@@ -317,6 +317,7 @@ const PoolTokenDeposit: React.FC<PoolTokenDepositProps> = props => {
                     tokenIcon={icon}
                     max={activeBalance}
                     maximumFractionDigits={token.decimals}
+                    name={token.name}
                     displayDecimals={token === UNISWAPTokenMeta ? 8 : 4}
                     disabled={state.formDisabled || state.saving}
                     slider
@@ -338,7 +339,6 @@ const PoolTokenDeposit: React.FC<PoolTokenDepositProps> = props => {
             <Button
               type="primary"
               htmlType="submit"
-              size="large"
               loading={state.saving}
               disabled={!state.enabled || state.formDisabled}
               style={{ width: 121 }}>

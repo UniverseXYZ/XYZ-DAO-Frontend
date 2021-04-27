@@ -5,13 +5,13 @@
     @include font-p1-regular;
     max-width: 360px;
     padding: 16px;
-    background: var(--theme-card-color);
+    background: var(--theme-tooltip-bg);
     box-shadow: var(--theme-overlay-shadow);
     border-radius: 4px;
     color: var(--theme-primary-color);
   }
 
   :global(.ant-tooltip-arrow-content) {
-    background: var(--theme-card-color);
+    background: var(--theme-tooltip-bg);
   }
 }

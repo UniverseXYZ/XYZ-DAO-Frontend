@@ -10,6 +10,7 @@ export type PoolTokenShare = {
   icon: React.ReactNode;
   name: string;
   color: string;
+  gradient?: string;
   value?: string;
   share?: number;
 };
@@ -45,7 +46,7 @@ const PoolStakeShareBar: React.FC<PoolStakeShareBarProps> = props => {
           <div
             className={s.item}
             style={{
-              backgroundColor: tokenShare.color,
+              background: tokenShare.gradient || tokenShare.color,
             }}
           />
         </Tooltip>

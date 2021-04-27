@@ -1,21 +1,4 @@
-@font-face {
-  font-family: Montserrat;
-  src: url('../resources/fonts/Montserrat-Regular.ttf');
-}
-
-@font-face {
-  font-family: Montserrat;
-  font-weight: 600;
-  src: url('../resources/fonts/Montserrat-SemiBold.ttf');
-}
-
-@font-face {
-  font-family: Montserrat;
-  font-weight: 700;
-  src: url('../resources/fonts/Montserrat-Bold.ttf');
-}
-
-@mixin font($size, $height, $weight: normal, $style: normal, $family: Montserrat) {
+@mixin font($size, $height, $weight: normal, $style: normal, $family: var(--font-family)) {
   font-family: $family;
   font-weight: $weight;
   font-style: $style;

@@ -3,28 +3,28 @@
 
 :root .component {
   // primary regular
-  --btn-primary-shadow: 0 8px 16px rgba(255, 67, 57, 0.16);
+  --btn-primary-shadow: 0 10px 20px rgba(136, 120, 172, 0.2);
   --btn-primary-border: 0;
-  --btn-primary-bg: #{$color-red500};
-  --btn-primary-text: #fff;
+  --btn-primary-bg: linear-gradient(135deg, #BCEB00 15.57%, #00EAEA 84.88%);
+  --btn-primary-text: #000;
 
   // primary hover
-  --btn-primary-shadow-hover: 0 8px 16px rgba(255, 105, 97, 0.24);
+  --btn-primary-shadow-hover: 0 10px 20px rgba(136, 120, 172, 0.2);
   --btn-primary-border-hover: none;
-  --btn-primary-bg-hover: #{$color-red400};
-  --btn-primary-text-hover: #fff;
+  --btn-primary-bg-hover: linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), linear-gradient(135deg, #BCEB00 15.57%, #00EAEA 84.88%);
+  --btn-primary-text-hover: #000;
 
   // primary active
-  --btn-primary-shadow-active: 0 4px 8px rgba(204, 54, 46, 0.16);
+  --btn-primary-shadow-active: 0 10px 20px rgba(136, 120, 172, 0.2);
   --btn-primary-border-active: none;
-  --btn-primary-bg-active: #{$color-red600};
-  --btn-primary-text-active: #fff;
+  --btn-primary-bg-active: linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), linear-gradient(135deg, #BCEB00 15.57%, #00EAEA 84.88%), #CC362E;
+  --btn-primary-text-active: #000;
 
   // primary disabled
   --btn-primary-shadow-disabled: none;
   --btn-primary-border-disabled: none;
-  --btn-primary-bg-disabled: #{$color-grey200};
-  --btn-primary-text-disabled: #fff;
+  --btn-primary-bg-disabled: rgba(255, 255, 255, 0.1);
+  --btn-primary-text-disabled: rgba(255, 255, 255, 0.3);
 
   // default regular
   --btn-default-shadow: none;
@@ -88,17 +88,13 @@
   --btn-select-shadow: none;
   --btn-select-shadow-hover: 0 16px 32px rgba(255, 67, 57, 0.04);
   --btn-select-shadow-active: 0 16px 32px rgba(255, 67, 57, 0.04);
-  --btn-select-border: 1px solid #e3e4e6;
-  --btn-select-border-hover: 1px solid #ff4339;
-  --btn-select-border-active: 1px solid #ff4339;
+  --btn-select-border: 1px solid var(--btn-primary-border);
+  --btn-select-border-hover: 1px solid var(--btn-primary-border-active);
+  --btn-select-border-active: 1px solid var(--btn-primary-border-active);
   --btn-select-bg: #fff;
 }
 
 [data-theme='dark'] .component {
-  // primary disabled
-  --btn-primary-bg-disabled: #43484d;
-  --btn-primary-text-disabled: #939496;
-
   // default disabled
   --btn-default-bg-disabled: rgba(147, 148, 150, 0.08);
   --btn-default-text-disabled: #939496;
@@ -114,10 +110,11 @@
   --btn-link-text-active: #{$color-blue500};
 
   // select
-  --btn-select-border: 1px solid #43484d;
-  --btn-select-border-hover: 1px solid #ff4339;
-  --btn-select-border-active: 1px solid #ff4339;
+  --btn-select-border: 1px solid var(--btn-primary-border);
+  --btn-select-border-hover: 1px solid var(--btn-primary-border-active);
+  --btn-select-border-active: 1px solid var(--btn-primary-border-active);
   --btn-select-bg: #202529;
+  --btn-select-bg-hover: #202529;
 }
 
 .component:global(.ant-btn) {
@@ -127,20 +124,21 @@
   justify-content: center;
   column-gap: 12px;
   height: 48px;
-  padding: 12px 32px;
-  border-radius: 4px;
+  padding: 14px 26px;
+  border-radius: 12px;
   text-align: center;
 
   &:global(.ant-btn-lg) {
     @include font-p1-bold;
     height: 64px;
-    padding: 20px;
+    padding: 20px 28px;
   }
 
   &:global(.ant-btn-sm) {
     @include font-sm-bold;
     height: 34px;
-    padding: 9px;
+    padding: 8px 18px;
+    border-radius: 8px;
   }
 
   &:global(.ant-btn-primary) {
@@ -234,6 +232,34 @@
       box-shadow: var(--btn-select-shadow);
       border: var(--btn-select-border);
       background: var(--btn-select-bg);
+
+      & > * {
+        z-index: 1;
+      }
+      &::before {
+        content: '';
+        top: -1px;
+        left: -1px;
+        right: -1px;
+        bottom: -1px;
+        display: block;
+        position: absolute;
+        background: linear-gradient(135deg, #BCEB00 15.57%, #00EAEA 84.88%);
+        border-radius: 12px;
+        z-index: 0 !important;
+      }
+      &::after {
+        content: '';
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: block;
+        position: absolute;
+        border-radius: 12px;
+        background: var(--btn-select-bg);
+        z-index: 0 !important;
+      }
 
       &:hover {
         box-shadow: var(--btn-select-shadow-hover);

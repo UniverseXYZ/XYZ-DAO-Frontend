@@ -60,14 +60,20 @@ const PoolDetailsView: React.FC = () => {
 
   return (
     <div>
-      <Button type="link" onClick={handleBackClick} className="mb-32">
-        <Grid flow="col" gap={16} align="center">
-          <Icon name="arrow-back" width={40} height={40} className="mr-8" />
-          <Text type="h1" weight="bold" color="primary">
-            {getPoolNames(pool).join('/')}
+      <Button type="link" onClick={handleBackClick} className="mb-16">
+        <Grid flow="col" gap={8} align="center">
+          <Icon name="arrow-back" width={24} height={24} />
+          <Text type="p1" weight="semibold" color="secondary">
+            Overview
           </Text>
         </Grid>
       </Button>
+
+      <Grid flow="col" align="center" className="mb-32">
+        <Text type="h1" weight="bold" color="primary">
+          {getPoolNames(pool).join('/')}
+        </Text>
+      </Grid>
 
       <Tabs simple activeKey={activeTab} onChange={handleTabChange} className="mb-24">
         <Tabs.Tab key={PoolActions.DEPOSIT} tab="Deposit" />

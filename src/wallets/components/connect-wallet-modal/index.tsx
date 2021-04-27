@@ -3,10 +3,13 @@ import React from 'react';
 import Button from 'components/antd/button';
 import Modal, { ModalProps } from 'components/antd/modal';
 import Grid from 'components/custom/grid';
+import { IconWallet } from 'components/custom/icon-wallet';
 import { Text } from 'components/custom/typography';
 import useMergeState from 'hooks/useMergeState';
 import LedgerDerivationPathModal from 'wallets/components/ledger-deriviation-path-modal';
 import { WalletConnectors, useWallet } from 'wallets/wallet';
+
+import s from './s.module.scss';
 
 import { WalletConnector } from 'wallets/types';
 
@@ -58,9 +61,10 @@ const ConnectWalletModal: React.FC<ConnectWalletModalProps> = props => {
             <Button
               key={connector.id}
               type="select"
+              className={s.button}
               style={{ height: '96px' }}
               onClick={() => handleConnectorSelect(connector)}>
-              <img src={connector.logo} alt={connector.name} height={32} />
+              <IconWallet wallet={connector.id} style={{ height: 32 }} />
             </Button>
           ))}
         </Grid>

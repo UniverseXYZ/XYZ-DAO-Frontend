@@ -7,6 +7,7 @@ import Slider from 'components/antd/slider';
 import Grid from 'components/custom/grid';
 import Icon, { TokenIconNames } from 'components/custom/icon';
 import NumericInput from 'components/custom/numeric-input';
+import { Text } from 'components/custom/typography';
 
 import s from './s.module.scss';
 
@@ -16,6 +17,7 @@ export type TokenAmountProps = {
   max?: number | BigNumber;
   maximumFractionDigits?: number;
   value?: number | BigNumber;
+  name?: string;
   disabled?: boolean;
   slider?: boolean;
   displayDecimals?: number;
@@ -29,6 +31,7 @@ const TokenAmount: React.FC<TokenAmountProps> = props => {
     max,
     maximumFractionDigits = 4,
     value,
+    name,
     disabled = false,
     slider = false,
     displayDecimals = 4,
@@ -58,15 +61,19 @@ const TokenAmount: React.FC<TokenAmountProps> = props => {
         className={cn(s.component, className)}
         placeholder={max !== undefined ? `0 (Max ${formatBigValue(bnMaxValue, displayDecimals)})` : ''}
         addonBefore={
-          <>
-            {typeof tokenIcon === 'string' && <Icon name={tokenIcon as TokenIconNames} width={36} height={36} />}
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {typeof tokenIcon === 'string' && <Icon name={tokenIcon as TokenIconNames} width={20} height={20} />}
             {typeof tokenIcon === 'object' && tokenIcon}
-          </>
+            <div className="mr-8" />
+            <Text type="lb2" weight="semibold" color="primary">
+              {name}
+            </Text>
+          </div>
         }
         addonAfter={
           max !== undefined ? (
             <button type="button" className="button-ghost" disabled={disabled} onClick={onMaxHandle}>
-              MAX
+              <span>MAX</span>
             </button>
           ) : null
         }

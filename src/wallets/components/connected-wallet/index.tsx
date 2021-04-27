@@ -87,9 +87,9 @@ const ConnectedWallet: React.FC = () => {
             </Grid>
             <Divider />
             <Grid padding={24}>
-              <Button type="ghost" onClick={() => wallet.disconnect()}>
-                Disconnect
-              </Button>
+              <button type="button" className="button button-ghost" onClick={() => wallet.disconnect()}>
+                <span>Disconnect</span>
+              </button>
             </Grid>
           </div>
         }
@@ -154,9 +154,9 @@ const ConnectedWallet: React.FC = () => {
           </Grid>
           <Divider />
           <Grid padding={24}>
-            <Button type="ghost" onClick={() => wallet.disconnect()}>
-              Disconnect
-            </Button>
+            <button type="button" className="button button-ghost" onClick={() => wallet.disconnect()}>
+              <span>Disconnect</span>
+            </button>
           </Grid>
         </div>
       }>

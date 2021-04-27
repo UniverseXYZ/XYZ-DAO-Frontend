@@ -23,11 +23,11 @@ const WEB3_POLLING_INTERVAL = Number(process.env.REACT_APP_WEB3_POLLING_INTERVAL
 
 export const WalletConnectors: WalletConnector[] = [
   MetaMaskWalletConfig,
-  WalletConnectConfig,
   LedgerWalletConfig,
+  PortisWalletConfig,
   TrezorWalletConfig,
   CoinbaseWalletConfig,
-  PortisWalletConfig,
+  WalletConnectConfig,
 ];
 
 type WalletData = {

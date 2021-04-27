@@ -19,16 +19,32 @@ import s from './s.module.scss';
 
 const PoolFilters: SelectOption[] = [
   {
-    value: PoolTypes.STABLE,
-    label: getPoolNames(PoolTypes.STABLE).join('/'),
-  },
-  {
-    value: PoolTypes.UNILP,
-    label: getPoolNames(PoolTypes.UNILP).join('/'),
+    value: PoolTypes.AAVE,
+    label: getPoolNames(PoolTypes.AAVE).join('/'),
   },
   {
     value: PoolTypes.BOND,
     label: getPoolNames(PoolTypes.BOND).join('/'),
+  },
+  {
+    value: PoolTypes.COMP,
+    label: getPoolNames(PoolTypes.COMP).join('/'),
+  },
+  {
+    value: PoolTypes.SNX,
+    label: getPoolNames(PoolTypes.SNX).join('/'),
+  },
+  {
+    value: PoolTypes.SUSHI,
+    label: getPoolNames(PoolTypes.SUSHI).join('/'),
+  },
+  {
+    value: PoolTypes.LINK,
+    label: getPoolNames(PoolTypes.LINK).join('/'),
+  },
+  {
+    value: PoolTypes.ILV,
+    label: getPoolNames(PoolTypes.ILV).join('/'),
   },
 ];
 
@@ -96,7 +112,7 @@ const PoolTxChartInner: React.FC<Props> = props => {
   }, [web3c, poolTxChart.summaries]);
 
   React.useEffect(() => {
-    poolTxChart.changePoolFilter(PoolTypes.STABLE);
+    poolTxChart.changePoolFilter(PoolTypes.BOND);
     poolTxChart.changePeriodFilter(undefined);
     poolTxChart.changeTypeFilter(undefined);
   }, []);
@@ -158,6 +174,16 @@ const PoolTxChartInner: React.FC<Props> = props => {
                   left: 60,
                   bottom: 12,
                 }}>
+                <defs>
+                  <linearGradient id="gradient-red" gradient-transform="rotate(135deg)">
+                    <stop offset="0%" stopColor="#FF7439" />
+                    <stop offset="100%" stopColor="#FF39BC" />
+                  </linearGradient>
+                  <linearGradient id="gradient-blue" gradient-transform="rotate(135deg) matrix(1, 0, 0, -1, 0, 0)">
+                    <stop offset="0%" stopColor="#914FE6" />
+                    <stop offset="100%" stopColor="#316CDF" />
+                  </linearGradient>
+                </defs>
                 <ReCharts.CartesianGrid vertical={false} stroke="var(--theme-border-color)" strokeDasharray="3 3" />
                 <ReCharts.XAxis dataKey="timestamp" stroke="var(--theme-border-color)" />
                 <ReCharts.YAxis
@@ -166,8 +192,10 @@ const PoolTxChartInner: React.FC<Props> = props => {
                   tickFormatter={(value: any) => formatUSDValue(value, 2, 0)}
                 />
                 <ReCharts.Tooltip
+                  separator=" "
                   wrapperClassName={s.chart_tooltip}
-                  formatter={(value: any) => formatUSDValue(value)}
+                  cursor={{ fill: 'rgba(255, 255, 255, 0.1)' }}
+                  formatter={(value: any, name: string) => [formatUSDValue(value), name]}
                 />
                 <ReCharts.Legend
                   align="right"
@@ -176,17 +204,18 @@ const PoolTxChartInner: React.FC<Props> = props => {
                   wrapperStyle={{
                     top: 0,
                     right: 12,
-                    color: 'var(--theme-secondary-color)',
+                    color: 'var(--theme-color-primary)',
                   }}
                 />
-                <ReCharts.ReferenceLine y={0} stroke="var(--theme-border-color)" />
+                <ReCharts.ReferenceLine y={0} stroke="#43484D" />
                 {(poolTxChart.typeFilter === undefined || poolTxChart.typeFilter === 'deposits') && (
                   <ReCharts.Bar
                     dataKey="deposits"
                     name="Deposits"
                     stackId="stack"
-                    fill="var(--theme-red-color)"
+                    fill="url(#gradient-red)"
                     fontSize={23}
+                    radius={[4, 4, 0, 0]}
                   />
                 )}
                 {(poolTxChart.typeFilter === undefined || poolTxChart.typeFilter === 'withdrawals') && (
@@ -194,7 +223,9 @@ const PoolTxChartInner: React.FC<Props> = props => {
                     dataKey="withdrawals"
                     name="Withdrawals"
                     stackId="stack"
-                    fill="var(--theme-blue-color)"
+                    fill="url(#gradient-blue)"
+                    fontSize={23}
+                    radius={[4, 4, 0, 0]}
                   />
                 )}
               </ReCharts.BarChart>

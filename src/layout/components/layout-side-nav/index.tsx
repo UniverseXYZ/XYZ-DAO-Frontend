@@ -9,6 +9,7 @@ import Tooltip from 'components/antd/tooltip';
 import Icon from 'components/custom/icon';
 import { Text } from 'components/custom/typography';
 import { useGeneral } from 'components/providers/general-provider';
+import logoSrc from 'resources/png/universe.png';
 
 import s from './s.module.scss';
 
@@ -48,8 +49,7 @@ const LayoutSideNav: React.FC = () => {
             <Icon name="close-circle-outlined" />
           </button>
           <Link to="/" className={s.logo}>
-            <Icon name="bond-square-token" />
-            <Icon name="barnbridge" width="113" color="primary" className={s.logoLabel} />
+            <Icon name="png/universe" width="40" height="40" src={logoSrc} />
           </Link>
         </div>
         <nav className={s.top}>

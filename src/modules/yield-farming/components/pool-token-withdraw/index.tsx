@@ -275,6 +275,7 @@ const PoolTokenWithdraw: React.FC<PoolTokenWithdrawProps> = props => {
                     tokenIcon={icon}
                     max={activeBalance}
                     maximumFractionDigits={token.decimals}
+                    name={token.name}
                     displayDecimals={token === UNISWAPTokenMeta ? 8 : 4}
                     disabled={state.formDisabled || state.saving}
                     slider
@@ -315,7 +316,6 @@ const PoolTokenWithdraw: React.FC<PoolTokenWithdrawProps> = props => {
             <Button
               type="primary"
               htmlType="submit"
-              size="large"
               loading={state.saving}
               disabled={state.formDisabled}
               style={{ width: 121 }}>

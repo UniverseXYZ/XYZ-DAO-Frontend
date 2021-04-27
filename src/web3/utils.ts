@@ -1,7 +1,13 @@
 import BigNumber from 'bignumber.js';
+import { AAVETokenMeta } from 'web3/contracts/aave';
 import { BONDTokenMeta } from 'web3/contracts/bond';
+import { COMPTokenMeta } from 'web3/contracts/comp';
 import { DAITokenMeta } from 'web3/contracts/dai';
+import { ILVTokenMeta } from 'web3/contracts/ilv';
+import { LINKTokenMeta } from 'web3/contracts/link';
+import { SNXTokenMeta } from 'web3/contracts/snx';
 import { SUSDTokenMeta } from 'web3/contracts/susd';
+import { SUSHITokenMeta } from 'web3/contracts/sushi';
 import { UNISWAPTokenMeta } from 'web3/contracts/uniswap';
 import { USDCTokenMeta } from 'web3/contracts/usdc';
 import { TokenMeta } from 'web3/types';
@@ -227,6 +233,18 @@ export function getTokenMeta(tokenAddr: string): TokenMeta | undefined {
       return UNISWAPTokenMeta;
     case BONDTokenMeta.address:
       return BONDTokenMeta;
+    case AAVETokenMeta.address:
+      return AAVETokenMeta;
+    case COMPTokenMeta.address:
+      return COMPTokenMeta;
+    case ILVTokenMeta.address:
+      return ILVTokenMeta;
+    case LINKTokenMeta.address:
+      return LINKTokenMeta;
+    case SNXTokenMeta.address:
+      return SNXTokenMeta;
+    case SUSHITokenMeta.address:
+      return SUSHITokenMeta;
     default:
       return undefined;
   }

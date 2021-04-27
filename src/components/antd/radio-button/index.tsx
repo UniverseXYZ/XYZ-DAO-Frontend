@@ -17,8 +17,8 @@ const RadioButton: React.FC<AntdRadioProps & RadioButtonProps> = props => {
   return (
     <AntdRadio className={cn(s.component, className)} {...radioProps}>
       <Grid flow="row" gap={4}>
-        {label}
-        {hint}
+        <span>{label}</span>
+        <span>{hint}</span>
       </Grid>
     </AntdRadio>
   );

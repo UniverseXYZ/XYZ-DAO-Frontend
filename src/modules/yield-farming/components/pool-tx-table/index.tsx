@@ -2,7 +2,7 @@ import React from 'react';
 import { ColumnsType } from 'antd/lib/table/interface';
 import BigNumber from 'bignumber.js';
 import cn from 'classnames';
-import formatDistance from 'date-fns/formatDistance';
+import formatDistanceStrict from 'date-fns/formatDistanceStrict';
 import capitalize from 'lodash/capitalize';
 import { useWeb3Contracts } from 'web3/contracts';
 import { BONDTokenMeta } from 'web3/contracts/bond';
@@ -48,7 +48,7 @@ const Columns: ColumnsType<PoolTxListItem> = [
     title: 'Transaction type',
     render: (_: any, record) => (
       <div className="flex flow-col col-gap-16 align-center">
-        <div className={s.icon}>{getTokenMeta(record.token)?.icon}</div>
+        <div className={s.icon}>{getTokenMeta(record.token.toLowerCase())?.icon}</div>
         <div>
           <Text type="p1" weight="semibold" color="primary" className="mb-8">
             {capitalize(record.type)}
@@ -80,12 +80,12 @@ const Columns: ColumnsType<PoolTxListItem> = [
           }>
           <div className="full-width">
             {record.type === 'DEPOSIT' && (
-              <Text type="p1" weight="semibold" color="green">
+              <Text type="p1" weight="semibold" color="var(--gradient-green-safe)" textGradient="var(--gradient-green)">
                 + {formatToken(record.amount)}
               </Text>
             )}
             {record.type === 'WITHDRAW' && (
-              <Text type="p1" weight="semibold" color="red">
+              <Text type="p1" weight="semibold" color="var(--gradient-red-safe)" textGradient="var(--gradient-red)">
                 - {formatToken(record.amount)}
               </Text>
             )}
@@ -102,7 +102,7 @@ const Columns: ColumnsType<PoolTxListItem> = [
     dataIndex: 'user',
     render: (value: string) => (
       <ExternalLink href={getEtherscanAddressUrl(value)}>
-        <Text type="p1" weight="semibold" color="blue">
+        <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">
           {shortenAddr(value)}
         </Text>
       </ExternalLink>
@@ -113,7 +113,7 @@ const Columns: ColumnsType<PoolTxListItem> = [
     dataIndex: 'txHash',
     render: (value: string) => (
       <ExternalLink href={getEtherscanTxUrl(value)}>
-        <Text type="p1" weight="semibold" color="blue">
+        <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">
           {shortenAddr(value)}
         </Text>
       </ExternalLink>
@@ -125,7 +125,8 @@ const Columns: ColumnsType<PoolTxListItem> = [
     align: 'right',
     render: (value: number) => (
       <Text type="p1" weight="semibold" color="primary">
-        {formatDistance(new Date(value * 1_000), new Date(), {
+        ~{' '}
+        {formatDistanceStrict(new Date(value * 1_000), new Date(), {
           addSuffix: true,
         })}
       </Text>
@@ -228,7 +229,9 @@ const PoolTxTableInner: React.FC<PoolTxTableProps> = props => {
   const CardFooter = (
     <Grid align="center" justify="center">
       <Button type="light" disabled={poolTxList.loading} onClick={poolTxList.loadNext}>
-        Load more transactions
+        <Text type="p1" weight="500" color="var(--gradient-green-safe)" textGradient="var(--gradient-green)">
+          Load more transactions
+        </Text>
       </Button>
     </Grid>
   );

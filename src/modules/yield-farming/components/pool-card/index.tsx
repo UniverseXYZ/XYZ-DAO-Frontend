@@ -5,11 +5,13 @@ import cn from 'classnames';
 import addMinutes from 'date-fns/addMinutes';
 import format from 'date-fns/format';
 import { useWeb3Contracts } from 'web3/contracts';
+import { AAVETokenMeta } from 'web3/contracts/aave';
 import { BONDTokenMeta } from 'web3/contracts/bond';
-import { DAITokenMeta } from 'web3/contracts/dai';
-import { SUSDTokenMeta } from 'web3/contracts/susd';
-import { UNISWAPTokenMeta } from 'web3/contracts/uniswap';
-import { USDCTokenMeta } from 'web3/contracts/usdc';
+import { COMPTokenMeta } from 'web3/contracts/comp';
+import { ILVTokenMeta } from 'web3/contracts/ilv';
+import { LINKTokenMeta } from 'web3/contracts/link';
+import { SNXTokenMeta } from 'web3/contracts/snx';
+import { SUSHITokenMeta } from 'web3/contracts/sushi';
 import { formatBONDValue, formatBigValue, formatUSDValue } from 'web3/utils';
 
 import Grid from 'components/custom/grid';
@@ -54,125 +56,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
   const [state, setState] = useMergeState<State>({});
 
   React.useEffect(() => {
-    if (pool === PoolTypes.STABLE) {
-      setState({
-        enabled: true,
-        isEnded: web3c.yf.isEnded,
-        endDate: web3c.yf.endDate,
-        currentEpoch: web3c.yf.currentEpoch,
-        totalEpochs: web3c.yf.totalEpochs,
-        epochReward: web3c.yf.epochReward,
-        potentialReward: web3c.yf.potentialReward,
-        balance: web3c.aggregated.yfStakedValue,
-        myBalance: web3c.yf.nextEpochStake,
-        effectiveBalance: web3c.aggregated.yfEffectiveStakedValue,
-        myEffectiveBalance: web3c.yf.epochStake,
-        shares: [
-          {
-            icon: USDCTokenMeta.icon,
-            name: USDCTokenMeta.name,
-            color: '#4f6ae6',
-            value: formatUSDValue(web3c.staking.usdc.nextEpochPoolSize),
-            share: web3c.staking.usdc.nextEpochPoolSize
-              ?.multipliedBy(100)
-              .div(web3c.yf.nextPoolSize ?? 1)
-              .toNumber(),
-          },
-          {
-            icon: DAITokenMeta.icon,
-            name: DAITokenMeta.name,
-            color: '#ffd160',
-            value: formatUSDValue(web3c.staking.dai.nextEpochPoolSize),
-            share: web3c.staking.dai.nextEpochPoolSize
-              ?.multipliedBy(100)
-              .div(web3c.yf.nextPoolSize ?? 1)
-              .toNumber(),
-          },
-          {
-            icon: SUSDTokenMeta.icon,
-            name: SUSDTokenMeta.name,
-            color: '#1e1a31',
-            value: formatUSDValue(web3c.staking.susd.nextEpochPoolSize),
-            share: web3c.staking.susd.nextEpochPoolSize
-              ?.multipliedBy(100)
-              .div(web3c.yf.nextPoolSize ?? 1)
-              .toNumber(),
-          },
-        ],
-        myShares: [
-          {
-            icon: USDCTokenMeta.icon,
-            name: USDCTokenMeta.name,
-            color: '#4f6ae6',
-            value: formatUSDValue(web3c.staking.usdc.nextEpochUserBalance),
-            share: web3c.staking.usdc.nextEpochUserBalance
-              ?.multipliedBy(100)
-              .div(web3c.yf.nextEpochStake ?? 1)
-              .toNumber(),
-          },
-          {
-            icon: DAITokenMeta.icon,
-            name: DAITokenMeta.name,
-            color: '#ffd160',
-            value: formatUSDValue(web3c.staking.dai.nextEpochUserBalance),
-            share: web3c.staking.dai.nextEpochUserBalance
-              ?.multipliedBy(100)
-              .div(web3c.yf.nextEpochStake ?? 1)
-              .toNumber(),
-          },
-          {
-            icon: SUSDTokenMeta.icon,
-            name: SUSDTokenMeta.name,
-            color: '#1e1a31',
-            value: formatUSDValue(web3c.staking.susd.nextEpochUserBalance),
-            share: web3c.staking.susd.nextEpochUserBalance
-              ?.multipliedBy(100)
-              .div(web3c.yf.nextEpochStake ?? 1)
-              .toNumber(),
-          },
-        ],
-      });
-    } else if (pool === PoolTypes.UNILP) {
-      setState({
-        enabled: web3c.yfLP.currentEpoch! > 0,
-        isEnded: web3c.yfLP.isEnded,
-        endDate: web3c.yfLP.endDate,
-        currentEpoch: web3c.yfLP.currentEpoch,
-        totalEpochs: web3c.yfLP.totalEpochs,
-        epochReward: web3c.yfLP.epochReward,
-        potentialReward: web3c.yfLP.potentialReward,
-        balance: web3c.aggregated.yfLPStakedValue,
-        myBalance: web3c.aggregated.myLPStakedValue,
-        effectiveBalance: web3c.aggregated.yfLPEffectiveStakedValue,
-        myEffectiveBalance: web3c.aggregated.myLPEffectiveStakedValue,
-        shares: [
-          {
-            icon: UNISWAPTokenMeta.icon,
-            name: UNISWAPTokenMeta.name,
-            color: 'var(--theme-red-color)',
-            value: formatBigValue(web3c.yfLP.nextPoolSize, UNISWAPTokenMeta.decimals),
-            share:
-              web3c.staking.uniswap.nextEpochPoolSize
-                ?.multipliedBy(100)
-                .div(web3c.yfLP.nextPoolSize ?? 1)
-                .toNumber() ?? 0,
-          },
-        ],
-        myShares: [
-          {
-            icon: UNISWAPTokenMeta.icon,
-            name: UNISWAPTokenMeta.name,
-            color: 'var(--theme-red-color)',
-            value: formatBigValue(web3c.yfLP.nextEpochStake, UNISWAPTokenMeta.decimals),
-            share:
-              web3c.staking.uniswap.nextEpochUserBalance
-                ?.multipliedBy(100)
-                .div(web3c.yfLP.nextEpochStake ?? 1)
-                .toNumber() ?? 0,
-          },
-        ],
-      });
-    } else if (pool === PoolTypes.BOND) {
+    if (pool === PoolTypes.BOND) {
       setState({
         enabled: true,
         isEnded: web3c.yfBOND.isEnded,
@@ -189,7 +73,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           {
             icon: BONDTokenMeta.icon,
             name: BONDTokenMeta.name,
-            color: 'var(--theme-red-color)',
+            color: '#ff4339',
             value: formatBigValue(web3c.yfBOND.nextPoolSize, BONDTokenMeta.decimals),
             share:
               web3c.staking.bond.nextEpochPoolSize
@@ -202,7 +86,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           {
             icon: BONDTokenMeta.icon,
             name: BONDTokenMeta.name,
-            color: 'var(--theme-red-color)',
+            color: '#ff4339',
             value: formatBigValue(web3c.yfBOND.nextEpochStake, BONDTokenMeta.decimals),
             share:
               web3c.staking.bond.nextEpochUserBalance
@@ -212,19 +96,280 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           },
         ],
       });
+    } else if (pool === PoolTypes.AAVE) {
+      setState({
+        enabled: web3c.yfLP.currentEpoch! > 0,
+        isEnded: web3c.yfLP.isEnded,
+        endDate: web3c.yfLP.endDate,
+        currentEpoch: web3c.yfLP.currentEpoch,
+        totalEpochs: web3c.yfLP.totalEpochs,
+        epochReward: web3c.yfLP.epochReward,
+        potentialReward: web3c.yfLP.potentialReward,
+        balance: web3c.aggregated.yfLPStakedValue,
+        myBalance: web3c.aggregated.myLPStakedValue,
+        effectiveBalance: web3c.aggregated.yfLPEffectiveStakedValue,
+        myEffectiveBalance: web3c.aggregated.myLPEffectiveStakedValue,
+        shares: [
+          {
+            icon: AAVETokenMeta.icon,
+            name: AAVETokenMeta.name,
+            color: '#2FB9C6',
+            gradient: 'linear-gradient(90deg, #2FB9C6 0%, #B4519F 100%)',
+            value: formatBigValue(web3c.yfLP.nextPoolSize, AAVETokenMeta.decimals),
+            share:
+              web3c.staking.uniswap.nextEpochPoolSize
+                ?.multipliedBy(100)
+                .div(web3c.yfLP.nextPoolSize ?? 1)
+                .toNumber() ?? 0,
+          },
+        ],
+        myShares: [
+          {
+            icon: AAVETokenMeta.icon,
+            name: AAVETokenMeta.name,
+            color: '#2FB9C6',
+            gradient: 'linear-gradient(90deg, #2FB9C6 0%, #B4519F 100%)',
+            value: formatBigValue(web3c.yfLP.nextEpochStake, AAVETokenMeta.decimals),
+            share:
+              web3c.staking.uniswap.nextEpochUserBalance
+                ?.multipliedBy(100)
+                .div(web3c.yfLP.nextEpochStake ?? 1)
+                .toNumber() ?? 0,
+          },
+        ],
+      });
+    } else if (pool === PoolTypes.COMP) {
+      setState({
+        enabled: web3c.yfLP.currentEpoch! > 0,
+        isEnded: web3c.yfLP.isEnded,
+        endDate: web3c.yfLP.endDate,
+        currentEpoch: web3c.yfLP.currentEpoch,
+        totalEpochs: web3c.yfLP.totalEpochs,
+        epochReward: web3c.yfLP.epochReward,
+        potentialReward: web3c.yfLP.potentialReward,
+        balance: web3c.aggregated.yfLPStakedValue,
+        myBalance: web3c.aggregated.myLPStakedValue,
+        effectiveBalance: web3c.aggregated.yfLPEffectiveStakedValue,
+        myEffectiveBalance: web3c.aggregated.myLPEffectiveStakedValue,
+        shares: [
+          {
+            icon: COMPTokenMeta.icon,
+            name: COMPTokenMeta.name,
+            color: '#00D395',
+            value: formatBigValue(web3c.yfLP.nextPoolSize, COMPTokenMeta.decimals),
+            share:
+              web3c.staking.uniswap.nextEpochPoolSize
+                ?.multipliedBy(100)
+                .div(web3c.yfLP.nextPoolSize ?? 1)
+                .toNumber() ?? 0,
+          },
+        ],
+        myShares: [
+          {
+            icon: COMPTokenMeta.icon,
+            name: COMPTokenMeta.name,
+            color: '#00D395',
+            value: formatBigValue(web3c.yfLP.nextEpochStake, COMPTokenMeta.decimals),
+            share:
+              web3c.staking.uniswap.nextEpochUserBalance
+                ?.multipliedBy(100)
+                .div(web3c.yfLP.nextEpochStake ?? 1)
+                .toNumber() ?? 0,
+          },
+        ],
+      });
+    } else if (pool === PoolTypes.SNX) {
+      setState({
+        enabled: web3c.yfLP.currentEpoch! > 0,
+        isEnded: web3c.yfLP.isEnded,
+        endDate: web3c.yfLP.endDate,
+        currentEpoch: web3c.yfLP.currentEpoch,
+        totalEpochs: web3c.yfLP.totalEpochs,
+        epochReward: web3c.yfLP.epochReward,
+        potentialReward: web3c.yfLP.potentialReward,
+        balance: web3c.aggregated.yfLPStakedValue,
+        myBalance: web3c.aggregated.myLPStakedValue,
+        effectiveBalance: web3c.aggregated.yfLPEffectiveStakedValue,
+        myEffectiveBalance: web3c.aggregated.myLPEffectiveStakedValue,
+        shares: [
+          {
+            icon: SNXTokenMeta.icon,
+            name: SNXTokenMeta.name,
+            color: '#0F0C20',
+            value: formatBigValue(web3c.yfLP.nextPoolSize, SNXTokenMeta.decimals),
+            share:
+              web3c.staking.uniswap.nextEpochPoolSize
+                ?.multipliedBy(100)
+                .div(web3c.yfLP.nextPoolSize ?? 1)
+                .toNumber() ?? 0,
+          },
+        ],
+        myShares: [
+          {
+            icon: SNXTokenMeta.icon,
+            name: SNXTokenMeta.name,
+            color: '#0F0C20',
+            value: formatBigValue(web3c.yfLP.nextEpochStake, SNXTokenMeta.decimals),
+            share:
+              web3c.staking.uniswap.nextEpochUserBalance
+                ?.multipliedBy(100)
+                .div(web3c.yfLP.nextEpochStake ?? 1)
+                .toNumber() ?? 0,
+          },
+        ],
+      });
+    } else if (pool === PoolTypes.SUSHI) {
+      setState({
+        enabled: web3c.yfLP.currentEpoch! > 0,
+        isEnded: web3c.yfLP.isEnded,
+        endDate: web3c.yfLP.endDate,
+        currentEpoch: web3c.yfLP.currentEpoch,
+        totalEpochs: web3c.yfLP.totalEpochs,
+        epochReward: web3c.yfLP.epochReward,
+        potentialReward: web3c.yfLP.potentialReward,
+        balance: web3c.aggregated.yfLPStakedValue,
+        myBalance: web3c.aggregated.myLPStakedValue,
+        effectiveBalance: web3c.aggregated.yfLPEffectiveStakedValue,
+        myEffectiveBalance: web3c.aggregated.myLPEffectiveStakedValue,
+        shares: [
+          {
+            icon: SUSHITokenMeta.icon,
+            name: SUSHITokenMeta.name,
+            color: '#2FADE4',
+            gradient: 'background: linear-gradient(270deg, #2FADE4 0%, #F356A3 100%)',
+            value: formatBigValue(web3c.yfLP.nextPoolSize, SUSHITokenMeta.decimals),
+            share:
+              web3c.staking.uniswap.nextEpochPoolSize
+                ?.multipliedBy(100)
+                .div(web3c.yfLP.nextPoolSize ?? 1)
+                .toNumber() ?? 0,
+          },
+        ],
+        myShares: [
+          {
+            icon: SUSHITokenMeta.icon,
+            name: SUSHITokenMeta.name,
+            color: '#0F0C20',
+            gradient: 'background: linear-gradient(270deg, #2FADE4 0%, #F356A3 100%)',
+            value: formatBigValue(web3c.yfLP.nextEpochStake, SUSHITokenMeta.decimals),
+            share:
+              web3c.staking.uniswap.nextEpochUserBalance
+                ?.multipliedBy(100)
+                .div(web3c.yfLP.nextEpochStake ?? 1)
+                .toNumber() ?? 0,
+          },
+        ],
+      });
+    } else if (pool === PoolTypes.LINK) {
+      setState({
+        enabled: web3c.yfLP.currentEpoch! > 0,
+        isEnded: web3c.yfLP.isEnded,
+        endDate: web3c.yfLP.endDate,
+        currentEpoch: web3c.yfLP.currentEpoch,
+        totalEpochs: web3c.yfLP.totalEpochs,
+        epochReward: web3c.yfLP.epochReward,
+        potentialReward: web3c.yfLP.potentialReward,
+        balance: web3c.aggregated.yfLPStakedValue,
+        myBalance: web3c.aggregated.myLPStakedValue,
+        effectiveBalance: web3c.aggregated.yfLPEffectiveStakedValue,
+        myEffectiveBalance: web3c.aggregated.myLPEffectiveStakedValue,
+        shares: [
+          {
+            icon: LINKTokenMeta.icon,
+            name: LINKTokenMeta.name,
+            color: '#2A5ADA',
+            value: formatBigValue(web3c.yfLP.nextPoolSize, LINKTokenMeta.decimals),
+            share:
+              web3c.staking.uniswap.nextEpochPoolSize
+                ?.multipliedBy(100)
+                .div(web3c.yfLP.nextPoolSize ?? 1)
+                .toNumber() ?? 0,
+          },
+        ],
+        myShares: [
+          {
+            icon: LINKTokenMeta.icon,
+            name: LINKTokenMeta.name,
+            color: '#2A5ADA',
+            value: formatBigValue(web3c.yfLP.nextEpochStake, LINKTokenMeta.decimals),
+            share:
+              web3c.staking.uniswap.nextEpochUserBalance
+                ?.multipliedBy(100)
+                .div(web3c.yfLP.nextEpochStake ?? 1)
+                .toNumber() ?? 0,
+          },
+        ],
+      });
+    } else if (pool === PoolTypes.ILV) {
+      setState({
+        enabled: web3c.yfLP.currentEpoch! > 0,
+        isEnded: web3c.yfLP.isEnded,
+        endDate: web3c.yfLP.endDate,
+        currentEpoch: web3c.yfLP.currentEpoch,
+        totalEpochs: web3c.yfLP.totalEpochs,
+        epochReward: web3c.yfLP.epochReward,
+        potentialReward: web3c.yfLP.potentialReward,
+        balance: web3c.aggregated.yfLPStakedValue,
+        myBalance: web3c.aggregated.myLPStakedValue,
+        effectiveBalance: web3c.aggregated.yfLPEffectiveStakedValue,
+        myEffectiveBalance: web3c.aggregated.myLPEffectiveStakedValue,
+        shares: [
+          {
+            icon: ILVTokenMeta.icon,
+            name: ILVTokenMeta.name,
+            color: '#242553',
+            gradient: 'linear-gradient(90deg, #242553 0%, #5C2870 100%)',
+            value: formatBigValue(web3c.yfLP.nextPoolSize, ILVTokenMeta.decimals),
+            share:
+              web3c.staking.uniswap.nextEpochPoolSize
+                ?.multipliedBy(100)
+                .div(web3c.yfLP.nextPoolSize ?? 1)
+                .toNumber() ?? 0,
+          },
+        ],
+        myShares: [
+          {
+            icon: ILVTokenMeta.icon,
+            name: ILVTokenMeta.name,
+            color: '#242553',
+            gradient: 'linear-gradient(90deg, #242553 0%, #5C2870 100%)',
+            value: formatBigValue(web3c.yfLP.nextEpochStake, ILVTokenMeta.decimals),
+            share:
+              web3c.staking.uniswap.nextEpochUserBalance
+                ?.multipliedBy(100)
+                .div(web3c.yfLP.nextEpochStake ?? 1)
+                .toNumber() ?? 0,
+          },
+        ],
+      });
     }
   }, [pool, web3c]);
 
   function handleStaking() {
     switch (pool) {
-      case PoolTypes.STABLE:
-        history.push('/yield-farming/stable');
-        break;
-      case PoolTypes.UNILP:
-        history.push('/yield-farming/unilp');
+      case PoolTypes.AAVE:
+        history.push('/yield-farming/aave');
         break;
       case PoolTypes.BOND:
         history.push('/yield-farming/bond');
+        break;
+      case PoolTypes.COMP:
+        history.push('/yield-farming/comp');
+        break;
+      case PoolTypes.SNX:
+        history.push('/yield-farming/snx');
+        break;
+      case PoolTypes.SUSHI:
+        history.push('/yield-farming/sushi');
+        break;
+      case PoolTypes.LINK:
+        history.push('/yield-farming/link');
+        break;
+      case PoolTypes.ILV:
+        history.push('/yield-farming/ivl');
+        break;
+      case PoolTypes.USDC_kek_SUSHI_LP:
+        history.push('/yield-farming/USDC_kek_SUSHI_LP');
         break;
       default:
     }
@@ -252,10 +397,10 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           <Text
             type="lb2"
             weight="semibold"
-            color="red"
+            color="primary"
             ellipsis
-            title={`EPOCH ${state.currentEpoch ?? '-'}/${state.totalEpochs ?? '-'}`}>
-            EPOCH {state.currentEpoch ?? '-'}/{state.totalEpochs ?? '-'}
+            title={`WEEK ${state.currentEpoch ?? '-'}/${state.totalEpochs ?? '-'}`}>
+            WEEK {state.currentEpoch ?? '-'}/{state.totalEpochs ?? '-'}
           </Text>
         </div>
         {wallet.isActive && (
@@ -276,7 +421,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
                 {formatBONDValue(state.epochReward)}
               </Text>
               <Text type="p2" color="secondary">
-                BOND
+                KEK
               </Text>
             </div>
           </div>
@@ -290,13 +435,14 @@ const PoolCard: React.FC<PoolCardProps> = props => {
                   {formatBONDValue(state.potentialReward)}
                 </Text>
                 <Text type="p2" color="secondary">
-                  BOND
+                  KEK
                 </Text>
               </div>
             </div>
           )}
           <div className="card-row flex flow-row p-24">
             <Hint
+              className="mb-4"
               text={
                 <span>
                   This number shows the total staked balance of the pool, and the effective balance of the pool.
@@ -313,10 +459,10 @@ const PoolCard: React.FC<PoolCardProps> = props => {
               </Text>
             </Hint>
 
-            <Text type="p1" weight="semibold" color="primary">
+            <Text type="p1" weight="semibold" color="primary" className="mb-4">
               {formatUSDValue(state.balance)}
             </Text>
-            <Text type="p2" color="secondary">
+            <Text type="p2" color="secondary" className="mb-8">
               {formatUSDValue(state.effectiveBalance)} effective balance
             </Text>
             <PoolStakeShareBar shares={state.shares} />
@@ -354,39 +500,22 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           )}
         </div>
       )}
-      {state.isEnded && pool === PoolTypes.STABLE && (
-        <div className={s.box}>
-          <Grid flow="row" align="start">
-            <Text type="p2" weight="semibold" color="secondary">
-              The stablecoin staking pool ended after {state.totalEpochs} epochs on {endDateFormatted}. Deposits are now
-              disabled but you can still withdraw your tokens and collect any unclaimed rewards.
-            </Text>
-            <Link to="/smart-yield" className="link-blue">
-              Go to SMART yield
-            </Link>
-          </Grid>
-        </div>
-      )}
-      {state.isEnded && pool === PoolTypes.UNILP && (
-        <div className={s.box}>
-          <Grid flow="row" align="start">
-            <Text type="p2" weight="semibold" color="secondary">
-              The unilp staking pool ended after {state.totalEpochs} epochs on {endDateFormatted}. Deposits are now
-              disabled but you can still withdraw your tokens and collect any unclaimed rewards.
-            </Text>
-          </Grid>
-        </div>
-      )}
       {state.isEnded && pool === PoolTypes.BOND && (
         <div className={s.box}>
           <Grid className="card-row" flow="row" align="start">
-            <Text type="p2" weight="semibold" color="secondary">
+            <Text type="p2" weight="semibold" color="secondary" className="mb-4">
               The $BOND staking pool ended after {state.totalEpochs} epochs on {endDateFormatted}. Deposits are now
               disabled, but you can still withdraw your tokens and collect any unclaimed rewards. To continue to stake
               $BOND
             </Text>
-            <Link to="/governance" className="link-blue">
-              Go to governance staking
+            <Link to="/governance">
+              <Text
+                type="p2"
+                weight="bold"
+                color="var(--gradient-green-safe-color)"
+                textGradient="var(--gradient-green)">
+                Go to governance staking
+              </Text>
             </Link>
           </Grid>
         </div>

@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: min-content auto min-content;
   gap: 16px;
-  min-height: 97px;
+  min-height: 88px;
 
   @media (max-width: 480px) {
     gap: 24px 8px;
@@ -26,7 +26,7 @@
 .box {
   margin: 24px;
   padding: 16px;
-  background: rgba(113, 121, 128, 0.04);
-  border: 1px solid rgba(113, 121, 128, 0.16);
-  border-radius: 4px;
+  background: var(--theme-tooltip-bg);
+  border: 1px solid var(--theme-border-color);
+  border-radius: 8px;
 }

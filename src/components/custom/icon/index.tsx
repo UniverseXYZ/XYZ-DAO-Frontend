@@ -5,7 +5,7 @@ import Sprite from 'resources/svg/icons-sprite.svg';
 
 import s from './s.module.scss';
 
-export type LogoIconNames = 'barnbridge';
+export type LogoIconNames = 'png/universe';
 
 export type TokenIconNames =
   | 'bond-circle-token'
@@ -21,8 +21,12 @@ export type TokenIconNames =
   | 'token-dai'
   | 'token-susd'
   | 'token-uniswap'
+  | 'token-snx'
   | 'compound'
-  | 'static/aave'
+  | 'png/aave'
+  | 'png/sushi'
+  | 'png/link'
+  | 'png/ilv'
   | 'cream_finance'
   | 'yearn_finance';
 
@@ -120,12 +124,28 @@ export type IconProps = {
   rotate?: 0 | 90 | 180 | 270;
   className?: string;
   style?: CSSProperties;
+  src?: string;
 };
 
 const Icon: React.FC<IconProps> = props => {
-  const { name, width = 24, height = 24, rotate, color, className, style, ...rest } = props;
+  const { name, width = 24, height = 24, rotate, color, className, style, src, ...rest } = props;
 
   const isStatic = (name ?? '').indexOf('static/') === 0;
+  const isPng = (name ?? '').indexOf('png/') === 0;
+
+  if (isPng) {
+    return (
+      <img
+        className={cn(s.component, className, rotate && `rotate-${rotate}`, color && s[`${color}-color`])}
+        width={width}
+        alt=""
+        height={height ?? width}
+        style={style}
+        src={src}
+        {...rest}
+      />
+    );
+  }
 
   return (
     <svg

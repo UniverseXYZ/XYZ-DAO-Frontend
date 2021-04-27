@@ -40,17 +40,11 @@ const PoolStats: React.FC<Props> = ({ className }) => {
             <Hint
               text={
                 <Text type="p2">
-                  This number shows the Total Value Locked across the staking pool(s), and the effective Total Value
-                  Locked.
-                  <br />
-                  <br />
-                  When staking tokens during an epoch that is currently running, your effective deposit amount will be
-                  proportionally reduced by the time that has passed from that epoch. Once an epoch ends, your staked
-                  balance and effective staked balance will be the equal, therefore TVL and effective TVL will differ in
-                  most cases.
+                  This number shows the Total Value Locked across the staking pool(s). It is the USD and ETH conversion
+                  of the amounts in the pool balance(s).
                 </Text>
               }>
-              <Text type="lb2" weight="semibold" color="red">
+              <Text type="lb2" weight="semibold" color="primary">
                 Total Value Locked
               </Text>
             </Hint>
@@ -73,12 +67,12 @@ const PoolStats: React.FC<Props> = ({ className }) => {
             <Hint
               text={
                 <Text type="p2">
-                  This number shows the $BOND token rewards distributed so far out of the total of ${totalBondReward}{' '}
-                  that are going to be available for Yield Farming.
+                  This number shows the $KEK token rewards distributed so far out of the total of 2,800,000 that are
+                  going to be available for Yield Farming.
                 </Text>
               }>
-              <Text type="lb2" weight="semibold" color="red">
-                Bond Rewards
+              <Text type="lb2" weight="semibold" color="primary">
+                KEK Rewards
               </Text>
             </Hint>
           </Grid>
@@ -96,8 +90,8 @@ const PoolStats: React.FC<Props> = ({ className }) => {
       <div className="card p-24">
         <Grid flow="row" gap={48}>
           <Grid flow="col" align="center" justify="space-between">
-            <Text type="lb2" weight="semibold" color="red">
-              Bond Price
+            <Text type="lb2" weight="semibold" color="primary">
+              KEK Price
             </Text>
           </Grid>
           <Grid flow="row" gap={4}>
@@ -105,7 +99,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
               {formatUSDValue(uniswap.bondPrice)}
             </Text>
             <ExternalLink href={UNISWAP_EXCHANGE_LINK}>
-              <Text type="p1" weight="semibold" color="blue">
+              <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">
                 Uniswap market
               </Text>
             </ExternalLink>
@@ -119,13 +113,13 @@ const PoolStats: React.FC<Props> = ({ className }) => {
             <Hint
               text={
                 <Text type="p2">
-                  This counter shows the time left in the current epoch. The pool(s) below are synchronized and have
+                  This counter shows the time left in the current week. The pool(s) below are synchronized and have
                   epochs that last a week. You can deposit to the pool(s) during the duration of an epoch and receive
                   rewards proportional to the time they are staked, but the funds must stay staked until the clock runs
                   out and the epoch ends in order to be able to harvest the rewards.
                 </Text>
               }>
-              <Text type="lb2" weight="semibold" color="red">
+              <Text type="lb2" weight="semibold" color="primary">
                 Time Left
               </Text>
             </Hint>

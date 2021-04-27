@@ -8,6 +8,7 @@ import Grid from 'components/custom/grid';
 import Icon from 'components/custom/icon';
 import { Hint, Text } from 'components/custom/typography';
 import useMergeState from 'hooks/useMergeState';
+import imgSrc from 'resources/png/universe.png';
 import { useWallet } from 'wallets/wallet';
 
 import PoolHarvestModal from '../../modals/pool-harvest-modal';
@@ -30,7 +31,7 @@ const PoolRewards: React.FC = () => {
 
   return (
     <Grid flow="row" gap={16} padding={[24, 64]} className={s.component}>
-      <Text type="lb2" weight="semibold" color="red">
+      <Text type="lb2" weight="semibold" color="primary">
         My Rewards
       </Text>
 
@@ -39,16 +40,18 @@ const PoolRewards: React.FC = () => {
           <Text type="p2" color="secondary">
             Current reward
           </Text>
-          <Grid flow="col" gap={16} align="center">
+          <Grid flow="col" align="center">
             <Text type="h3" weight="bold" color="primary">
               {formatBONDValue(web3c.aggregated.totalCurrentReward)}
             </Text>
-            <Icon name="bond-square-token" />
+            <Icon name="png/universe" src={imgSrc} width={40} height={40} />
             {wallet.isActive && (
               <Button
-                type="light"
+                type="primary"
+                size="small"
                 disabled={web3c.aggregated.totalCurrentReward?.isZero()}
-                onClick={() => setState({ showHarvestModal: true })}>
+                onClick={() => setState({ showHarvestModal: true })}
+                style={{ marginLeft: 4 }}>
                 Claim
               </Button>
             )}
@@ -57,13 +60,13 @@ const PoolRewards: React.FC = () => {
         <Divider type="vertical" />
         <Grid flow="row" gap={4}>
           <Text type="p2" color="secondary">
-            Bond Balance
+            KEK Balance
           </Text>
-          <Grid flow="col" gap={16} align="center">
+          <Grid flow="col" gap={2} align="center">
             <Text type="h3" weight="bold" color="primary">
               {formatBONDValue(web3c.bond.balance)}
             </Text>
-            <Icon name="bond-square-token" />
+            <Icon name="png/universe" src={imgSrc} width={40} height={40} />
           </Grid>
         </Grid>
         <Divider type="vertical" />
@@ -75,11 +78,11 @@ const PoolRewards: React.FC = () => {
               </Text>
             </Hint>
           </Grid>
-          <Grid flow="col" gap={16} align="center">
+          <Grid flow="col" gap={2} align="center">
             <Text type="h3" weight="bold" color="primary">
               {formatBONDValue(web3c.aggregated.totalPotentialReward)}
             </Text>
-            <Icon name="bond-square-token" />
+            <Icon name="png/universe" src={imgSrc} width={40} height={40} />
           </Grid>
         </Grid>
       </Grid>
