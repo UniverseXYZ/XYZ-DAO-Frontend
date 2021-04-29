@@ -9,7 +9,8 @@
 
 .popover {
   :global(.ant-popover-inner) {
-    box-shadow: 0 0 0.5px rgba(0, 0, 0, 0.4), 0 32px 64px rgba(113, 121, 128, 0.32);
+    box-shadow: var(--theme-card-shadow);
+    border-radius: 12px;
   }
 }
 

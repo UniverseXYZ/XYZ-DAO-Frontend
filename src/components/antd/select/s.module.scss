@@ -13,6 +13,10 @@
     }
   }
 
+  &:hover {
+    background: linear-gradient(135deg, #BCEB00 15.57%, #00EAEA 84.88%);
+  }
+
   &:global(.ant-select-sm) {
     height: 32px;
 

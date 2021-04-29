@@ -118,7 +118,9 @@ export const PoolsCard: FC<PoolsCardProps> = props => {
               The $BOND staking pool ended after 12 epochs on Feb 08, 00:00 UTC. Deposits are now disabled, but you can
               still withdraw your tokens and collect any unclaimed rewards. To continue to stake $BOND
             </p>
-            <a href="/">Go to governance staking</a>
+            <a href="/" className="link-gradient">
+              Go to governance staking
+            </a>
           </div>
         )}
         {!ended && activeTab === 'pool' && (

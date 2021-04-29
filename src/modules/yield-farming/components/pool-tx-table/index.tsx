@@ -228,7 +228,7 @@ const PoolTxTableInner: React.FC<PoolTxTableProps> = props => {
 
   const CardFooter = (
     <Grid align="center" justify="center">
-      <Button type="light" disabled={poolTxList.loading} onClick={poolTxList.loadNext}>
+      <Button type="light" disabled={poolTxList.loading} onClick={poolTxList.loadNext} className="link-gradient">
         <Text type="p1" weight="500" color="var(--gradient-green-safe)" textGradient="var(--gradient-green)">
           Load more transactions
         </Text>

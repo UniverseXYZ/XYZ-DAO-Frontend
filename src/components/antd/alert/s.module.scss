@@ -72,6 +72,22 @@
       -webkit-text-fill-color: transparent;
       text-fill-color: transparent;
     }
+    &:global(.ant-alert-info) :global(.ant-alert-message)::selection {
+      -webkit-text-fill-color: var(--theme-blue-color);
+      text-fill-color: var(--theme-blue-color);
+    }
+    &:global(.ant-alert-success) :global(.ant-alert-message)::selection {
+      -webkit-text-fill-color: var(--theme-green-color);
+      text-fill-color: var(--theme-green-color);
+    }
+    &:global(.ant-alert-warning) :global(.ant-alert-message)::selection {
+      -webkit-text-fill-color: var(--theme-yellow-color);
+      text-fill-color: var(--theme-yellow-color);
+    }
+    &:global(.ant-alert-error) :global(.ant-alert-message)::selection {
+      -webkit-text-fill-color: var(--theme-red-color);
+      text-fill-color: var(--theme-red-color);
+    }
   }
 
   > :global(.ant-alert-icon),

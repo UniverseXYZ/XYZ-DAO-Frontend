@@ -98,7 +98,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
             <Text type="h2" weight="bold" color="primary">
               {formatUSDValue(uniswap.bondPrice)}
             </Text>
-            <ExternalLink href={UNISWAP_EXCHANGE_LINK}>
+            <ExternalLink href={UNISWAP_EXCHANGE_LINK} className="link-gradient">
               <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">
                 Uniswap market
               </Text>

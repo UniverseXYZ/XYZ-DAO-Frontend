@@ -508,7 +508,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
               disabled, but you can still withdraw your tokens and collect any unclaimed rewards. To continue to stake
               $BOND
             </Text>
-            <Link to="/governance">
+            <Link to="/governance" className="link-gradient">
               <Text
                 type="p2"
                 weight="bold"

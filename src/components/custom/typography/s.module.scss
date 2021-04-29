@@ -92,6 +92,10 @@
       -webkit-text-fill-color: transparent;
       text-fill-color: transparent;
     }
+    &.textGradient::selection {
+      -webkit-text-fill-color: var(--text-color);
+      text-fill-color: var(--text-color);
+    }
   }
 }
 
