@@ -16,6 +16,7 @@ import Icon from 'components/custom/icon';
 import { Hint, Text } from 'components/custom/typography';
 import { UseLeftTime } from 'hooks/useLeftTime';
 import useMergeState from 'hooks/useMergeState';
+import imgSrc from 'resources/png/universe.png';
 
 import VotingDetailedModal from '../voting-detailed-modal';
 
@@ -63,7 +64,7 @@ const VotingHeader: React.FC = () => {
 
   return (
     <div className={cn(s.component, 'pv-24 ph-64 sm-ph-16')}>
-      <Text type="lb2" weight="semibold" color="red" className="mb-16">
+      <Text type="lb2" weight="semibold" color="primary" className="mb-16">
         My Voting Power
       </Text>
       <Grid flow="col" gap={24} className={s.items}>
@@ -71,7 +72,7 @@ const VotingHeader: React.FC = () => {
           <Text type="p2" color="secondary">
             Current reward
           </Text>
-          <Grid flow="col" gap={16} align="center">
+          <Grid flow="col" align="center">
             <Tooltip title={<Text type="p2">{formatBigValue(claimValue, BONDTokenMeta.decimals)}</Text>}>
               <Skeleton loading={claimValue === undefined}>
                 <Text type="h3" weight="bold" color="primary">
@@ -80,8 +81,13 @@ const VotingHeader: React.FC = () => {
                 </Text>
               </Skeleton>
             </Tooltip>
-            <Icon name="bond-square-token" />
-            <Button type="light" disabled={claimValue?.isZero()} onClick={handleClaim}>
+            <Icon name="png/universe" src={imgSrc} width={40} height={40} />
+            <Button
+              type="primary"
+              size="small"
+              disabled={claimValue?.isZero()}
+              onClick={handleClaim}
+              style={{ marginLeft: 4 }}>
               {!state.claiming ? 'Claim' : <Spin spinning />}
             </Button>
           </Grid>
@@ -91,13 +97,13 @@ const VotingHeader: React.FC = () => {
           <Text type="p2" color="secondary">
             Bond Balance
           </Text>
-          <Grid flow="col" gap={16} align="center">
+          <Grid flow="col" align="center">
             <Skeleton loading={bondBalance === undefined}>
               <Text type="h3" weight="bold" color="primary">
                 {formatBONDValue(bondBalance)}
               </Text>
             </Skeleton>
-            <Icon name="bond-square-token" />
+            <Icon name="png/universe" src={imgSrc} width={40} height={40} />
           </Grid>
         </Grid>
         <Divider type="vertical" />
@@ -112,7 +118,9 @@ const VotingHeader: React.FC = () => {
               </Text>
             </Skeleton>
             <Button type="light" onClick={() => setState({ showDetailedView: true })}>
-              Detailed view
+              <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">
+                Detailed view
+              </Text>
             </Button>
 
             {state.showDetailedView && <VotingDetailedModal onCancel={() => setState({ showDetailedView: false })} />}

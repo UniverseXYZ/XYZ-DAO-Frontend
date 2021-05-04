@@ -3,6 +3,7 @@
 .overlay:global(.ant-popover) {
   :global(.ant-popover-inner) {
     background: var(--theme-overlay-color);
+    border-radius: 12px;
   }
 
   :global(.ant-popover-arrow) {

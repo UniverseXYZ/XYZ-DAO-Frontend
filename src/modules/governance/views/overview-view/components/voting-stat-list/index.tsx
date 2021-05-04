@@ -37,7 +37,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
                 This number shows the amount of $BOND (and their USD value) currently staked in the DAO.
               </Text>
             }>
-            <Text type="lb2" weight="semibold" color="red">
+            <Text type="lb2" weight="semibold" color="secondary">
               Bond Staked
             </Text>
           </Hint>
@@ -74,7 +74,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
                 </ExternalLink>
               </Grid>
             }>
-            <Text type="lb2" weight="semibold" color="red">
+            <Text type="lb2" weight="semibold" color="secondary">
               VBond
             </Text>
           </Hint>
@@ -103,7 +103,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
                 </ExternalLink>
               </Grid>
             }>
-            <Text type="lb2" weight="semibold" color="red">
+            <Text type="lb2" weight="semibold" color="secondary">
               Avg. Lock Time
             </Text>
           </Hint>
@@ -128,7 +128,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
                 Staking.
               </Text>
             }>
-            <Text type="lb2" weight="semibold" color="red">
+            <Text type="lb2" weight="semibold" color="secondary">
               Bond Rewards
             </Text>
           </Hint>
@@ -161,7 +161,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
                 </ExternalLink>
               </Grid>
             }>
-            <Text type="lb2" weight="semibold" color="red">
+            <Text type="lb2" weight="semibold" color="secondary">
               Delegated
             </Text>
           </Hint>
@@ -185,7 +185,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
                 the DAO.
               </Text>
             }>
-            <Text type="lb2" weight="semibold" color="red">
+            <Text type="lb2" weight="semibold" color="secondary">
               Addresses
             </Text>
           </Hint>

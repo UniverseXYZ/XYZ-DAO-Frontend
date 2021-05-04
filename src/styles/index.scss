@@ -22,6 +22,11 @@ body {
   min-inline-size: 100%;
 }
 
+body[data-fixed="true"] {
+  height: 100vh;
+  overflow: hidden;
+}
+
 * {
   box-sizing: border-box;
   margin: unset;
@@ -85,6 +90,8 @@ body.mobile-menu-open {
   --theme-card-shadow: 0 0 0.5px rgba(6, 10, 13, 0.4), 0 8px 16px rgba(113, 121, 128, 0.08);
   --theme-modal-shadow: 0 0 0.5px rgba(6, 10, 13, 0.4), 0 16px 32px rgba(19, 32, 43, 0.4);
   --theme-overlay-shadow: 0 0 0.5px rgba(0, 0, 0, 0.4), 0 32px 64px rgba(113, 121, 128, 0.32);
+
+  --theme-modal-overlay: rgba(0, 0, 0, 0.7);;
 
   --theme-input-background: #fff;
   --theme-input-placeholder: #aaafb3;

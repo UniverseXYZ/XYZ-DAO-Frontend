@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 import { useWeb3Contracts } from 'web3/contracts';
 import { formatBONDValue } from 'web3/utils';
 
@@ -30,12 +31,12 @@ const PoolRewards: React.FC = () => {
   const [state, setState] = useMergeState<PoolRewardsState>(InitialState);
 
   return (
-    <Grid flow="row" gap={16} padding={[24, 64]} className={s.component}>
+    <div className={cn(s.component, 'pv-24 ph-64 sm-ph-16')}>
       <Text type="lb2" weight="semibold" color="primary">
         My Rewards
       </Text>
 
-      <Grid flow="col" gap={24}>
+      <Grid flow="col" gap={24} className={s.items}>
         <Grid flow="row" gap={4}>
           <Text type="p2" color="secondary">
             Current reward
@@ -88,7 +89,7 @@ const PoolRewards: React.FC = () => {
       </Grid>
 
       {state.showHarvestModal && <PoolHarvestModal onCancel={() => setState({ showHarvestModal: false })} />}
-    </Grid>
+    </div>
   );
 };
 

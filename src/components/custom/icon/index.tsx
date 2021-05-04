@@ -95,6 +95,7 @@ export type IconNames =
   | 'tx-success'
   | 'tx-failure'
   | 'burger'
+  | 'burger-close'
   | 'hourglass'
   | 'history'
   | 'piggybank'
@@ -114,7 +115,16 @@ export type IconNames =
   | 'apy-up'
   | 'chart'
   | 'queue'
-  | 'stake';
+  | 'stake'
+  | 'auction'
+  | 'marketplace'
+  | 'social-media'
+  | 'about'
+  | 'whitepaper'
+  | 'team'
+  | 'governance'
+  | 'yield-farming'
+  | 'docs';
 
 export type IconProps = {
   name: IconNames;
