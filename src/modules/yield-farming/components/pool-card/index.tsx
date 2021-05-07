@@ -409,7 +409,6 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           </button>
         )}
       </div>
-
       {!state.isEnded && (
         <>
           <div className="card-row flex flow-row p-24">
@@ -500,13 +499,42 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           )}
         </div>
       )}
-      {state.isEnded && pool === PoolTypes.BOND && (
+      {state.isEnded && (
         <div className={s.box}>
           <Grid className="card-row" flow="row" align="start">
             <Text type="p2" weight="semibold" color="secondary" className="mb-4">
-              The $BOND staking pool ended after {state.totalEpochs} epochs on {endDateFormatted}. Deposits are now
+              {pool === PoolTypes.AAVE &&
+                `The $AAVE staking pool ended after ${state.totalEpochs} epochs on ${endDateFormatted}. Deposits are now
               disabled, but you can still withdraw your tokens and collect any unclaimed rewards. To continue to stake
-              $BOND
+              $AAVE`}
+              {pool === PoolTypes.BOND &&
+                `The $BOND staking pool ended after ${state.totalEpochs} epochs on ${endDateFormatted}. Deposits are now
+              disabled, but you can still withdraw your tokens and collect any unclaimed rewards. To continue to stake
+              $BOND`}
+              {pool === PoolTypes.COMP &&
+                `The $COMP staking pool ended after ${state.totalEpochs} epochs on ${endDateFormatted}. Deposits are now
+              disabled, but you can still withdraw your tokens and collect any unclaimed rewards. To continue to stake
+              $COMP`}
+              {pool === PoolTypes.SNX &&
+                `The $SNX staking pool ended after ${state.totalEpochs} epochs on ${endDateFormatted}. Deposits are now
+              disabled, but you can still withdraw your tokens and collect any unclaimed rewards. To continue to stake
+              $SNX`}
+              {pool === PoolTypes.SUSHI &&
+                `The $SUSHI staking pool ended after ${state.totalEpochs} epochs on ${endDateFormatted}. Deposits are now
+              disabled, but you can still withdraw your tokens and collect any unclaimed rewards. To continue to stake
+              $SUSHI`}
+              {pool === PoolTypes.LINK &&
+                `The $LINK staking pool ended after ${state.totalEpochs} epochs on ${endDateFormatted}. Deposits are now
+              disabled, but you can still withdraw your tokens and collect any unclaimed rewards. To continue to stake
+              $LINK`}
+              {pool === PoolTypes.ILV &&
+                `The $ILV staking pool ended after ${state.totalEpochs} epochs on ${endDateFormatted}. Deposits are now
+              disabled, but you can still withdraw your tokens and collect any unclaimed rewards. To continue to stake
+              $ILV`}
+              {pool === PoolTypes.USDC_kek_SUSHI_LP &&
+                `The $USDC_kek_SUSHI_LP staking pool ended after ${state.totalEpochs} epochs on ${endDateFormatted}. Deposits are now
+              disabled, but you can still withdraw your tokens and collect any unclaimed rewards. To continue to stake
+              $USDC_kek_SUSHI_LP`}
             </Text>
             <Link to="/governance" className="link-gradient">
               <Text

@@ -58,6 +58,7 @@
       border-bottom: 1px solid var(--theme-border-color);
       vertical-align: top;
       color: var(--theme-secondary-color);
+      white-space: nowrap;
 
       &:first-of-type {
         border-left: 2px solid transparent;

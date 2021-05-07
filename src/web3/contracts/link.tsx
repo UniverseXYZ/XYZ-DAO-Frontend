@@ -10,17 +10,16 @@ import { getHumanValue } from 'web3/utils';
 
 import Icon from 'components/custom/icon';
 import { useReload } from 'hooks/useReload';
-import imgSrc from 'resources/png/token-link.png';
 import { useWallet } from 'wallets/wallet';
 
-const CONTRACT_BOND_ADDR = String(process.env.REACT_APP_CONTRACT_BOND_ADDR).toLowerCase();
+const CONTRACT_LINK_ADDR = String(process.env.REACT_APP_CONTRACT_BOND_ADDR).toLowerCase();
 
-const Contract = new Web3Contract(BOND_ABI as Web3ContractAbiItem[], CONTRACT_BOND_ADDR, 'BOND');
+const Contract = new Web3Contract(BOND_ABI as Web3ContractAbiItem[], CONTRACT_LINK_ADDR, 'BOND');
 
 export const LINKTokenMeta: TokenMeta = {
-  icon: <Icon key="link" name="png/link" src={imgSrc} width={40} height={40} />,
+  icon: <Icon key="link" name="png/link" width={40} height={40} />,
   name: 'LINK',
-  address: CONTRACT_BOND_ADDR,
+  address: CONTRACT_LINK_ADDR,
   decimals: 18,
 };
 
@@ -128,6 +127,6 @@ export function useLINKContract(): LINKContract {
 
 export class LinkContract extends Erc20Contract {
   constructor() {
-    super([], CONTRACT_BOND_ADDR);
+    super([], CONTRACT_LINK_ADDR);
   }
 }

@@ -12,14 +12,14 @@ import Icon from 'components/custom/icon';
 import { useReload } from 'hooks/useReload';
 import { useWallet } from 'wallets/wallet';
 
-const CONTRACT_BOND_ADDR = String(process.env.REACT_APP_CONTRACT_BOND_ADDR).toLowerCase();
+const CONTRACT_SNX_ADDR = String(process.env.REACT_APP_CONTRACT_BOND_ADDR).toLowerCase();
 
-const Contract = new Web3Contract(BOND_ABI as Web3ContractAbiItem[], CONTRACT_BOND_ADDR, 'BOND');
+const Contract = new Web3Contract(BOND_ABI as Web3ContractAbiItem[], CONTRACT_SNX_ADDR, 'BOND');
 
 export const SNXTokenMeta: TokenMeta = {
   icon: <Icon key="snx" name="token-snx" />,
   name: 'SNX',
-  address: CONTRACT_BOND_ADDR,
+  address: CONTRACT_SNX_ADDR,
   decimals: 18,
 };
 
@@ -127,6 +127,6 @@ export function useSNXContract(): SNXContract {
 
 export class SnxContract extends Erc20Contract {
   constructor() {
-    super([], CONTRACT_BOND_ADDR);
+    super([], CONTRACT_SNX_ADDR);
   }
 }

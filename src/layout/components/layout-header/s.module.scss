@@ -18,6 +18,7 @@
     background: var(--theme-modal-overlay);
     height: 100vh;
   }
+
   .mobileMenuInner {
     background: var(--theme-card-color);
     padding: 20px 0;
@@ -26,10 +27,12 @@
     &::after {
       content: '';
     }
+
     & .mobileMenuBlock {
       display: inline-block;
       margin: 20px;
     }
+
     & h3 {
       padding-left: 8px;
       font-size: 12px;

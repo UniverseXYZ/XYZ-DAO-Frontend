@@ -1,6 +1,11 @@
 import React, { CSSProperties } from 'react';
 import cn from 'classnames';
 
+import aaveSrc from 'resources/png/token-aave.png';
+import ilvSrc from 'resources/png/token-ilv.png';
+import linkSrc from 'resources/png/token-link.png';
+import sushiSrc from 'resources/png/token-sushi.png';
+import universeSrc from 'resources/png/universe.png';
 import Sprite from 'resources/svg/icons-sprite.svg';
 
 import s from './s.module.scss';
@@ -144,6 +149,22 @@ const Icon: React.FC<IconProps> = props => {
   const isPng = (name ?? '').indexOf('png/') === 0;
 
   if (isPng) {
+    const getSrc = () => {
+      switch (name) {
+        case 'png/universe':
+          return universeSrc;
+        case 'png/aave':
+          return aaveSrc;
+        case 'png/ilv':
+          return ilvSrc;
+        case 'png/link':
+          return linkSrc;
+        case 'png/sushi':
+          return sushiSrc;
+        default:
+          return '';
+      }
+    };
     return (
       <img
         className={cn(s.component, className, rotate && `rotate-${rotate}`, color && s[`${color}-color`])}
@@ -151,7 +172,7 @@ const Icon: React.FC<IconProps> = props => {
         alt=""
         height={height ?? width}
         style={style}
-        src={src}
+        src={src || getSrc()}
         {...rest}
       />
     );

@@ -10,8 +10,6 @@ import { PoolTypes } from 'modules/yield-farming/utils';
 
 import s from './s.module.scss';
 
-// import SYPoolCard from 'modules/yield-farming/components/sy-pool-card';
-
 const PoolsOverviewView: React.FC = () => {
   return (
     <>
@@ -24,7 +22,6 @@ const PoolsOverviewView: React.FC = () => {
         </Text>
       </Grid>
       <div className={s.poolCards}>
-        {/*<SYPoolCard />*/}
         <PoolCard pool={PoolTypes.AAVE} />
         <PoolCard pool={PoolTypes.BOND} />
         <PoolCard pool={PoolTypes.COMP} />

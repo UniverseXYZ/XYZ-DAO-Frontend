@@ -26,11 +26,6 @@
   --btn-primary-bg-disabled: rgba(0, 0, 0, 0.1);
   --btn-primary-text-disabled: rgba(0, 0, 0, 0.3);
 
-  body[data-theme="dark"] {
-    --btn-primary-bg-disabled: rgba(255, 255, 255, 0.1);
-    --btn-primary-text-disabled: rgba(255, 255, 255, 0.3);
-  }
-
   // default regular
   --btn-default-shadow: none;
   --btn-default-border: 0;
@@ -103,6 +98,10 @@
   // default disabled
   --btn-default-bg-disabled: rgba(147, 148, 150, 0.08);
   --btn-default-text-disabled: #939496;
+
+  // primary disabled
+  --btn-primary-bg-disabled: rgba(255, 255, 255, 0.1);
+  --btn-primary-text-disabled: rgba(255, 255, 255, 0.3);
 
   // ghost disabled
   --btn-ghost-border-disabled: 1px solid #43484d;

@@ -46,13 +46,13 @@ const ConnectWalletModal: React.FC<ConnectWalletModalProps> = props => {
 
   return (
     <Modal width={568} {...modalProps}>
-      <Grid flow="row" gap={32}>
-        <Grid flow="row" gap={4}>
-          <Text type="h2" weight="bold" color="primary">
-            Connect Wallet
+      <Grid flow="row" gap={40}>
+        <Grid flow="row" gap={24}>
+          <Text type="h1" weight="bold" color="primary" align="center">
+            Select Wallet
           </Text>
-          <Text type="p1" color="secondary">
-            Please select the wallet of your liking
+          <Text type="p1" color="secondary" align="center">
+            Please pick a wallet to connect to Universe
           </Text>
         </Grid>
 
@@ -64,9 +64,15 @@ const ConnectWalletModal: React.FC<ConnectWalletModalProps> = props => {
               className={s.button}
               style={{ height: '96px' }}
               onClick={() => handleConnectorSelect(connector)}>
-              <IconWallet wallet={connector.id} style={{ height: 32 }} />
+              <IconWallet wallet={connector.id} style={{ maxHeight: 32 }} />
             </Button>
           ))}
+        </Grid>
+
+        <Grid flow="row">
+          <Text type="p1" color="secondary" align="center">
+            We do not own your private keys and cannot access your funds without your confirmation.
+          </Text>
         </Grid>
       </Grid>
 

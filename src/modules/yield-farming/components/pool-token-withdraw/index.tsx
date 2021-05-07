@@ -22,6 +22,8 @@ import TokenAmount from 'components/custom/token-amount';
 import { Hint, Text } from 'components/custom/typography';
 import useMergeState from 'hooks/useMergeState';
 
+import s from './s.module.scss';
+
 export type PoolTokenWithdrawProps = {
   token: TokenMeta;
   expanded?: boolean;
@@ -252,7 +254,7 @@ const PoolTokenWithdraw: React.FC<PoolTokenWithdrawProps> = props => {
           </Grid>
           <Divider />
           <Grid flow="row" gap={32} padding={24}>
-            <Grid flow="col" gap={48} colsTemplate="1fr 1fr">
+            <Grid flow="col" className={s.content}>
               <Grid flow="row" gap={32}>
                 <Form.Item
                   name="amount"

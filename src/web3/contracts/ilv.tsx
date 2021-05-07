@@ -10,17 +10,16 @@ import { getHumanValue } from 'web3/utils';
 
 import Icon from 'components/custom/icon';
 import { useReload } from 'hooks/useReload';
-import imgSrc from 'resources/png/token-ilv.png';
 import { useWallet } from 'wallets/wallet';
 
-const CONTRACT_BOND_ADDR = String(process.env.REACT_APP_CONTRACT_BOND_ADDR).toLowerCase();
+const CONTRACT_ILV_ADDR = String(process.env.REACT_APP_CONTRACT_BOND_ADDR).toLowerCase();
 
-const Contract = new Web3Contract(BOND_ABI as Web3ContractAbiItem[], CONTRACT_BOND_ADDR, 'BOND');
+const Contract = new Web3Contract(BOND_ABI as Web3ContractAbiItem[], CONTRACT_ILV_ADDR, 'BOND');
 
 export const ILVTokenMeta: TokenMeta = {
-  icon: <Icon key="ilv" name="png/ilv" src={imgSrc} width={40} height={40} />,
+  icon: <Icon key="ilv" name="png/ilv" width={40} height={40} />,
   name: 'ILV',
-  address: CONTRACT_BOND_ADDR,
+  address: CONTRACT_ILV_ADDR,
   decimals: 18,
 };
 
@@ -128,6 +127,6 @@ export function useILVContract(): ILVContract {
 
 export class IlvContract extends Erc20Contract {
   constructor() {
-    super([], CONTRACT_BOND_ADDR);
+    super([], CONTRACT_ILV_ADDR);
   }
 }
