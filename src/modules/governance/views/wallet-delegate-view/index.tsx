@@ -79,10 +79,10 @@ const WalletDelegateView: React.FC = () => {
   return (
     <div className="card">
       <Grid className="card-header" flow="col" gap={24} colsTemplate="auto" align="start">
-        <Grid flow="col" gap={12}>
-          <Icon name="token-bond" width={40} height={40} />
+        <Grid flow="col" gap={12} align="center">
+          <Icon name="png/universe" width={40} height={40} />
           <Text type="p1" weight="semibold" color="primary">
-            BOND
+            XYZ
           </Text>
         </Grid>
 

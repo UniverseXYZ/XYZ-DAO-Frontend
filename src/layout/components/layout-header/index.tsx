@@ -25,9 +25,7 @@ const LayoutHeader: React.FC = () => {
     <div className={s.component}>
       <Link to="/" className={s.logoLink}>
         <Icon name="png/universe" width="auto" height="auto" className={s.logo} />
-        <Text type="h2" weight="semibold" color="primary" className={s.title}>
-          Universe
-        </Text>
+        <Icon name="universe-text" width="94" height="15" className={s.title} />
       </Link>
       <nav className={s.nav}>
         <Popover
@@ -98,14 +96,14 @@ const LayoutHeader: React.FC = () => {
           noPadding
           content={
             <div className={cn('card', s.dropdown)}>
-              <ExternalLink href="#" className={s.dropdownLink}>
+              <Link to="/governance" className={s.dropdownLink}>
                 <Icon name="governance" width={20} height={20} className={s.dropdownIcon} />
                 <span>Governance</span>
-              </ExternalLink>
-              <ExternalLink href="#" className={s.dropdownLink}>
+              </Link>
+              <Link to="/yield-farming" className={s.dropdownLink}>
                 <Icon name="yield-farming" width={20} height={20} className={s.dropdownIcon} />
                 <span>Yield farming</span>
-              </ExternalLink>
+              </Link>
               <ExternalLink href="#" className={s.dropdownLink}>
                 <Icon name="docs" width={20} height={20} className={s.dropdownIcon} />
                 <span>Docs</span>
@@ -165,14 +163,14 @@ const LayoutHeader: React.FC = () => {
             </div>
             <div className={s.mobileMenuBlock}>
               <h3>DAO</h3>
-              <ExternalLink href="#" className={s.dropdownLink}>
+              <Link to="/governance" className={s.dropdownLink}>
                 <Icon name="governance" width={20} height={20} className={s.dropdownIcon} />
                 <span>Governance</span>
-              </ExternalLink>
-              <ExternalLink href="#" className={s.dropdownLink}>
+              </Link>
+              <Link to="/yield-farming" className={s.dropdownLink}>
                 <Icon name="yield-farming" width={20} height={20} className={s.dropdownIcon} />
                 <span>Yield farming</span>
-              </ExternalLink>
+              </Link>
               <ExternalLink href="#" className={s.dropdownLink}>
                 <Icon name="docs" width={20} height={20} className={s.dropdownIcon} />
                 <span>Docs</span>

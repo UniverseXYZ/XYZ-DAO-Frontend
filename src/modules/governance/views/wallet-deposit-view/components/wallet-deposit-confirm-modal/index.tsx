@@ -29,7 +29,7 @@ const WalletDepositConfirmModal: React.FC<WalletDepositConfirmModalProps> = prop
             </Text>
 
             <Text type="p2" weight="semibold" color="secondary">
-              You are about to deposit {formatBONDValue(deposit)} $BOND.
+              You are about to deposit {formatBONDValue(deposit)} $XYZ.
               <br />
               You have an active lock for {getFormattedDuration(0, lockDuration)}.
             </Text>

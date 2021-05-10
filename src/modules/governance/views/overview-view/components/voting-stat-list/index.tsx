@@ -34,11 +34,11 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
           <Hint
             text={
               <Text type="p2">
-                This number shows the amount of $BOND (and their USD value) currently staked in the DAO.
+                This number shows the amount of $XYZ (and their USD value) currently staked in the DAO.
               </Text>
             }>
             <Text type="lb2" weight="semibold" color="secondary">
-              Bond Staked
+              XYZ Locked
             </Text>
           </Hint>
           <Grid flow="row" gap={4}>
@@ -47,7 +47,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
                 {formatBONDValue(web3c.daoBarn.bondStaked)}
               </Text>
               <Text type="p1" color="secondary">
-                BOND
+                XYZ
               </Text>
             </Grid>
             <Text type="p1" color="secondary">
@@ -63,8 +63,8 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
             text={
               <Grid flow="row" gap={8} align="start">
                 <Text type="p2">
-                  This number shows the amount of vBOND currently minted. This number may differ from the amount of
-                  $BOND staked because of the multiplier mechanic
+                  This number shows the amount of vXYZ currently minted. This number may differ from the amount of 4XYZ
+                  staked because of the multiplier mechanic
                 </Text>
                 <ExternalLink
                   href="https://docs.barnbridge.com/governance/barnbridge-dao/multiplier-and-voting-power"
@@ -75,7 +75,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
               </Grid>
             }>
             <Text type="lb2" weight="semibold" color="secondary">
-              VBond
+              VXYZ
             </Text>
           </Hint>
           <Grid flow="row" gap={4}>
@@ -92,7 +92,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
             text={
               <Grid flow="row" gap={8} align="start">
                 <Text type="p2">
-                  This counter shows the average amount of time $BOND stakers locked their deposits in order to take
+                  This counter shows the average amount of time $XYZ stakers locked their deposits in order to take
                   advantage of the voting power bonus.
                 </Text>
                 <ExternalLink
@@ -123,13 +123,13 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
           <Hint
             text={
               <Text type="p2">
-                This number shows the $BOND token rewards distributed so far out of the total of{' '}
+                This number shows the $XYZ token rewards distributed so far out of the total of{' '}
                 {formatBONDValue(web3c.daoReward.poolFeature?.totalAmount)} that are going to be available for the DAO
                 Staking.
               </Text>
             }>
             <Text type="lb2" weight="semibold" color="secondary">
-              Bond Rewards
+              XYZ Rewards
             </Text>
           </Hint>
           <Grid flow="row" gap={4}>
@@ -152,7 +152,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
           <Hint
             text={
               <Grid flow="row" gap={8} align="start">
-                <Text type="p2">This number shows the amount of vBOND that is delegated to other addresses.</Text>
+                <Text type="p2">This number shows the amount of vXYZ that is delegated to other addresses.</Text>
                 <ExternalLink
                   href="https://docs.barnbridge.com/governance/barnbridge-dao/multiplier-and-voting-power#3-you-can-delegate-vbonds-to-other-users"
                   className="link-blue"
@@ -181,8 +181,8 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
           <Hint
             text={
               <Text type="p2">
-                This card shows the number of holders of $BOND and compares it to the number of stakers and voters in
-                the DAO.
+                This card shows the number of holders of $XYZ and compares it to the number of stakers and voters in the
+                DAO.
               </Text>
             }>
             <Text type="lb2" weight="semibold" color="secondary">

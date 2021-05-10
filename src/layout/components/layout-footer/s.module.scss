@@ -1,15 +1,153 @@
 .footer {
-  background: var(--theme-body-color);
+  background: #000;
   grid-area: footer;
   margin-top: auto;
   padding: 64px 64px 32px;
 
-  a {
-    color: var(--theme-default-color);
+  @media (max-width: 767px) {
+    padding: 32px 20px;
+  }
 
-    &:hover,
-    &:active {
-      color: var(--theme-primary-color);
+  .footerTop {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .leftBlock {
+    max-width: 350px;
+
+    @media (max-width: 1023px) {
+      margin: 0 auto 24px;
+    }
+    @media (max-width: 767px) {
+      margin: 0 0 24px;
+      max-width: none;
+      width: 100%;
+    }
+  }
+
+  .rightBlock {
+    margin: 0 auto;
+
+    .navBlock {
+      display: inline-block;
+      margin: 20px;
+
+      h3 {
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 22px;
+        text-align: left;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.4);
+        margin: 0 0 16px;
+      }
+
+      .link {
+        display: flex;
+        align-items: center;
+        color: #fff;
+        margin-bottom: 16px;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 20px;
+      }
+
+      .link:hover,
+      .link:active {
+        opacity: 0.8;
+      }
+
+      .link[aria-disabled="true"] {
+        color: #717980;
+      }
+    }
+  }
+
+  .logoLink {
+    display: inline-flex;
+    align-items: center;
+    margin-right: auto;
+    margin-bottom: 21px;
+  }
+
+  .logo {
+    margin-right: 3px;
+    width: 56px;
+    height: 56px;
+
+    @media (max-width: 768px) {
+      width: 44px;
+      height: 44px;
+    }
+  }
+
+  .logoText {
+    color: #fff;
+  }
+
+  .title {
+    white-space: nowrap;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0;
+  }
+
+  .subscribeWrap {
+    position: relative;
+    margin-top: 4px;
+
+    .subscribeInput {
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 20px;
+      letter-spacing: 0;
+      text-align: left;
+      padding: 15px 148px 15px 16px;
+      width: 100%;
+      color: #000;
+    }
+    .subscribeButton {
+      position: absolute;
+      top: 50%;
+      right: 4px;
+      transform: translate(0, -50%);
+    }
+  }
+
+  .copyrightsBlock {
+    padding: 24px 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .sLink {
+      display: inline-flex;
+      margin-right: 16px;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+
+      svg {
+        color: #fff;
+        opacity: 0.4;
+      }
+
+      &:hover svg,
+      &:active svg {
+        opacity: 1;
+      }
     }
   }
 }

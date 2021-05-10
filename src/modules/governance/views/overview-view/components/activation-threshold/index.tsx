@@ -34,11 +34,11 @@ const ActivationThreshold: React.FC<ActivationThresholdProps> = props => {
         <Hint
           text={
             <Text type="p2">
-              For the DAO to be activated, a threshold of {formatBONDValue(dao.activationThreshold)} $BOND tokens staked
+              For the KEK to be activated, a threshold of {formatBONDValue(dao.activationThreshold)} KEK tokens staked
               has to be met.
             </Text>
           }>
-          <Text type="p1" weight="semibold" color="primary">
+          <Text type="p1" weight="bold" color="primary">
             Activation threshold
           </Text>
         </Hint>
@@ -48,14 +48,14 @@ const ActivationThreshold: React.FC<ActivationThresholdProps> = props => {
             trailColor="var(--theme-border-color)"
             strokeWidth={24}
             strokeColor={{
-              '0%': 'var(--theme-blue-color)',
-              '100%': 'var(--theme-green-color)',
+              '0%': 'rgba(188, 235, 0, 1)',
+              '100%': 'rgba(0, 234, 234, 1)',
             }}
           />
           <Icon name="ribbon-outlined" />
         </Grid>
-        <Grid flow="col" gap={8}>
-          <Icon name="bond-square-token" />
+        <Grid flow="col" gap={8} align="center">
+          <Icon name="png/universe" width={32} height={32} />
           <Text type="p1" weight="bold" color="primary">
             {formatBONDValue(dao.bondStaked)}
           </Text>

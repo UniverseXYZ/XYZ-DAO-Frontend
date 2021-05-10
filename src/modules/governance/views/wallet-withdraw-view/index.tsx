@@ -69,10 +69,10 @@ const WalletWithdrawView: React.FC = () => {
   return (
     <div className="card">
       <Grid className="card-header" flow="col" gap={24} colsTemplate="1fr 1fr 1fr 1fr 42px" align="start">
-        <Grid flow="col" gap={12}>
-          <Icon name="token-bond" width={40} height={40} />
+        <Grid flow="col" gap={12} align="center">
+          <Icon name="png/universe" width={40} height={40} />
           <Text type="p1" weight="semibold" color="primary">
-            BOND
+            XYZ
           </Text>
         </Grid>
 

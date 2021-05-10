@@ -31,7 +31,7 @@ const UnsupportedChainModal: React.FC<UnsupportedChainModalProps> = props => {
         </Grid>
 
         <Button
-          type="ghost"
+          type="primary"
           onClick={() => {
             props.onCancel?.();
             wallet.showWalletsModal();

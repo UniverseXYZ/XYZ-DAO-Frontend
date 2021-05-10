@@ -10,7 +10,7 @@ import Sprite from 'resources/svg/icons-sprite.svg';
 
 import s from './s.module.scss';
 
-export type LogoIconNames = 'png/universe';
+export type LogoIconNames = 'png/universe' | 'universe-text';
 
 export type TokenIconNames =
   | 'bond-circle-token'
@@ -129,7 +129,9 @@ export type IconNames =
   | 'team'
   | 'governance'
   | 'yield-farming'
-  | 'docs';
+  | 'docs'
+  | 'twitter'
+  | 'discord';
 
 export type IconProps = {
   name: IconNames;

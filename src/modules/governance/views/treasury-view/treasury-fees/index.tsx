@@ -88,7 +88,7 @@ const ActionColumn: React.FC<ActionColumnProps> = props => {
         disabled={!amount?.gt(BigNumber.ZERO) || harvesting}
         onClick={() => setConfirmVisible(true)}>
         {harvesting && <AntdSpin spinning className="mr-8" />}
-        Transfer fees
+        <span>Transfer fees</span>
       </button>
       {confirmVisible && (
         <TxConfirmModal

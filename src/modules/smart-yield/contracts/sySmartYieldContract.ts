@@ -254,7 +254,7 @@ class SYSmartYieldContract extends Erc20Contract {
         }),
       },
     ]).then(([price, abond]) => {
-      this.price = price.dividedBy(1e18);
+      this.price = price?.dividedBy(1e18) || null;
       this.abond = abond;
       this.emit(Web3Contract.UPDATE_DATA);
     });
