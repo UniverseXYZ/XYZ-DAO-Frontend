@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
+import cn from 'classnames';
 import { BONDTokenMeta } from 'web3/contracts/bond';
 import { DAITokenMeta } from 'web3/contracts/dai';
 import { SUSDTokenMeta } from 'web3/contracts/susd';
@@ -17,6 +18,8 @@ import PoolTxTable from 'modules/yield-farming/components/pool-tx-table';
 import { useWallet } from 'wallets/wallet';
 
 import { PoolActions, PoolTypes, getPoolNames } from 'modules/yield-farming/utils';
+
+import s from './s.module.scss';
 
 type RouteParams = {
   pool: PoolTypes;
@@ -60,7 +63,7 @@ const PoolDetailsView: React.FC = () => {
 
   return (
     <div>
-      <Button type="link" onClick={handleBackClick} className="mb-16">
+      <Button type="link" onClick={handleBackClick} className={cn(s.link, 'mb-16')}>
         <Grid flow="col" gap={8} align="center">
           <Icon name="arrow-back" width={24} height={24} />
           <Text type="p1" weight="semibold" color="secondary">
@@ -70,7 +73,7 @@ const PoolDetailsView: React.FC = () => {
       </Button>
 
       <Grid flow="col" align="center" className="mb-32">
-        <Text type="h1" weight="bold" color="primary">
+        <Text type="h2" weight="bold" color="primary" font="secondary">
           {getPoolNames(pool).join('/')}
         </Text>
       </Grid>
@@ -98,9 +101,6 @@ const PoolDetailsView: React.FC = () => {
                 {pool === PoolTypes.BOND && <PoolTokenDeposit token={BONDTokenMeta} expanded />}
               </div>
 
-              <Text type="p1" weight="semibold" color="primary" className="mb-24">
-                Transactions
-              </Text>
               <PoolTxTable label="My Transactions" ownTransactions pool={pool} action={PoolActions.DEPOSIT} />
             </>
           )}
@@ -122,9 +122,6 @@ const PoolDetailsView: React.FC = () => {
                 {pool === PoolTypes.BOND && <PoolTokenWithdraw token={BONDTokenMeta} expanded />}
               </div>
 
-              <Text type="p1" weight="semibold" color="primary" className="mb-24">
-                Transactions
-              </Text>
               <PoolTxTable label="My Transactions" ownTransactions pool={pool} action={PoolActions.WITHDRAW} />
             </>
           )}

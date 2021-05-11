@@ -11,6 +11,7 @@ import s from './s.module.scss';
 
 // import LayoutSideNav from 'layout/components/layout-side-nav';
 
+import ThemeSwitcher from './components/theme-switcher';
 const YieldFarmingView = lazy(() => import('modules/yield-farming'));
 const GovernanceView = lazy(() => import('modules/governance'));
 // const SmartYieldView = lazy(() => import('modules/smart-yield'));
@@ -39,6 +40,7 @@ const LayoutView: React.FC = () => {
             </ErrorBoundary>
           </main>
           <LayoutFooter />
+          <ThemeSwitcher />
         </WarningProvider>
       </div>
     </div>

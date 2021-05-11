@@ -206,7 +206,7 @@ const PoolTokenWithdraw: React.FC<PoolTokenWithdrawProps> = props => {
 
         <Grid flow="row" gap={4}>
           <Text type="small" weight="semibold" color="secondary">
-            Staked Balance
+            Wallet Balance
           </Text>
           <Text type="p1" weight="semibold" color="primary">
             {formatBigValue(state.stakedBalance, token.decimals)}
@@ -232,7 +232,7 @@ const PoolTokenWithdraw: React.FC<PoolTokenWithdrawProps> = props => {
           <Grid colsTemplate="1fr 1px 1fr">
             <Grid flow="row" gap={4} padding={24}>
               <Text type="lb2" weight="semibold" color="secondary">
-                Wallet Balance
+                Staked Balance
               </Text>
               <Text type="p1" weight="semibold" color="primary">
                 {formatBigValue(state.walletBalance, token.decimals)}

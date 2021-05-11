@@ -131,7 +131,8 @@ export type IconNames =
   | 'yield-farming'
   | 'docs'
   | 'twitter'
-  | 'discord';
+  | 'discord'
+  | 'theme-switcher';
 
 export type IconProps = {
   name: IconNames;

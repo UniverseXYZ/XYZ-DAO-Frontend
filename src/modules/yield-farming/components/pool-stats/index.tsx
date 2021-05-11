@@ -35,7 +35,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
   return (
     <div className={cn(s.component, className)}>
       <div className="card p-24">
-        <Grid flow="row" gap={48}>
+        <Grid flow="row" className={s.item}>
           <Grid flow="col" align="center" justify="space-between">
             <Hint
               text={
@@ -44,7 +44,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
                   of the amounts in the pool balance(s).
                 </Text>
               }>
-              <Text type="lb2" weight="semibold" color="primary">
+              <Text type="lb2" weight="semibold" color="primary" className={s.label}>
                 Total Value Locked
               </Text>
             </Hint>
@@ -54,15 +54,14 @@ const PoolStats: React.FC<Props> = ({ className }) => {
               {formatUSDValue(aggregated.totalStaked?.plus(syPoolsCtx.totalPoolsBalance ?? 0), 0)}
             </Text>
             <Text type="p1" color="secondary">
-              {formatUSDValue(aggregated.totalEffectiveStaked?.plus(syPoolsCtx.totalPoolsBalance ?? 0), 0)} effective
-              locked
+              {formatUSDValue(aggregated.totalEffectiveStaked?.plus(syPoolsCtx.totalPoolsBalance ?? 0), 0)} eff. locked
             </Text>
           </Grid>
         </Grid>
       </div>
 
       <div className="card p-24">
-        <Grid flow="row" gap={48}>
+        <Grid flow="row" className={s.item}>
           <Grid flow="col" align="center" justify="space-between">
             <Hint
               text={
@@ -71,8 +70,8 @@ const PoolStats: React.FC<Props> = ({ className }) => {
                   going to be available for Yield Farming.
                 </Text>
               }>
-              <Text type="lb2" weight="semibold" color="primary">
-                KEK Rewards
+              <Text type="lb2" weight="semibold" color="primary" className={s.label}>
+                XYZ Rewards
               </Text>
             </Hint>
           </Grid>
@@ -88,10 +87,10 @@ const PoolStats: React.FC<Props> = ({ className }) => {
       </div>
 
       <div className="card p-24">
-        <Grid flow="row" gap={48}>
+        <Grid flow="row" className={s.item}>
           <Grid flow="col" align="center" justify="space-between">
-            <Text type="lb2" weight="semibold" color="primary">
-              KEK Price
+            <Text type="lb2" weight="semibold" color="primary" className={s.label}>
+              XYZ Price
             </Text>
           </Grid>
           <Grid flow="row" gap={4}>
@@ -100,7 +99,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
             </Text>
             <ExternalLink href={UNISWAP_EXCHANGE_LINK} className="link-gradient">
               <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">
-                Uniswap market
+                SushiSwap market
               </Text>
             </ExternalLink>
           </Grid>
@@ -108,7 +107,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
       </div>
 
       <div className="card p-24">
-        <Grid flow="row" gap={48}>
+        <Grid flow="row" className={s.item}>
           <Grid flow="col" align="center" justify="space-between">
             <Hint
               text={
@@ -119,7 +118,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
                   out and the epoch ends in order to be able to harvest the rewards.
                 </Text>
               }>
-              <Text type="lb2" weight="semibold" color="primary">
+              <Text type="lb2" weight="semibold" color="primary" className={s.label}>
                 Time Left
               </Text>
             </Hint>
@@ -133,7 +132,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
               )}
             </UseLeftTime>
             <Text type="p1" color="secondary">
-              until next epoch
+              until next week
             </Text>
           </Grid>
         </Grid>

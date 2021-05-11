@@ -14,7 +14,7 @@ const PoolsOverviewView: React.FC = () => {
   return (
     <>
       <Grid flow="row" gap={16} className="mb-32">
-        <Text type="h1" weight="bold" color="primary">
+        <Text type="h2" weight="semibold" color="primary" font="secondary">
           Pools
         </Text>
         <Text type="p1" weight="semibold" color="secondary">

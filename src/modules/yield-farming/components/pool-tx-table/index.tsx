@@ -243,7 +243,7 @@ const PoolTxTableInner: React.FC<PoolTxTableProps> = props => {
         align="center"
         justify="space-between"
         className={cn(s.chartTitleContainer, 'card-header pv-12 ph-24')}>
-        <Text type="p1" weight="semibold" color="primary">
+        <Text type="p2" weight="semibold" color="primary" font="secondary">
           {label}
         </Text>
         <Grid flow="col" gap={24} className={s.chartTitleFilters}>

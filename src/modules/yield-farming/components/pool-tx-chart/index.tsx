@@ -66,7 +66,7 @@ const PoolTxChartInner: React.FC<Props> = props => {
     const filters = [
       {
         value: 'all',
-        label: 'All epochs',
+        label: 'All weeks',
       },
     ];
 

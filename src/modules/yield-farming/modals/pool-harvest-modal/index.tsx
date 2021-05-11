@@ -6,6 +6,7 @@ import { formatBONDValue } from 'web3/utils';
 import Button from 'components/antd/button';
 import Modal, { ModalProps } from 'components/antd/modal';
 import Grid from 'components/custom/grid';
+import Icon from 'components/custom/icon';
 import IconsSet from 'components/custom/icons-set';
 import { Text } from 'components/custom/typography';
 import useMergeState from 'hooks/useMergeState';
@@ -28,34 +29,33 @@ const PoolHarvestSelect: React.FC<PoolHarvestSelectProps> = props => {
   const { icons, label, reward, loading, onClick } = props;
 
   return (
-    <Button
-      className={s.btn}
-      type="select"
-      loading={loading}
-      disabled={reward?.isEqualTo(0) !== false}
-      onClick={onClick}>
-      <Grid flow="row" gap={24} width="100%">
-        <Grid flow="row" gap={8} align="start">
-          <IconsSet icons={icons} />
+    <Grid flow="row" gap={24} width="100%" className={s.wrap}>
+      <Grid flow="row" gap={8} align="start">
+        <IconsSet icons={icons} />
+        <Text type="p1" weight="semibold" color="primary">
+          {label}
+        </Text>
+      </Grid>
+      <Grid flow="row" gap={8}>
+        <Text type="lb2" weight="semibold" color="secondary">
+          Current reward
+        </Text>
+        <Grid flow="col" gap={6} align="center">
           <Text type="p1" weight="semibold" color="primary">
-            {label}
+            {formatBONDValue(reward)}
           </Text>
-        </Grid>
-        <Grid flow="row" gap={8}>
-          <Text type="lb2" weight="semibold" color="secondary">
-            Reward
-          </Text>
-          <Grid flow="col" gap={4}>
-            <Text type="p1" weight="semibold" color="primary">
-              {formatBONDValue(reward)}
-            </Text>
-            <Text type="p2" color="secondary">
-              BOND
-            </Text>
-          </Grid>
+          <Icon name="png/universe" width={30} height={30} />
+          <Button
+            type="primary"
+            size="small"
+            loading={loading}
+            disabled={reward?.isEqualTo(0) !== false}
+            onClick={onClick}>
+            Claim
+          </Button>
         </Grid>
       </Grid>
-    </Button>
+    </Grid>
   );
 };
 
@@ -114,31 +114,66 @@ const PoolHarvestModal: React.FC<PoolHarvestModalProps> = props => {
     <Modal width={832} {...modalProps}>
       <Grid flow="row" gap={32}>
         <Grid flow="row" gap={8}>
-          <Text type="h3" weight="semibold" color="primary">
+          <Text type="h2" weight="semibold" color="primary" font="secondary">
             Claim your reward
           </Text>
-          <Text type="p2" weight="semibold" color="secondary">
+          <Text type="p1" color="secondary">
             Select the pool you want to claim your reward from
           </Text>
         </Grid>
-        <Grid flow="col" gap={24} colsTemplate="repeat(auto-fit, 240px)">
+        <Grid flow="row" gap={24} colsTemplate="repeat(auto-fit, 240px)">
+          {/*  <PoolHarvestSelect*/}
+          {/*    icons={getPoolIcons(PoolTypes.STABLE)}*/}
+          {/*    label={getPoolNames(PoolTypes.STABLE).join('/')}*/}
+          {/*    reward={yf?.currentReward}*/}
+          {/*    loading={state.yfHarvesting}*/}
+          {/*    onClick={handleYFHarvest}*/}
+          {/*  />*/}
           <PoolHarvestSelect
-            icons={getPoolIcons(PoolTypes.STABLE)}
-            label={getPoolNames(PoolTypes.STABLE).join('/')}
-            reward={yf?.currentReward}
-            loading={state.yfHarvesting}
-            onClick={handleYFHarvest}
-          />
-          <PoolHarvestSelect
-            icons={getPoolIcons(PoolTypes.UNILP)}
-            label={getPoolNames(PoolTypes.UNILP).join('/')}
-            reward={yfLP?.currentReward}
-            loading={state.yfLPHarvesting}
-            onClick={handleYFLPHarvest}
+            icons={getPoolIcons(PoolTypes.AAVE)}
+            label={getPoolNames(PoolTypes.AAVE).join('/')}
+            reward={yfBOND?.currentReward}
+            loading={state.yfBONDHarvesting}
+            onClick={handleYFBONDHarvest}
           />
           <PoolHarvestSelect
             icons={getPoolIcons(PoolTypes.BOND)}
             label={getPoolNames(PoolTypes.BOND).join('/')}
+            reward={yfBOND?.currentReward}
+            loading={state.yfBONDHarvesting}
+            onClick={handleYFBONDHarvest}
+          />
+          <PoolHarvestSelect
+            icons={getPoolIcons(PoolTypes.COMP)}
+            label={getPoolNames(PoolTypes.COMP).join('/')}
+            reward={yfBOND?.currentReward}
+            loading={state.yfBONDHarvesting}
+            onClick={handleYFBONDHarvest}
+          />
+          <PoolHarvestSelect
+            icons={getPoolIcons(PoolTypes.SNX)}
+            label={getPoolNames(PoolTypes.SNX).join('/')}
+            reward={yfBOND?.currentReward}
+            loading={state.yfBONDHarvesting}
+            onClick={handleYFBONDHarvest}
+          />
+          <PoolHarvestSelect
+            icons={getPoolIcons(PoolTypes.SUSHI)}
+            label={getPoolNames(PoolTypes.SUSHI).join('/')}
+            reward={yfBOND?.currentReward}
+            loading={state.yfBONDHarvesting}
+            onClick={handleYFBONDHarvest}
+          />
+          <PoolHarvestSelect
+            icons={getPoolIcons(PoolTypes.LINK)}
+            label={getPoolNames(PoolTypes.LINK).join('/')}
+            reward={yfBOND?.currentReward}
+            loading={state.yfBONDHarvesting}
+            onClick={handleYFBONDHarvest}
+          />
+          <PoolHarvestSelect
+            icons={getPoolIcons(PoolTypes.ILV)}
+            label={getPoolNames(PoolTypes.ILV).join('/')}
             reward={yfBOND?.currentReward}
             loading={state.yfBONDHarvesting}
             onClick={handleYFBONDHarvest}

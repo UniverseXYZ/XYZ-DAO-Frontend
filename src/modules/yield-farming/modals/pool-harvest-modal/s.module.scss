@@ -1,16 +1,6 @@
-.btn {
-  position: relative !important;
-  padding: 24px !important;
+.wrap {
+  padding: 24px;
+  border: 1px solid var(--theme-border-color);
   text-align: left !important;
-
-  :global(.ant-btn-loading-icon) {
-    position: absolute !important;
-    top: 24px;
-    right: 18px;
-
-    svg {
-      width: 16px;
-      height: 16px;
-    }
-  }
+  border-radius: 12px;
 }

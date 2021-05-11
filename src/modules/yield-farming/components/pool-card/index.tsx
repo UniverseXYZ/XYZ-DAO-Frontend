@@ -420,7 +420,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
                 {formatBONDValue(state.epochReward)}
               </Text>
               <Text type="p2" color="secondary">
-                KEK
+                XYZ
               </Text>
             </div>
           </div>
@@ -434,7 +434,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
                   {formatBONDValue(state.potentialReward)}
                 </Text>
                 <Text type="p2" color="secondary">
-                  KEK
+                  XYZ
                 </Text>
               </div>
             </div>

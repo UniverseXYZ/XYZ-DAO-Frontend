@@ -34,7 +34,7 @@
     box-shadow: var(--input-shadow);
     border: var(--input-border);
     border-radius: 12px;
-    background: var(--theme-body-color);
+    background: var(--input-bg);
     outline: none;
     color: var(--input-text);
 
@@ -78,13 +78,13 @@
 
   :global(.ant-input-group) {
     border: var(--input-border);
-    background: var(--gradient-green);
+    //background: var(--gradient-green);
     border-radius: 12px;
-    padding: 1px;
+    //padding: 1px;
 
 
     :global(.ant-input-group-addon) {
-      background: var(--theme-body-color);
+      background: var(--input-bg);
       border: 0;
 
       &:first-of-type {
