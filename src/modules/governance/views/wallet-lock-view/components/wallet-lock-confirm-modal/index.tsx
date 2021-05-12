@@ -49,7 +49,7 @@ const WalletLockConfirmModal: React.FC<WalletLockConfirmModalProps> = props => {
         </Grid>
         <Grid flow="col" justify="space-between">
           <Button type="default" onClick={modalProps.onCancel}>
-            Cancel
+            <span>Cancel</span>
           </Button>
           <Button type="primary" onClick={modalProps.onOk}>
             Lock balance

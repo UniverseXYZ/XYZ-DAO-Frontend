@@ -49,13 +49,17 @@ const Columns: ColumnsType<APIVoteEntity> = [
     width: '27%',
     render: (support: boolean) =>
       support ? (
-        <Text type="lb2" weight="semibold" className={s.forTag}>
-          For
-        </Text>
+        <div className={s.forTag}>
+          <Text type="lb2" weight="semibold" textGradient="var(--gradient-green)" color="var(--gradient-green-safe)">
+            For
+          </Text>
+        </div>
       ) : (
-        <Text type="lb2" weight="semibold" className={s.againstTag}>
-          Against
-        </Text>
+        <div className={s.againstTag}>
+          <Text type="lb2" weight="semibold" textGradient="var(--gradient-red)" color="var(--gradient-red-safe)">
+            Against
+          </Text>
+        </div>
       ),
   },
 ];

@@ -15,7 +15,7 @@ const ProposalQuorumCard: React.FC = () => {
     <div className="card">
       <div className="card-header">
         <Hint text="Quorum is the percentage of the amount of tokens staked in the DAO that support for a proposal must be greater than for the proposal to be considered valid. For example, if the Quorum % is set to 20%, then more than 20% of the amount of tokens staked in the DAO must vote to approve a proposal for the vote to be considered valid.">
-          <Text type="p1" weight="semibold" color="primary">
+          <Text type="p1" weight="semibold" color="primary" font="secondary">
             Quorum
           </Text>
         </Hint>
@@ -32,7 +32,7 @@ const ProposalQuorumCard: React.FC = () => {
         <Progress
           percent={proposalCtx.quorum}
           acceptance={proposalCtx.proposal?.minQuorum}
-          strokeColor={passed ? 'var(--theme-green-color)' : 'var(--theme-red-color)'}
+          strokeColor={passed ? 'var(--gradient-green)' : 'var(--gradient-red)'}
           trailColor={passed ? 'rgba(var(--theme-green-color-rgb), .16)' : 'rgba(var(--theme-red-color-rgb), .16)'}
         />
       </Grid>

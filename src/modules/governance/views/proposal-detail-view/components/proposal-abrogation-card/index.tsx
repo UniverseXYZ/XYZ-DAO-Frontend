@@ -39,7 +39,7 @@ const ProposalAbrogationCard: React.FC = () => {
     <>
       <div className="card">
         <div className="card-header">
-          <Text type="p1" weight="semibold" color="primary">
+          <Text type="p1" weight="semibold" color="primary" font="secondary">
             Abrogation proposal
           </Text>
         </div>
@@ -57,7 +57,7 @@ const ProposalAbrogationCard: React.FC = () => {
               <ul>
                 <li>
                   <Text type="p1" color="primary">
-                    Acceptance criteria: 50% of staked BOND
+                    Acceptance criteria: 50% of staked XYZ
                   </Text>
                 </li>
                 <li>
@@ -90,9 +90,9 @@ const ProposalAbrogationCard: React.FC = () => {
 
               <Grid flow="row" gap={8} align="center" justify="end">
                 <Button
-                  type="default"
+                  type="ghost"
                   loading={state.cancelling}
-                  disabled={!hasThreshold}
+                  // disabled={!hasThreshold}
                   onClick={() => setState({ abrogationVoteModal: true })}>
                   Initiate abrogation proposal
                 </Button>

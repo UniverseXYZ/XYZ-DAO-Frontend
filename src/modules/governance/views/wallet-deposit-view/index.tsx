@@ -118,7 +118,7 @@ const WalletDepositView: React.FC = () => {
 
         <Grid flow="row" gap={4}>
           <Text type="small" weight="semibold" color="secondary">
-            Staked Balance
+            Voting vXYZ
           </Text>
           <Text type="p1" weight="semibold" color="primary">
             {formatBONDValue(stakedBalance)}
@@ -127,7 +127,7 @@ const WalletDepositView: React.FC = () => {
 
         <Grid flow="row" gap={4}>
           <Text type="small" weight="semibold" color="secondary">
-            Wallet Balance
+            XYZ
           </Text>
           <Text type="p1" weight="semibold" color="primary">
             {formatBONDValue(bondBalance)}
@@ -175,6 +175,7 @@ const WalletDepositView: React.FC = () => {
                   <TokenAmount
                     tokenIcon="token-bond"
                     max={bondBalance}
+                    name={BONDTokenMeta.name}
                     maximumFractionDigits={BONDTokenMeta.decimals}
                     displayDecimals={4}
                     disabled={state.saving}

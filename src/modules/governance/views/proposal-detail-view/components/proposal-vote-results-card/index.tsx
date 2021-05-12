@@ -16,7 +16,7 @@ const ProposalVoteResultsCard: React.FC = () => {
     <>
       <div className="card">
         <div className="card-header flex justify-space-between">
-          <Text type="p1" weight="semibold" color="primary">
+          <Text type="p1" weight="semibold" color="primary" font="secondary">
             Vote results
           </Text>
           <Button type="link" onClick={() => showVotersModal(true)}>
@@ -54,8 +54,8 @@ const ProposalVoteResultsCard: React.FC = () => {
           </Grid>
           <Progress
             percent={proposalCtx.forRate}
-            strokeColor="var(--theme-green-color)"
-            trailColor="var(--theme-red-color)"
+            strokeColor="var(--gradient-green)"
+            trailColor="var(--gradient-red-safe)"
           />
         </Grid>
         <Grid flow="row" className="card-row p-24">

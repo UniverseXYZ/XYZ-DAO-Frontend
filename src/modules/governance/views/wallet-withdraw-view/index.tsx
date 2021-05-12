@@ -109,6 +109,7 @@ const WalletWithdrawView: React.FC = () => {
                 <TokenAmount
                   tokenIcon="token-bond"
                   max={stakedBalance}
+                  name={BONDTokenMeta.name}
                   maximumFractionDigits={BONDTokenMeta.decimals}
                   displayDecimals={4}
                   disabled={formDisabled || state.saving}
