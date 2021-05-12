@@ -29,6 +29,7 @@ const PoolsOverviewView: React.FC = () => {
         <PoolCard pool={PoolTypes.SUSHI} />
         <PoolCard pool={PoolTypes.LINK} />
         <PoolCard pool={PoolTypes.ILV} />
+        <PoolCard pool={PoolTypes.USDC_KEK_SUSHI_LP} />
       </div>
       <PoolTxChart className="mb-32" />
       <PoolTxTable label="Transactions" />

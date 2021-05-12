@@ -12,6 +12,7 @@ import { ILVTokenMeta } from 'web3/contracts/ilv';
 import { LINKTokenMeta } from 'web3/contracts/link';
 import { SNXTokenMeta } from 'web3/contracts/snx';
 import { SUSHITokenMeta } from 'web3/contracts/sushi';
+import { USDCKEKSUSHILPTokenMeta } from 'web3/contracts/usdckeksushilp';
 import { formatBONDValue, formatBigValue, formatUSDValue } from 'web3/utils';
 
 import Grid from 'components/custom/grid';
@@ -342,6 +343,48 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           },
         ],
       });
+    } else if (pool === PoolTypes.USDC_KEK_SUSHI_LP) {
+      setState({
+        enabled: web3c.yfLP.currentEpoch! > 0,
+        isEnded: web3c.yfLP.isEnded,
+        endDate: web3c.yfLP.endDate,
+        currentEpoch: web3c.yfLP.currentEpoch,
+        totalEpochs: web3c.yfLP.totalEpochs,
+        epochReward: web3c.yfLP.epochReward,
+        potentialReward: web3c.yfLP.potentialReward,
+        balance: web3c.aggregated.yfLPStakedValue,
+        myBalance: web3c.aggregated.myLPStakedValue,
+        effectiveBalance: web3c.aggregated.yfLPEffectiveStakedValue,
+        myEffectiveBalance: web3c.aggregated.myLPEffectiveStakedValue,
+        shares: [
+          {
+            icon: USDCKEKSUSHILPTokenMeta.icon,
+            name: USDCKEKSUSHILPTokenMeta.name,
+            color: '#BCEB00',
+            gradient: 'linear-gradient(116.52deg, #BCEB00 16.64%, #00EAEA 83.36%)',
+            value: formatBigValue(web3c.yfLP.nextPoolSize, USDCKEKSUSHILPTokenMeta.decimals),
+            share:
+              web3c.staking.uniswap.nextEpochPoolSize
+                ?.multipliedBy(100)
+                .div(web3c.yfLP.nextPoolSize ?? 1)
+                .toNumber() ?? 0,
+          },
+        ],
+        myShares: [
+          {
+            icon: USDCKEKSUSHILPTokenMeta.icon,
+            name: USDCKEKSUSHILPTokenMeta.name,
+            color: '#BCEB00',
+            gradient: 'linear-gradient(116.52deg, #BCEB00 16.64%, #00EAEA 83.36%)',
+            value: formatBigValue(web3c.yfLP.nextEpochStake, USDCKEKSUSHILPTokenMeta.decimals),
+            share:
+              web3c.staking.uniswap.nextEpochUserBalance
+                ?.multipliedBy(100)
+                .div(web3c.yfLP.nextEpochStake ?? 1)
+                .toNumber() ?? 0,
+          },
+        ],
+      });
     }
   }, [pool, web3c]);
 
@@ -368,8 +411,8 @@ const PoolCard: React.FC<PoolCardProps> = props => {
       case PoolTypes.ILV:
         history.push('/yield-farming/ivl');
         break;
-      case PoolTypes.USDC_kek_SUSHI_LP:
-        history.push('/yield-farming/USDC_kek_SUSHI_LP');
+      case PoolTypes.USDC_KEK_SUSHI_LP:
+        history.push('/yield-farming/usdc_kek_sushi_lp');
         break;
       default:
     }
@@ -531,10 +574,10 @@ const PoolCard: React.FC<PoolCardProps> = props => {
                 `The $ILV staking pool ended after ${state.totalEpochs} epochs on ${endDateFormatted}. Deposits are now
               disabled, but you can still withdraw your tokens and collect any unclaimed rewards. To continue to stake
               $ILV`}
-              {pool === PoolTypes.USDC_kek_SUSHI_LP &&
-                `The $USDC_kek_SUSHI_LP staking pool ended after ${state.totalEpochs} epochs on ${endDateFormatted}. Deposits are now
+              {pool === PoolTypes.USDC_KEK_SUSHI_LP &&
+                `The $USDC_KEK_SUSHI_LP staking pool ended after ${state.totalEpochs} epochs on ${endDateFormatted}. Deposits are now
               disabled, but you can still withdraw your tokens and collect any unclaimed rewards. To continue to stake
-              $USDC_kek_SUSHI_LP`}
+              $USDC_KEK_SUSHI_LP`}
             </Text>
             <Link to="/governance" className="link-gradient">
               <Text

@@ -38,7 +38,7 @@ const ActivationThreshold: React.FC<ActivationThresholdProps> = props => {
               has to be met.
             </Text>
           }>
-          <Text type="p1" weight="bold" color="primary">
+          <Text type="p2" weight="bold" color="primary" font="secondary">
             Activation threshold
           </Text>
         </Hint>

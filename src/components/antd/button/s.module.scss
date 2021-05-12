@@ -52,21 +52,21 @@
 
   // ghost regular
   --btn-ghost-shadow: none;
-  --btn-ghost-border: 1px solid #{$color-red500};
-  --btn-ghost-bg: transparent;
-  --btn-ghost-text: #{$color-red500};
+  --btn-ghost-border: 0;
+  --btn-ghost-bg: linear-gradient(135deg, #BCEB00 15.57%, #00EAEA 84.88%);
+  --btn-ghost-text: var(--theme-primary-color);
 
   // ghost hover
   --btn-ghost-shadow-hover: none;
-  --btn-ghost-border-hover: 1px solid #{$color-red300};
-  --btn-ghost-bg-hover: rgba(255, 105, 97, 0.1);
-  --btn-ghost-text-hover: #{$color-red400};
+  --btn-ghost-border-hover: 0;
+  --btn-ghost-bg-hover: linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), linear-gradient(135deg, #BCEB00 15.57%, #00EAEA 84.88%);
+  --btn-ghost-text-hover: var(--theme-secondary-color);
 
   // ghost active
   --btn-ghost-shadow-active: none;
-  --btn-ghost-border-active: 1px solid #{$color-red600};
-  --btn-ghost-bg-active: rgba(204, 54, 46, 0.04);
-  --btn-ghost-text-active: #{$color-red600};
+  --btn-ghost-border-active: none;
+  --btn-ghost-bg-active: linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), linear-gradient(135deg, #BCEB00 15.57%, #00EAEA 84.88%), #CC362E;
+  --btn-ghost-text-active: var(--theme-primary-color);
 
   // ghost disabled
   --btn-ghost-shadow-disabled: none;
@@ -231,7 +231,7 @@
       color: var(--btn-ghost-text-disabled);
     }
 
-    &.select {
+    & {
       height: auto;
       box-shadow: var(--btn-select-shadow);
       border: var(--btn-select-border);

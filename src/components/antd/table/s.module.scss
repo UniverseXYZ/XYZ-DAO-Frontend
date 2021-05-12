@@ -101,7 +101,7 @@
       font-weight: 600;
 
       &:global(.ant-pagination-item-active) > a {
-        color: var(--theme-red-color);
+        color: var(--theme-primary-color);
       }
 
       > a {

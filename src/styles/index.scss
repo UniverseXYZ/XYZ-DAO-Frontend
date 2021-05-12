@@ -210,10 +210,9 @@ button {
   background: #43484D;
 }
 
-.ant-switch.ant-switch[aria-checked="trye"] {
+.ant-switch.ant-switch[aria-checked="true"] {
   background: var(--gradient-green);
 }
-
 
 .ant-spin .ant-spin-dot {
   color: var(--theme-secondary-color);

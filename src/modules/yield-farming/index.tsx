@@ -13,7 +13,16 @@ import PoolsOverviewView from './views/pools-overview-view';
 
 import { PoolActions, PoolTypes } from './utils';
 
-const PATH_POOLS_OPTS = [PoolTypes.STABLE, PoolTypes.UNILP, PoolTypes.BOND].join('|');
+const PATH_POOLS_OPTS = [
+  PoolTypes.AAVE,
+  PoolTypes.BOND,
+  PoolTypes.COMP,
+  PoolTypes.SNX,
+  PoolTypes.SUSHI,
+  PoolTypes.LINK,
+  PoolTypes.ILV,
+  PoolTypes.USDC_KEK_SUSHI_LP,
+].join('|');
 const PATH_ACTIONS_OPTS = [PoolActions.DEPOSIT, PoolActions.WITHDRAW].join('|');
 
 const YieldFarmingView: React.FC = () => {

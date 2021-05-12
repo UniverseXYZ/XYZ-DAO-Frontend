@@ -1,7 +1,7 @@
 import React from 'react';
 import { isMobile } from 'react-device-detect';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import cn from 'classnames';
 
 import Button from 'components/antd/button';
@@ -24,11 +24,13 @@ const LayoutHeader: React.FC = () => {
   const { navOpen, setNavOpen, toggleDarkTheme, isDarkTheme } = useGeneral();
   const wallet = useWallet();
 
+  const isGovernancePage = useRouteMatch('/governance');
+
   return (
     <div className={s.component}>
       <Link to="/" className={s.logoLink}>
         <Icon name="png/universe" width="auto" height="auto" className={s.logo} />
-        <h1 className={s.title}>Yield Farming</h1>
+        <h1 className={s.title}>{isGovernancePage ? 'Governance' : 'Yield Farming'}</h1>
       </Link>
       <nav className={s.nav}>
         <Popover

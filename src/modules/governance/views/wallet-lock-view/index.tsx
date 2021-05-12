@@ -213,7 +213,9 @@ const WalletLockView: React.FC = () => {
                   </div>
                 )}
               </Form.Item>
-              <Text type="p1" color="primary">OR</Text>
+              <Text type="p1" color="primary">
+                OR
+              </Text>
               <Form.Item
                 name="lockEndDate"
                 label="Manual choose your lock end date"

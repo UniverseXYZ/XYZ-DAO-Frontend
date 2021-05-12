@@ -5,6 +5,7 @@ import aaveSrc from 'resources/png/token-aave.png';
 import ilvSrc from 'resources/png/token-ilv.png';
 import linkSrc from 'resources/png/token-link.png';
 import sushiSrc from 'resources/png/token-sushi.png';
+import usdc_kek_sushi_lpSrc from 'resources/png/token-usdc_kek_sushi_lp.png';
 import universeSrc from 'resources/png/universe.png';
 import Sprite from 'resources/svg/icons-sprite.svg';
 
@@ -33,7 +34,8 @@ export type TokenIconNames =
   | 'png/link'
   | 'png/ilv'
   | 'cream_finance'
-  | 'yearn_finance';
+  | 'yearn_finance'
+  | 'png/USDC_KEK_SUSHI_LP';
 
 export type NavIconNames =
   | 'paper-bill-outlined'
@@ -164,6 +166,8 @@ const Icon: React.FC<IconProps> = props => {
           return linkSrc;
         case 'png/sushi':
           return sushiSrc;
+        case 'png/USDC_KEK_SUSHI_LP':
+          return usdc_kek_sushi_lpSrc;
         default:
           return '';
       }

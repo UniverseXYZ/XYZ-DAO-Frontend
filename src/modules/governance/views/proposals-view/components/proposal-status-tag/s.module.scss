@@ -4,17 +4,21 @@
   padding: 8px 24px;
   border-radius: 32px;
   text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-  label {
+  div {
     display: block;
   }
 
   &.ACCEPTED,
   &.EXECUTED {
-    background: rgba(var(--theme-green-color-rgb), 0.08);
+    background: linear-gradient(135deg, rgba(188, 235, 0, 0.08) 15.57%, rgba(0, 234, 234, 0.08) 84.88%);
 
-    label {
-      color: var(--theme-green-color);
+    div {
+      --text-gradient: var(--gradient-green);
+      --text-color: var(--gradient-green-safe);
     }
   }
 
@@ -22,10 +26,11 @@
   &.ACTIVE,
   &.QUEUED,
   &.GRACE {
-    background: rgba(var(--theme-blue-color-rgb), 0.08);
+    background: linear-gradient(135deg, rgba(145, 79, 230, 0.08) 0%, rgba(49, 108, 223, 0.08) 100%);
 
-    label {
-      color: var(--theme-blue-color);
+    div {
+      --text-gradient: var(--gradient-blue);
+      --text-color: var(--gradient-blue-safe);
     }
   }
 
@@ -33,10 +38,11 @@
   &.FAILED,
   &.CANCELED,
   &.ABROGATED {
-    background: rgba(var(--theme-red-color-rgb), 0.08);
+    background: linear-gradient(135deg, rgba(255, 116, 57, 0.08) 0%, rgba(255, 57, 188, 0.08) 100%);
 
-    label {
-      color: var(--theme-red-color);
+    div {
+      --text-gradient: var(--gradient-red);
+      --text-color: var(--gradient-red-safe);
     }
   }
 }

@@ -46,13 +46,13 @@ const AddZerosPopup: React.FC<PopoverProps & AddZerosPopupProps> = props => {
         </Text>
         <Grid flow="col" gap={16}>
           <Button type="ghost" onClick={() => setValue('6')}>
-            6
+            <span>6</span>
           </Button>
           <Button type="ghost" onClick={() => setValue('8')}>
-            8
+            <span>8</span>
           </Button>
           <Button type="ghost" onClick={() => setValue('18')}>
-            18
+            <span>18</span>
           </Button>
           <Input type="number" value={value} max={max} placeholder={`Max ${max}`} onChange={handleChange} />
         </Grid>
@@ -61,7 +61,7 @@ const AddZerosPopup: React.FC<PopoverProps & AddZerosPopupProps> = props => {
         Use the options above to add trailing zeros to the input amount.
       </Text>
       <Grid flow="col" gap={16} justify="space-between">
-        <Button type="ghost" onClick={handleCancel}>
+        <Button type="link" onClick={handleCancel}>
           Cancel
         </Button>
         <Button type="primary" onClick={handleAddZeros}>
