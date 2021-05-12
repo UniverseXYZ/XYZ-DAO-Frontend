@@ -1,36 +1,32 @@
 import React from 'react';
 import cn from 'classnames';
-import { useWeb3Contracts } from 'web3/contracts';
-import { BONDTokenMeta } from 'web3/contracts/bond';
-import { USDCTokenMeta } from 'web3/contracts/usdc';
-import { formatBONDValue, formatUSDValue } from 'web3/utils';
+import { formatToken, formatUSD } from 'web3/utils';
 
 import ExternalLink from 'components/custom/externalLink';
 import Grid from 'components/custom/grid';
 import { Hint, Text } from 'components/custom/typography';
 import { UseLeftTime } from 'hooks/useLeftTime';
 
-import { useSyPools } from '../../providers/sy-pools-provider';
+import { XyzToken } from '../../../../components/providers/known-tokens-provider';
+import { XYZ_MARKET_LINK } from '../../../../config';
+import { useYFPools } from '../../providers/pools-provider';
 
 import { getFormattedDuration } from 'utils';
 
 import s from './s.module.scss';
-
-const UNISWAP_EXCHANGE_LINK = `https://app.uniswap.org/#/swap?inputCurrency=${BONDTokenMeta.address}&outputCurrency=${USDCTokenMeta.address}`;
 
 type Props = {
   className?: string;
 };
 
 const PoolStats: React.FC<Props> = ({ className }) => {
-  const syPoolsCtx = useSyPools();
-  const { aggregated, uniswap, staking } = useWeb3Contracts();
-  const epochEnd = React.useMemo<number | undefined>(() => {
-    const [, end] = staking.getEpochPeriod(staking.currentEpoch!) ?? [];
-    return end;
-  }, [staking]);
+  const yfPoolsCtx = useYFPools();
 
-  const totalBondReward = formatBONDValue(aggregated.totalBondReward);
+  const yfTotalStakedInUSD = yfPoolsCtx.getYFTotalStakedInUSD();
+  const yfTotalEffectiveStakedInUSD = yfPoolsCtx.getYFTotalEffectiveStakedInUSD();
+  const yfTotalSupply = yfPoolsCtx.getYFTotalSupply();
+  const yfDistributedRewards = yfPoolsCtx.getYFDistributedRewards();
+  const [, epochEndDate] = yfPoolsCtx.stakingContract?.epochDates ?? [];
 
   return (
     <div className={cn(s.component, className)}>
@@ -51,11 +47,15 @@ const PoolStats: React.FC<Props> = ({ className }) => {
           </Grid>
           <Grid flow="row" gap={4}>
             <Text type="h2" weight="bold" color="primary">
-              {formatUSDValue(aggregated.totalStaked?.plus(syPoolsCtx.totalPoolsBalance ?? 0), 0)}
+              {formatUSD(yfTotalStakedInUSD, {
+                decimals: 0,
+              }) ?? '-'}
             </Text>
             <Text type="p1" color="secondary">
-              {formatUSDValue(aggregated.totalEffectiveStaked?.plus(syPoolsCtx.totalPoolsBalance ?? 0), 0)} effective
-              locked
+              {formatUSD(yfTotalEffectiveStakedInUSD, {
+                decimals: 0,
+              }) ?? '-'}{' '}
+              effective locked
             </Text>
           </Grid>
         </Grid>
@@ -67,21 +67,21 @@ const PoolStats: React.FC<Props> = ({ className }) => {
             <Hint
               text={
                 <Text type="p2">
-                  This number shows the $KEK token rewards distributed so far out of the total of 2,800,000 that are
-                  going to be available for Yield Farming.
+                  This number shows the ${XyzToken.symbol} token rewards distributed so far out of the total of{' '}
+                  {formatToken(yfTotalSupply) ?? '-'} that are going to be available for Yield Farming.
                 </Text>
               }>
               <Text type="lb2" weight="semibold" color="primary">
-                KEK Rewards
+                {XyzToken.symbol} Rewards
               </Text>
             </Hint>
           </Grid>
           <Grid flow="row" gap={4}>
             <Text type="h2" weight="bold" color="primary">
-              {formatBONDValue(aggregated.bondReward)}
+              {formatToken(yfDistributedRewards) ?? '-'}
             </Text>
             <Text type="p1" color="secondary">
-              out of {totalBondReward}
+              out of {formatToken(yfTotalSupply) ?? '-'}
             </Text>
           </Grid>
         </Grid>
@@ -91,16 +91,16 @@ const PoolStats: React.FC<Props> = ({ className }) => {
         <Grid flow="row" gap={48}>
           <Grid flow="col" align="center" justify="space-between">
             <Text type="lb2" weight="semibold" color="primary">
-              KEK Price
+              {XyzToken.symbol} Price
             </Text>
           </Grid>
           <Grid flow="row" gap={4}>
             <Text type="h2" weight="bold" color="primary">
-              {formatUSDValue(uniswap.bondPrice)}
+              {formatUSD(XyzToken.price) ?? '-'}
             </Text>
-            <ExternalLink href={UNISWAP_EXCHANGE_LINK} className="link-gradient">
+            <ExternalLink href={XYZ_MARKET_LINK} className="link-gradient">
               <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">
-                Uniswap market
+                {XyzToken.symbol} market
               </Text>
             </ExternalLink>
           </Grid>
@@ -125,13 +125,17 @@ const PoolStats: React.FC<Props> = ({ className }) => {
             </Hint>
           </Grid>
           <Grid flow="row" gap={4}>
-            <UseLeftTime end={epochEnd ?? 0} delay={1_000}>
-              {leftTime => (
-                <Text type="h2" weight="bold" color="primary">
-                  {leftTime > 0 ? getFormattedDuration(0, epochEnd) : '0s'}
-                </Text>
-              )}
-            </UseLeftTime>
+            {epochEndDate ? (
+              <UseLeftTime end={epochEndDate} delay={1_000}>
+                {leftTime => (
+                  <Text type="h2" weight="bold" color="primary" className="mb-4">
+                    {leftTime > 0 ? getFormattedDuration(0, epochEndDate) : '0s'}
+                  </Text>
+                )}
+              </UseLeftTime>
+            ) : (
+              '-'
+            )}
             <Text type="p1" color="secondary">
               until next epoch
             </Text>

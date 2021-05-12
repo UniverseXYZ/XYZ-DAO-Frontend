@@ -3,7 +3,6 @@ import 'styles/index.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Web3ContractsProvider from 'web3/contracts';
 
 import ErrorBoundary from 'components/custom/error-boundary';
 import EthWeb3Provider from 'components/providers/eth-web3-provider';
@@ -26,15 +25,13 @@ const App: React.FC = () => {
         <EthWeb3Provider>
           <Web3WalletProvider>
             <KnownTokensProvider>
-              <Web3ContractsProvider>
-                <GeneralContextProvider>
-                  <Router>
-                    <NotificationsProvider>
-                      <LayoutView />
-                    </NotificationsProvider>
-                  </Router>
-                </GeneralContextProvider>
-              </Web3ContractsProvider>
+              <GeneralContextProvider>
+                <Router>
+                  <NotificationsProvider>
+                    <LayoutView />
+                  </NotificationsProvider>
+                </Router>
+              </GeneralContextProvider>
             </KnownTokensProvider>
           </Web3WalletProvider>
         </EthWeb3Provider>

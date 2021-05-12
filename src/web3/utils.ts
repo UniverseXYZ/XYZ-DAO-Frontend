@@ -1,16 +1,6 @@
 import BigNumber from 'bignumber.js';
-import { AAVETokenMeta } from 'web3/contracts/aave';
-import { BONDTokenMeta } from 'web3/contracts/bond';
-import { COMPTokenMeta } from 'web3/contracts/comp';
-import { DAITokenMeta } from 'web3/contracts/dai';
-import { ILVTokenMeta } from 'web3/contracts/ilv';
-import { LINKTokenMeta } from 'web3/contracts/link';
-import { SNXTokenMeta } from 'web3/contracts/snx';
-import { SUSDTokenMeta } from 'web3/contracts/susd';
-import { SUSHITokenMeta } from 'web3/contracts/sushi';
-import { UNISWAPTokenMeta } from 'web3/contracts/uniswap';
-import { USDCTokenMeta } from 'web3/contracts/usdc';
-import { TokenMeta } from 'web3/types';
+
+import config from 'config';
 
 BigNumber.prototype.scaleBy = function (decimals?: number): BigNumber | undefined {
   if (decimals === undefined) {
@@ -31,15 +21,27 @@ BigNumber.prototype.unscaleBy = function (decimals?: number): BigNumber | undefi
 BigNumber.ZERO = new BigNumber(0);
 BigNumber.MAX_UINT_256 = new BigNumber(2).pow(256).minus(1);
 
+BigNumber.sumEach = <T = any>(items: T[], predicate: (item: T) => BigNumber | undefined): BigNumber | undefined => {
+  let sum = BigNumber.ZERO;
+
+  for (let item of items) {
+    const val = predicate?.(item);
+
+    if (!val || val.isNaN()) {
+      return undefined;
+    }
+
+    sum = sum.plus(val);
+  }
+
+  return sum;
+};
+
 export const MAX_UINT_256 = new BigNumber(2).pow(256).minus(1);
 export const ZERO_BIG_NUMBER = new BigNumber(0);
 export const DEFAULT_ADDRESS = '0x0000000000000000000000000000000000000000';
-const ETHERSCAN_API_KEY = String(process.env.REACT_APP_ETHERSCAN_API_KEY);
 
-export function getEtherscanTxUrl(
-  txHash?: string,
-  chainId = Number(process.env.REACT_APP_WEB3_CHAIN_ID),
-): string | undefined {
+export function getEtherscanTxUrl(txHash?: string, chainId = config.web3.chainId): string | undefined {
   if (txHash) {
     switch (chainId) {
       case 1:
@@ -55,10 +57,7 @@ export function getEtherscanTxUrl(
   return undefined;
 }
 
-export function getEtherscanAddressUrl(
-  address?: string,
-  chainId = Number(process.env.REACT_APP_WEB3_CHAIN_ID),
-): string | undefined {
+export function getEtherscanAddressUrl(address?: string, chainId = config.web3.chainId): string | undefined {
   if (address) {
     switch (chainId) {
       case 1:
@@ -77,7 +76,7 @@ export function getEtherscanAddressUrl(
 export function getEtherscanABIUrl(
   address?: string,
   apiKey?: string,
-  chainId = Number(process.env.REACT_APP_WEB3_CHAIN_ID),
+  chainId = config.web3.chainId,
 ): string | undefined {
   if (address) {
     switch (chainId) {
@@ -129,6 +128,24 @@ export function formatBigValue(
   return new BigNumber(bnValue.toFixed(decimals)).toFormat(minDecimals);
 }
 
+type FormatNumberOptions = {
+  decimals?: number;
+};
+
+export function formatNumber(value: number | BigNumber | undefined, options?: FormatNumberOptions): string | undefined {
+  if (value === undefined || Number.isNaN(value)) {
+    return undefined;
+  }
+
+  const { decimals } = options ?? {};
+
+  const val = BigNumber.isBigNumber(value) ? value.toNumber() : value;
+
+  return Intl.NumberFormat('en', {
+    maximumFractionDigits: decimals,
+  }).format(val);
+}
+
 export function formatPercent(value: number | BigNumber | undefined, decimals: number = 2): string | undefined {
   if (value === undefined || Number.isNaN(value)) {
     return undefined;
@@ -157,6 +174,12 @@ export function formatToken(value: number | BigNumber | undefined, options?: For
     return undefined;
   }
 
+  let val = new BigNumber(value);
+
+  if (val.isNaN()) {
+    return undefined;
+  }
+
   if (options) {
     if (options.hasOwnProperty('scale') && options.scale === undefined) {
       return undefined;
@@ -165,10 +188,8 @@ export function formatToken(value: number | BigNumber | undefined, options?: For
 
   const { tokenName, compact = false, decimals = 4, minDecimals, scale = 0 } = options ?? {};
 
-  let val = new BigNumber(value);
-
   if (scale > 0) {
-    val = val.dividedBy(10 ** scale);
+    val = val.unscaleBy(scale)!;
   }
 
   let str = '';
@@ -185,17 +206,54 @@ export function formatToken(value: number | BigNumber | undefined, options?: For
   return tokenName ? `${str} ${tokenName}` : str;
 }
 
-export function formatUSD(value: number | BigNumber | undefined, compact?: boolean): string | undefined {
-  if (value === undefined || value === null || Number.isNaN(value)) {
+type FormatUSDOptions = {
+  decimals?: number;
+  compact?: boolean;
+};
+
+export function formatUSD(
+  value: number | BigNumber | string | undefined,
+  options?: FormatUSDOptions,
+): string | undefined {
+  let val = value;
+
+  if (val === undefined || val === null) {
     return undefined;
   }
 
-  return Intl.NumberFormat('en', {
-    notation: compact ? 'compact' : undefined,
-    maximumFractionDigits: compact ? 2 : undefined,
-    style: 'currency',
-    currency: 'USD',
-  }).format(BigNumber.isBigNumber(value) ? value.toNumber() : value);
+  if (typeof val === 'string') {
+    val = Number(val);
+  }
+
+  if (BigNumber.isBigNumber(val)) {
+    if (val.isNaN()) {
+      return undefined;
+    }
+  } else if (typeof val === 'number') {
+    if (!Number.isFinite(val)) {
+      return undefined;
+    }
+  }
+
+  const { decimals = 2, compact = false } = options ?? {};
+
+  if (0 > decimals || decimals > 20) {
+    console.trace(`Decimals value is out of range 0..20 (value: ${decimals})`);
+    return undefined;
+  }
+
+  let str = '';
+
+  if (compact) {
+    str = Intl.NumberFormat('en', {
+      notation: 'compact',
+      maximumFractionDigits: decimals !== 0 ? decimals : undefined,
+    }).format(BigNumber.isBigNumber(val) ? val.toNumber() : val);
+  } else {
+    str = new BigNumber(val.toFixed(decimals)).toFormat(decimals);
+  }
+
+  return `$${str}`;
 }
 
 export function formatUSDValue(value?: BigNumber | number, decimals = 2, minDecimals: number = decimals): string {
@@ -221,37 +279,8 @@ export function shortenAddr(addr: string | undefined, first = 6, last = 4): stri
   return addr ? [String(addr).slice(0, first), String(addr).slice(-last)].join('...') : undefined;
 }
 
-export function getTokenMeta(tokenAddr: string): TokenMeta | undefined {
-  switch (tokenAddr.toLowerCase()) {
-    case USDCTokenMeta.address:
-      return USDCTokenMeta;
-    case DAITokenMeta.address:
-      return DAITokenMeta;
-    case SUSDTokenMeta.address:
-      return SUSDTokenMeta;
-    case UNISWAPTokenMeta.address:
-      return UNISWAPTokenMeta;
-    case BONDTokenMeta.address:
-      return BONDTokenMeta;
-    case AAVETokenMeta.address:
-      return AAVETokenMeta;
-    case COMPTokenMeta.address:
-      return COMPTokenMeta;
-    case ILVTokenMeta.address:
-      return ILVTokenMeta;
-    case LINKTokenMeta.address:
-      return LINKTokenMeta;
-    case SNXTokenMeta.address:
-      return SNXTokenMeta;
-    case SUSHITokenMeta.address:
-      return SUSHITokenMeta;
-    default:
-      return undefined;
-  }
-}
-
 export function fetchContractABI(address: string): any {
-  const url = getEtherscanABIUrl(address, ETHERSCAN_API_KEY);
+  const url = getEtherscanABIUrl(address, config.web3.etherscan.apiKey);
 
   if (!url) {
     return Promise.reject();
@@ -276,7 +305,7 @@ type GasPriceResult = {
 };
 
 export function fetchGasPrice(): Promise<GasPriceResult> {
-  return fetch(`https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=${ETHERSCAN_API_KEY}`)
+  return fetch(`https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=${config.web3.etherscan.apiKey}`)
     .then(result => result.json())
     .then(result => result.result)
     .then(result => {

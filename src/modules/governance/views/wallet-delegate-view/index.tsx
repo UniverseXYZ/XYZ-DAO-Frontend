@@ -1,6 +1,5 @@
 import React from 'react';
 import * as Antd from 'antd';
-import { useWeb3Contracts } from 'web3/contracts';
 import { ZERO_BIG_NUMBER } from 'web3/utils';
 
 import Alert from 'components/antd/alert';
@@ -12,6 +11,9 @@ import Icon from 'components/custom/icon';
 import TokenInput from 'components/custom/token-input';
 import { Text } from 'components/custom/typography';
 import useMergeState from 'hooks/useMergeState';
+
+import { XyzToken } from '../../../../components/providers/known-tokens-provider';
+import { useDAO } from '../../components/dao-provider';
 
 import { isValidAddress } from 'utils';
 
@@ -38,10 +40,10 @@ const InitialState: WalletDelegateViewState = {
 const WalletDelegateView: React.FC = () => {
   const [form] = Antd.Form.useForm<DelegateFormData>();
 
-  const web3c = useWeb3Contracts();
+  const daoCtx = useDAO();
   const [state, setState] = useMergeState<WalletDelegateViewState>(InitialState);
 
-  const { balance: stakedBalance, userDelegatedTo, userLockedUntil } = web3c.daoBarn;
+  const { balance: stakedBalance, userDelegatedTo, userLockedUntil } = daoCtx.daoBarn;
   const isDelegated = isValidAddress(userDelegatedTo);
   const isLocked = (userLockedUntil ?? 0) > Date.now();
   const hasStakedBalance = stakedBalance?.gt(ZERO_BIG_NUMBER);
@@ -64,13 +66,13 @@ const WalletDelegateView: React.FC = () => {
 
     try {
       if (delegateAddress !== userDelegatedTo) {
-        await web3c.daoBarn.actions.delegate(delegateAddress, gasPrice.value);
+        await daoCtx.daoBarn.actions.delegate(delegateAddress, gasPrice.value);
       } else {
-        await web3c.daoBarn.actions.stopDelegate(gasPrice.value);
+        await daoCtx.daoBarn.actions.stopDelegate(gasPrice.value);
       }
 
       form.setFieldsValue(InitialFormValues);
-      web3c.daoBarn.reload();
+      daoCtx.daoBarn.reload();
     } catch {}
 
     setState({ saving: false });
@@ -82,7 +84,7 @@ const WalletDelegateView: React.FC = () => {
         <Grid flow="col" gap={12} align="center">
           <Icon name="png/universe" width={40} height={40} />
           <Text type="p1" weight="semibold" color="primary">
-            XYZ
+            {XyzToken.symbol}
           </Text>
         </Grid>
 

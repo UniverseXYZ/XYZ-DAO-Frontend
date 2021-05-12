@@ -16,6 +16,8 @@ export type TokenIconNames =
   | 'bond-circle-token'
   | 'bond-square-token'
   | 'token-unknown'
+  | 'static/token-bond'
+  | 'static/token-uniswap'
   | 'token-eth'
   | 'token-btc'
   | 'token-weth'
@@ -26,6 +28,7 @@ export type TokenIconNames =
   | 'token-dai'
   | 'token-susd'
   | 'token-uniswap'
+  | 'token-usdt'
   | 'token-snx'
   | 'compound'
   | 'png/aave'
@@ -131,7 +134,8 @@ export type IconNames =
   | 'yield-farming'
   | 'docs'
   | 'twitter'
-  | 'discord';
+  | 'discord'
+  | 'dropdown';
 
 export type IconProps = {
   name: IconNames;

@@ -1,34 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
+import BigNumber from 'bignumber.js';
 import cn from 'classnames';
-import { useWeb3Contracts } from 'web3/contracts';
-import { formatBONDValue } from 'web3/utils';
+import Erc20Contract from 'web3/erc20Contract';
+import { formatToken } from 'web3/utils';
 
-import Button from 'components/antd/button';
 import Divider from 'components/antd/divider';
 import Grid from 'components/custom/grid';
 import Icon from 'components/custom/icon';
 import { Hint, Text } from 'components/custom/typography';
-import useMergeState from 'hooks/useMergeState';
-import imgSrc from 'resources/png/universe.png';
+import { XyzToken } from 'components/providers/known-tokens-provider';
 import { useWallet } from 'wallets/wallet';
 
-import PoolHarvestModal from '../../modals/pool-harvest-modal';
+import PoolHarvestModal from '../../components/pool-harvest-modal';
+import { useYFPools } from '../../providers/pools-provider';
 
 import s from './s.module.scss';
 
-type PoolRewardsState = {
-  showHarvestModal: boolean;
-};
-
-const InitialState: PoolRewardsState = {
-  showHarvestModal: false,
-};
-
 const PoolRewards: React.FC = () => {
-  const wallet = useWallet();
-  const web3c = useWeb3Contracts();
+  const walletCtx = useWallet();
+  const yfPoolsCtx = useYFPools();
 
-  const [state, setState] = useMergeState<PoolRewardsState>(InitialState);
+  const [harvestModalVisible, showHarvestModal] = useState(false);
+
+  const xyzContract = XyzToken.contract as Erc20Contract;
+
+  const totalToClaim = yfPoolsCtx.yfPools.reduce((sum: BigNumber | undefined, { contract }) => {
+    return (sum ?? BigNumber.ZERO).plus(contract.toClaim ?? BigNumber.ZERO);
+  }, undefined);
+
+  const totalPotentialReward = yfPoolsCtx.yfPools.reduce((sum: BigNumber | undefined, { contract }) => {
+    if (contract.isPoolEnded !== false) {
+      return sum;
+    }
+
+    return (sum ?? BigNumber.ZERO).plus(contract.potentialReward ?? BigNumber.ZERO);
+  }, undefined);
 
   return (
     <div className={cn(s.component, 'pv-24 ph-64 sm-ph-16')}>
@@ -43,31 +49,31 @@ const PoolRewards: React.FC = () => {
           </Text>
           <Grid flow="col" align="center">
             <Text type="h3" weight="bold" color="primary">
-              {formatBONDValue(web3c.aggregated.totalCurrentReward)}
+              {formatToken(totalToClaim?.unscaleBy(XyzToken.decimals)) ?? '-'}
             </Text>
-            <Icon name="png/universe" src={imgSrc} width={40} height={40} />
-            {wallet.isActive && (
-              <Button
-                type="primary"
-                size="small"
-                disabled={web3c.aggregated.totalCurrentReward?.isZero()}
-                onClick={() => setState({ showHarvestModal: true })}
-                style={{ marginLeft: 4 }}>
+            <Icon name={XyzToken.icon!} width={40} height={40} />
+            {walletCtx.isActive && (
+              <button
+                type="button"
+                className="button-text"
+                style={{ color: totalToClaim?.gt(BigNumber.ZERO) ? 'red' : 'var(--theme-default-color)' }}
+                // disabled={!totalToClaim?.gt(BigNumber.ZERO)}
+                onClick={() => showHarvestModal(true)}>
                 Claim
-              </Button>
+              </button>
             )}
           </Grid>
         </Grid>
         <Divider type="vertical" />
         <Grid flow="row" gap={4}>
           <Text type="p2" color="secondary">
-            KEK Balance
+            {XyzToken.symbol} Balance
           </Text>
           <Grid flow="col" gap={2} align="center">
             <Text type="h3" weight="bold" color="primary">
-              {formatBONDValue(web3c.bond.balance)}
+              {formatToken(xyzContract.balance?.unscaleBy(XyzToken.decimals)) ?? '-'}
             </Text>
-            <Icon name="png/universe" src={imgSrc} width={40} height={40} />
+            <Icon name={XyzToken.icon!} width={40} height={40} />
           </Grid>
         </Grid>
         <Divider type="vertical" />
@@ -81,14 +87,14 @@ const PoolRewards: React.FC = () => {
           </Grid>
           <Grid flow="col" gap={2} align="center">
             <Text type="h3" weight="bold" color="primary">
-              {formatBONDValue(web3c.aggregated.totalPotentialReward)}
+              {formatToken(totalPotentialReward) ?? '-'}
             </Text>
-            <Icon name="png/universe" src={imgSrc} width={40} height={40} />
+            <Icon name={XyzToken.icon!} width={40} height={40} />
           </Grid>
         </Grid>
       </Grid>
 
-      {state.showHarvestModal && <PoolHarvestModal onCancel={() => setState({ showHarvestModal: false })} />}
+      {harvestModalVisible && <PoolHarvestModal onCancel={() => showHarvestModal(false)} />}
     </div>
   );
 };
