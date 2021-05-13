@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { getGasValue, getHumanValue, getNonHumanValue } from 'web3/utils';
 import Web3Contract, { Web3ContractAbiItem } from 'web3/web3Contract';
 
-import { BondToken } from 'components/providers/known-tokens-provider';
+import { XyzToken } from 'components/providers/known-tokens-provider';
 import config from 'config';
 import useMergeState from 'hooks/useMergeState';
 import { useReload } from 'hooks/useReload';
@@ -19,7 +19,7 @@ function loadCommonData(): Promise<any> {
   return Contract.batch([
     {
       method: 'bondStaked',
-      transform: (value: string) => getHumanValue(new BigNumber(value), BondToken.decimals),
+      transform: (value: string) => getHumanValue(new BigNumber(value), XyzToken.decimals),
     },
   ]).then(([bondStaked]) => {
     return {
@@ -37,17 +37,17 @@ function loadUserData(userAddress?: string): Promise<any> {
     {
       method: 'balanceOf',
       methodArgs: [userAddress],
-      transform: (value: string) => getHumanValue(new BigNumber(value), BondToken.decimals),
+      transform: (value: string) => getHumanValue(new BigNumber(value), XyzToken.decimals),
     },
     {
       method: 'votingPower',
       methodArgs: [userAddress],
-      transform: (value: string) => getHumanValue(new BigNumber(value), BondToken.decimals),
+      transform: (value: string) => getHumanValue(new BigNumber(value), XyzToken.decimals),
     },
     {
       method: 'multiplierAtTs',
       methodArgs: [userAddress, getNowTs()],
-      transform: (value: string) => getHumanValue(new BigNumber(value), BondToken.decimals)?.toNumber(),
+      transform: (value: string) => getHumanValue(new BigNumber(value), XyzToken.decimals)?.toNumber(),
     },
     {
       method: 'userLockedUntil',
@@ -57,7 +57,7 @@ function loadUserData(userAddress?: string): Promise<any> {
     {
       method: 'delegatedPower',
       methodArgs: [userAddress],
-      transform: (value: string) => getHumanValue(new BigNumber(value), BondToken.decimals),
+      transform: (value: string) => getHumanValue(new BigNumber(value), XyzToken.decimals),
     },
     {
       method: 'userDelegatedTo',
@@ -75,7 +75,7 @@ function loadUserData(userAddress?: string): Promise<any> {
 
 function bondStakedAtTsCall(timestamp: number): Promise<BigNumber | undefined> {
   return Contract.call('bondStakedAtTs', [timestamp], {}).then((value: string) =>
-    getHumanValue(new BigNumber(value), BondToken.decimals),
+    getHumanValue(new BigNumber(value), XyzToken.decimals),
   );
 }
 
