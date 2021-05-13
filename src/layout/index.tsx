@@ -7,6 +7,8 @@ import WarningProvider from 'components/providers/warning-provider';
 import LayoutFooter from 'layout/components/layout-footer';
 import LayoutHeader from 'layout/components/layout-header';
 
+import ThemeSwitcher from './components/theme-switcher';
+
 import s from './s.module.scss';
 
 // import LayoutSideNav from 'layout/components/layout-side-nav';
@@ -39,6 +41,7 @@ const LayoutView: React.FC = () => {
             </ErrorBoundary>
           </main>
           <LayoutFooter />
+          <ThemeSwitcher />
         </WarningProvider>
       </div>
     </div>

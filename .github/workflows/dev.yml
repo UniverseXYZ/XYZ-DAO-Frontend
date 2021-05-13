@@ -48,7 +48,7 @@ jobs:
         GENERATE_SOURCEMAP: false
         SKIP_PREFLIGHT_CHECK: true
         REACT_APP_ENV: 'development'
-        REACT_APP_HTML_TITLE: 'Yield Farming Rinkeby'
+        REACT_APP_HTML_TITLE: 'Universe Rinkeby'
         REACT_APP_WEB3_CHAIN_ID: 4
         REACT_APP_WEB3_POLLING_INTERVAL: 12000
         REACT_APP_WEB3_RPC_WSS_URL: 'wss://rinkeby.infura.io/ws/v3/25763b5ba15644a8b3079d3ee755bce5'

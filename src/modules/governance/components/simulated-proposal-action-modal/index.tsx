@@ -44,7 +44,7 @@ const SimulatedProposalActionModal: React.FC<SimulatedProposalActionModalProps> 
         </Grid>
         <Grid flow="col" justify="space-between">
           <Button type="default" onClick={modalProps.onOk}>
-            Continue anyway
+            <span>Continue anyway</span>
           </Button>
           <Button type="primary" onClick={modalProps.onCancel}>
             Go back

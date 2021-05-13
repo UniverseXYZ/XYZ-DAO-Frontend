@@ -70,7 +70,7 @@ const ProposalDetailViewInner: React.FC = () => {
       </div>
 
       <Grid flow="col" gap={32} colsTemplate="1fr 1fr" className="mb-32">
-        <Text type="h2" weight="semibold" color="primary">
+        <Text type="h2" weight="semibold" color="primary" font="secondary">
           PID-{proposalCtx.proposal?.proposalId}: {proposalCtx.proposal?.title}
         </Text>
 

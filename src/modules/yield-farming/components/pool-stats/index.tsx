@@ -31,7 +31,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
   return (
     <div className={cn(s.component, className)}>
       <div className="card p-24">
-        <Grid flow="row" gap={48}>
+        <Grid flow="row" className={s.item}>
           <Grid flow="col" align="center" justify="space-between">
             <Hint
               text={
@@ -40,7 +40,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
                   of the amounts in the pool balance(s).
                 </Text>
               }>
-              <Text type="lb2" weight="semibold" color="primary">
+              <Text type="lb2" weight="semibold" color="primary" className={s.label}>
                 Total Value Locked
               </Text>
             </Hint>
@@ -55,14 +55,14 @@ const PoolStats: React.FC<Props> = ({ className }) => {
               {formatUSD(yfTotalEffectiveStakedInUSD, {
                 decimals: 0,
               }) ?? '-'}{' '}
-              effective locked
+              eff. locked
             </Text>
           </Grid>
         </Grid>
       </div>
 
       <div className="card p-24">
-        <Grid flow="row" gap={48}>
+        <Grid flow="row" className={s.item}>
           <Grid flow="col" align="center" justify="space-between">
             <Hint
               text={
@@ -71,7 +71,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
                   {formatToken(yfTotalSupply) ?? '-'} that are going to be available for Yield Farming.
                 </Text>
               }>
-              <Text type="lb2" weight="semibold" color="primary">
+              <Text type="lb2" weight="semibold" color="primary" className={s.label}>
                 {XyzToken.symbol} Rewards
               </Text>
             </Hint>
@@ -88,9 +88,9 @@ const PoolStats: React.FC<Props> = ({ className }) => {
       </div>
 
       <div className="card p-24">
-        <Grid flow="row" gap={48}>
+        <Grid flow="row" className={s.item}>
           <Grid flow="col" align="center" justify="space-between">
-            <Text type="lb2" weight="semibold" color="primary">
+            <Text type="lb2" weight="semibold" color="primary" className={s.label}>
               {XyzToken.symbol} Price
             </Text>
           </Grid>
@@ -108,7 +108,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
       </div>
 
       <div className="card p-24">
-        <Grid flow="row" gap={48}>
+        <Grid flow="row" className={s.item}>
           <Grid flow="col" align="center" justify="space-between">
             <Hint
               text={
@@ -119,7 +119,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
                   out and the epoch ends in order to be able to harvest the rewards.
                 </Text>
               }>
-              <Text type="lb2" weight="semibold" color="primary">
+              <Text type="lb2" weight="semibold" color="primary" className={s.label}>
                 Time Left
               </Text>
             </Hint>
@@ -137,7 +137,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
               '-'
             )}
             <Text type="p1" color="secondary">
-              until next epoch
+              until next week
             </Text>
           </Grid>
         </Grid>

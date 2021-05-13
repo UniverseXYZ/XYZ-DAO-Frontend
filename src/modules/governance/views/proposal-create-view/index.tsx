@@ -270,14 +270,16 @@ const ProposalCreateView: React.FC = () => {
                     })}
 
                     {fields.length < 10 && (
-                      <Button
-                        type="ghost"
-                        icon={<Icon name="plus-circle-outlined" color="inherit" />}
+                      <button
+                        type="button"
                         disabled={state.submitting}
-                        className={s.addActionBtn}
+                        className={cn('button-ghost', s.addActionBtn)}
                         onClick={() => setState({ showCreateActionModal: true })}>
-                        Add new action
-                      </Button>
+                        <span>Add new action</span>
+                        <span>
+                          <Icon name="plus-circle-outlined" color="inherit" />
+                        </span>
+                      </button>
                     )}
 
                     {fields.length >= 10 && <Alert type="info" message="Maximum 10 actions are allowed." />}

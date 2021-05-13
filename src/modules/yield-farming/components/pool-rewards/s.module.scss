@@ -5,9 +5,29 @@
   padding: 24px 64px;
 }
 
+.items.items {
+  @media (max-width: 767px) {
+    grid-template-columns: none;
+    grid-template-rows: none;
+    grid-template-areas: "item1 item2" "item3 item3";
 
-.items {
-  @media (max-width: 480px) {
-    display: block;
+    & > [role="separator"] {
+      display: none;
+    }
+    & .item1 {
+      grid-area: item1;
+    }
+    & .item2 {
+      grid-area: item2;
+      border-left: 1px solid var(--theme-border-color);
+      padding-left: 26px;
+    }
+    & .item3 {
+      text-align: center;
+      justify-content: center;
+      grid-area: item3;
+      border-top: 1px solid var(--theme-border-color);
+      padding-top: 26px;
+    }
   }
 }

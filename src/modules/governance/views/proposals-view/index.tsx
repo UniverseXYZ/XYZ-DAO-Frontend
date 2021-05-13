@@ -59,7 +59,7 @@ const ProposalsViewInner: React.FC = () => {
   return (
     <Grid flow="row" gap={32}>
       <Grid flow="col" align="center" justify="space-between">
-        <Text type="h1" weight="bold" color="primary">
+        <Text type="h2" weight="bold" color="primary" font="secondary">
           Proposals
         </Text>
         {wallet.isActive && (

@@ -57,7 +57,7 @@ const Columns: ColumnsType<LiteProposalEntity> = [
           <Grid gap={24} colsTemplate="minmax(0, 196px) 65px">
             <Progress
               percent={forRate.toNumber()}
-              strokeColor="var(--theme-green-color)"
+              strokeColor="var(--gradient-green)"
               trailColor="rgba(var(--theme-green-color-rgb), .16)"
             />
             <Text type="p2" weight="semibold" color="secondary" align="right">
@@ -67,7 +67,7 @@ const Columns: ColumnsType<LiteProposalEntity> = [
           <Grid gap={24} colsTemplate="minmax(0, 196px) 65px">
             <Progress
               percent={againstRate.toNumber()}
-              strokeColor="var(--theme-red-color)"
+              strokeColor="var(--gradient-red)"
               trailColor="rgba(var(--theme-red-color-rgb), .16)"
             />
             <Text type="p2" weight="semibold" color="secondary" align="right">

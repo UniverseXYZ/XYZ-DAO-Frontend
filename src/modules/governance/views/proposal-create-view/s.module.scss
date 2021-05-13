@@ -1,6 +1,14 @@
 .addActionBtn {
   width: 100%;
   flex-direction: row-reverse;
+  align-items: center;
+
+  & > span {
+    display: inline-flex;
+  }
+  & > span + span {
+    margin-left: 10px;
+  }
 }
 
 .cardsContainer {

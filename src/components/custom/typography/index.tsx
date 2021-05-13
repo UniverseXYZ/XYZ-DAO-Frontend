@@ -18,6 +18,7 @@ export type TextProps = {
   className?: string;
   style?: Partial<CSSStyleDeclaration>;
   title?: string;
+  font?: 'secondary';
 };
 
 export const Text: React.FC<TextProps> = React.memo(props => {
@@ -33,6 +34,7 @@ export const Text: React.FC<TextProps> = React.memo(props => {
     className,
     children,
     style,
+    font,
     ...textProps
   } = props;
 
@@ -49,6 +51,7 @@ export const Text: React.FC<TextProps> = React.memo(props => {
         textGradient && s.textGradient,
         wrap === true && 'text-wrap',
         wrap === false && 'text-nowrap',
+        font && s[`font-${font}`],
         className,
       ),
       style: textGradient ? { ...style, '--text-gradient': textGradient || '', '--text-color': color } : style,

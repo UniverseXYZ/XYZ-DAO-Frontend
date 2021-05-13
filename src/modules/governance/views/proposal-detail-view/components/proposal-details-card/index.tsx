@@ -59,7 +59,7 @@ const ProposalDetailsCard: React.FC = () => {
   return (
     <div className="card">
       <div className="card-header">
-        <Text type="p1" weight="semibold" color="primary">
+        <Text type="p1" weight="semibold" color="primary" font="secondary">
           Details
         </Text>
       </div>
@@ -100,7 +100,7 @@ const ProposalDetailsCard: React.FC = () => {
         <div>
           {canBeCancelled && (
             <Button type="default" loading={state.cancelling} onClick={handleProposalCancel}>
-              Cancel proposal
+              <span>Cancel proposal</span>
             </Button>
           )}
         </div>
