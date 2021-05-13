@@ -4,7 +4,7 @@ import ContractListener from 'web3/components/contract-listener';
 import Erc20Contract from 'web3/erc20Contract';
 import { ZERO_BIG_NUMBER } from 'web3/utils';
 
-import { BondToken } from 'components/providers/known-tokens-provider';
+import { XyzToken } from 'components/providers/known-tokens-provider';
 import config from 'config';
 import useMergeState from 'hooks/useMergeState';
 import { DAOBarnContract, useDAOBarnContract } from 'modules/governance/contracts/daoBarn';
@@ -77,14 +77,16 @@ const DAOProvider: React.FC = props => {
   }, [walletCtx.provider]);
 
   React.useEffect(() => {
-    const bondContract = BondToken.contract as Erc20Contract;
+    const xyzContract = XyzToken.contract as Erc20Contract;
 
-    (async () => {
-      if (walletCtx.isActive) {
-        bondContract.setAccount(walletCtx.account);
-        bondContract.loadAllowance(config.contracts.dao.barn).catch(Error);
-      }
-    })();
+    xyzContract.setAccount(walletCtx.account);
+    daoBarn.contract.setAccount(walletCtx.account);
+    daoReward.contract.setAccount(walletCtx.account);
+    daoGovernance.contract.setAccount(walletCtx.account);
+
+    if (walletCtx.isActive) {
+      xyzContract.loadAllowance(config.contracts.dao.barn).catch(Error);
+    }
   }, [walletCtx.account]);
 
   React.useEffect(() => {

@@ -1,9 +1,9 @@
-name: Development Environment
+name: Alpha Environment
 
 on:
   push:
     branches:
-    - development
+      - master
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
-        channel: infra-ci-kekdao
+        channel_id: C01D16VJ84C
         status: BUILD STARTED
         color: warning
 
@@ -34,7 +34,7 @@ jobs:
       with:
         path: |
           **/node_modules
-        key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+        key: alpha-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
     - name: Install dependencies
       if: steps.node-cache.outputs.cache-hit != 'true'
@@ -44,53 +44,66 @@ jobs:
       run: npm run build
       env:
         CI: false
-        HTTPS: true
-        GENERATE_SOURCEMAP: false
         SKIP_PREFLIGHT_CHECK: true
-        REACT_APP_ENV: 'development'
-        REACT_APP_HTML_TITLE: 'Yield Farming Rinkeby'
-        REACT_APP_WEB3_CHAIN_ID: 4
+        REACT_APP_ENV: 'production'
+        REACT_APP_HTML_TITLE: 'BarnBridge'
+
+        REACT_APP_WEB3_CHAIN_ID: 1
         REACT_APP_WEB3_POLLING_INTERVAL: 12000
-        REACT_APP_WEB3_RPC_WSS_URL: 'wss://rinkeby.infura.io/ws/v3/25763b5ba15644a8b3079d3ee755bce5'
-        REACT_APP_WEB3_RPC_HTTPS_URL: 'https://rinkeby.infura.io/v3/25763b5ba15644a8b3079d3ee755bce5'
+        REACT_APP_WEB3_RPC_WSS_URL: 'wss://mainnet.infura.io/ws/v3/25763b5ba15644a8b3079d3ee755bce5'
+        REACT_APP_WEB3_RPC_HTTPS_URL: 'https://mainnet.infura.io/v3/25763b5ba15644a8b3079d3ee755bce5'
         REACT_APP_WEB3_PORTIS_APP_ID: 'b0b0f776-bbf6-458c-a175-6483e0c452b7'
         REACT_APP_WEB3_WALLET_CONNECT_BRIDGE: 'https://bridge.walletconnect.org'
-        REACT_APP_WEB3_COINBASE_APP_NAME: 'barnbridge'
+        REACT_APP_WEB3_COINBASE_APP_NAME: 'BarnBridge'
         REACT_APP_WEB3_TREZOR_EMAIL: 'bogdan@barnbridge.com'
         REACT_APP_WEB3_TREZOR_APP_URL: 'https://app.barnbridge.com/'
         REACT_APP_ETHERSCAN_API_KEY: '4RSJUUZQFMXUAUUJP5FI5UR5U59N7UIA32'
-        REACT_APP_TOKEN_USDC_ADDR: '0x86dEddCFc3a7DBeE68cDADA65Eed3D3b70F4fe24'
+
+        REACT_APP_TOKEN_USDC_ADDR: ''
         REACT_APP_TOKEN_USDC_PRICE_ADDR: '0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6'
-        REACT_APP_TOKEN_XYZ_ADDR: '0x86dEddCFc3a7DBeE68cDADA65Eed3D3b70F4fe24'
+
+        REACT_APP_TOKEN_XYZ_ADDR: ''
         REACT_APP_TOKEN_XYZ_PRICE_ADDR: '0x86dEddCFc3a7DBeE68cDADA65Eed3D3b70F4fe24'
-        REACT_APP_TOKEN_BOND_ADDR: '0xdf695cf3118d504c33415cbc465dd469b7e4c881'
+
+        REACT_APP_TOKEN_BOND_ADDR: ''
         REACT_APP_TOKEN_BOND_PRICE_ADDR: '0x6591c4BcD6D7A1eb4E537DA8B78676C1576Ba244'
-        REACT_APP_TOKEN_AAVE_ADDR: '0x7bdf7a5ab7a18985d1b1cb09b69338ba0c78f416'
+
+        REACT_APP_TOKEN_AAVE_ADDR: ''
         REACT_APP_TOKEN_AAVE_PRICE_ADDR: '0x547a514d5e3769680Ce22B2361c10Ea13619e8a9'
-        REACT_APP_TOKEN_COMP_ADDR: '0xfdf1a271f12148e11254dd63178ee1fbb8b4c75e'
+
+        REACT_APP_TOKEN_COMP_ADDR: ''
         REACT_APP_TOKEN_COMP_PRICE_ADDR: '0xdbd020CAeF83eFd542f4De03e3cF0C28A4428bd5'
-        REACT_APP_TOKEN_SNX_ADDR: '0xff85fe0a2e8d66b9101305ab1522a37e0a50c4ef'
+
+        REACT_APP_TOKEN_SNX_ADDR: ''
         REACT_APP_TOKEN_SNX_PRICE_ADDR: '0xDC3EA94CD0AC27d9A86C180091e7f78C683d3699'
-        REACT_APP_TOKEN_SUSHI_ADDR: '0xf3461cd59e3a3c25fd5f4c471df724a74cec4eeb'
+
+        REACT_APP_TOKEN_SUSHI_ADDR: ''
         REACT_APP_TOKEN_SUSHI_PRICE_ADDR: '0xe572CeF69f43c2E488b33924AF04BDacE19079cf'
-        REACT_APP_TOKEN_LINK_ADDR: '0x2b9781477b64e48a263854B778d548Fc9560CbB5'
+
+        REACT_APP_TOKEN_LINK_ADDR: ''
         REACT_APP_TOKEN_LINK_PRICE_ADDR: '0x2c1d072e956AFFC0D435Cb7AC38EF18d24d9127c'
+
         REACT_APP_TOKEN_ILV_ADDR: '0x449ae80a139e724dd2506b8b312e898bf713fea9'
-        REACT_APP_TOKEN_USDC_XYZ_SUSHI_LP_ADDR: '0xe0dddd62431f705325f8d1e0474a31589622f54a'
+
+        REACT_APP_TOKEN_USDC_XYZ_SUSHI_LP_ADDR: ''
         REACT_APP_TOKEN_USDC_XYZ_SUSHI_LP_PRICE_ADDR: '0xe0dddd62431f705325f8d1e0474a31589622f54a'
-        REACT_APP_CONTRACT_YF_STAKING_ADDR: '0x15BCbC39636E5ef6a2531233Fd726588Ed8e5630'
-        REACT_APP_CONTRACT_YF_BOND_ADDR: '0x9c4Fb445Bf98085FD690B3C197f39622a7FC82C3'
-        REACT_APP_CONTRACT_YF_AAVE_ADDR: '0xFE370dd73BfC684dC35b8096a0299e72deb33962'
-        REACT_APP_CONTRACT_YF_COMP_ADDR: '0xA8042c95b651B05455561FD0Ad35FF039C802C7E'
-        REACT_APP_CONTRACT_YF_SNX_ADDR: '0x59257326eB23370BCB0f0a552beA4a277f1821e8'
-        REACT_APP_CONTRACT_YF_SUSHI_ADDR: '0x30C0E9526d87A1b44a691878c69d8f4Db7334f8c'
-        REACT_APP_CONTRACT_YF_LINK_ADDR: '0x4D8109dD77209F83E305fF79e1810A22a85821ad'
-        REACT_APP_CONTRACT_YF_ILV_ADDR: '0x7249a0Bd0a0F1fec2B23911A6bd705C07f6Fc08c'
-        REACT_APP_CONTRACT_YF_USDC_XYZ_SUSHI_LP_ADDR: '0x3C76Db3cb199609E21d1024111447FCe010D646B'
-        REACT_APP_CONTRACT_DAO_GOVERNANCE_ADDR: '0x889AF716442bAdfB7F546745973dE9073CEBA6aC'
-        REACT_APP_CONTRACT_DAO_BARN_ADDR: '0xA95281904827E1758252bB49eCd5D3Cf06F2040e'
-        REACT_APP_CONTRACT_DAO_REWARD_ADDR: '0xA287c145d4D89C746D7CfdB875B8362a8Aa90987'
-        REACT_APP_BASE_API_URL: 'https://dev.api.dao.universe.xyz'
+
+        REACT_APP_CONTRACT_YF_STAKING_ADDR: ''
+        REACT_APP_CONTRACT_YF_BOND_ADDR: ''
+        REACT_APP_CONTRACT_YF_AAVE_ADDR: ''
+        REACT_APP_CONTRACT_YF_COMP_ADDR: ''
+        REACT_APP_CONTRACT_YF_SNX_ADDR: ''
+        REACT_APP_CONTRACT_YF_SUSHI_ADDR: ''
+        REACT_APP_CONTRACT_YF_LINK_ADDR: ''
+        REACT_APP_CONTRACT_YF_ILV_ADDR: ''
+        REACT_APP_CONTRACT_YF_USDC_XYZ_SUSHI_LP_ADDR: ''
+
+        REACT_APP_CONTRACT_DAO_GOVERNANCE_ADDR: ''
+        REACT_APP_CONTRACT_DAO_BARN_ADDR: ''
+        REACT_APP_CONTRACT_DAO_REWARD_ADDR: ''
+
+        REACT_APP_BASE_API_URL: ''
+
     - name: Save artifacts
       uses: actions/upload-artifact@v2
       with:
@@ -104,7 +117,7 @@ jobs:
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
         message_id: ${{ steps.slack.outputs.message_id }}
-        channel: infra-ci-kekdao
+        channel_id: C01D16VJ84C
         status: BUILD SUCCESSFUL
         color: good
 
@@ -115,7 +128,7 @@ jobs:
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
         message_id: ${{ steps.slack.outputs.message_id }}
-        channel: infra-ci-kekdao
+        channel_id: C01D16VJ84C
         status: BUILD FAILED
         color: danger
 
@@ -130,7 +143,7 @@ jobs:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
-        channel: infra-ci-kekdao
+        channel_id: C01D16VJ84C
         status: DEPLOYMENT STARTED
         color: warning
 
@@ -147,14 +160,14 @@ jobs:
         aws-region: us-east-1
 
     - name: Deploy static site to S3
-      run: ls -l && aws s3 sync . s3://dev-devappbarnbridgecom-origin --delete
+      run: ls -l && aws s3 sync . s3://alpha-alphaappbarnbridgecom-origin --delete
 
     - name: Invalidate CloudFront cache
       run: |
         #!/usr/bin/env bash
-        set -eou pipefail
+        set -euo pipefail
 
-        CF_DIST_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items!=null] | [?contains(Aliases.Items, 'dev.app.barnbridge.com')].Id | [0]" | tr -d \")
+        CF_DIST_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items!=null] | [?contains(Aliases.Items, 'alpha.app.barnbridge.com')].Id | [0]" | tr -d \")
         echo "Clearing cache for ${CF_DIST_ID}..."
         CF_INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id ${CF_DIST_ID} --paths "/*" | jq -r '.Invalidation.Id')
         while [ $(aws cloudfront get-invalidation --distribution-id ${CF_DIST_ID} --id ${CF_INVALIDATION_ID} | jq -r '.Invalidation.Status') != "Completed" ]; do
@@ -169,7 +182,7 @@ jobs:
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
         message_id: ${{ steps.slack.outputs.message_id }}
-        channel: infra-ci-kekdao
+        channel_id: C01D16VJ84C
         status: DEPLOYMENT SUCCESSFUL
         color: good
 
@@ -180,6 +193,6 @@ jobs:
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
         message_id: ${{ steps.slack.outputs.message_id }}
-        channel: infra-ci-kekdao
+        channel_id: C01D16VJ84C
         status: DEPLOYMENT FAILED
         color: danger
