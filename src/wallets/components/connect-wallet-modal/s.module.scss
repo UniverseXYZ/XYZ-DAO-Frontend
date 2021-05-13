@@ -1,0 +1,18 @@
+.button {
+  min-height: 96px;
+  max-height: 96px;
+}
+
+.button:hover {
+  background-color: #202529 !important;
+}
+
+.button > svg {
+  filter: grayscale(100%) opacity(60%);
+  transition: filter 0.2s ease-out !important;
+  color: var(--theme-primary-color);
+}
+
+.button:hover > svg {
+  filter: grayscale(0%) opacity(100%);
+}

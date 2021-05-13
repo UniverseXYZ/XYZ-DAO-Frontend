@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import Web3Contract from 'web3/contracts/web3Contract';
+import Web3Contract from 'web3/web3Contract';
 import { MAX_UINT_256, ZERO_BIG_NUMBER } from 'web3/utils';
 
 const ABI: any[] = [

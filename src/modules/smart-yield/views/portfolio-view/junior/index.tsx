@@ -2,9 +2,8 @@ import React from 'react';
 import AntdSpin from 'antd/lib/spin';
 import BigNumber from 'bignumber.js';
 import format from 'date-fns/format';
-import { useWeb3Contracts } from 'web3/contracts';
-import Erc20Contract from 'web3/contracts/erc20Contract';
-import Web3Contract from 'web3/contracts/web3Contract';
+import Erc20Contract from 'web3/erc20Contract';
+import Web3Contract from 'web3/web3Contract';
 import { ZERO_BIG_NUMBER, formatBigValue, getHumanValue } from 'web3/utils';
 
 import Divider from 'components/antd/divider';
@@ -29,6 +28,7 @@ import StakedPositionsTable, {
 } from 'modules/smart-yield/views/portfolio-view/junior/staked-positions-table';
 import { useWallet } from 'wallets/wallet';
 
+import { BondToken, XyzToken } from '../../../../../components/providers/known-tokens-provider';
 import ActivePositionsTable, { ActivePositionsTableEntity } from './active-positions-table';
 import LockedPositionsTable, { LockedPositionsTableEntity } from './locked-positions-table';
 import PastPositionsTable from './past-positions-table';
@@ -83,7 +83,6 @@ const JuniorPortfolio: React.FC = () => {
   const [reload] = useReload();
   const [activeTab, setActiveTab] = React.useState('active');
 
-  const web3c = useWeb3Contracts();
   const wallet = useWallet();
   const poolsCtx = usePools();
 
@@ -272,10 +271,10 @@ const JuniorPortfolio: React.FC = () => {
       ...prevState,
       dataStaked: prevState.dataStaked.map(data => ({
         ...data,
-        rewardPrice: web3c.uniswap.bondPrice,
+        rewardPrice: XyzToken.price,
       })),
     }));
-  }, [state.dataStaked.length, web3c.uniswap.bondPrice]);
+  }, [state.dataStaked.length, XyzToken.price]);
 
   function handleFiltersApply(values: PositionsFilterValues) {
     setFiltersMap(prevState => ({

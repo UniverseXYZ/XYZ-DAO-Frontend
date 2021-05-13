@@ -1,0 +1,15 @@
+.ledger {
+  color: #1d2028;
+
+  [data-theme='dark'] & {
+    color: #fff;
+  }
+}
+
+.metamask {
+  color: #161616;
+
+  [data-theme='dark'] & {
+    color: #fff;
+  }
+}

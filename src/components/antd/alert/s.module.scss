@@ -2,10 +2,10 @@
 
 .component:global(.ant-alert) {
   padding: 16px 24px;
-  border-radius: 4px;
+  border-radius: 12px;
 
-  background: rgba(var(--alert-bg-color), 0.04);
-  border: 1px solid rgba(var(--alert-bg-color), 0.32);
+  background: var(--alert-bg-color);
+  border: 1px solid var(--alert-border-color);
 
   > :global(.ant-alert-icon) {
     margin-right: 12px;
@@ -23,8 +23,9 @@
   }
 
   &:global(.ant-alert-info) {
-    --alert-bg-color: var(--theme-blue-color-rgb);
+    --alert-bg-color: linear-gradient(135deg, rgba(145, 79, 230, 0.04) 0%, rgba(49, 108, 223, 0.04) 100%);
     --alert-text-color: var(--theme-blue-color);
+    --alert-border-color: rgba(49, 108, 223, 0.32);
   }
 
   &:global(.ant-alert-success) {
@@ -40,6 +41,53 @@
   &:global(.ant-alert-error) {
     --alert-bg-color: var(--theme-red-color-rgb);
     --alert-text-color: var(--theme-red-color);
+  }
+
+  @supports ((background-clip: text) or (-webkit-background-clip: text)) and
+  ((text-fill-color: transparent) or (-webkit-text-fill-color: transparent)) {
+    &:global(.ant-alert-info) :global(.ant-alert-message) {
+      --alert-bg-color: linear-gradient(135deg, rgba(145, 79, 230, 0.04) 0%, rgba(49, 108, 223, 0.04) 100%);
+      --alert-text-color: var(--gradient-blue);
+    }
+    &:global(.ant-alert-info) :global(.ant-alert-icon) {
+      color: rgb(145, 79, 230);
+    }
+    &:global(.ant-alert-success) :global(.ant-alert-message) {
+      --alert-bg-color: var(--theme-green-color-rgb);
+      --alert-text-color: var(--theme-green-color);
+    }
+    &:global(.ant-alert-warning) :global(.ant-alert-message) {
+      --alert-bg-color: var(--theme-yellow-color-rgb);
+      --alert-text-color: var(--theme-yellow-color);
+    }
+    &:global(.ant-alert-error) :global(.ant-alert-message) {
+      --alert-bg-color: var(--theme-red-color-rgb);
+      --alert-text-color: var(--theme-red-color);
+    }
+    & :global(.ant-alert-message) {
+      background: var(--alert-text-color);
+      background-size: cover;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-fill-color: transparent;
+    }
+    &:global(.ant-alert-info) :global(.ant-alert-message)::selection {
+      -webkit-text-fill-color: var(--theme-blue-color);
+      text-fill-color: var(--theme-blue-color);
+    }
+    &:global(.ant-alert-success) :global(.ant-alert-message)::selection {
+      -webkit-text-fill-color: var(--theme-green-color);
+      text-fill-color: var(--theme-green-color);
+    }
+    &:global(.ant-alert-warning) :global(.ant-alert-message)::selection {
+      -webkit-text-fill-color: var(--theme-yellow-color);
+      text-fill-color: var(--theme-yellow-color);
+    }
+    &:global(.ant-alert-error) :global(.ant-alert-message)::selection {
+      -webkit-text-fill-color: var(--theme-red-color);
+      text-fill-color: var(--theme-red-color);
+    }
   }
 
   > :global(.ant-alert-icon),

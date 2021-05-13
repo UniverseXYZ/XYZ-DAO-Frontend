@@ -8,7 +8,6 @@ import formatDuration from 'date-fns/formatDuration';
 import intervalToDuration from 'date-fns/intervalToDuration';
 import isThisWeek from 'date-fns/isThisWeek';
 import isToday from 'date-fns/isToday';
-import { BONDTokenMeta } from 'web3/contracts/bond';
 import { getEtherscanAddressUrl, getHumanValue, shortenAddr } from 'web3/utils';
 
 import Icon, { IconNames } from 'components/custom/icon';
@@ -18,6 +17,7 @@ import { NotificationType, useNotifications } from 'components/providers/notific
 import { useReload } from 'hooks/useReload';
 import SYSmartYieldContract from 'modules/smart-yield/contracts/sySmartYieldContract';
 
+import { XyzToken } from '../../providers/known-tokens-provider';
 import ExternalLink from '../externalLink';
 import NotificationIcon from './icon';
 
@@ -213,7 +213,7 @@ function getData(n: NotificationType, reload: Function): [IconNames, [string, st
         colorPairs.blue,
         <Text type="p2" weight="semibold" color="secondary">
           {getStrongText(
-            `${getHumanValue(new BigNumber(n.metadata.amount ?? 0), BONDTokenMeta.decimals)?.toFixed()} vBOND`,
+            `${getHumanValue(new BigNumber(n.metadata.amount ?? 0), XyzToken.decimals)?.toFixed()} v${XyzToken.symbol}`,
           )}{' '}
           has been delegated to you from{' '}
           <ExternalLink href={getEtherscanAddressUrl(n.metadata.from)} className="link-blue">

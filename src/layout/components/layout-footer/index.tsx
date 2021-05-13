@@ -1,59 +1,90 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import cn from 'classnames';
-import { BONDTokenMeta } from 'web3/contracts/bond';
-import { USDCTokenMeta } from 'web3/contracts/usdc';
 
+import Tooltip from 'components/antd/tooltip';
 import ExternalLink from 'components/custom/externalLink';
+import Icon from 'components/custom/icon';
 import { Text } from 'components/custom/typography';
 
 import s from './s.module.scss';
 
-const WEBSITE_LINK = 'http://www.barnbridge.com/';
-const DISCORD_LINK = 'https://discord.com/invite/FfEhsVk';
-const TWITTER_LINK = 'https://twitter.com/barn_bridge';
-const WHITEPAPER_LINK = 'https://github.com/BarnBridge/BarnBridge-Whitepaper';
-const GITHUB_LINK = 'https://github.com/BarnBridge/';
-const UNISWAP_LIQUIDITY_LINK = `https://app.uniswap.org/#/add/${BONDTokenMeta.address}/${USDCTokenMeta.address}`;
-const UNISWAP_MARKET_LINK = `https://app.uniswap.org/#/swap?inputCurrency=${BONDTokenMeta.address}&outputCurrency=${USDCTokenMeta.address}`;
-
 const LayoutFooter: React.FC = () => {
   return (
-    <footer className={cn(s.footer, 'flex wrap col-gap-24 row-gap-24 justify-end')}>
-      <ExternalLink href={WEBSITE_LINK}>
-        <Text type="p2" weight="semibold">
-          Website
+    <footer className={s.footer}>
+      <div className={s.footerTop}>
+        <div className={s.leftBlock}>
+          <Link to="/" className={s.logoLink}>
+            <Icon name="png/universe" width="auto" height="auto" className={s.logo} />
+            <Icon name="universe-text" width="94" height="15" className={s.logoText} />
+          </Link>
+          <Text type="p2" weight="bold" color="white">
+            Stay up to date with our newsletter
+          </Text>
+          <form className={s.subscribeWrap} onSubmit={undefined}>
+            <input type="email" name="email" placeholder="Enter your email" className={s.subscribeInput} />
+            <button className={cn(s.subscribeButton, 'button-primary')}>Subscribe</button>
+          </form>
+        </div>
+        <div className={s.rightBlock}>
+          <nav className={s.navBlock}>
+            <h3>Products</h3>
+            <ExternalLink href="#" className={s.link}>
+              Auction house
+            </ExternalLink>
+            <ExternalLink className={s.link} aria-disabled="true">
+              <Tooltip title="Coming soon" placement="top" hint>
+                NFT marketplace
+              </Tooltip>
+            </ExternalLink>
+            <ExternalLink className={s.link} aria-disabled="true">
+              <Tooltip title="Coming soon" placement="top" hint>
+                Social media
+              </Tooltip>
+            </ExternalLink>
+          </nav>
+          <nav className={s.navBlock}>
+            <h3>Info</h3>
+            <ExternalLink href="#" className={s.link}>
+              About
+            </ExternalLink>
+            <ExternalLink href="#" className={s.link}>
+              Whitepaper
+            </ExternalLink>
+            <ExternalLink href="#" className={s.link}>
+              Team
+            </ExternalLink>
+          </nav>
+          <nav className={s.navBlock}>
+            <h3>DAO</h3>
+            <ExternalLink href="#" className={s.link}>
+              Governance
+            </ExternalLink>
+            <ExternalLink href="#" className={s.link}>
+              Yield farming
+            </ExternalLink>
+            <ExternalLink href="#" className={s.link}>
+              Docs
+            </ExternalLink>
+          </nav>
+        </div>
+      </div>
+      <div className={s.copyrightsBlock}>
+        <Text type="p2" color="secondary">
+          Universe.xyz © 2021. Open-sourced.
         </Text>
-      </ExternalLink>
-      <ExternalLink href={DISCORD_LINK}>
-        <Text type="p2" weight="semibold">
-          Discord
+        <Text type="p2" color="secondary">
+          Powered by xyzDAO.
         </Text>
-      </ExternalLink>
-      <ExternalLink href={TWITTER_LINK}>
-        <Text type="p2" weight="semibold">
-          Twitter
-        </Text>
-      </ExternalLink>
-      <ExternalLink href={WHITEPAPER_LINK}>
-        <Text type="p2" weight="semibold">
-          Whitepaper
-        </Text>
-      </ExternalLink>
-      <ExternalLink href={GITHUB_LINK}>
-        <Text type="p2" weight="semibold">
-          Github
-        </Text>
-      </ExternalLink>
-      <ExternalLink href={UNISWAP_LIQUIDITY_LINK}>
-        <Text type="p2" weight="semibold">
-          Uniswap v2 USDC/BOND add liquidity
-        </Text>
-      </ExternalLink>
-      <ExternalLink href={UNISWAP_MARKET_LINK}>
-        <Text type="p2" weight="semibold">
-          Uniswap v2 USDC/BOND market
-        </Text>
-      </ExternalLink>
+        <div>
+          <ExternalLink href="#" className={s.sLink}>
+            <Icon name="twitter" width="20" height="20" />
+          </ExternalLink>
+          <ExternalLink href="#" className={s.sLink}>
+            <Icon name="discord" width="20" height="20" />
+          </ExternalLink>
+        </div>
+      </div>
     </footer>
   );
 };

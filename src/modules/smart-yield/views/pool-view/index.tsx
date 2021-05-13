@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AntdSwitch from 'antd/lib/switch';
-import { useWeb3Contracts } from 'web3/contracts';
-import { BONDTokenMeta } from 'web3/contracts/bond';
 import { ZERO_BIG_NUMBER, formatPercent, formatToken } from 'web3/utils';
 
 import Icon from 'components/custom/icon';
@@ -15,11 +13,12 @@ import Statistics from 'modules/smart-yield/views/pool-view/statistics';
 import Transactions from 'modules/smart-yield/views/pool-view/transactions';
 import { useWallet } from 'wallets/wallet';
 
+import { XyzToken } from '../../../../components/providers/known-tokens-provider';
+
 import s from './s.module.scss';
 
 const PoolView: React.FC = () => {
   const wallet = useWallet();
-  const web3c = useWeb3Contracts();
   const { rewardPool } = useRewardPool();
 
   const [enabling, setEnabling] = React.useState(false);
@@ -35,11 +34,11 @@ const PoolView: React.FC = () => {
       return undefined;
     }
 
-    const bondPrice = web3c.uniswap.bondPrice ?? 1;
+    const bondPrice = XyzToken.price ?? 1;
     const jTokenPrice = rewardPool.poolToken.price ?? 1;
 
     const yearlyReward = dailyReward
-      .dividedBy(10 ** BONDTokenMeta.decimals)
+      .dividedBy(10 ** XyzToken.decimals)
       .multipliedBy(bondPrice)
       .multipliedBy(365);
     const poolBalance = poolSize

@@ -2,10 +2,7 @@ import React from 'react';
 import AntdForm from 'antd/lib/form';
 import AntdSwitch from 'antd/lib/switch';
 import BigNumber from 'bignumber.js';
-import { useWeb3Contracts } from 'web3/contracts';
-import { BONDTokenMeta } from 'web3/contracts/bond';
-import { CONTRACT_DAO_BARN_ADDR } from 'web3/contracts/daoBarn';
-import { MAX_UINT_256, ZERO_BIG_NUMBER, formatBONDValue } from 'web3/utils';
+import { ZERO_BIG_NUMBER, formatBONDValue } from 'web3/utils';
 
 import Alert from 'components/antd/alert';
 import Button from 'components/antd/button';
@@ -17,6 +14,10 @@ import TokenAmount from 'components/custom/token-amount';
 import { Text } from 'components/custom/typography';
 import useMergeState from 'hooks/useMergeState';
 
+import { XyzToken } from '../../../../components/providers/known-tokens-provider';
+import config from '../../../../config';
+import Erc20Contract from '../../../../web3/erc20Contract';
+import { useDAO } from '../../components/dao-provider';
 import WalletDepositConfirmModal from './components/wallet-deposit-confirm-modal';
 
 type DepositFormData = {
@@ -48,22 +49,21 @@ const InitialState: WalletDepositViewState = {
 };
 
 const WalletDepositView: React.FC = () => {
-  const web3c = useWeb3Contracts();
+  const daoCtx = useDAO();
   const [form] = AntdForm.useForm<DepositFormData>();
 
   const [state, setState] = useMergeState<WalletDepositViewState>(InitialState);
 
-  const { balance: stakedBalance, userLockedUntil } = web3c.daoBarn;
-  const { balance: bondBalance, barnAllowance } = web3c.bond;
+  const { balance: stakedBalance, userLockedUntil } = daoCtx.daoBarn;
+  const xyzBalance = (XyzToken.contract as Erc20Contract).balance?.unscaleBy(XyzToken.decimals);
+  const barnAllowance = (XyzToken.contract as Erc20Contract).getAllowanceOf(config.contracts.dao.barn);
   const isLocked = (userLockedUntil ?? 0) > Date.now();
 
   async function handleSwitchChange(checked: boolean) {
-    const value = checked ? MAX_UINT_256 : ZERO_BIG_NUMBER;
-
     setState({ enabling: true });
 
     try {
-      await web3c.bond.approveSend(CONTRACT_DAO_BARN_ADDR, value);
+      await (XyzToken.contract as Erc20Contract).approve(checked, config.contracts.dao.barn);
     } catch {}
 
     setState({ enabling: false });
@@ -79,10 +79,10 @@ const WalletDepositView: React.FC = () => {
     setState({ saving: true });
 
     try {
-      await web3c.daoBarn.actions.deposit(amount, gasPrice.value);
+      await daoCtx.daoBarn.actions.deposit(amount, gasPrice.value);
       form.setFieldsValue(InitialFormValues);
-      web3c.daoBarn.reload();
-      web3c.bond.reload();
+      daoCtx.daoBarn.reload();
+      (XyzToken.contract as Erc20Contract).loadBalance().catch(Error);
     } catch {}
 
     setState({ saving: false });
@@ -109,10 +109,10 @@ const WalletDepositView: React.FC = () => {
   return (
     <div className="card">
       <Grid className="card-header" flow="col" gap={24} colsTemplate="1fr 1fr 1fr 1fr 42px" align="start">
-        <Grid flow="col" gap={12}>
-          <Icon name="token-bond" width={40} height={40} />
+        <Grid flow="col" gap={12} align="center">
+          <Icon name="png/universe" width={40} height={40} />
           <Text type="p1" weight="semibold" color="primary">
-            BOND
+            {XyzToken.symbol}
           </Text>
         </Grid>
 
@@ -130,7 +130,7 @@ const WalletDepositView: React.FC = () => {
             Wallet Balance
           </Text>
           <Text type="p1" weight="semibold" color="primary">
-            {formatBONDValue(bondBalance)}
+            {formatBONDValue(xyzBalance)}
           </Text>
         </Grid>
 
@@ -174,8 +174,8 @@ const WalletDepositView: React.FC = () => {
                 <Form.Item name="amount" label="Amount" rules={[{ required: true, message: 'Required' }]}>
                   <TokenAmount
                     tokenIcon="token-bond"
-                    max={bondBalance}
-                    maximumFractionDigits={BONDTokenMeta.decimals}
+                    max={xyzBalance}
+                    maximumFractionDigits={XyzToken.decimals}
                     displayDecimals={4}
                     disabled={state.saving}
                     slider

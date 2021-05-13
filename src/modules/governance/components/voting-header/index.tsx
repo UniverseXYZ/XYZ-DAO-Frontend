@@ -2,8 +2,6 @@ import React from 'react';
 import { Spin } from 'antd';
 import BigNumber from 'bignumber.js';
 import cn from 'classnames';
-import { useWeb3Contracts } from 'web3/contracts';
-import { BONDTokenMeta } from 'web3/contracts/bond';
 import { formatBONDValue, formatBigValue, isSmallBONDValue } from 'web3/utils';
 
 import Button from 'components/antd/button';
@@ -16,7 +14,11 @@ import Icon from 'components/custom/icon';
 import { Hint, Text } from 'components/custom/typography';
 import { UseLeftTime } from 'hooks/useLeftTime';
 import useMergeState from 'hooks/useMergeState';
+import imgSrc from 'resources/png/universe.png';
 
+import { XyzToken } from '../../../../components/providers/known-tokens-provider';
+import Erc20Contract from '../../../../web3/erc20Contract';
+import { useDAO } from '../dao-provider';
 import VotingDetailedModal from '../voting-detailed-modal';
 
 import { getFormattedDuration, inRange } from 'utils';
@@ -34,36 +36,36 @@ const InitialState: VotingHeaderState = {
 };
 
 const VotingHeader: React.FC = () => {
-  const web3c = useWeb3Contracts();
+  const daoCtx = useDAO();
 
   const [state, setState] = useMergeState<VotingHeaderState>(InitialState);
 
-  const { claimValue } = web3c.daoReward;
-  const { balance: bondBalance } = web3c.bond;
-  const { votingPower, userLockedUntil, multiplier = 1 } = web3c.daoBarn;
+  const { claimValue } = daoCtx.daoReward;
+  const xyzBalance = (XyzToken.contract as Erc20Contract).balance?.unscaleBy(XyzToken.decimals);
+  const { votingPower, userLockedUntil, multiplier = 1 } = daoCtx.daoBarn;
 
   const loadedUserLockedUntil = (userLockedUntil ?? Date.now()) - Date.now();
 
   function handleLeftTimeEnd() {
-    web3c.daoBarn.reload();
+    daoCtx.daoBarn.reload();
   }
 
   function handleClaim() {
     setState({ claiming: true });
 
-    web3c.daoReward.actions
+    daoCtx.daoReward.actions
       .claim()
       .catch(Error)
       .then(() => {
-        web3c.daoReward.reload();
-        web3c.bond.reload();
+        daoCtx.daoReward.reload();
+        (XyzToken.contract as Erc20Contract).loadBalance().catch(Error);
         setState({ claiming: false });
       });
   }
 
   return (
     <div className={cn(s.component, 'pv-24 ph-64 sm-ph-16')}>
-      <Text type="lb2" weight="semibold" color="red" className="mb-16">
+      <Text type="lb2" weight="semibold" color="primary" className="mb-16">
         My Voting Power
       </Text>
       <Grid flow="col" gap={24} className={s.items}>
@@ -71,8 +73,8 @@ const VotingHeader: React.FC = () => {
           <Text type="p2" color="secondary">
             Current reward
           </Text>
-          <Grid flow="col" gap={16} align="center">
-            <Tooltip title={<Text type="p2">{formatBigValue(claimValue, BONDTokenMeta.decimals)}</Text>}>
+          <Grid flow="col" align="center">
+            <Tooltip title={<Text type="p2">{formatBigValue(claimValue, XyzToken.decimals)}</Text>}>
               <Skeleton loading={claimValue === undefined}>
                 <Text type="h3" weight="bold" color="primary">
                   {isSmallBONDValue(claimValue) && '> '}
@@ -80,8 +82,13 @@ const VotingHeader: React.FC = () => {
                 </Text>
               </Skeleton>
             </Tooltip>
-            <Icon name="bond-square-token" />
-            <Button type="light" disabled={claimValue?.isZero()} onClick={handleClaim}>
+            <Icon name="png/universe" src={imgSrc} width={40} height={40} />
+            <Button
+              type="primary"
+              size="small"
+              disabled={claimValue?.isZero()}
+              onClick={handleClaim}
+              style={{ marginLeft: 4 }}>
               {!state.claiming ? 'Claim' : <Spin spinning />}
             </Button>
           </Grid>
@@ -89,15 +96,15 @@ const VotingHeader: React.FC = () => {
         <Divider type="vertical" />
         <Grid flow="row" gap={4}>
           <Text type="p2" color="secondary">
-            Bond Balance
+            XYZ Balance
           </Text>
-          <Grid flow="col" gap={16} align="center">
-            <Skeleton loading={bondBalance === undefined}>
+          <Grid flow="col" align="center">
+            <Skeleton loading={xyzBalance === undefined}>
               <Text type="h3" weight="bold" color="primary">
-                {formatBONDValue(bondBalance)}
+                {formatBONDValue(xyzBalance)}
               </Text>
             </Skeleton>
-            <Icon name="bond-square-token" />
+            <Icon name="png/universe" src={imgSrc} width={40} height={40} />
           </Grid>
         </Grid>
         <Divider type="vertical" />
@@ -112,7 +119,9 @@ const VotingHeader: React.FC = () => {
               </Text>
             </Skeleton>
             <Button type="light" onClick={() => setState({ showDetailedView: true })}>
-              Detailed view
+              <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">
+                Detailed view
+              </Text>
             </Button>
 
             {state.showDetailedView && <VotingDetailedModal onCancel={() => setState({ showDetailedView: false })} />}

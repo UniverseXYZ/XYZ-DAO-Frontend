@@ -1,4 +1,13 @@
 .component {
   background: var(--theme-card-color);
   border-bottom: 1px solid var(--theme-border-color);
+  gap: 16px;
+  padding: 24px 64px;
+}
+
+
+.items {
+  @media (max-width: 480px) {
+    display: block;
+  }
 }

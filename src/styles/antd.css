@@ -318,7 +318,7 @@ mark {
 }
 ::selection {
   color: #fff;
-  background: #ff4339;
+  background: var(--gradient-green-safe);
 }
 .clearfix::before {
   display: table;
@@ -17595,15 +17595,14 @@ textarea.ant-pagination-options-quick-jumper input {
   background-color: #fff;
   background-clip: padding-box;
   border-radius: 4px;
-  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15) \9;
+  box-shadow: var(--theme-modal-shadow);
 }
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .ant-popover {
     /* IE10+ */
   }
   .ant-popover-inner {
-    box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--theme-modal-shadow);
   }
 }
 .ant-popover-title {
@@ -17652,7 +17651,7 @@ textarea.ant-pagination-options-quick-jumper input {
   transform: rotate(45deg);
 }
 .ant-popover-placement-top > .ant-popover-content > .ant-popover-arrow,
-.ant-popover-placement-topLeft > .ant-popover-content > .ant-popover-arrow,
+.ant-popover-placement-topLeft > .ant-popover-content > .ant-popoveant-popover-innerr-arrow,
 .ant-popover-placement-topRight > .ant-popover-content > .ant-popover-arrow {
   bottom: 6.2px;
   border-top-color: transparent;
@@ -20822,8 +20821,8 @@ span.ant-radio + * {
   font-feature-settings: 'tnum';
   position: relative;
   font-size: 14px;
-  background: #fff;
-  border-radius: 4px;
+  background: var(--theme-card-color);
+  border-radius: 12px;
 }
 .ant-table table {
   width: 100%;
@@ -21330,13 +21329,13 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   border-top-right-radius: 4px;
 }
 .ant-table-container table > thead > tr:first-child th:first-child {
-  border-top-left-radius: 4px;
+  border-top-left-radius: 12px;
 }
 .ant-table-container table > thead > tr:first-child th:last-child {
-  border-top-right-radius: 4px;
+  border-top-right-radius: 12px;
 }
 .ant-table-footer {
-  border-radius: 0 0 4px 4px;
+  border-radius: 0 0 12px 12px;
 }
 .ant-table-wrapper-rtl {
   direction: rtl;

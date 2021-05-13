@@ -1,9 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import BigNumber from 'bignumber.js';
-import { useWeb3Contracts } from 'web3/contracts';
-import { BONDTokenMeta } from 'web3/contracts/bond';
-import Web3Contract from 'web3/contracts/web3Contract';
+import Web3Contract from 'web3/web3Contract';
 import { ZERO_BIG_NUMBER, getEtherscanTxUrl } from 'web3/utils';
 
 import { useReload } from 'hooks/useReload';
@@ -14,6 +12,8 @@ import SYSeniorBondContract from 'modules/smart-yield/contracts/sySeniorBondCont
 import SYSmartYieldContract from 'modules/smart-yield/contracts/sySmartYieldContract';
 import SYUnderlyingContract from 'modules/smart-yield/contracts/syUnderlyingContract';
 import { useWallet } from 'wallets/wallet';
+
+import { XyzToken } from '../../../../components/providers/known-tokens-provider';
 
 export type PoolsSYPool = APISYPool & {
   meta?: SYPoolMeta;
@@ -66,7 +66,6 @@ const PoolsProvider: React.FC = props => {
   const { children } = props;
 
   const history = useHistory();
-  const web3c = useWeb3Contracts();
   const wallet = useWallet();
   const [reload, version] = useReload();
   const [state, setState] = React.useState<State>(InitialState);
@@ -155,11 +154,11 @@ const PoolsProvider: React.FC = props => {
       const { poolSize, dailyReward } = rewardPool;
 
       if (poolSize && dailyReward) {
-        const bondPrice = web3c.uniswap.bondPrice ?? 1;
+        const bondPrice = XyzToken.price ?? 1;
         const jTokenPrice = smartYield.price ?? 1;
 
         const yearlyReward = dailyReward
-          .dividedBy(10 ** BONDTokenMeta.decimals)
+          .dividedBy(10 ** XyzToken.decimals)
           .multipliedBy(bondPrice)
           .multipliedBy(365);
         const poolBalance = poolSize
@@ -175,7 +174,7 @@ const PoolsProvider: React.FC = props => {
         reload();
       }
     });
-  }, [state.pools, web3c.uniswap.bondPrice, version]);
+  }, [state.pools, XyzToken.price, version]);
 
   const redeemBond = React.useCallback(
     (smartYieldAddress: string, sBondId: number, gasPrice: number) => {

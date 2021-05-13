@@ -2,11 +2,12 @@
 
 .overlay:global(.ant-popover) {
   :global(.ant-popover-inner) {
-    background: var(--theme-overlay-color);
+    background: var(--theme-card-color);
+    border-radius: 12px;
   }
 
   :global(.ant-popover-arrow) {
-    border-color: var(--theme-overlay-color);
+    border-color: var(--theme-card-color);
   }
 
   :global(.ant-popover-title) {

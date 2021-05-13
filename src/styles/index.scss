@@ -15,12 +15,16 @@ html {
 body {
   background: var(--theme-body-color);
   color: var(--theme-secondary-color);
-  font-family: Montserrat, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-block-size: 100%;
   min-inline-size: 100%;
+}
+
+body[data-fixed="true"] {
+  height: 100vh;
+  overflow: hidden;
 }
 
 * {
@@ -60,6 +64,7 @@ body.mobile-menu-open {
 }
 
 :root {
+  --font-family: 'Space Grotesk', sans-serif;
   --font-size-h1: 32px;
   --font-size-h2: 24px;
   --font-size-h3: 18px;
@@ -72,7 +77,7 @@ body.mobile-menu-open {
   --theme-body-color: #f8f8f9; // grey50
   --theme-card-color: #fff;
   --theme-overlay-color: #fff;
-  --theme-mask-color: rgba(19, 32, 43, 0.8);
+  --theme-mask-color: rgba(0, 0, 0, 0.08);
   --theme-border-color: #e3e4e6; // grey100
   --theme-icon-color: #aaafb3; // grey300
   --theme-icon-hover-color: #060a0d; // grey900
@@ -82,9 +87,11 @@ body.mobile-menu-open {
   --theme-secondary-color-rgb: 113, 121, 128; // grey500
   --theme-default-color: #aaafb3; // grey300
 
-  --theme-card-shadow: 0 0 0.5px rgba(6, 10, 13, 0.4), 0 8px 16px rgba(113, 121, 128, 0.08);
-  --theme-modal-shadow: 0 0 0.5px rgba(6, 10, 13, 0.4), 0 16px 32px rgba(19, 32, 43, 0.4);
-  --theme-overlay-shadow: 0 0 0.5px rgba(0, 0, 0, 0.4), 0 32px 64px rgba(113, 121, 128, 0.32);
+  --theme-card-shadow: 0 0 1px rgba(6, 10, 13, 0.4), 0 8px 16px rgba(113, 121, 128, 0.08);
+  --theme-modal-shadow: 0 0 1px rgba(6, 10, 13, 0.4), 0 16px 32px rgba(19, 32, 43, 0.4);
+  --theme-overlay-shadow: 0 0 1px rgba(0, 0, 0, 0.4), 0 32px 64px rgba(113, 121, 128, 0.32);
+
+  --theme-modal-overlay: rgba(0, 0, 0, 0.7);;
 
   --theme-input-background: #fff;
   --theme-input-placeholder: #aaafb3;
@@ -113,6 +120,16 @@ body.mobile-menu-open {
   --theme-white-color: #fff;
 
   --horizontal-padding: 64px;
+
+  --gradient-green: linear-gradient(135deg, #BCEB00 15.57%, #00EAEA 84.88%); // rgb(188, 235, 0) rgb(0, 234, 234)
+  --gradient-green-safe: #BCEB00;
+  --gradient-red: linear-gradient(135deg, #FF7439 0%, #FF39BC 100%); // rgb(255, 116, 57) rgb(255, 57, 188)
+  --gradient-red-safe: #FF7439;
+  --gradient-blue: linear-gradient(135deg, #914FE6 0%, #316CDF 100%); // rgb(145, 79, 230) rgb(49, 108, 223)
+  --gradient-blue-safe: #914FE6;
+
+  --theme-tooltip-bg: #fff;
+  --theme-tooltip-item-bg-active: rgba(0, 0, 0, 0.04);
 }
 
 @media (max-width: 1024px) {
@@ -136,24 +153,28 @@ body.mobile-menu-open {
 }
 
 [data-theme='dark'] {
-  --theme-body-color: #202529;
-  --theme-card-color: #282c30;
+  --theme-body-color: #131313;
+  --theme-card-color: #1d1d1d;
   --theme-overlay-color: #36393d;
   --theme-mask-color: rgba(32, 37, 41, 0.8);
   --theme-border-color: #43484d;
   --theme-icon-color: #606268;
   --theme-icon-hover-color: #fff;
+  --theme-icon-hover-gradient: linear-gradient(135deg, #bceb00 15%, #00eaea 85%);
 
   --theme-primary-color: #fff;
   --theme-secondary-color: #939496;
   --theme-default-color: #939496;
 
-  --theme-card-shadow: 0 0 0.5px #fff, 0 8px 16px rgba(0, 0, 0, 0.08);
-  --theme-modal-shadow: 0 0 0.5px #fff, 0 32px 64px rgba(0, 0, 0, 0.32);
-  --theme-overlay-shadow: 0 0 0.5px #fff, 0 32px 64px rgba(0, 0, 0, 0.32);
+  --theme-card-shadow: 0px 0px 1px #fff, 0px 8px 16px rgba(0, 0, 0, 0.08);
+  --theme-modal-shadow: 0 0 1px #fff, 0 32px 64px rgba(0, 0, 0, 0.32);
+  --theme-overlay-shadow: 0 0 1px #fff, 0 32px 64px rgba(0, 0, 0, 0.32);
 
-  --theme-input-background: #202529;
+  --theme-input-background: #1d1d1d;
   --theme-input-placeholder: #606268;
+
+  --theme-tooltip-bg: #2f2f2f;
+  --theme-tooltip-item-bg-active: #3F3F3F;
 }
 
 :focus:not(:focus-visible) {
@@ -179,4 +200,29 @@ button {
   &:empty {
     display: none;
   }
+}
+
+.ant-switch.ant-switch .ant-switch-handle::before {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.24);
+}
+
+.ant-switch.ant-switch[aria-checked="false"] {
+  background: #43484D;
+}
+
+.ant-switch.ant-switch[aria-checked="trye"] {
+  background: var(--gradient-green);
+}
+
+
+.ant-spin .ant-spin-dot {
+  color: var(--theme-secondary-color);
+}
+
+.ant-spin .ant-spin-dot .ant-spin-dot-item {
+  background: var(--theme-secondary-color);
+}
+
+.link-gradient:hover {
+  opacity: 0.7;
 }

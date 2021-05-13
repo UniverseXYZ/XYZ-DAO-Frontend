@@ -18,10 +18,22 @@ const Columns: ColumnsType<APIVoterEntity> = [
       <div className="flex col-gap-16 align-center">
         <Identicon address={value} width={32} height={32} />
         <ExternalLink href={getEtherscanAddressUrl(value)} className="link-blue">
-          <Text type="p1" weight="semibold" ellipsis className="hidden-mobile hidden-tablet">
+          <Text
+            type="p1"
+            weight="semibold"
+            color="var(--gradient-blue-safe)"
+            textGradient="var(--gradient-blue)"
+            ellipsis
+            className="hidden-mobile hidden-tablet">
             {value}
           </Text>
-          <Text type="p1" weight="semibold" wrap={false} className="hidden-desktop">
+          <Text
+            type="p1"
+            weight="semibold"
+            color="var(--gradient-blue-safe)"
+            textGradient="var(--gradient-blue)"
+            wrap={false}
+            className="hidden-desktop">
             {shortenAddr(value)}
           </Text>
         </ExternalLink>
@@ -34,7 +46,12 @@ const Columns: ColumnsType<APIVoterEntity> = [
     width: 200,
     align: 'right',
     render: (value: BigNumber) => (
-      <Text type="p1" weight="semibold" color="primary" className="ml-auto">
+      <Text
+        type="p1"
+        weight="semibold"
+        className="ml-auto"
+        color="var(--gradient-red-safe)"
+        textGradient="var(--gradient-red)">
         {formatBigValue(value, 2, '-', 2)}
       </Text>
     ),
@@ -45,7 +62,12 @@ const Columns: ColumnsType<APIVoterEntity> = [
     width: 200,
     align: 'right',
     render: (value: BigNumber) => (
-      <Text type="p1" weight="semibold" color="primary" className="ml-auto">
+      <Text
+        type="p1"
+        weight="semibold"
+        className="ml-auto"
+        color="var(--gradient-red-safe)"
+        textGradient="var(--gradient-red)">
         {formatBigValue(value, 2, '-', 2)}
       </Text>
     ),
@@ -56,7 +78,12 @@ const Columns: ColumnsType<APIVoterEntity> = [
     width: 150,
     align: 'right',
     render: (value: number) => (
-      <Text type="p1" weight="semibold" color="primary" className="ml-auto">
+      <Text
+        type="p1"
+        weight="semibold"
+        className="ml-auto"
+        color="var(--gradient-green-safe)"
+        textGradient="var(--gradient-green)">
         {value}
       </Text>
     ),
@@ -67,7 +94,12 @@ const Columns: ColumnsType<APIVoterEntity> = [
     width: 150,
     align: 'right',
     render: (value: number) => (
-      <Text type="p1" weight="semibold" color="primary" className="ml-auto">
+      <Text
+        type="p1"
+        weight="semibold"
+        className="ml-auto"
+        color="var(--gradient-green-safe)"
+        textGradient="var(--gradient-green)">
         {value}
       </Text>
     ),

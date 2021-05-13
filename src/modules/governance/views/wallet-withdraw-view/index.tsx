@@ -1,8 +1,6 @@
 import React from 'react';
 import * as Antd from 'antd';
 import BigNumber from 'bignumber.js';
-import { useWeb3Contracts } from 'web3/contracts';
-import { BONDTokenMeta } from 'web3/contracts/bond';
 import { ZERO_BIG_NUMBER, formatBONDValue } from 'web3/utils';
 
 import Alert from 'components/antd/alert';
@@ -13,7 +11,11 @@ import Grid from 'components/custom/grid';
 import Icon from 'components/custom/icon';
 import TokenAmount from 'components/custom/token-amount';
 import { Text } from 'components/custom/typography';
+import { XyzToken } from 'components/providers/known-tokens-provider';
 import useMergeState from 'hooks/useMergeState';
+
+import Erc20Contract from '../../../../web3/erc20Contract';
+import { useDAO } from '../../components/dao-provider';
 
 type WithdrawFormData = {
   amount?: BigNumber;
@@ -36,13 +38,13 @@ const InitialState: WalletWithdrawViewState = {
 };
 
 const WalletWithdrawView: React.FC = () => {
-  const web3c = useWeb3Contracts();
+  const daoCtx = useDAO();
   const [form] = Antd.Form.useForm<WithdrawFormData>();
 
   const [state, setState] = useMergeState<WalletWithdrawViewState>(InitialState);
 
-  const { balance: stakedBalance, userLockedUntil } = web3c.daoBarn;
-  const { balance: bondBalance } = web3c.bond;
+  const { balance: stakedBalance, userLockedUntil } = daoCtx.daoBarn;
+  const xyzBalance = (XyzToken.contract as Erc20Contract).balance?.unscaleBy(XyzToken.decimals);
   const isLocked = (userLockedUntil ?? 0) > Date.now();
   const hasStakedBalance = stakedBalance?.gt(ZERO_BIG_NUMBER);
   const formDisabled = !hasStakedBalance || isLocked;
@@ -57,10 +59,10 @@ const WalletWithdrawView: React.FC = () => {
     setState({ saving: true });
 
     try {
-      await web3c.daoBarn.actions.withdraw(amount, gasPrice.value);
+      await daoCtx.daoBarn.actions.withdraw(amount, gasPrice.value);
       form.setFieldsValue(InitialFormValues);
-      web3c.daoBarn.reload();
-      web3c.bond.reload();
+      daoCtx.daoBarn.reload();
+      (XyzToken.contract as Erc20Contract).loadBalance().catch(Error);
     } catch {}
 
     setState({ saving: false });
@@ -69,10 +71,10 @@ const WalletWithdrawView: React.FC = () => {
   return (
     <div className="card">
       <Grid className="card-header" flow="col" gap={24} colsTemplate="1fr 1fr 1fr 1fr 42px" align="start">
-        <Grid flow="col" gap={12}>
-          <Icon name="token-bond" width={40} height={40} />
+        <Grid flow="col" gap={12} align="center">
+          <Icon name="png/universe" width={40} height={40} />
           <Text type="p1" weight="semibold" color="primary">
-            BOND
+            {XyzToken.symbol}
           </Text>
         </Grid>
 
@@ -90,7 +92,7 @@ const WalletWithdrawView: React.FC = () => {
             Wallet Balance
           </Text>
           <Text type="p1" weight="semibold" color="primary">
-            {formatBONDValue(bondBalance)}
+            {formatBONDValue(xyzBalance)}
           </Text>
         </Grid>
 
@@ -109,7 +111,7 @@ const WalletWithdrawView: React.FC = () => {
                 <TokenAmount
                   tokenIcon="token-bond"
                   max={stakedBalance}
-                  maximumFractionDigits={BONDTokenMeta.decimals}
+                  maximumFractionDigits={XyzToken.decimals}
                   displayDecimals={4}
                   disabled={formDisabled || state.saving}
                   slider

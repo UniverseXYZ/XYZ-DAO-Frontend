@@ -2,9 +2,9 @@
 
 :root .component {
   --input-shadow: none;
-  --input-shadow-focused: 0 0 0 3px rgba(255, 67, 57, 0.16);
+  --input-shadow-focused: 0 0 0 3px rgba(63, 234, 156, 0.16);
   --input-border: 1px solid #e3e4e6;
-  --input-border-focused: 1px solid #ff4339;
+  --input-border-focused: 1px solid transparent;
   --input-border-disabled: 1px solid #e3e4e6;
   --input-bg: #fff;
   --input-bg-disabled: #f8f8f9;
@@ -14,15 +14,17 @@
 }
 
 [data-theme='dark'] .component {
-  --input-bg-disabled: rgb(32, 37, 41);
+  --input-bg-disabled: rgba(19, 19, 19, 0.1);
   --input-border: 1px solid #43484d;
   --input-border-disabled: none;
   --input-text-active: #fff;
   --input-text-disabled: #939496;
+  --input-bg: var(--theme-body-color);
 }
 
 .component {
   width: 100%;
+  border-radius: 12px;
 
   :global(.ant-input),
   &:global(.ant-input) {
@@ -31,8 +33,8 @@
     padding: 12px 16px;
     box-shadow: var(--input-shadow);
     border: var(--input-border);
-    border-radius: 4px;
-    background: var(--theme-input-background);
+    border-radius: 12px;
+    background: var(--theme-body-color);
     outline: none;
     color: var(--input-text);
 
@@ -56,7 +58,8 @@
       background: var(--input-bg-disabled);
 
       &::placeholder {
-        color: var(--input-text-disabled);
+        color: inherit;
+        opacity: 0.4;
       }
     }
 
@@ -75,14 +78,21 @@
 
   :global(.ant-input-group) {
     border: var(--input-border);
-    border-radius: 4px;
+    background: var(--gradient-green);
+    border-radius: 12px;
+    padding: 1px;
+
 
     :global(.ant-input-group-addon) {
-      background: var(--theme-input-background);
+      background: var(--theme-body-color);
       border: 0;
 
       &:first-of-type {
+        border-radius: 12px 0 0 12px;
         border-right: var(--input-border);
+      }
+      &:last-of-type {
+        border-radius: 0 12px 12px 0;
       }
     }
 
@@ -91,7 +101,7 @@
       padding: 12px 16px;
       box-shadow: none;
       border: 0;
-      border-radius: 0;
+      border-radius: 12px;
 
       &:global(.ant-input-lg) {
         height: 64px;
@@ -117,7 +127,8 @@
 
       :global(.ant-input-group-addon) {
         &:first-of-type {
-          border-right: var(--input-border-disabled);
+          border-right: var(--input-border);
+          opacity: 0.4;
         }
       }
     }

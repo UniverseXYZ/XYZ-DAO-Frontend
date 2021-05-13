@@ -1,21 +1,13 @@
-import React, { FC } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { CSSProperties, FC, HTMLProps, ReactNode } from 'react';
+import { NavLink, NavLinkProps } from 'react-router-dom';
 import cn from 'classnames';
 
 import s from './s.module.scss';
 
-function isExternal(href: string) {
-  let parser = document.createElement('a');
-  parser.href = href;
-  return window.location.host !== parser.host;
-}
+type NavTabProps = NavLinkProps | HTMLProps<HTMLAnchorElement>;
 
-type TabProps = React.HTMLProps<HTMLAnchorElement> & {
-  href: string;
-};
-
-type TabsProps = {
-  tabs: TabProps[];
+type NavTabsProps = {
+  tabs: NavTabProps[];
   className?: string;
   /**
    * @example
@@ -25,7 +17,7 @@ type TabsProps = {
   shadows?: boolean | string;
 };
 
-export const Tabs: FC<TabsProps> = ({ className, tabs, shadows = false }) => {
+export const NavTabs: FC<NavTabsProps> = ({ className, tabs, shadows = false }) => {
   return (
     <div
       className={cn(s.tabs, className, {
@@ -34,72 +26,78 @@ export const Tabs: FC<TabsProps> = ({ className, tabs, shadows = false }) => {
       style={
         {
           '--tabs-bg': `var(${typeof shadows === 'string' ? shadows : '--theme-body-color'})`,
-        } as React.CSSProperties
+        } as CSSProperties
       }>
-      {tabs.map(({ href, className, children, ...restTab }, idx) => {
-        if (isExternal(href)) {
+      {tabs.map(({ className, children, ...restTab }, idx) => {
+        // @ts-ignore
+        if (restTab.to) {
           return (
-            <a
-              key={idx}
-              href={href}
-              className={cn(s.tab, className)}
-              rel="noopener noreferrer"
-              target="_blank"
-              {...restTab}>
+            // @ts-ignore
+            <NavLink key={idx} className={cn(s.tab, className)} activeClassName={s.active} {...restTab}>
               {children}
-            </a>
+            </NavLink>
           );
         }
 
         return (
-          // @ts-ignore
-          <NavLink key={idx} to={href} className={cn(s.tab, className)} exact activeClassName={s.active} {...restTab}>
+          <a key={idx} className={cn(s.tab, className)} rel="noopener noreferrer" target="_blank" {...restTab}>
             {children}
-          </NavLink>
+          </a>
         );
       })}
     </div>
   );
 };
 
-type ElasticTabProps = {
-  children: React.ReactNode;
+type TabProps = {
   id: string;
+  children: ReactNode;
   className?: string;
+  disabled?: boolean;
   onClick?: Function;
 };
 
-type ElasticTabsProps = {
-  tabs: ElasticTabProps[];
+type TabsProps = {
+  variation?: 'normal' | 'elastic';
+  tabs: TabProps[];
+  activeKey: TabProps['id'];
+  size?: 'normal' | 'small';
   className?: string;
-  active: ElasticTabProps['id'];
-  onClick: (id: ElasticTabProps['id']) => void;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
+  onClick?: (id: TabProps['id']) => void;
 };
 
-export const ElasticTabs: FC<ElasticTabsProps> = props => {
-  const totalTabs = props.tabs.length;
-  const activeIndex = props.tabs.findIndex(t => t.id === props.active);
+export const Tabs: FC<TabsProps> = props => {
+  const { variation = 'normal', tabs, activeKey, size, className, style } = props;
+
+  const totalTabs = tabs.length;
+  const activeIndex = tabs.findIndex(tab => tab.id === activeKey);
 
   return (
-    <div className={cn(s.elasticTabs, props.className)} style={props.style}>
-      <div
-        className={s.elasticToggle}
-        style={{ left: `calc(${activeIndex} * 100% / ${totalTabs} + 4px)`, width: `calc(100% / ${totalTabs} - 8px)` }}
-      />
-      {props.tabs.map(({ id, className, onClick, ...tabRest }) => (
+    <div
+      className={cn(className, {
+        [s.tabs]: variation === 'normal',
+        [s.elasticTabs]: variation === 'elastic',
+      })}
+      style={style}>
+      {variation === 'elastic' && (
+        <div
+          className={s.elasticToggle}
+          style={{ left: `calc(${activeIndex} * 100% / ${totalTabs} + 4px)`, width: `calc(100% / ${totalTabs} - 8px)` }}
+        />
+      )}
+      {tabs.map(({ id, className, onClick, ...tabRest }) => (
         <button
           key={id}
           className={cn(s.tab, className, {
-            [s.active]: id === props.active,
+            [s.active]: id === activeKey,
+            [s.small]: size === 'small',
           })}
-          style={{ width: `calc(100% / ${totalTabs})` }}
+          style={{ width: variation === 'elastic' ? `calc(100% / ${totalTabs})` : 'inherit' }}
           type="button"
           onClick={() => {
-            props.onClick(id);
-            if (typeof onClick === 'function') {
-              onClick();
-            }
+            props.onClick?.(id);
+            onClick?.();
           }}
           {...tabRest}
         />

@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
-import Erc20Contract from 'web3/contracts/erc20Contract';
-import Web3Contract, { BatchContractMethod } from 'web3/contracts/web3Contract';
+import Erc20Contract from 'web3/erc20Contract';
 import { getGasValue } from 'web3/utils';
+import Web3Contract, { BatchContractMethod } from 'web3/web3Contract';
 
 const ABI: any[] = [
   {
@@ -254,7 +254,7 @@ class SYSmartYieldContract extends Erc20Contract {
         }),
       },
     ]).then(([price, abond]) => {
-      this.price = price.dividedBy(1e18);
+      this.price = price?.dividedBy(1e18) || null;
       this.abond = abond;
       this.emit(Web3Contract.UPDATE_DATA);
     });

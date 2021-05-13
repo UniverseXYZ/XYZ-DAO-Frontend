@@ -1,16 +1,23 @@
 import React, { CSSProperties } from 'react';
 import cn from 'classnames';
 
+import aaveSrc from 'resources/png/token-aave.png';
+import ilvSrc from 'resources/png/token-ilv.png';
+import linkSrc from 'resources/png/token-link.png';
+import sushiSrc from 'resources/png/token-sushi.png';
+import universeSrc from 'resources/png/universe.png';
 import Sprite from 'resources/svg/icons-sprite.svg';
 
 import s from './s.module.scss';
 
-export type LogoIconNames = 'barnbridge';
+export type LogoIconNames = 'png/universe' | 'universe-text';
 
 export type TokenIconNames =
   | 'bond-circle-token'
   | 'bond-square-token'
   | 'token-unknown'
+  | 'static/token-bond'
+  | 'static/token-uniswap'
   | 'token-eth'
   | 'token-btc'
   | 'token-weth'
@@ -21,8 +28,13 @@ export type TokenIconNames =
   | 'token-dai'
   | 'token-susd'
   | 'token-uniswap'
+  | 'token-usdt'
+  | 'token-snx'
   | 'compound'
-  | 'static/aave'
+  | 'png/aave'
+  | 'png/sushi'
+  | 'png/link'
+  | 'png/ilv'
   | 'cream_finance'
   | 'yearn_finance';
 
@@ -91,6 +103,7 @@ export type IconNames =
   | 'tx-success'
   | 'tx-failure'
   | 'burger'
+  | 'burger-close'
   | 'hourglass'
   | 'history'
   | 'piggybank'
@@ -110,7 +123,19 @@ export type IconNames =
   | 'apy-up'
   | 'chart'
   | 'queue'
-  | 'stake';
+  | 'stake'
+  | 'auction'
+  | 'marketplace'
+  | 'social-media'
+  | 'about'
+  | 'whitepaper'
+  | 'team'
+  | 'governance'
+  | 'yield-farming'
+  | 'docs'
+  | 'twitter'
+  | 'discord'
+  | 'dropdown';
 
 export type IconProps = {
   name: IconNames;
@@ -120,12 +145,44 @@ export type IconProps = {
   rotate?: 0 | 90 | 180 | 270;
   className?: string;
   style?: CSSProperties;
+  src?: string;
 };
 
 const Icon: React.FC<IconProps> = props => {
-  const { name, width = 24, height = 24, rotate, color, className, style, ...rest } = props;
+  const { name, width = 24, height = 24, rotate, color, className, style, src, ...rest } = props;
 
   const isStatic = (name ?? '').indexOf('static/') === 0;
+  const isPng = (name ?? '').indexOf('png/') === 0;
+
+  if (isPng) {
+    const getSrc = () => {
+      switch (name) {
+        case 'png/universe':
+          return universeSrc;
+        case 'png/aave':
+          return aaveSrc;
+        case 'png/ilv':
+          return ilvSrc;
+        case 'png/link':
+          return linkSrc;
+        case 'png/sushi':
+          return sushiSrc;
+        default:
+          return '';
+      }
+    };
+    return (
+      <img
+        className={cn(s.component, className, rotate && `rotate-${rotate}`, color && s[`${color}-color`])}
+        width={width}
+        alt=""
+        height={height ?? width}
+        style={style}
+        src={src || getSrc()}
+        {...rest}
+      />
+    );
+  }
 
   return (
     <svg

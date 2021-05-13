@@ -30,6 +30,14 @@ const GeneralContextProvider: React.FC<Props> = ({ children }) => {
     }
   }, [theme]);
 
+  React.useEffect(() => {
+    if (navOpen) {
+      document.body.setAttribute('data-fixed', 'true');
+    } else {
+      document.body.removeAttribute('data-fixed');
+    }
+  }, [navOpen]);
+
   return (
     <GeneralContext.Provider
       value={{

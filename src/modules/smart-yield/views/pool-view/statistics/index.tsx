@@ -95,7 +95,7 @@ const Statistics: React.FC<Props> = ({ className }) => {
             </dd>
           </div>
           <div className={s.def}>
-            <dt>My Bond balance</dt>
+            <dt>My XYZ balance</dt>
             <dd>
               <Icon name="bond-circle-token" className="mr-8" width="16" height="16" />
               {formatToken(rewardPool?.rewardToken.balance, {

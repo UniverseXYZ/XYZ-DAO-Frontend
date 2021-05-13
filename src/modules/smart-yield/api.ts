@@ -1,23 +1,10 @@
 import BigNumber from 'bignumber.js';
-import QueryString from 'query-string';
 
-const GOV_API_URL = process.env.REACT_APP_GOV_API_URL;
+import config from 'config';
 
-function queryfy(obj: Record<string, any>): string {
-  return QueryString.stringify(obj, {
-    skipNull: true,
-    skipEmptyString: true,
-    encode: true,
-  });
-}
+import { PaginatedResult, queryfy } from 'utils/fetch';
 
-type PaginatedResult<T extends Record<string, any>> = {
-  data: T[];
-  meta: {
-    count: number;
-    block: number;
-  };
-};
+const API_URL = config.api.baseUrl;
 
 export type SYMarketMeta = {
   id: string;
@@ -116,7 +103,7 @@ export type APISYPool = {
 };
 
 export function fetchSYPools(protocolID = 'all'): Promise<APISYPool[]> {
-  const url = new URL(`/api/smartyield/pools?protocolID=${protocolID}`, GOV_API_URL);
+  const url = new URL(`/api/smartyield/pools?protocolID=${protocolID}`, API_URL);
 
   return fetch(url.toString())
     .then(result => result.json())
@@ -124,10 +111,7 @@ export function fetchSYPools(protocolID = 'all'): Promise<APISYPool[]> {
 }
 
 export function fetchSYPool(protocolID: string, underlyingSymbol: string): Promise<APISYPool> {
-  const url = new URL(
-    `/api/smartyield/pools?protocolID=${protocolID}&underlyingSymbol=${underlyingSymbol}`,
-    GOV_API_URL,
-  );
+  const url = new URL(`/api/smartyield/pools?protocolID=${protocolID}&underlyingSymbol=${underlyingSymbol}`, API_URL);
 
   return fetch(url.toString())
     .then(result => result.json())
@@ -141,7 +125,7 @@ export type APISYPoolAPY = {
 };
 
 export function fetchSYPoolAPY(syAddr: string): Promise<APISYPoolAPY[]> {
-  const url = new URL(`/api/smartyield/pools/${syAddr}/apy`, GOV_API_URL);
+  const url = new URL(`/api/smartyield/pools/${syAddr}/apy`, API_URL);
 
   return fetch(url.toString())
     .then(result => result.json())
@@ -239,7 +223,7 @@ export function fetchSYUserTxHistory(
     transactionType,
   });
 
-  const url = new URL(`/api/smartyield/users/${address}/history?${query}`, GOV_API_URL);
+  const url = new URL(`/api/smartyield/users/${address}/history?${query}`, API_URL);
 
   return fetch(url.toString())
     .then(result => result.json())
@@ -279,7 +263,7 @@ export function fetchSYSeniorRedeems(
     token,
   });
 
-  const url = new URL(`/api/smartyield/users/${address}/redeems/senior?=${query}`, GOV_API_URL);
+  const url = new URL(`/api/smartyield/users/${address}/redeems/senior?=${query}`, API_URL);
 
   return fetch(url.toString())
     .then(result => result.json())
@@ -330,7 +314,7 @@ export function fetchSYJuniorPastPositions(
     transactionType,
   });
 
-  const url = new URL(`/api/smartyield/users/${address}/junior-past-positions?${query}`, GOV_API_URL);
+  const url = new URL(`/api/smartyield/users/${address}/junior-past-positions?${query}`, API_URL);
 
   return fetch(url.toString())
     .then(result => result.json())
@@ -352,7 +336,7 @@ export type APISYPortfolioValue = {
 };
 
 export function fetchSYPortfolioValues(address: string): Promise<APISYPortfolioValue[]> {
-  const url = new URL(`/api/smartyield/users/${address}/portfolio-value`, GOV_API_URL);
+  const url = new URL(`/api/smartyield/users/${address}/portfolio-value`, API_URL);
 
   return fetch(url.toString())
     .then(result => result.json())
@@ -370,7 +354,7 @@ export type APISYSeniorPortfolioValue = {
 };
 
 export function fetchSYSeniorPortfolioValues(address: string): Promise<APISYSeniorPortfolioValue[]> {
-  const url = new URL(`/api/smartyield/users/${address}/portfolio-value/senior`, GOV_API_URL);
+  const url = new URL(`/api/smartyield/users/${address}/portfolio-value/senior`, API_URL);
 
   return fetch(url.toString())
     .then(result => result.json())
@@ -388,7 +372,7 @@ export type APISYJuniorPortfolioValue = {
 };
 
 export function fetchSYJuniorPortfolioValues(address: string): Promise<APISYJuniorPortfolioValue[]> {
-  const url = new URL(`/api/smartyield/users/${address}/portfolio-value/junior`, GOV_API_URL);
+  const url = new URL(`/api/smartyield/users/${address}/portfolio-value/junior`, API_URL);
 
   return fetch(url.toString())
     .then(result => result.json())
@@ -416,7 +400,7 @@ export function fetchSYRewardPools(
 ): Promise<APISYRewardPool[]> {
   const url = new URL(
     `/api/smartyield/rewards/pools?protocolId=${protocolId}&underlyingSymbol=${underlyingSymbol}`,
-    GOV_API_URL,
+    API_URL,
   );
 
   return fetch(url.toString())
@@ -457,7 +441,7 @@ export function fetchSYRewardPoolTransactions(
     transactionType,
   });
 
-  const url = new URL(`/api/smartyield/rewards/pools/${poolAddress}/transactions?${query}`, GOV_API_URL);
+  const url = new URL(`/api/smartyield/rewards/pools/${poolAddress}/transactions?${query}`, API_URL);
 
   return fetch(url.toString())
     .then(result => result.json())

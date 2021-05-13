@@ -1,8 +1,21 @@
 @import 'src/styles/text';
 
 .component:global(.ant-select.ant-select-single) {
-  height: 48px;
+  min-height: 48px;
   position: relative;
+  padding: 1px;
+  border-radius: 12px;
+
+  &:global(.ant-select-focused) {
+    :global(.ant-select-selector) {
+      box-shadow: none !important;
+      border-color: var(--theme-border-color) !important;
+    }
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, #BCEB00 15.57%, #00EAEA 84.88%);
+  }
 
   &:global(.ant-select-sm) {
     height: 32px;
@@ -23,12 +36,17 @@
   }
 
   &:global(.ant-select-open) {
+    background: linear-gradient(135deg, #BCEB00 15.57%, #00EAEA 84.88%);
+
     :global(.ant-select-arrow) svg {
       transform: rotate(-180deg);
     }
 
     :global(.ant-select-selector) {
-      background: var(--theme-body-color);
+      background: var(--theme-card-color);
+      box-shadow: none;
+      border-color: var(--theme-border-color) !important;
+      border-radius: 12px;
     }
   }
 
@@ -37,6 +55,7 @@
     border: 1px solid var(--theme-border-color);
     height: 48px;
     padding: 12px 32px 12px 16px;
+    border-radius: 12px;
 
     :global(.ant-select-selection-item),
     :global(.ant-select-selection-placeholder) {
@@ -60,19 +79,19 @@
 }
 
 .dropdown:global(.ant-select-dropdown) {
-  background: var(--theme-overlay-color);
-  border: 1px solid var(--theme-border-color);
-  border-radius: 4px;
+  background: var(--theme-tooltip-bg);
+  border: 1px solid var(--theme-tooltip-bg);
+  border-radius: 12px;
   padding: 4px;
   pointer-events: all !important;
 
   .option {
     height: 48px;
     padding: 12px;
-    border-radius: 4px;
+    border-radius: 12px;
 
     &:global(.ant-select-item-option-selected) {
-      background: var(--theme-overlay-color);
+      background: var(--theme-tooltip-item-bg-active);
     }
 
     :global(.ant-select-item-option-content) {
@@ -81,7 +100,7 @@
     }
 
     &:global(.ant-select-item-option-active) {
-      background: var(--theme-border-color);
+      background: var(--theme-tooltip-item-bg-active);
 
       :global(.ant-select-item-option-content) {
         color: var(--theme-primary-color);

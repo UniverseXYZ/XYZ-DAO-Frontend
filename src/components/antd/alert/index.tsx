@@ -9,7 +9,7 @@ import s from './s.module.scss';
 export type AlertProps = AntdAlertProps;
 
 const Alert: React.FC<AlertProps> = props => {
-  const { className, type = 'info', ...alertProps } = props;
+  const { className, type = 'info', children, ...alertProps } = props;
 
   const icon = React.useMemo<React.ReactNode>(() => {
     switch (type) {

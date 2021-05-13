@@ -9,8 +9,9 @@ import s from './s.module.scss';
 export type TextProps = {
   tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'label' | 'p' | 'div' | 'span' | 'small' | 'strong';
   type: 'h1' | 'h2' | 'h3' | 'p1' | 'p2' | 'lb1' | 'lb2' | 'small';
-  weight?: 'semibold' | 'bold';
-  color?: 'primary' | 'secondary' | 'red' | 'green' | 'blue' | 'purple';
+  weight?: '500' | 'semibold' | 'bold';
+  color?: 'primary' | 'secondary' | 'red' | 'green' | 'blue' | 'purple' | 'white' | string;
+  textGradient?: string;
   align?: 'left' | 'center' | 'right';
   ellipsis?: boolean;
   wrap?: boolean;
@@ -20,7 +21,20 @@ export type TextProps = {
 };
 
 export const Text: React.FC<TextProps> = React.memo(props => {
-  const { tag = 'div', type, weight, color, align, ellipsis, wrap, className, children, ...textProps } = props;
+  const {
+    tag = 'div',
+    type,
+    weight,
+    color,
+    align,
+    ellipsis,
+    wrap,
+    textGradient,
+    className,
+    children,
+    style,
+    ...textProps
+  } = props;
 
   return React.createElement(
     tag,
@@ -32,10 +46,12 @@ export const Text: React.FC<TextProps> = React.memo(props => {
         color && s[`${color}-color`],
         align && `text-${align}`,
         ellipsis && 'text-ellipsis',
+        textGradient && s.textGradient,
         wrap === true && 'text-wrap',
         wrap === false && 'text-nowrap',
         className,
       ),
+      style: textGradient ? { ...style, '--text-gradient': textGradient || '', '--text-color': color } : style,
       ...textProps,
     },
     children,

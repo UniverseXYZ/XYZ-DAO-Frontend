@@ -7,7 +7,6 @@ import addSeconds from 'date-fns/addSeconds';
 import getUnixTime from 'date-fns/getUnixTime';
 import isAfter from 'date-fns/isAfter';
 import isBefore from 'date-fns/isBefore';
-import { useWeb3Contracts } from 'web3/contracts';
 import { ZERO_BIG_NUMBER, formatBONDValue } from 'web3/utils';
 
 import Alert from 'components/antd/alert';
@@ -18,9 +17,11 @@ import GasFeeList from 'components/custom/gas-fee-list';
 import Grid from 'components/custom/grid';
 import Icon from 'components/custom/icon';
 import { Text } from 'components/custom/typography';
+import { XyzToken } from 'components/providers/known-tokens-provider';
 import { UseLeftTime } from 'hooks/useLeftTime';
 import useMergeState from 'hooks/useMergeState';
 
+import { useDAO } from '../../components/dao-provider';
 // import WalletLockChart from './components/wallet-lock-chart';
 import WalletLockConfirmModal from './components/wallet-lock-confirm-modal';
 
@@ -84,10 +85,10 @@ function getLockEndDate(startDate: Date, duration: string): Date | undefined {
 const WalletLockView: React.FC = () => {
   const [form] = Antd.Form.useForm<LockFormData>();
 
-  const web3c = useWeb3Contracts();
+  const daoCtx = useDAO();
   const [state, setState] = useMergeState<WalletLockViewState>(InitialState);
 
-  const { balance: stakedBalance, userLockedUntil, userDelegatedTo } = web3c.daoBarn;
+  const { balance: stakedBalance, userLockedUntil, userDelegatedTo } = daoCtx.daoBarn;
 
   const hasStakedBalance = stakedBalance?.gt(ZERO_BIG_NUMBER);
   const hasDelegation = isValidAddress(userDelegatedTo);
@@ -123,9 +124,9 @@ const WalletLockView: React.FC = () => {
     setState({ saving: true });
 
     try {
-      await web3c.daoBarn.actions.lock(getUnixTime(lockEndDate), gasPrice.value);
+      await daoCtx.daoBarn.actions.lock(getUnixTime(lockEndDate), gasPrice.value);
       form.setFieldsValue(InitialFormValues);
-      web3c.daoBarn.reload();
+      daoCtx.daoBarn.reload();
     } catch {}
 
     setState({ saving: false });
@@ -140,10 +141,10 @@ const WalletLockView: React.FC = () => {
   return (
     <div className="card">
       <Grid className="card-header" flow="col" gap={24} colsTemplate="1fr 1fr 1fr 1fr 42px" align="start">
-        <Grid flow="col" gap={12}>
-          <Icon name="token-bond" width={40} height={40} />
+        <Grid flow="col" gap={12} align="center">
+          <Icon name="png/universe" width={40} height={40} />
           <Text type="p1" weight="semibold" color="primary">
-            BOND
+            {XyzToken.symbol}
           </Text>
         </Grid>
 
@@ -213,7 +214,9 @@ const WalletLockView: React.FC = () => {
                   </div>
                 )}
               </Form.Item>
-              <Text type="p1">OR</Text>
+              <Text type="p1" color="primary">
+                OR
+              </Text>
               <Form.Item
                 name="lockEndDate"
                 label="Manual choose your lock end date"

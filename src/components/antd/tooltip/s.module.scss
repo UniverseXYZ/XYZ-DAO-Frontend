@@ -5,13 +5,30 @@
     @include font-p1-regular;
     max-width: 360px;
     padding: 16px;
-    background: var(--theme-card-color);
+    background: var(--theme-tooltip-bg);
     box-shadow: var(--theme-overlay-shadow);
     border-radius: 4px;
     color: var(--theme-primary-color);
   }
 
   :global(.ant-tooltip-arrow-content) {
-    background: var(--theme-card-color);
+    background: var(--theme-tooltip-bg);
+  }
+
+  &.hint {
+    :global(.ant-tooltip-inner) {
+      min-height: auto;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 18px;
+      text-align: center;
+      padding: 4px 12px;
+      background: var(--theme-primary-color);
+      color: var(--theme-card-color);
+      border-radius: 100px;
+    }
+    :global(.ant-tooltip-arrow-content) {
+      background: var(--theme-primary-color);
+    }
   }
 }
