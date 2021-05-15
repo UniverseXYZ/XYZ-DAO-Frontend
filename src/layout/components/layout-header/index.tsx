@@ -109,7 +109,7 @@ const LayoutHeader: React.FC = () => {
                 <Icon name="yield-farming" width={20} height={20} className={s.dropdownIcon} />
                 <span>Yield farming</span>
               </Link>
-              <ExternalLink href="#" className={s.dropdownLink}>
+              <ExternalLink href="https://docs.universe.xyz/" className={s.dropdownLink}>
                 <Icon name="docs" width={20} height={20} className={s.dropdownIcon} />
                 <span>Docs</span>
               </ExternalLink>
@@ -179,7 +179,7 @@ const LayoutHeader: React.FC = () => {
                       <Icon name="yield-farming" width={20} height={20} className={s.dropdownIcon} />
                       <span>Yield farming</span>
                     </Link>
-                    <ExternalLink href="#" className={s.dropdownLink}>
+                    <ExternalLink href="https://docs.universe.xyz/" className={s.dropdownLink}>
                       <Icon name="docs" width={20} height={20} className={s.dropdownIcon} />
                       <span>Docs</span>
                     </ExternalLink>

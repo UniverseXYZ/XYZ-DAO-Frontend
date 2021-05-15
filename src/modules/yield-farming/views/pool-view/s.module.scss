@@ -3,6 +3,11 @@
   flex-direction: column;
   flex-grow: 1;
   width: 100%;
+  gap: 0 !important;
+
+  @media (max-width: 900px) {
+    flex: 1 1 100%;
+  }
 }
 
 .stakeCardHeader {

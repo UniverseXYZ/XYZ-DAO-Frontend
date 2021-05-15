@@ -396,7 +396,7 @@ const JuniorPortfolio: React.FC = () => {
                   The Junior APY is estimated based on the current state of the pool. The actual APY you get for your
                   positions might differ. This number shows a weighted average of these APYs for your active positions.
                 </Text>
-                <ExternalLink href="https://docs.barnbridge.com/sy-specs/junior-tranches#jtokens-apy">
+                <ExternalLink href="https://docs.universe.xyz/">
                   Learn more
                 </ExternalLink>
               </Grid>
@@ -454,7 +454,7 @@ const JuniorPortfolio: React.FC = () => {
             <LockedPositionsTable loading={state.loadingLocked} data={dataLockedFilters} />
             {redeemModal && (
               <TxConfirmModal
-                title="Redeem your junior bond"
+                title="Redeem your junior XYZ"
                 header={
                   <div className="grid flow-col col-gap-32">
                     <div className="grid flow-row row-gap-4">

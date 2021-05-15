@@ -75,7 +75,7 @@ const Columns: ColumnsType<StakedPositionsTableEntity> = [
     ),
   },
   {
-    title: 'My $BOND rewards',
+    title: 'My $XYZ rewards',
     width: '20%',
     align: 'right',
     sorter: (a, b) => 0,

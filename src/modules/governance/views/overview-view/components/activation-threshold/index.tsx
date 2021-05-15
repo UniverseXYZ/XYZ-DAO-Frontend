@@ -34,7 +34,7 @@ const ActivationThreshold: React.FC<ActivationThresholdProps> = props => {
         <Hint
           text={
             <Text type="p2">
-              For the KEK to be activated, a threshold of {formatBONDValue(dao.activationThreshold)} KEK tokens staked
+              For the XYZ to be activated, a threshold of {formatBONDValue(dao.activationThreshold)} XYZ tokens staked
               has to be met.
             </Text>
           }>

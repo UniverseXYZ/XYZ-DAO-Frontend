@@ -57,13 +57,13 @@ const LayoutFooter: React.FC = () => {
           </nav>
           <nav className={s.navBlock}>
             <h3>DAO</h3>
-            <ExternalLink href="#" className={s.link}>
+            <Link to="/governance" className={s.link}>
               Governance
-            </ExternalLink>
-            <ExternalLink href="#" className={s.link}>
+            </Link>
+            <Link to="/yield-farming" className={s.link}>
               Yield farming
-            </ExternalLink>
-            <ExternalLink href="#" className={s.link}>
+            </Link>
+            <ExternalLink href="https://docs.universe.xyz/" className={s.link}>
               Docs
             </ExternalLink>
           </nav>

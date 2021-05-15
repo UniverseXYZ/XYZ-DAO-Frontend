@@ -144,7 +144,7 @@ const InstantWithdraw: React.FC = () => {
       <Text type="p2" weight="semibold" className="mb-32">
         Choose the amount of junior tokens you want to redeem. Make sure you double check the amounts, including the
         amount you forfeit. &nbsp;
-        <ExternalLink href="#">Learn more</ExternalLink>
+        <ExternalLink href="https://docs.universe.xyz/">Learn more</ExternalLink>
       </Text>
 
       <Form

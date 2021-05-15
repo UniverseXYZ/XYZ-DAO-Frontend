@@ -36,6 +36,7 @@
   }
 
   :global(.ant-table-tbody) {
+    border-radius: 12px;
     :global(.ant-table-placeholder):hover {
       :global(.ant-table-cell) {
         background: var(--theme-card-color);

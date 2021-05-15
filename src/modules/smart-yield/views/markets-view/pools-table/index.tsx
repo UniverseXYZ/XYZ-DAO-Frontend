@@ -127,7 +127,7 @@ function getTableColumns(wallet: Wallet): ColumnsType<PoolEntity> {
               <Text type="p2" className="mb-8">
                 The number below is the SMART Yield junior rewards APY. You can add that by staking tokens in Pools
               </Text>
-              <ExternalLink href="https://docs.barnbridge.com/sy-specs/junior-tranches#jtokens-apy">
+              <ExternalLink href="https://docs.universe.xyz/">
                 Learn more
               </ExternalLink>
             </>
@@ -220,7 +220,7 @@ function getTableColumns(wallet: Wallet): ColumnsType<PoolEntity> {
                     search: `?m=${entity.protocolId}&t=${entity.underlyingSymbol}`,
                   }}
                   {...{ disabled: !wallet.isActive }}>
-                  Deposit
+                  <span>Deposit</span>
                 </NavLink>
               );
             },

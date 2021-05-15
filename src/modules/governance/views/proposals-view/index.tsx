@@ -92,15 +92,13 @@ const ProposalsViewInner: React.FC = () => {
                         <li>
                           <Text type="p2" weight="semibold">
                             You don’t have enough voting power to create a proposal. The creator of a proposal needs to
-                            have a voting power of at least {daoCtx.minThreshold}% of the amount of $BOND staked in the
+                            have a voting power of at least {daoCtx.minThreshold}% of the amount of $XYZ staked in the
                             DAO.
                           </Text>
                         </li>
                       </ul>
 
-                      <ExternalLink href="https://docs.barnbridge.com/governance/barnbridge-dao/proposals-and-voting">
-                        Learn more
-                      </ExternalLink>
+                      <ExternalLink href="https://docs.universe.xyz/">Learn more</ExternalLink>
                     </Grid>
                   }
                   visible={state.showWhyReason}

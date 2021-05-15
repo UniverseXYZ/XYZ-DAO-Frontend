@@ -110,7 +110,7 @@ const ProposalAbrogationCard: React.FC = () => {
                         <Text type="p2" weight="semibold">
                           You don’t have enough voting power to create an abrogation proposal. The creator of an
                           abrogation proposal needs to have a voting power of at least {daoCtx.minThreshold}% of the
-                          amount of $BOND staked in the DAO.
+                          amount of $XYZ staked in the DAO.
                         </Text>
                       }
                       visible={state.showWhyReason}

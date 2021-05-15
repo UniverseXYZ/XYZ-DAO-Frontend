@@ -28,7 +28,7 @@ const WalletLockConfirmModal: React.FC<WalletLockConfirmModalProps> = props => {
               Are you sure you want to lock your balance?
             </Text>
             <Text type="p2" weight="semibold" color="secondary">
-              You are about to lock {formatBONDValue(balance)} $BOND for {getFormattedDuration(0, duration)}.
+              You are about to lock {formatBONDValue(balance)} $XYZ for {getFormattedDuration(0, duration)}.
               <br />
               <br />
               You cannot undo this or partially lock your balance.
