@@ -141,7 +141,7 @@ const AbrogationVotesCard: React.FC = () => {
                   Vote for
                 </Button>
                 <Button type="default" onClick={handleVoteAgainstModal}>
-                  Vote against
+                  <span>Vote against</span>
                 </Button>
               </Grid>
             ) : (
@@ -156,7 +156,7 @@ const AbrogationVotesCard: React.FC = () => {
                     Change vote
                   </Button>
                   <Button type="default" onClick={handleVoteCancelModal}>
-                    Cancel vote
+                    <span>Cancel vote</span>
                   </Button>
                 </Grid>
               </>

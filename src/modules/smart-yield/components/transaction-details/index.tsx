@@ -74,7 +74,7 @@ const TransactionCustomization: React.FC<TransactionCustomizationProps> = props 
                       slippage: Number(opt),
                     });
                   }}>
-                  {opt}%
+                  <span>{opt}%</span>
                 </Button>
               ))}
               <Form.Item

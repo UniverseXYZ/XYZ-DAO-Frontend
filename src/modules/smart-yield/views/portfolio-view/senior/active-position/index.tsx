@@ -204,7 +204,7 @@ const ActivePosition: React.FC<ActivePositionProps> = props => {
           Redeem
         </Button>
         <Button type="ghost" disabled={!canTransfer || saving} onClick={handleTransferShow}>
-          Transfer
+          <span>Transfer</span>
         </Button>
       </div>
 

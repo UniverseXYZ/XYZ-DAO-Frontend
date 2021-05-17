@@ -20,6 +20,7 @@ type TokenAmountType = {
   max?: number;
   slider?: boolean;
   decimals?: number;
+  name?: string;
 };
 
 export const TokenAmount: React.FC<TokenAmountType> = ({
@@ -30,16 +31,25 @@ export const TokenAmount: React.FC<TokenAmountType> = ({
   classNameBefore,
   slider,
   decimals = 6,
+  name,
   ...rest
 }) => {
   return (
     <div className={className}>
       <div className={s.tokenAmount}>
-        {before && <div className={cn(s.tokenAmountBefore, classNameBefore)}>{before}</div>}
+        {before && (
+          <div className={cn(s.tokenAmountBefore, classNameBefore)}>
+            {before}
+            <span className={s.tokenName}>{name}</span>
+          </div>
+        )}
         <div className={s.tokenAmountValues}>
           <input
             className={s.tokenAmountValue}
-            type="number"
+            type="text"
+            pattern="[0-9]+([\.,][0-9]+)?"
+            step={1 / 10 ** Math.min(decimals, 6)}
+            lang="en"
             onChange={e => {
               onChange(e.target.value);
             }}
@@ -54,7 +64,7 @@ export const TokenAmount: React.FC<TokenAmountType> = ({
             style={{ alignSelf: 'center' }}
             disabled={rest.disabled || rest.max === 0}
             onClick={() => onChange(String(rest.max))}>
-            MAX
+            <span>MAX</span>
           </button>
         )}
       </div>

@@ -4,7 +4,7 @@
   --thumb-size: 32px;
   --thumb-offset: -12px;
   --thumb-highlight-size: 0;
-  --brand-bg-gradient: linear-gradient(to bottom, var(--theme-red-color), var(--theme-red-color));
+  --brand-bg-gradient: var(--gradient-green);
   display: block;
   width: 100%;
   // margin: 1ex 0;
@@ -38,7 +38,7 @@
     margin-top: var(--thumb-offset);
     border-radius: 50%;
     background: var(--brand-bg-gradient) fixed;
-    box-shadow: 0 0 0 var(--thumb-highlight-size) rgba(var(--theme-red-color-rgb), 0.2);
+    //box-shadow: 0 0 0 var(--thumb-highlight-size) rgba(var(--theme-red-color-rgb), 0.2);
 
     @media (prefers-reduced-motion: no-preference) {
       transition: box-shadow 0.1s ease;
@@ -54,18 +54,18 @@
     margin-top: var(--thumb-offset);
     border-radius: 50%;
     background: var(--brand-bg-gradient) fixed;
-    box-shadow: 0 0 0 var(--thumb-highlight-size) rgba(var(--theme-red-color-rgb), 0.2);
+    //box-shadow: 0 0 0 var(--thumb-highlight-size) rgba(var(--theme-red-color-rgb), 0.2);
 
     @media (prefers-reduced-motion: no-preference) {
       transition: box-shadow 0.1s ease;
     }
   }
 
-  &:is(:hover, :active) {
-    &:not(:disabled) {
-      --thumb-highlight-size: 10px;
-    }
-  }
+  //&:is(:hover, :active) {
+  //  &:not(:disabled) {
+  //    --thumb-highlight-size: 10px;
+  //  }
+  //}
 
   &:disabled {
     --brand-bg-gradient: var(--theme-border-color);

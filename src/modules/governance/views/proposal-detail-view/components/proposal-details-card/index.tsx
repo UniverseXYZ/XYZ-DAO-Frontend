@@ -59,7 +59,7 @@ const ProposalDetailsCard: React.FC = () => {
   return (
     <div className="card">
       <div className="card-header">
-        <Text type="p1" weight="semibold" color="primary">
+        <Text type="p1" weight="semibold" color="primary" font="secondary">
           Details
         </Text>
       </div>
@@ -79,7 +79,7 @@ const ProposalDetailsCard: React.FC = () => {
         </div>
         <div>
           <Hint
-            text={`If the creator’s vBOND balance falls below ${minThreshold}% of the total amount of $BOND staked in the DAO the proposal can be cancelled by anyone.`}>
+            text={`If the creator’s vBOND balance falls below ${minThreshold}% of the total amount of $XYZ staked in the DAO the proposal can be cancelled by anyone.`}>
             <Text type="small" weight="semibold" color="secondary" className="mb-4">
               Creator threshold
             </Text>
@@ -100,7 +100,7 @@ const ProposalDetailsCard: React.FC = () => {
         <div>
           {canBeCancelled && (
             <Button type="default" loading={state.cancelling} onClick={handleProposalCancel}>
-              Cancel proposal
+              <span>Cancel proposal</span>
             </Button>
           )}
         </div>

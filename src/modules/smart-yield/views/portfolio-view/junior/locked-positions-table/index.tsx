@@ -51,7 +51,7 @@ const Columns: ColumnsType<LockedPositionsTableEntity> = [
               This value is based on current junior token prices. At the actual maturity date of the junior bond, the
               price may differ and be higher or lower.
             </Text>
-            <ExternalLink href="#">Learn more</ExternalLink>
+            <ExternalLink href="https://docs.universe.xyz/">Learn more</ExternalLink>
           </Grid>
         }>
         Redeemable balance
@@ -105,7 +105,7 @@ const Columns: ColumnsType<LockedPositionsTableEntity> = [
         className="ml-auto"
         disabled={entity.jBond.maturesAt * 1_000 > Date.now()}
         onClick={entity.redeem}>
-        Redeem
+        <span>Redeem</span>
       </Button>
     ),
   },

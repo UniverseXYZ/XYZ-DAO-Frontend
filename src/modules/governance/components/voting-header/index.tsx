@@ -8,10 +8,9 @@ import Button from 'components/antd/button';
 import Divider from 'components/antd/divider';
 import Skeleton from 'components/antd/skeleton';
 import Tooltip from 'components/antd/tooltip';
-import ExternalLink from 'components/custom/externalLink';
 import Grid from 'components/custom/grid';
 import Icon from 'components/custom/icon';
-import { Hint, Text } from 'components/custom/typography';
+import { Text } from 'components/custom/typography';
 import { UseLeftTime } from 'hooks/useLeftTime';
 import useMergeState from 'hooks/useMergeState';
 import imgSrc from 'resources/png/universe.png';
@@ -69,7 +68,7 @@ const VotingHeader: React.FC = () => {
         My Voting Power
       </Text>
       <Grid flow="col" gap={24} className={s.items}>
-        <Grid flow="row" gap={4}>
+        <Grid flow="row" gap={4} className={s.item1}>
           <Text type="p2" color="secondary">
             Current reward
           </Text>
@@ -82,7 +81,7 @@ const VotingHeader: React.FC = () => {
                 </Text>
               </Skeleton>
             </Tooltip>
-            <Icon name="png/universe" src={imgSrc} width={40} height={40} />
+            <Icon name="png/universe" width={40} height={40} />
             <Button
               type="primary"
               size="small"
@@ -94,7 +93,7 @@ const VotingHeader: React.FC = () => {
           </Grid>
         </Grid>
         <Divider type="vertical" />
-        <Grid flow="row" gap={4}>
+        <Grid flow="row" gap={4} className={s.item2}>
           <Text type="p2" color="secondary">
             XYZ Balance
           </Text>
@@ -108,14 +107,14 @@ const VotingHeader: React.FC = () => {
           </Grid>
         </Grid>
         <Divider type="vertical" />
-        <Grid flow="row" gap={4}>
+        <Grid flow="row" gap={4} className={s.item3}>
           <Text type="p2" color="secondary">
             Total voting power
           </Text>
           <Grid flow="col" gap={16} align="center">
             <Skeleton loading={votingPower === undefined}>
               <Text type="h3" weight="bold" color="primary">
-                {formatBONDValue(votingPower)}
+                {formatBONDValue(votingPower) || '-'}
               </Text>
             </Skeleton>
             <Button type="light" onClick={() => setState({ showDetailedView: true })}>
@@ -138,32 +137,10 @@ const VotingHeader: React.FC = () => {
             return leftMultiplier.gt(1) ? (
               <>
                 <Divider type="vertical" />
-                <Grid flow="row" gap={4}>
-                  <Hint
-                    text={
-                      <>
-                        <Text type="p2">
-                          The multiplier mechanic allows users to lock $BOND for a period up to 1 year and get a bonus
-                          of up to 2x vBOND. The bonus is linear, as per the following example:
-                        </Text>
-                        <ul>
-                          <li>
-                            <Text type="p2">lock 1000 $BOND for 1 year → get back 2000 vBOND</Text>
-                          </li>
-                          <li>
-                            <Text type="p2">lock 1000 $BOND for 6 months → get back 1500 vBOND</Text>
-                          </li>
-                        </ul>
-                        <ExternalLink href="https://docs.barnbridge.com/governance/barnbridge-dao/multiplier-and-voting-power">
-                          Learn more
-                        </ExternalLink>
-                      </>
-                    }>
-                    <Text type="p2" color="secondary">
-                      Multiplier & Lock timer
-                    </Text>
-                  </Hint>
-
+                <Grid flow="row" gap={4} className={s.item4}>
+                  <Text type="p2" color="secondary">
+                    Multiplier & Lock timer
+                  </Text>
                   <Grid flow="col" gap={8} align="center">
                     <Tooltip title={`x${leftMultiplier}`}>
                       <Text type="lb1" weight="bold" color="red" className={s.ratio}>

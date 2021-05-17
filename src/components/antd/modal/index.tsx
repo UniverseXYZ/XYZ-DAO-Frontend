@@ -55,7 +55,7 @@ const Modal: React.FC<ModalProps> = props => {
             </Text>
             <Grid flow="col" justify="space-between">
               <Button type="ghost" onClick={() => showConfirm(false)}>
-                No
+                <span>No</span>
               </Button>
               <Button type="primary" onClick={onCancel}>
                 Yes

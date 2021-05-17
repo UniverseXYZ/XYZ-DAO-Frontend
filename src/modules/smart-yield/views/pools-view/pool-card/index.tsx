@@ -114,8 +114,8 @@ export const PoolsCard: FC<PoolsCardProps> = props => {
         {ended && (
           <div>
             <p>
-              The $BOND staking pool ended after 12 epochs on Feb 08, 00:00 UTC. Deposits are now disabled, but you can
-              still withdraw your tokens and collect any unclaimed rewards. To continue to stake $BOND
+              The $XYZ staking pool ended after 12 epochs on Feb 08, 00:00 UTC. Deposits are now disabled, but you can
+              still withdraw your tokens and collect any unclaimed rewards. To continue to stake $XYZ
             </p>
             <a href="/" className="link-gradient">
               Go to governance staking
@@ -130,7 +130,7 @@ export const PoolsCard: FC<PoolsCardProps> = props => {
             </div>
             <div className={s.defRow}>
               <dt>
-                <Hint text="This number shows the $BOND token rewards distributed per day.">Daily reward</Hint>
+                <Hint text="This number shows the $XYZ token rewards distributed per day.">Daily reward</Hint>
               </dt>
               <dd>
                 <Icon name="bond-circle-token" className="mr-8" width="16" height="16" />
@@ -141,7 +141,7 @@ export const PoolsCard: FC<PoolsCardProps> = props => {
             </div>
             <div className={s.defRow}>
               <dt>
-                <Hint text="This number shows the $BOND token rewards remaining.">Reward left</Hint>
+                <Hint text="This number shows the $XYZ token rewards remaining.">Reward left</Hint>
               </dt>
               <dd>
                 <Icon name="bond-circle-token" className="mr-8" width="16" height="16" />
@@ -176,7 +176,7 @@ export const PoolsCard: FC<PoolsCardProps> = props => {
             </div>
             <div className={s.defRow}>
               <dt>
-                <Hint text="This number shows the $BOND rewards you would potentially be able to harvest daily, but is subject to change - in case more users deposit, or you withdraw some of your stake.">
+                <Hint text="This number shows the $XYZ rewards you would potentially be able to harvest daily, but is subject to change - in case more users deposit, or you withdraw some of your stake.">
                   Your daily reward
                 </Hint>
               </dt>
@@ -227,7 +227,7 @@ export const PoolsCard: FC<PoolsCardProps> = props => {
               disabled={!rewardPool.pool.toClaim?.gt(ZERO_BIG_NUMBER)}
               onClick={handleClaim}>
               {claiming && <Spin type="circle" />}
-              Claim
+              <span>Claim</span>
             </button>
           )}
         </footer>

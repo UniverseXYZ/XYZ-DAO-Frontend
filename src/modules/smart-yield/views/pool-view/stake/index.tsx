@@ -232,7 +232,7 @@ const UnstakeForm: React.FC = () => {
           </button>
           <button type="button" className="button-ghost" disabled={saving || !canUnstake} onClick={handleClaimUnstake}>
             {saving && isClaimUnstake && <Spin type="circle" />}
-            Claim & Unstake
+            <span>Claim & Unstake</span>
           </button>
         </div>
       </Form>

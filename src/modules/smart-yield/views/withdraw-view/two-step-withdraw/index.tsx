@@ -102,7 +102,7 @@ const TwoStepWithdraw: React.FC = () => {
       <Text type="p2" weight="semibold" className="mb-32">
         Choose the amount of junior tokens you want to redeem through the 2 step process. Make sure you understand what
         this purchase of a junior bond means, and double check the amount and wait time. &nbsp;
-        <ExternalLink href="https://docs.barnbridge.com/sy-specs/junior-tranches#steps-for-exit">
+        <ExternalLink href="https://docs.universe.xyz/">
           Learn more
         </ExternalLink>
       </Text>

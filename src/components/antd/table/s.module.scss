@@ -36,6 +36,7 @@
   }
 
   :global(.ant-table-tbody) {
+    border-radius: 12px;
     :global(.ant-table-placeholder):hover {
       :global(.ant-table-cell) {
         background: var(--theme-card-color);
@@ -79,7 +80,7 @@
     padding: 24px;
     background: var(--theme-card-color);
     // border: 1px solid var(--theme-border-color);
-    border-radius: 0 0 4px 4px;
+    border-radius: 0 0 12px 12px;
 
     :global(.ant-pagination-total-text) {
       @include font-p2-semi-bold;
@@ -101,7 +102,7 @@
       font-weight: 600;
 
       &:global(.ant-pagination-item-active) > a {
-        color: var(--theme-red-color);
+        color: var(--theme-primary-color);
       }
 
       > a {

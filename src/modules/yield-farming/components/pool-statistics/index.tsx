@@ -84,7 +84,7 @@ const PoolStatistics: FC = () => {
           </div>
           <div className="flex align-center justify-space-between">
             <Text type="small" weight="semibold" color="secondary">
-              Potential reward this epoch
+              Potential reward this week
             </Text>
             <div className="flex align-center">
               <Icon name={XyzToken.icon!} width={16} height={16} className="mr-8" />

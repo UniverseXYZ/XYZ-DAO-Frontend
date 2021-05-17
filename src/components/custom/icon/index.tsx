@@ -135,7 +135,8 @@ export type IconNames =
   | 'docs'
   | 'twitter'
   | 'discord'
-  | 'dropdown';
+  | 'dropdown'
+  | 'theme-switcher';
 
 export type IconProps = {
   name: IconNames;

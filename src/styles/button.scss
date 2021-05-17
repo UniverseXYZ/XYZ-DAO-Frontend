@@ -8,7 +8,7 @@
   padding: 12px 32px;
 
   border: 0;
-  background: linear-gradient(135deg, #BCEB00 15.57%, #00EAEA 84.88%);
+  background: var(--gradient-green);
   box-shadow: 0 10px 20px rgba(136, 120, 172, 0.2);
 
   border-radius: 12px;
@@ -23,21 +23,26 @@
 
   &:hover {
     color: #000;
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), linear-gradient(135deg, #BCEB00 15.57%, #00EAEA 84.88%);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), linear-gradient(135deg, #bceb00 15.57%, #00eaea 84.88%);
   }
 
   &:active {
     color: #000;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), linear-gradient(135deg, #BCEB00 15.57%, #00EAEA 84.88%);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), linear-gradient(135deg, #bceb00 15.57%, #00eaea 84.88%);
   }
 
   &:disabled,
   &[disabled] {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    color: rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
     box-shadow: none;
     cursor: not-allowed;
+
+    [data-theme='dark'] & {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.3);
+    }
   }
 }
 
@@ -86,7 +91,7 @@
   padding: 11px 32px;
   position: relative;
 
-  border: none;
+  border: 0;
   background-color: transparent;
   box-sizing: border-box;
   border-radius: 12px;
@@ -111,6 +116,7 @@
     background: var(--gradient-green);
     z-index: 0;
   }
+
   &::after {
     content: '';
     display: block;
@@ -123,7 +129,8 @@
     background-color: var(--theme-card-color);
     z-index: 0;
   }
-  & span {
+
+  span {
     z-index: 1;
   }
 
@@ -131,7 +138,8 @@
     &::after {
       background-image: linear-gradient(135deg, rgba(188, 235, 0, 0.1) 15.57%, rgba(0, 234, 234, 0.1) 84.88%);
     }
-    & span {
+
+    span {
       opacity: 0.8;
     }
   }
@@ -145,16 +153,17 @@
   &:disabled,
   &[disabled] {
     cursor: not-allowed;
+
     &::before {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    & span {
-      opacity: 0.3;
-    }
-    &:hover {
-      &::after {
-        background: rgba(147, 148, 150, 0.08);
+      background: rgba(0, 0, 0, 0.2);
+
+      [data-theme='dark'] & {
+        background: rgba(255, 255, 255, 0.2);
       }
+    }
+
+    span {
+      opacity: 0.3;
     }
   }
 }
@@ -212,7 +221,7 @@
   }
 
   &.selected {
-    border-color: var(--theme-red-color);
+    border-color: var(--gradient-green-safe);
   }
 }
 

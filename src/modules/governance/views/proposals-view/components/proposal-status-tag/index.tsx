@@ -16,7 +16,7 @@ const ProposalStatusTag: React.FC<ProposalStatusTagProps> = props => {
 
   return (
     <div className={cn(s.component, className, s[state])}>
-      <Text type="lb2" weight="bold">
+      <Text type="lb2" weight="bold" textGradient=" ">
         {APIProposalStateMap.get(state)}
       </Text>
     </div>

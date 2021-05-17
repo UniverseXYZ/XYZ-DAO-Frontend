@@ -109,7 +109,8 @@ const WalletWithdrawView: React.FC = () => {
             <Grid flow="row" gap={32}>
               <Form.Item name="amount" label="Amount" rules={[{ required: true, message: 'Required' }]}>
                 <TokenAmount
-                  tokenIcon="token-bond"
+                  tokenIcon="png/universe"
+                  name={XyzToken.symbol}
                   max={stakedBalance}
                   maximumFractionDigits={XyzToken.decimals}
                   displayDecimals={4}

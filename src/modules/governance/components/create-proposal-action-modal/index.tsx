@@ -536,7 +536,7 @@ const CreateProposalActionModal: React.FC<CreateProposalActionModalProps> = prop
               disabled={state.submitting}
               onClick={props.onCancel}
               className="button-ghost-monochrome">
-              {edit ? 'Cancel Changes' : 'Cancel'}
+              <span>{edit ? 'Cancel Changes' : 'Cancel'}</span>
             </button>
             <button className="button-primary" type="submit">
               {state.submitting && <AntdSpin spinning />}
