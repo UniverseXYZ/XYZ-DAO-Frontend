@@ -200,7 +200,7 @@ const LayoutHeader: React.FC = () => {
               </div>
               <div className={s.themeSwitcherWrap}>
                 <button type="button" className={s.themeSwitcher} onClick={toggleDarkTheme}>
-                  <Icon name="theme-switcher" width={24} height={24} />
+                  <Icon name={isDarkTheme ? 'theme-switcher-sun' : 'theme-switcher-moon'} width={24} height={24} />
                   <span>{isDarkTheme ? 'Switch to light mode' : 'Switch to dark mode'}</span>
                 </button>
               </div>

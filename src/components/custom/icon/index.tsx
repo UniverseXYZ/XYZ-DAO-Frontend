@@ -136,7 +136,8 @@ export type IconNames =
   | 'twitter'
   | 'discord'
   | 'dropdown'
-  | 'theme-switcher';
+  | 'theme-switcher-sun'
+  | 'theme-switcher-moon';
 
 export type IconProps = {
   name: IconNames;
