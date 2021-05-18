@@ -1,8 +1,8 @@
 import React from 'react';
 import cn from 'classnames';
 
-import Tooltip from 'components/antd/tooltip';
 import Icon from 'components/custom/icon';
+import { Tooltip } from 'components/custom/tooltip';
 
 import s from './s.module.scss';
 
@@ -76,10 +76,8 @@ export const Hint: React.FC<HintProps> = props => {
   return (
     <div className={cn(s.hint, className)}>
       <span>{children}</span>
-      <Tooltip title={text} className={s.tooltip}>
-        <span>
-          <Icon name="info-outlined" width={16} height={16} className={s.icon} />
-        </span>
+      <Tooltip target={<Icon name="info-outlined" width={16} height={16} className={s.icon} />} className={s.tooltip}>
+        {text}
       </Tooltip>
     </div>
   );

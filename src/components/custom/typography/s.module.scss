@@ -95,7 +95,7 @@
     color: var(--text-color);
   }
   @supports ((background-clip: text) or (-webkit-background-clip: text)) and
-  ((text-fill-color: transparent) or (-webkit-text-fill-color: transparent)) {
+    ((text-fill-color: transparent) or (-webkit-text-fill-color: transparent)) {
     &.textGradient {
       background: var(--text-gradient);
       background-size: cover;
@@ -104,6 +104,7 @@
       -webkit-text-fill-color: transparent;
       text-fill-color: transparent;
     }
+
     &.textGradient::selection {
       -webkit-text-fill-color: var(--text-color);
       text-fill-color: var(--text-color);
@@ -119,8 +120,6 @@
 
   .tooltip {
     align-self: start;
-    line-height: initial;
-    cursor: pointer;
   }
 
   .icon {
