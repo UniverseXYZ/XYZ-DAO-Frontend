@@ -156,7 +156,9 @@ const WalletDepositView: React.FC = () => {
                 expanded: !prevState.expanded,
               }))
             }>
-            <span><Icon name="chevron-right" rotate={state.expanded ? 270 : 0} /></span>
+            <span>
+              <Icon name="chevron-right" rotate={state.expanded ? 270 : 0} />
+            </span>
           </button>
         )}
       </Grid>

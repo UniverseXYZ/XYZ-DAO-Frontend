@@ -279,9 +279,10 @@ const PoolTransactions: FC = () => {
 
   return (
     <div className="card mb-32">
-      <div className="card-header flex flow-col align-center justify-space-between pv-0">
+      <div className="card-header flex flow-col align-center justify-space-between pv-0" style={{ overflowX: 'auto' }}>
         <Tabs
           activeKey={activeTab}
+          style={{ flexShrink: 0 }}
           tabs={[
             ...(hasOwnTab
               ? [
