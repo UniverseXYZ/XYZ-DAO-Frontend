@@ -117,8 +117,8 @@
 
 .nav {
   display: flex;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-  margin-right: 30px;
+  border-right: 1px solid var(--theme-border-color);
+  margin-right: 24px;
 
   @media (max-width: 768px) {
     display: none;

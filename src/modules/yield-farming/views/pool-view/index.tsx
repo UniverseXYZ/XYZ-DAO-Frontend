@@ -61,10 +61,6 @@ const PoolViewInner: FC = () => {
                       id: 'unstake',
                       children: 'Unstake',
                     },
-                    {
-                      id: 'stake',
-                      children: 'Stake',
-                    },
                   ]}
                   size="small"
                   activeKey={activeTab}

@@ -102,7 +102,7 @@ const ConnectedWallet: React.FC = () => {
   if (!wallet.isActive) {
     return !isMobile ? (
       <button type="button" className="button-ghost" onClick={() => wallet.showWalletsModal()}>
-        <span>Sing in</span>
+        <span>Sign in</span>
       </button>
     ) : null;
   }

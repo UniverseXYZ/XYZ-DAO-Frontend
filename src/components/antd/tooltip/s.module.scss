@@ -1,6 +1,8 @@
 @import 'src/styles/text';
 
 .overlay:global(.ant-tooltip) {
+  max-width: 360px;
+
   :global(.ant-tooltip-inner) {
     @include font-p1-regular;
     max-width: 360px;
@@ -27,6 +29,7 @@
       color: var(--theme-card-color);
       border-radius: 100px;
     }
+
     :global(.ant-tooltip-arrow-content) {
       background: var(--theme-primary-color);
     }

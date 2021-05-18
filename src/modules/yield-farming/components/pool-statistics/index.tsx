@@ -62,6 +62,8 @@ const PoolStatistics: FC = () => {
     setClaiming(false);
   };
 
+  const isEnded = poolMeta?.contract.isPoolEnded === true;
+
   return (
     <div className={s.component}>
       <div className="card mb-32">
@@ -82,17 +84,19 @@ const PoolStatistics: FC = () => {
               </Text>
             </div>
           </div>
-          <div className="flex align-center justify-space-between">
-            <Text type="small" weight="semibold" color="secondary">
-              Potential reward this week
-            </Text>
-            <div className="flex align-center">
-              <Icon name={XyzToken.icon!} width={16} height={16} className="mr-8" />
-              <Text type="p1" weight="semibold" color="primary">
-                {formatToken(poolMeta.contract.potentialReward) ?? '-'}
+          {!isEnded && (
+            <div className="flex align-center justify-space-between">
+              <Text type="small" weight="semibold" color="secondary">
+                Potential reward this week
               </Text>
+              <div className="flex align-center">
+                <Icon name={XyzToken.icon!} width={16} height={16} className="mr-8" />
+                <Text type="p1" weight="semibold" color="primary">
+                  {formatToken(poolMeta.contract.potentialReward) ?? '-'}
+                </Text>
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <div className="p-4">
           <div className={cn('flex align-center justify-space-between', s.claimBlock)}>
@@ -194,6 +198,7 @@ const PoolStatistics: FC = () => {
                 <Text type="p1" weight="semibold" color="primary">
                   {formatToken(selectedStakedToken?.currentEpochUserBalance?.unscaleBy(activeToken?.decimals), {
                     decimals: activeToken?.decimals,
+                    compact: true,
                   }) ?? '-'}
                 </Text>
               </Tooltip>

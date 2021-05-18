@@ -7,13 +7,12 @@ import fromUnixTime from 'date-fns/fromUnixTime';
 import { formatToken, formatUSD } from 'web3/utils';
 
 import Grid from 'components/custom/grid';
+import Icon, { IconNames } from 'components/custom/icon';
 import IconsSet from 'components/custom/icons-set';
 import { Hint, Text } from 'components/custom/typography';
+import { XyzToken } from 'components/providers/known-tokens-provider';
+import { YFPoolID, useYFPools } from 'modules/yield-farming/providers/pools-provider';
 import { useWallet } from 'wallets/wallet';
-
-import Icon, { IconNames } from '../../../../components/custom/icon';
-import { XyzToken } from '../../../../components/providers/known-tokens-provider';
-import { YFPoolID, useYFPools } from '../../providers/pools-provider';
 
 import s from './s.module.scss';
 
@@ -56,7 +55,6 @@ const PoolCard: React.FC<PoolCardProps> = props => {
       <div className={cn('card-header', s.cardTitleContainer)}>
         <IconsSet
           icons={poolMeta?.icons.map(icon => <Icon key={icon} name={icon as IconNames} width={40} height={40} />) ?? []}
-          className="mr-16"
         />
         <div className={s.cardTitleTexts}>
           <Text type="p1" weight="semibold" color="primary" ellipsis>
@@ -166,7 +164,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
         <div className={s.box}>
           <Grid className="card-row" flow="row" align="start">
             <Text type="p2" weight="semibold" color="secondary" className="mb-4">
-              The ${poolMeta?.label} staking pool ended after {totalEpochs} epochs on {formattedEndDate}. Deposits are
+              The ${poolMeta?.label} staking pool ended after {totalEpochs} weeks on {formattedEndDate}. Deposits are
               now disabled, but you can still withdraw your tokens and collect any unclaimed rewards.
             </Text>
             <Link to="/governance" className="link-gradient">
