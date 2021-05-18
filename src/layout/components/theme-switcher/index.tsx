@@ -7,7 +7,7 @@ import { useGeneral } from 'components/providers/general-provider';
 import s from './s.module.scss';
 
 const ThemeSwitcher: React.FC = () => {
-  const { toggleDarkTheme } = useGeneral();
+  const { toggleDarkTheme, isDarkTheme } = useGeneral();
 
   if (isMobile) {
     return null;
@@ -15,7 +15,7 @@ const ThemeSwitcher: React.FC = () => {
 
   return (
     <button type="button" className={s.button} onClick={toggleDarkTheme}>
-      <Icon name="theme-switcher" width={24} height={24} />
+      <Icon name={isDarkTheme ? 'theme-switcher-sun' : 'theme-switcher-moon'} width={24} height={24} />
     </button>
   );
 };
