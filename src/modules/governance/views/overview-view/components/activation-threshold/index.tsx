@@ -57,7 +57,7 @@ const ActivationThreshold: React.FC<ActivationThresholdProps> = props => {
         <Grid flow="col" gap={8} align="center">
           <Icon name="png/universe" width={32} height={32} />
           <Text type="p1" weight="bold" color="primary">
-            {formatBONDValue(dao.bondStaked)}
+            {formatBONDValue(dao.xyzStaked)}
           </Text>
           <Text type="p1" weight="semibold" color="secondary">
             / {formatBONDValue(dao.activationThreshold)} already staked.

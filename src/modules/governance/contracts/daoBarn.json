@@ -248,7 +248,7 @@
   },
   {
     "inputs": [],
-    "name": "bondStaked",
+    "name": "xyzStaked",
     "outputs": [
       {
         "internalType": "uint256",
@@ -267,7 +267,7 @@
         "type": "uint256"
       }
     ],
-    "name": "bondStakedAtTs",
+    "name": "xyzStakedAtTs",
     "outputs": [
       {
         "internalType": "uint256",
@@ -369,7 +369,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_bond",
+        "name": "",
         "type": "address"
       },
       {

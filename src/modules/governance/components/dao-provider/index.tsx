@@ -17,7 +17,7 @@ import { APIProposalStateId } from '../../api';
 export type DAOProviderState = {
   minThreshold: number;
   isActive?: boolean;
-  bondStaked?: BigNumber;
+  xyzStaked?: BigNumber;
   activationThreshold?: BigNumber;
   activationRate?: number;
   thresholdRate?: number;
@@ -26,7 +26,7 @@ export type DAOProviderState = {
 const InitialState: DAOProviderState = {
   minThreshold: 1,
   isActive: undefined,
-  bondStaked: undefined,
+  xyzStaked: undefined,
   activationThreshold: undefined,
   activationRate: undefined,
   thresholdRate: undefined,
@@ -91,30 +91,30 @@ const DAOProvider: React.FC = props => {
 
   React.useEffect(() => {
     const { isActive } = daoGovernance;
-    const { bondStaked, activationThreshold, votingPower } = daoBarn;
+    const { xyzStaked, activationThreshold, votingPower } = daoBarn;
 
     let activationRate: number | undefined;
 
-    if (bondStaked && activationThreshold?.gt(ZERO_BIG_NUMBER)) {
-      activationRate = bondStaked.multipliedBy(100).div(activationThreshold).toNumber();
+    if (xyzStaked && activationThreshold?.gt(ZERO_BIG_NUMBER)) {
+      activationRate = xyzStaked.multipliedBy(100).div(activationThreshold).toNumber();
       activationRate = Math.min(activationRate, 100);
     }
 
     let thresholdRate: number | undefined;
 
-    if (votingPower && bondStaked?.gt(ZERO_BIG_NUMBER)) {
-      thresholdRate = votingPower.multipliedBy(100).div(bondStaked).toNumber();
+    if (votingPower && xyzStaked?.gt(ZERO_BIG_NUMBER)) {
+      thresholdRate = votingPower.multipliedBy(100).div(xyzStaked).toNumber();
       thresholdRate = Math.min(thresholdRate, 100);
     }
 
     setState({
       isActive,
-      bondStaked,
+      xyzStaked,
       activationThreshold,
       activationRate,
       thresholdRate,
     });
-  }, [daoGovernance.isActive, daoBarn.bondStaked, daoBarn.activationThreshold, daoBarn.votingPower]);
+  }, [daoGovernance.isActive, daoBarn.xyzStaked, daoBarn.activationThreshold, daoBarn.votingPower]);
 
   function activate() {
     return daoGovernance.actions.activate().then(() => {

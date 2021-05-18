@@ -1,3 +1,7 @@
+function toLowerCase(value: any): string {
+  return String(value ?? '').toLowerCase();
+}
+
 const config = {
   env: String(process.env.REACT_APP_ENV),
   isDev: String(process.env.REACT_APP_ENV) === 'development',
@@ -6,61 +10,34 @@ const config = {
   api: {
     baseUrl: String(process.env.REACT_APP_BASE_API_URL),
   },
+  tokens: {
+    usdc: toLowerCase(process.env.REACT_APP_TOKEN_USDC_ADDR),
+    xyz: toLowerCase(process.env.REACT_APP_TOKEN_XYZ_ADDR),
+    bond: toLowerCase(process.env.REACT_APP_TOKEN_BOND_ADDR),
+    aave: toLowerCase(process.env.REACT_APP_TOKEN_AAVE_ADDR),
+    comp: toLowerCase(process.env.REACT_APP_TOKEN_COMP_ADDR),
+    snx: toLowerCase(process.env.REACT_APP_TOKEN_SNX_ADDR),
+    sushi: toLowerCase(process.env.REACT_APP_TOKEN_SUSHI_ADDR),
+    link: toLowerCase(process.env.REACT_APP_TOKEN_LINK_ADDR),
+    ilv: toLowerCase(process.env.REACT_APP_TOKEN_ILV_ADDR),
+    usdcXYZSushiLP: toLowerCase(process.env.REACT_APP_TOKEN_USDC_XYZ_SUSHI_LP_ADDR),
+  },
   contracts: {
-    usdc: {
-      token: String(process.env.REACT_APP_TOKEN_USDC_ADDR).toLowerCase(),
-      price: String(process.env.REACT_APP_TOKEN_USDC_PRICE_ADDR).toLowerCase(),
-    },
-    xyz: {
-      token: String(process.env.REACT_APP_TOKEN_XYZ_ADDR).toLowerCase(),
-      price: String(process.env.REACT_APP_TOKEN_XYZ_PRICE_ADDR).toLowerCase(),
-    },
-    bond: {
-      token: String(process.env.REACT_APP_TOKEN_BOND_ADDR).toLowerCase(),
-      price: String(process.env.REACT_APP_TOKEN_BOND_PRICE_ADDR).toLowerCase(),
-    },
-    aave: {
-      token: String(process.env.REACT_APP_TOKEN_AAVE_ADDR).toLowerCase(),
-      price: String(process.env.REACT_APP_TOKEN_AAVE_PRICE_ADDR).toLowerCase(),
-    },
-    comp: {
-      token: String(process.env.REACT_APP_TOKEN_COMP_ADDR).toLowerCase(),
-      price: String(process.env.REACT_APP_TOKEN_COMP_PRICE_ADDR).toLowerCase(),
-    },
-    snx: {
-      token: String(process.env.REACT_APP_TOKEN_SNX_ADDR).toLowerCase(),
-      price: String(process.env.REACT_APP_TOKEN_SNX_PRICE_ADDR).toLowerCase(),
-    },
-    sushi: {
-      token: String(process.env.REACT_APP_TOKEN_SUSHI_ADDR).toLowerCase(),
-      price: String(process.env.REACT_APP_TOKEN_SUSHI_PRICE_ADDR).toLowerCase(),
-    },
-    link: {
-      token: String(process.env.REACT_APP_TOKEN_LINK_ADDR).toLowerCase(),
-      price: String(process.env.REACT_APP_TOKEN_LINK_PRICE_ADDR).toLowerCase(),
-    },
-    ilv: {
-      token: String(process.env.REACT_APP_TOKEN_ILV_ADDR).toLowerCase(),
-    },
-    usdcXYZSushiLP: {
-      token: String(process.env.REACT_APP_TOKEN_USDC_XYZ_SUSHI_LP_ADDR).toLowerCase(),
-      price: String(process.env.REACT_APP_TOKEN_USDC_XYZ_SUSHI_LP_PRICE_ADDR).toLowerCase(),
-    },
     yf: {
-      staking: String(process.env.REACT_APP_CONTRACT_YF_STAKING_ADDR).toLowerCase(),
-      bond: String(process.env.REACT_APP_CONTRACT_YF_BOND_ADDR).toLowerCase(),
-      aave: String(process.env.REACT_APP_CONTRACT_YF_AAVE_ADDR).toLowerCase(),
-      comp: String(process.env.REACT_APP_CONTRACT_YF_COMP_ADDR).toLowerCase(),
-      snx: String(process.env.REACT_APP_CONTRACT_YF_SNX_ADDR).toLowerCase(),
-      sushi: String(process.env.REACT_APP_CONTRACT_YF_SUSHI_ADDR).toLowerCase(),
-      link: String(process.env.REACT_APP_CONTRACT_YF_LINK_ADDR).toLowerCase(),
-      ilv: String(process.env.REACT_APP_CONTRACT_YF_ILV_ADDR).toLowerCase(),
-      usdcXYZSushiLP: String(process.env.REACT_APP_CONTRACT_YF_USDC_XYZ_SUSHI_LP_ADDR).toLowerCase(),
+      staking: toLowerCase(process.env.REACT_APP_CONTRACT_YF_STAKING_ADDR),
+      bond: toLowerCase(process.env.REACT_APP_CONTRACT_YF_BOND_ADDR),
+      aave: toLowerCase(process.env.REACT_APP_CONTRACT_YF_AAVE_ADDR),
+      comp: toLowerCase(process.env.REACT_APP_CONTRACT_YF_COMP_ADDR),
+      snx: toLowerCase(process.env.REACT_APP_CONTRACT_YF_SNX_ADDR),
+      sushi: toLowerCase(process.env.REACT_APP_CONTRACT_YF_SUSHI_ADDR),
+      link: toLowerCase(process.env.REACT_APP_CONTRACT_YF_LINK_ADDR),
+      ilv: toLowerCase(process.env.REACT_APP_CONTRACT_YF_ILV_ADDR),
+      usdcXYZSushiLP: toLowerCase(process.env.REACT_APP_CONTRACT_YF_USDC_XYZ_SUSHI_LP_ADDR),
     },
     dao: {
-      governance: String(process.env.REACT_APP_CONTRACT_DAO_GOVERNANCE_ADDR).toLowerCase(),
-      barn: String(process.env.REACT_APP_CONTRACT_DAO_BARN_ADDR).toLowerCase(),
-      reward: String(process.env.REACT_APP_CONTRACT_DAO_REWARD_ADDR).toLowerCase(),
+      governance: toLowerCase(process.env.REACT_APP_CONTRACT_DAO_GOVERNANCE_ADDR),
+      barn: toLowerCase(process.env.REACT_APP_CONTRACT_DAO_BARN_ADDR),
+      reward: toLowerCase(process.env.REACT_APP_CONTRACT_DAO_REWARD_ADDR),
     },
   },
   web3: {
@@ -91,6 +68,6 @@ const config = {
   },
 };
 
-export const XYZ_MARKET_LINK = `https://app.uniswap.org/#/swap?use=V2&inputCurrency=${config.contracts.xyz.token}&outputCurrency=${config.contracts.usdc.token}`;
+export const XYZ_MARKET_LINK = `https://app.sushi.com/add/${config.tokens.usdc}/${config.tokens.xyz}`;
 
 export default config;
