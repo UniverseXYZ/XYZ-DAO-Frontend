@@ -43,7 +43,7 @@ const PoolRewards: React.FC = () => {
       </Text>
 
       <Grid flow="col" gap={24} className={s.items}>
-        <Grid flow="row" gap={4}>
+        <Grid flow="row" gap={4} className={s.item1}>
           <Text type="p2" color="secondary">
             Current reward
           </Text>
@@ -65,7 +65,7 @@ const PoolRewards: React.FC = () => {
           </Grid>
         </Grid>
         <Divider type="vertical" />
-        <Grid flow="row" gap={4}>
+        <Grid flow="row" gap={4} className={s.item2}>
           <Text type="p2" color="secondary">
             {XyzToken.symbol} Balance
           </Text>
@@ -77,9 +77,9 @@ const PoolRewards: React.FC = () => {
           </Grid>
         </Grid>
         <Divider type="vertical" />
-        <Grid flow="row" gap={4}>
+        <Grid flow="row" gap={4} className={s.item3}>
           <Grid flow="col" gap={8} align="center">
-            <Hint text="This number shows the $BOND rewards you would potentially be able to harvest this epoch, but is subject to change - in case more users deposit, or you withdraw some of your stake.">
+            <Hint text="This number shows the $XYZ rewards you would potentially be able to harvest this epoch, but is subject to change - in case more users deposit, or you withdraw some of your stake.">
               <Text type="p2" color="secondary">
                 Potential reward this epoch
               </Text>

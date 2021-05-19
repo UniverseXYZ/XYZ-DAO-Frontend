@@ -109,7 +109,7 @@ const GasFeeList: React.FC<GasFeeListProps> = props => {
             <RadioButton
               key={option.key}
               label={
-                <Text type="p1" weight="semibold" color="primary">
+                <Text type="lb2" weight="semibold" color="primary" style={{ textTransform: 'uppercase' }}>
                   {option.name}
                 </Text>
               }

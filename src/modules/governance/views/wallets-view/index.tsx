@@ -43,7 +43,7 @@ const WalletView: React.FC = () => {
 
   return (
     <Grid flow="row" gap={32}>
-      <Text type="h1" weight="bold" color="primary">
+      <Text type="h2" weight="bold" color="primary" font="secondary">
         Wallet
       </Text>
       <Tabs activeKey={activeTab} simple onChange={handleTabChange}>

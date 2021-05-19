@@ -16,3 +16,21 @@
   border: 1px solid var(--theme-border-color) !important;
   border-radius: 4px !important;
 }
+
+.chartLabel {
+  --dot-color: '';
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+
+  &::before {
+    content: '';
+    display: flex;
+    width: 16px;
+    height: 16px;
+    background: var(--dot-color);
+    border-radius: 100px;
+    margin-right: 8px;
+  }
+}
+

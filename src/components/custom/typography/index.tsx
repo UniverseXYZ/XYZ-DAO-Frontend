@@ -1,8 +1,8 @@
 import React from 'react';
 import cn from 'classnames';
 
-import Tooltip from 'components/antd/tooltip';
 import Icon from 'components/custom/icon';
+import { Tooltip } from 'components/custom/tooltip';
 
 import s from './s.module.scss';
 
@@ -18,6 +18,7 @@ export type TextProps = {
   className?: string;
   style?: Partial<CSSStyleDeclaration>;
   title?: string;
+  font?: 'secondary';
 };
 
 export const Text: React.FC<TextProps> = React.memo(props => {
@@ -33,6 +34,7 @@ export const Text: React.FC<TextProps> = React.memo(props => {
     className,
     children,
     style,
+    font,
     ...textProps
   } = props;
 
@@ -49,6 +51,7 @@ export const Text: React.FC<TextProps> = React.memo(props => {
         textGradient && s.textGradient,
         wrap === true && 'text-wrap',
         wrap === false && 'text-nowrap',
+        font && s[`font-${font}`],
         className,
       ),
       style: textGradient ? { ...style, '--text-gradient': textGradient || '', '--text-color': color } : style,
@@ -73,10 +76,8 @@ export const Hint: React.FC<HintProps> = props => {
   return (
     <div className={cn(s.hint, className)}>
       <span>{children}</span>
-      <Tooltip title={text} className={s.tooltip}>
-        <span>
-          <Icon name="info-outlined" width={16} height={16} className={s.icon} />
-        </span>
+      <Tooltip target={<Icon name="info-outlined" width={16} height={16} className={s.icon} />} className={s.tooltip}>
+        {text}
       </Tooltip>
     </div>
   );

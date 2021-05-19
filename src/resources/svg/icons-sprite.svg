@@ -267,10 +267,16 @@
           d="M18.223 5.777L14.401 9.6M16.676 7.323l-10.899 10.9M18.223 18.223L5.778 5.777"/>
   </symbol>
   <!-- DROPDOWN ARROW -->
-  <symbol id="icon__dropdown-arrow" viewBox="0 0 24 24" fill="none">
-    <path
-      d="M11.2947 14.2929L7.70896 10.7071C7.079 10.0771 7.52516 9 8.41607 9H15.5876C16.4785 9 16.9247 10.0771 16.2947 10.7071L12.709 14.2929C12.3184 14.6834 11.6853 14.6834 11.2947 14.2929Z"
-      fill="currentColor"/>
+  <symbol id="icon__dropdown-arrow" viewBox="0 0 12 12" fill="none">
+    <path d="M9.00073 4.50025L6.00085 7.50012L3.00098 4.5" stroke="currentColor" />
+  </symbol>
+  <!-- THEME SWITCHER MOON -->
+  <symbol id="icon__theme-switcher-moon" viewBox="0 0 24 24" fill="none">
+    <path d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C14.6029 2 8 7.72522 12.6667 12C17.3333 16.2748 22 9.08007 22 12Z" stroke="currentColor" stroke-width="1.5"/>
+  </symbol>
+  <!-- THEME SWITCHER SUN -->
+  <symbol id="icon__theme-switcher-sun" viewBox="0 0 24 24" fill="none">
+    <path d="M11.7297 2V3.62162M11.7297 20.3784V22M22 12H20.3784M3.62162 12H2M19.0711 19.0711L17.9244 17.9244M6.07559 6.07559L4.92893 4.92893M4.92894 19.0711L6.0756 17.9244M17.9244 6.0756L19.0711 4.92894M17.4054 12C17.4054 14.9853 14.9853 17.4054 12 17.4054C9.01468 17.4054 6.59459 14.9853 6.59459 12C6.59459 9.01468 9.01468 6.59459 12 6.59459C14.9853 6.59459 17.4054 9.01468 17.4054 12Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   </symbol>
   <!-- WARNING OUTLINED -->
   <symbol id="icon__warning-outlined" viewBox="0 0 39 34" fill="none">

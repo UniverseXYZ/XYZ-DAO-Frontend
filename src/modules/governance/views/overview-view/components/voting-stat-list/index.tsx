@@ -69,16 +69,13 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
                   This number shows the amount of vXYZ currently minted. This number may differ from the amount of 4XYZ
                   staked because of the multiplier mechanic
                 </Text>
-                <ExternalLink
-                  href="https://docs.barnbridge.com/governance/barnbridge-dao/multiplier-and-voting-power"
-                  className="link-blue"
-                  style={{ fontWeight: 600 }}>
+                <ExternalLink href="https://docs.universe.xyz/" className="link-blue" style={{ fontWeight: 600 }}>
                   Learn more
                 </ExternalLink>
               </Grid>
             }>
             <Text type="lb2" weight="semibold" color="secondary">
-              VXYZ
+              vXYZ
             </Text>
           </Hint>
           <Grid flow="row" gap={4}>
@@ -98,10 +95,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
                   This counter shows the average amount of time ${XyzToken.symbol} stakers locked their deposits in
                   order to take advantage of the voting power bonus.
                 </Text>
-                <ExternalLink
-                  href="https://docs.barnbridge.com/governance/barnbridge-dao/multiplier-and-voting-power"
-                  className="link-blue"
-                  style={{ fontWeight: 600 }}>
+                <ExternalLink href="https://docs.universe.xyz/" className="link-blue" style={{ fontWeight: 600 }}>
                   Learn more
                 </ExternalLink>
               </Grid>
@@ -156,10 +150,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
             text={
               <Grid flow="row" gap={8} align="start">
                 <Text type="p2">This number shows the amount of vXYZ that is delegated to other addresses.</Text>
-                <ExternalLink
-                  href="https://docs.barnbridge.com/governance/barnbridge-dao/multiplier-and-voting-power#3-you-can-delegate-vbonds-to-other-users"
-                  className="link-blue"
-                  style={{ fontWeight: 600 }}>
+                <ExternalLink href="https://docs.universe.xyz/" className="link-blue" style={{ fontWeight: 600 }}>
                   Learn more
                 </ExternalLink>
               </Grid>

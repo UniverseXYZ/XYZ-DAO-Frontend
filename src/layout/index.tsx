@@ -7,6 +7,8 @@ import WarningProvider from 'components/providers/warning-provider';
 import LayoutFooter from 'layout/components/layout-footer';
 import LayoutHeader from 'layout/components/layout-header';
 
+import ThemeSwitcher from './components/theme-switcher';
+
 import s from './s.module.scss';
 
 const YieldFarmingView = lazy(() => import('modules/yield-farming'));
@@ -31,6 +33,7 @@ const LayoutView: React.FC = () => {
             </ErrorBoundary>
           </main>
           <LayoutFooter />
+          <ThemeSwitcher />
         </WarningProvider>
       </div>
     </div>

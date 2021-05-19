@@ -87,7 +87,13 @@ function getColumns(isAll: boolean): ColumnsType<TableEntity> {
 
         return (
           <>
-            <Text type="p1" weight="semibold" wrap={false} color={isStake ? 'green' : 'red'} className="mb-4">
+            <Text
+              type="p1"
+              weight="semibold"
+              wrap={false}
+              color={isStake ? 'var(--gradient-green-safe)' : 'var(--gradient-red-safe)'}
+              textGradient={isStake ? 'var(--gradient-green)' : 'var(--gradient-red)'}
+              className="mb-4">
               {isStake ? '+' : '-'}
               {formatToken(amount, {
                 tokenName: knownToken.symbol,
@@ -108,7 +114,7 @@ function getColumns(isAll: boolean): ColumnsType<TableEntity> {
           width: '25%',
           render: (_, entity) => (
             <ExternalLink href={getEtherscanAddressUrl(entity.userAddress)} className="link-blue">
-              <Text type="p1" weight="semibold">
+              <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">
                 {shortenAddr(entity.userAddress)}
               </Text>
             </ExternalLink>
@@ -121,7 +127,7 @@ function getColumns(isAll: boolean): ColumnsType<TableEntity> {
       render: (_, entity) => (
         <>
           <ExternalLink href={getEtherscanTxUrl(entity.transactionHash)} className="link-blue mb-4">
-            <Text type="p1" weight="semibold">
+            <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">
               {shortenAddr(entity.transactionHash)}
             </Text>
           </ExternalLink>
@@ -279,9 +285,10 @@ const PoolTransactions: FC = () => {
 
   return (
     <div className="card mb-32">
-      <div className="card-header flex flow-col align-center justify-space-between pv-0">
+      <div className="card-header flex flow-col align-center justify-space-between pv-0" style={{ overflowX: 'auto' }}>
         <Tabs
           activeKey={activeTab}
+          style={{ flexShrink: 0 }}
           tabs={[
             ...(hasOwnTab
               ? [

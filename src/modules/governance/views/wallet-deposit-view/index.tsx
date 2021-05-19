@@ -118,7 +118,7 @@ const WalletDepositView: React.FC = () => {
 
         <Grid flow="row" gap={4}>
           <Text type="small" weight="semibold" color="secondary">
-            Staked Balance
+            Voting vXYZ
           </Text>
           <Text type="p1" weight="semibold" color="primary">
             {formatBONDValue(stakedBalance)}
@@ -127,7 +127,7 @@ const WalletDepositView: React.FC = () => {
 
         <Grid flow="row" gap={4}>
           <Text type="small" weight="semibold" color="secondary">
-            Wallet Balance
+            XYZ
           </Text>
           <Text type="p1" weight="semibold" color="primary">
             {formatBONDValue(xyzBalance)}
@@ -156,7 +156,9 @@ const WalletDepositView: React.FC = () => {
                 expanded: !prevState.expanded,
               }))
             }>
-            <Icon name="chevron-right" rotate={state.expanded ? 270 : 0} />
+            <span>
+              <Icon name="chevron-right" rotate={state.expanded ? 270 : 0} />
+            </span>
           </button>
         )}
       </Grid>
@@ -173,9 +175,10 @@ const WalletDepositView: React.FC = () => {
               <Grid flow="row" gap={32}>
                 <Form.Item name="amount" label="Amount" rules={[{ required: true, message: 'Required' }]}>
                   <TokenAmount
-                    tokenIcon="token-bond"
+                    tokenIcon="png/universe"
                     max={xyzBalance}
                     maximumFractionDigits={XyzToken.decimals}
+                    name={XyzToken.symbol}
                     displayDecimals={4}
                     disabled={state.saving}
                     slider

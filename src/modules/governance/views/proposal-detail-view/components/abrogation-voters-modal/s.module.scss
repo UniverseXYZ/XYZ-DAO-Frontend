@@ -32,24 +32,18 @@
   }
 
   .forTag {
-    min-width: 80px;
-    height: 32px;
-    padding: 8px 24px;
+    padding: 4px 16px;
     border-radius: 32px;
     text-align: center;
-
-    background: rgba(var(--theme-green-color-rgb), 0.08);
-    color: var(--theme-green-color);
+    background: linear-gradient(135deg, rgba(188, 235, 0, 0.1) 15.57%, rgba(0, 234, 234, 0.1) 84.88%);
+    display: inline-flex;
   }
 
   .againstTag {
-    min-width: 80px;
-    height: 32px;
-    padding: 8px 24px;
+    padding: 4px 16px;
     border-radius: 32px;
     text-align: center;
-
-    background: rgba(var(--theme-red-color-rgb), 0.08);
-    color: var(--theme-red-color);
+    background: linear-gradient(135deg, rgba(255, 116, 57, 0.1) 0%, rgba(255, 57, 188, 0.1) 100%);
+    display: inline-flex;
   }
 }

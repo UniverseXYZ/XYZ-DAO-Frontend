@@ -26,7 +26,12 @@
 .box {
   margin: 24px;
   padding: 16px;
-  background: var(--theme-tooltip-bg);
-  border: 1px solid var(--theme-border-color);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.16);
   border-radius: 8px;
+
+  [data-theme="dark"] & {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+  }
 }

@@ -39,8 +39,9 @@
   }
 
   &:global(.ant-alert-error) {
-    --alert-bg-color: var(--theme-red-color-rgb);
-    --alert-text-color: var(--theme-red-color);
+    --alert-bg-color: linear-gradient(135deg, rgba(255, 116, 57, 0.04) 0%, rgba(255, 57, 188, 0.04) 100%);
+    --alert-text-color: var(--gradient-red-safe);
+    --alert-border-color: rgba(255, 57, 188, 0.32);
   }
 
   @supports ((background-clip: text) or (-webkit-background-clip: text)) and
