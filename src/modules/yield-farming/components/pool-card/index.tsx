@@ -16,8 +16,6 @@ import { useWallet } from 'wallets/wallet';
 
 import s from './s.module.scss';
 
-// import PoolStakeShareBar from '../pool-stake-share-bar';
-
 export type PoolCardProps = {
   poolId: YFPoolID;
 };
@@ -125,7 +123,6 @@ const PoolCard: React.FC<PoolCardProps> = props => {
             <Text type="p2" color="secondary" className="mb-8">
               {formatUSD(poolEffectiveBalanceInUSD) ?? '-'} effective balance
             </Text>
-            {/*<PoolStakeShareBar shares={state.shares} />*/}
           </div>
         </>
       )}
@@ -155,7 +152,6 @@ const PoolCard: React.FC<PoolCardProps> = props => {
               <Text type="p2" color="secondary">
                 {formatUSD(myPoolEffectiveBalanceInUSD)} effective balance
               </Text>
-              {/*<PoolStakeShareBar shares={state.myShares} />*/}
             </>
           )}
         </div>
@@ -167,15 +163,17 @@ const PoolCard: React.FC<PoolCardProps> = props => {
               The ${poolMeta?.label} staking pool ended after {totalEpochs} weeks on {formattedEndDate}. Deposits are
               now disabled, but you can still withdraw your tokens and collect any unclaimed rewards.
             </Text>
-            <Link to="/governance" className="link-gradient">
-              <Text
-                type="p2"
-                weight="bold"
-                color="var(--gradient-green-safe-color)"
-                textGradient="var(--gradient-green)">
-                Go to governance staking
-              </Text>
-            </Link>
+            {poolMeta?.tokens.some(tk => tk === XyzToken) && (
+              <Link to="/governance" className="link-gradient">
+                <Text
+                  type="p2"
+                  weight="bold"
+                  color="var(--gradient-green-safe-color)"
+                  textGradient="var(--gradient-green)">
+                  Go to governance staking
+                </Text>
+              </Link>
+            )}
           </Grid>
         </div>
       )}

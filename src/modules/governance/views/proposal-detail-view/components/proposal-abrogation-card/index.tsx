@@ -5,6 +5,7 @@ import Button from 'components/antd/button';
 import Popover from 'components/antd/popover';
 import Grid from 'components/custom/grid';
 import { Text } from 'components/custom/typography';
+import { XyzToken } from 'components/providers/known-tokens-provider';
 import useMergeState from 'hooks/useMergeState';
 
 import { APIProposalState } from '../../../../api';
@@ -57,7 +58,7 @@ const ProposalAbrogationCard: React.FC = () => {
               <ul>
                 <li>
                   <Text type="p1" color="primary">
-                    Acceptance criteria: 50% of staked XYZ
+                    Acceptance criteria: 50% of staked {XyzToken.symbol}
                   </Text>
                 </li>
                 <li>

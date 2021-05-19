@@ -95,7 +95,7 @@ const VotingHeader: React.FC = () => {
         <Divider type="vertical" />
         <Grid flow="row" gap={4} className={s.item2}>
           <Text type="p2" color="secondary">
-            XYZ Balance
+            {XyzToken.symbol} Balance
           </Text>
           <Grid flow="col" align="center">
             <Skeleton loading={xyzBalance === undefined}>

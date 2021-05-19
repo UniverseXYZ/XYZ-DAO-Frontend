@@ -20,7 +20,7 @@ export enum KnownTokens {
   SUSHI = 'SUSHI',
   LINK = 'LINK',
   ILV = 'ILV',
-  USDC_XYZ_SUSHI_LP = 'USDC_XYZ_SUSHI_LP',
+  USDC_XYZ_SLP = 'USDC_XYZ_SUSHI_LP',
 }
 
 export type TokenMeta = {
@@ -123,13 +123,13 @@ export const IlvToken: TokenMeta = {
   contract: new Erc20Contract([], config.tokens.ilv),
 };
 
-export const UsdcXYZSushiLPToken: TokenMeta = {
-  address: config.tokens.usdcXYZSushiLP,
-  symbol: KnownTokens.USDC_XYZ_SUSHI_LP,
+export const UsdcXyzSLPToken: TokenMeta = {
+  address: config.tokens.usdcXyzSLP,
+  symbol: KnownTokens.USDC_XYZ_SLP,
   name: 'USDC XYZ SUSHI LP',
   decimals: 18,
   icon: 'token-usdc',
-  contract: new Erc20Contract([], config.tokens.usdcXYZSushiLP),
+  contract: new Erc20Contract([], config.tokens.usdcXyzSLP),
 };
 
 const KNOWN_TOKENS: TokenMeta[] = [
@@ -142,7 +142,7 @@ const KNOWN_TOKENS: TokenMeta[] = [
   SushiToken,
   LinkToken,
   IlvToken,
-  UsdcXYZSushiLPToken,
+  UsdcXyzSLPToken,
 ];
 
 (window as any).KNOWN_TOKENS = KNOWN_TOKENS;
@@ -153,6 +153,7 @@ export function getKnownTokens(): TokenMeta[] {
 
 type ContextType = {
   tokens: TokenMeta[];
+  version: number;
   getTokenBySymbol(symbol: string): TokenMeta | undefined;
   getTokenByAddress(address: string): TokenMeta | undefined;
   getTokenPriceIn(source: string, target: string): BigNumber | undefined;
@@ -162,6 +163,7 @@ type ContextType = {
 
 const Context = createContext<ContextType>({
   tokens: [...KNOWN_TOKENS],
+  version: 0,
   getTokenBySymbol: () => undefined,
   getTokenByAddress: () => undefined,
   getTokenPriceIn: () => undefined,
@@ -189,7 +191,7 @@ const LP_PRICE_FEED_ABI: AbiItem[] = [
 ];
 
 async function getXyzPrice(): Promise<BigNumber> {
-  const priceFeedContract = new Erc20Contract(LP_PRICE_FEED_ABI, UsdcXYZSushiLPToken.address);
+  const priceFeedContract = new Erc20Contract(LP_PRICE_FEED_ABI, UsdcXyzSLPToken.address);
 
   const [{ 0: reserve0, 1: reserve1 }] = await priceFeedContract.batch([{ method: 'getReserves' }]);
   const usdcReserve = new BigNumber(reserve0).unscaleBy(UsdcToken.decimals);
@@ -202,8 +204,8 @@ async function getXyzPrice(): Promise<BigNumber> {
   return usdcReserve.dividedBy(xyzReserve);
 }
 
-async function getUsdcXYZSushiLPPrice(): Promise<BigNumber> {
-  const priceFeedContract = new Erc20Contract(LP_PRICE_FEED_ABI, UsdcXYZSushiLPToken.address);
+async function getUsdcXyzSLPPrice(): Promise<BigNumber> {
+  const priceFeedContract = new Erc20Contract(LP_PRICE_FEED_ABI, UsdcXyzSLPToken.address);
 
   const [decimals, totalSupply, reserves] = await priceFeedContract.batch([
     { method: 'decimals', transform: Number },
@@ -275,14 +277,14 @@ const KnownTokensProvider: FC = props => {
   const { children } = props;
 
   const wallet = useWallet();
-  const [reload] = useReload();
+  const [reload, version] = useReload();
 
   useEffect(() => {
     (XyzToken.contract as Erc20Contract).loadCommon().catch(Error);
 
     (async () => {
       XyzToken.price = await getXyzPrice().catch();
-      UsdcXYZSushiLPToken.price = await getUsdcXYZSushiLPPrice().catch();
+      UsdcXyzSLPToken.price = await getUsdcXyzSLPPrice().catch();
 
       const ids = KNOWN_TOKENS.map(tk => tk.coinGeckoId)
         .filter(Boolean)
@@ -329,6 +331,7 @@ const KnownTokensProvider: FC = props => {
 
   const value = {
     tokens: [...KNOWN_TOKENS],
+    version,
     getTokenBySymbol,
     getTokenByAddress,
     getTokenPriceIn,
