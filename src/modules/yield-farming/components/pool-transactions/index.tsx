@@ -172,13 +172,19 @@ const PoolTransactions: FC = () => {
   }, [activeTab]);
 
   useEffect(() => {
+    const poolMeta = poolCtx.poolMeta;
+
+    if (!poolMeta) {
+      return;
+    }
+
     setState(prevState => ({
       ...prevState,
       page: 1,
       filters: {
         ...prevState.filters,
         actionType: 'all',
-        tokenAddress: poolCtx.poolMeta ? tokens[0].address ?? 'all' : 'all',
+        tokenAddress: poolMeta.tokens[0].address ?? 'all',
       },
     }));
 
@@ -188,10 +194,10 @@ const PoolTransactions: FC = () => {
       }
     }
 
-    poolCtx.poolMeta?.contract.on('tx:success', onPoolTx);
+    poolMeta.contract.on('tx:success', onPoolTx);
 
     return () => {
-      poolCtx.poolMeta?.contract.off('tx:success', onPoolTx);
+      poolMeta.contract.off('tx:success', onPoolTx);
     };
   }, [poolCtx.poolMeta]);
 

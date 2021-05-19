@@ -8,6 +8,7 @@ import formatDuration from 'date-fns/formatDuration';
 import intervalToDuration from 'date-fns/intervalToDuration';
 import isThisWeek from 'date-fns/isThisWeek';
 import isToday from 'date-fns/isToday';
+import Erc20Contract from 'web3/erc20Contract';
 import { getEtherscanAddressUrl, getHumanValue, shortenAddr } from 'web3/utils';
 
 import Icon, { IconNames } from 'components/custom/icon';
@@ -15,7 +16,6 @@ import IconNotification from 'components/custom/icon-notification';
 import { Text } from 'components/custom/typography';
 import { NotificationType, useNotifications } from 'components/providers/notifications-provider';
 import { useReload } from 'hooks/useReload';
-import SYSmartYieldContract from 'modules/smart-yield/contracts/sySmartYieldContract';
 
 import { XyzToken } from '../../providers/known-tokens-provider';
 import ExternalLink from '../externalLink';
@@ -224,7 +224,7 @@ function getData(n: NotificationType, reload: Function): [IconNames, [string, st
     case 'smart-yield-token-bought': {
       const contract = getSessionContractByAddress(n.metadata.syPoolAddress);
       if (!contract || !contract.symbol) {
-        const syPoolContract = new SYSmartYieldContract(n.metadata.syPoolAddress);
+        const syPoolContract = new Erc20Contract([], n.metadata.syPoolAddress);
         syPoolContract.loadCommon().then(() => {
           if (syPoolContract.symbol) {
             setSessionContractByAddress(n.metadata.syPoolAddress, {

@@ -5,6 +5,7 @@ import { UnsupportedChainIdError, Web3ReactProvider, useWeb3React } from '@web3-
 import { NoEthereumProviderError } from '@web3-react/injected-connector';
 import * as Antd from 'antd';
 
+import Spin from 'components/antd/spin';
 import { getNetworkName } from 'components/providers/eth-web3-provider';
 import config from 'config';
 import ConnectWalletModal from 'wallets/components/connect-wallet-modal';
@@ -178,7 +179,7 @@ const WalletProvider: React.FC = props => {
       {walletsModal && <ConnectWalletModal onCancel={() => setWalletsModal(false)} />}
       {installMetaMaskModal && <InstallMetaMaskModal onCancel={() => setInstallMetaMaskModal(false)} />}
       {unsupportedChainModal && <UnsupportedChainModal onCancel={() => setUnsupportedChainModal(false)} />}
-      {props.children}
+      {initialized ? props.children : <Spin spinning className="absolute-center" />}
     </WalletContext.Provider>
   );
 };
