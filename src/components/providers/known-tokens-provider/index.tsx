@@ -128,7 +128,7 @@ export const UsdcXyzSLPToken: TokenMeta = {
   symbol: KnownTokens.USDC_XYZ_SLP,
   name: 'USDC XYZ SUSHI LP',
   decimals: 18,
-  icon: 'token-usdc',
+  icon: 'png/uslp',
   contract: new Erc20Contract([], config.tokens.usdcXyzSLP),
 };
 

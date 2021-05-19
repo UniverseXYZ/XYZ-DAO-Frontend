@@ -138,7 +138,7 @@ export class YfPoolContract extends Web3Contract {
     ]);
 
     this.userStaked = new BigNumber(currentEpochStake);
-    this.toClaim = new BigNumber(toClaim);
+    this.toClaim = toClaim ? new BigNumber(toClaim) : undefined;
     this.emit(Web3Contract.UPDATE_DATA);
   }
 

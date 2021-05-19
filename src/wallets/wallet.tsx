@@ -147,7 +147,7 @@ const WalletProvider: React.FC = props => {
         const walletConnector = WalletConnectors.find(c => c.id === sessionProvider);
 
         if (walletConnector) {
-          await connect(walletConnector);
+          connect(walletConnector).catch(Error);
         }
       }
 
