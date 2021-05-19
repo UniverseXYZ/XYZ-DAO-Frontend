@@ -91,6 +91,6 @@ const config = {
   },
 };
 
-export const XYZ_MARKET_LINK = `https://app.uniswap.org/#/swap?use=V2&inputCurrency=${config.contracts.xyz.token}&outputCurrency=${config.contracts.usdc.token}`;
+export const XYZ_MARKET_LINK = `https://app.sushi.com/swap?use=V2&inputCurrency=${config.contracts.xyz.token}&outputCurrency=${config.contracts.usdc.token}`;
 
 export default config;

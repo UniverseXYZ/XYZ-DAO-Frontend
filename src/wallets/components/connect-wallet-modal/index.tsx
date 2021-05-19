@@ -64,7 +64,7 @@ const ConnectWalletModal: React.FC<ConnectWalletModalProps> = props => {
               className={s.button}
               style={{ height: '96px' }}
               onClick={() => handleConnectorSelect(connector)}>
-              <IconWallet wallet={connector.id} style={{ maxHeight: 32 }} />
+              <IconWallet wallet={connector.id} style={{ maxHeight: 32 }} className={s.walletIcon} />
             </Button>
           ))}
         </Grid>

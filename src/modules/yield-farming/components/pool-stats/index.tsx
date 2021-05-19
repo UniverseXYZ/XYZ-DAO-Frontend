@@ -105,7 +105,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
             </Text>
             <ExternalLink href={XYZ_MARKET_LINK} className="link-gradient">
               <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">
-                {XyzToken.symbol} market
+                SushiSwap market
               </Text>
             </ExternalLink>
           </Grid>
@@ -143,7 +143,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
                 '-'
               )}
               <Text type="p1" color="secondary">
-                until next week
+                until next epoch
               </Text>
             </Grid>
           </Grid>
