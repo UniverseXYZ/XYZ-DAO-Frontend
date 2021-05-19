@@ -12,8 +12,8 @@ import {
   SnxToken,
   SushiToken,
   TokenMeta,
-  UsdcXYZSushiLPToken,
-  convertTokenInUSD,
+  UsdcXyzSLPToken,
+  useKnownTokens,
 } from 'components/providers/known-tokens-provider';
 import config from 'config';
 import { useReload } from 'hooks/useReload';
@@ -29,7 +29,7 @@ export enum YFPoolID {
   SUSHI = 'sushi',
   LINK = 'link',
   ILV = 'ilv',
-  USDC_XYZ_SUSHI_LP = 'usdcXYZSushiLP',
+  USDC_XYZ_SLP = 'usdc-xyz-slp',
 }
 
 export type YFPoolMeta = {
@@ -104,13 +104,13 @@ export const IlvYfPool: YFPoolMeta = {
   contract: new YfPoolContract(config.contracts.yf.ilv),
 };
 
-export const UsdcKekSushiLPYfPool: YFPoolMeta = {
-  name: YFPoolID.USDC_XYZ_SUSHI_LP,
+export const UsdcXyzSLPYfPool: YFPoolMeta = {
+  name: YFPoolID.USDC_XYZ_SLP,
   label: 'USDC_XYZ_SUSHI_LP',
-  icons: ['token-usdc'],
+  icons: ['png/uslp'],
   colors: ['var(--theme-red-color)'],
-  tokens: [UsdcXYZSushiLPToken],
-  contract: new YfPoolContract(config.contracts.yf.usdcXYZSushiLP),
+  tokens: [UsdcXyzSLPToken],
+  contract: new YfPoolContract(config.contracts.yf.usdcXyzSLP),
 };
 
 const KNOWN_POOLS: YFPoolMeta[] = [
@@ -121,7 +121,7 @@ const KNOWN_POOLS: YFPoolMeta[] = [
   SushiYfPool,
   LinkYfPool,
   IlvYfPool,
-  UsdcKekSushiLPYfPool,
+  UsdcXyzSLPYfPool,
 ];
 
 export function getYFKnownPoolByName(name: string): YFPoolMeta | undefined {
@@ -163,6 +163,7 @@ export function useYFPools(): YFPoolsType {
 const YFPoolsProvider: FC = props => {
   const { children } = props;
 
+  const knownTokensCtx = useKnownTokens();
   const walletCtx = useWallet();
   const [reload] = useReload();
 
@@ -223,10 +224,10 @@ const YFPoolsProvider: FC = props => {
           return undefined;
         }
 
-        return convertTokenInUSD(stakedToken.nextEpochPoolSize.unscaleBy(token.decimals), token.symbol);
+        return knownTokensCtx.convertTokenInUSD(stakedToken.nextEpochPoolSize.unscaleBy(token.decimals), token.symbol);
       });
     },
-    [stakingContract],
+    [stakingContract, knownTokensCtx.version],
   );
 
   const getPoolEffectiveBalanceInUSD = useCallback(
@@ -244,10 +245,13 @@ const YFPoolsProvider: FC = props => {
           return undefined;
         }
 
-        return convertTokenInUSD(stakedToken.currentEpochPoolSize.unscaleBy(token.decimals), token.symbol);
+        return knownTokensCtx.convertTokenInUSD(
+          stakedToken.currentEpochPoolSize.unscaleBy(token.decimals),
+          token.symbol,
+        );
       });
     },
-    [stakingContract],
+    [stakingContract, knownTokensCtx.version],
   );
 
   const getMyPoolBalanceInUSD = useCallback(
@@ -265,10 +269,13 @@ const YFPoolsProvider: FC = props => {
           return undefined;
         }
 
-        return convertTokenInUSD(stakedToken.nextEpochUserBalance.unscaleBy(token.decimals), token.symbol);
+        return knownTokensCtx.convertTokenInUSD(
+          stakedToken.nextEpochUserBalance.unscaleBy(token.decimals),
+          token.symbol,
+        );
       });
     },
-    [stakingContract],
+    [stakingContract, knownTokensCtx.version],
   );
 
   const getMyPoolEffectiveBalanceInUSD = useCallback(
@@ -286,10 +293,13 @@ const YFPoolsProvider: FC = props => {
           return undefined;
         }
 
-        return convertTokenInUSD(stakedToken.currentEpochUserBalance.unscaleBy(token.decimals), token.symbol);
+        return knownTokensCtx.convertTokenInUSD(
+          stakedToken.currentEpochUserBalance.unscaleBy(token.decimals),
+          token.symbol,
+        );
       });
     },
-    [stakingContract],
+    [stakingContract, knownTokensCtx.version],
   );
 
   const getYFTotalStakedInUSD = useCallback(() => {
@@ -353,7 +363,7 @@ const YFPoolsProvider: FC = props => {
       <ContractListener contract={SushiYfPool.contract} />
       <ContractListener contract={LinkYfPool.contract} />
       <ContractListener contract={IlvYfPool.contract} />
-      <ContractListener contract={UsdcKekSushiLPYfPool.contract} />
+      <ContractListener contract={UsdcXyzSLPYfPool.contract} />
     </YFPoolsContext.Provider>
   );
 };

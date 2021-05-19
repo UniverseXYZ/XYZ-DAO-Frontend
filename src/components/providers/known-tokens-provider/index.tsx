@@ -1,25 +1,18 @@
-import React, { FC, createContext, useContext } from 'react';
+import React, { FC, createContext, useContext, useEffect } from 'react';
 import BigNumber from 'bignumber.js';
 import { AbiItem } from 'web3-utils';
 import Erc20Contract from 'web3/erc20Contract';
+import { formatUSD } from 'web3/utils';
 import Web3Contract, { createAbiItem } from 'web3/web3Contract';
 
 import { TokenIconNames } from 'components/custom/icon';
-import { MainnetHttpsWeb3Provider } from 'components/providers/eth-web3-provider';
 import config from 'config';
 import { useReload } from 'hooks/useReload';
 import { useWallet } from 'wallets/wallet';
 
-import { formatUSD } from '../../../web3/utils';
-
 export enum KnownTokens {
-  ETH = 'ETH',
-  BTC = 'BTC',
-  WETH = 'WETH',
-  WBTC = 'WBTC',
-  REN_BTC = 'renBTC',
-  USDC = 'USDC',
   XYZ = 'XYZ',
+  USDC = 'USDC',
   BOND = 'BOND',
   AAVE = 'AAVE',
   COMP = 'COMP',
@@ -27,7 +20,7 @@ export enum KnownTokens {
   SUSHI = 'SUSHI',
   LINK = 'LINK',
   ILV = 'ILV',
-  USDC_XYZ_SUSHI_LP = 'USDC_XYZ_SUSHI_LP',
+  USDC_XYZ_SLP = 'USDC_XYZ_SUSHI_LP',
 }
 
 export type TokenMeta = {
@@ -35,159 +28,113 @@ export type TokenMeta = {
   name: string;
   address: string;
   decimals: number;
-  priceFeed?: string;
-  pricePath?: KnownTokens[];
-  price?: BigNumber;
   icon?: TokenIconNames;
+  coinGeckoId?: string;
   contract?: Web3Contract;
-};
-
-export const UsdcToken: TokenMeta = {
-  address: config.contracts.usdc.token,
-  symbol: KnownTokens.USDC,
-  name: 'USD Coin',
-  decimals: 6,
-  priceFeed: config.contracts.usdc.price, // USDC -> $
-  icon: 'token-usdc',
-  contract: new Erc20Contract([], config.contracts.usdc.token),
+  price?: BigNumber;
 };
 
 export const XyzToken: TokenMeta = {
-  address: config.contracts.xyz.token,
+  address: config.tokens.xyz,
   symbol: KnownTokens.XYZ,
   name: 'XYZ Governance Token',
   decimals: 18,
-  priceFeed: config.contracts.xyz.price, // XYZ -> USDC
-  pricePath: [KnownTokens.USDC],
   icon: 'png/universe' as any,
-  contract: new Erc20Contract([], config.contracts.xyz.token),
+  contract: new Erc20Contract([], config.tokens.xyz),
+};
+
+export const UsdcToken: TokenMeta = {
+  address: config.tokens.usdc,
+  symbol: KnownTokens.USDC,
+  name: 'USD Coin',
+  decimals: 6,
+  icon: 'token-usdc',
+  coinGeckoId: 'usd-coin',
+  contract: new Erc20Contract([], config.tokens.usdc),
 };
 
 export const BondToken: TokenMeta = {
-  address: config.contracts.bond.token,
+  address: config.tokens.bond,
   symbol: KnownTokens.BOND,
   name: 'BarnBridge',
   decimals: 18,
-  priceFeed: config.contracts.bond.price, // BOND -> USDC
-  pricePath: [KnownTokens.USDC],
   icon: 'static/token-bond',
-  contract: new Erc20Contract([], config.contracts.bond.token),
+  coinGeckoId: 'barnbridge',
+  contract: new Erc20Contract([], config.tokens.bond),
 };
 
 export const AaveToken: TokenMeta = {
-  address: config.contracts.aave.token,
+  address: config.tokens.aave,
   symbol: KnownTokens.AAVE,
   name: 'Aave',
   decimals: 18,
-  priceFeed: config.contracts.aave.price, // AAVE -> $
   icon: 'png/aave',
-  contract: new Erc20Contract([], config.contracts.aave.token),
+  coinGeckoId: 'aave',
+  contract: new Erc20Contract([], config.tokens.aave),
 };
 
 export const CompToken: TokenMeta = {
-  address: config.contracts.comp.token,
+  address: config.tokens.comp,
   symbol: KnownTokens.COMP,
   name: 'Compound',
   decimals: 18,
-  priceFeed: config.contracts.comp.price, // COMP -> $
   icon: 'compound',
-  contract: new Erc20Contract([], config.contracts.comp.token),
+  coinGeckoId: 'compound-governance-token',
+  contract: new Erc20Contract([], config.tokens.comp),
 };
 
 export const SnxToken: TokenMeta = {
-  address: config.contracts.snx.token,
+  address: config.tokens.snx,
   symbol: KnownTokens.SNX,
   name: 'Synthetix Network Token',
   decimals: 18,
-  priceFeed: config.contracts.snx.price, // SNX -> $
   icon: 'token-snx',
-  contract: new Erc20Contract([], config.contracts.snx.token),
+  coinGeckoId: 'havven',
+  contract: new Erc20Contract([], config.tokens.snx),
 };
 
 export const SushiToken: TokenMeta = {
-  address: config.contracts.sushi.token,
+  address: config.tokens.sushi,
   symbol: KnownTokens.SUSHI,
   name: 'Sushi',
   decimals: 18,
-  priceFeed: config.contracts.sushi.price, // SUSHI -> ETH
-  pricePath: [KnownTokens.ETH],
   icon: 'png/sushi',
-  contract: new Erc20Contract([], config.contracts.sushi.token),
+  coinGeckoId: 'sushi',
+  contract: new Erc20Contract([], config.tokens.sushi),
 };
 
 export const LinkToken: TokenMeta = {
-  address: config.contracts.link.token,
+  address: config.tokens.link,
   symbol: KnownTokens.LINK,
   name: 'Chainlink',
   decimals: 18,
-  priceFeed: config.contracts.link.price, // LINK -> $
   icon: 'png/link',
-  contract: new Erc20Contract([], config.contracts.link.token),
+  coinGeckoId: 'chainlink',
+  contract: new Erc20Contract([], config.tokens.link),
 };
 
 export const IlvToken: TokenMeta = {
-  address: config.contracts.ilv.token,
+  address: config.tokens.ilv,
   symbol: KnownTokens.ILV,
   name: 'Illuvium',
   decimals: 18,
   icon: 'png/ilv',
-  contract: new Erc20Contract([], config.contracts.ilv.token),
+  coinGeckoId: 'illuvium',
+  contract: new Erc20Contract([], config.tokens.ilv),
 };
 
-export const UsdcXYZSushiLPToken: TokenMeta = {
-  address: config.contracts.usdcXYZSushiLP.token,
-  symbol: KnownTokens.USDC_XYZ_SUSHI_LP,
+export const UsdcXyzSLPToken: TokenMeta = {
+  address: config.tokens.usdcXyzSLP,
+  symbol: KnownTokens.USDC_XYZ_SLP,
   name: 'USDC XYZ SUSHI LP',
   decimals: 18,
-  priceFeed: config.contracts.usdcXYZSushiLP.price, // USDC_XYZ_SUSHI_LP -> USDC
-  pricePath: [KnownTokens.USDC],
-  icon: 'token-usdc',
-  contract: new Erc20Contract([], config.contracts.usdcXYZSushiLP.token),
+  icon: 'png/uslp',
+  contract: new Erc20Contract([], config.tokens.usdcXyzSLP),
 };
 
 const KNOWN_TOKENS: TokenMeta[] = [
-  {
-    address: '0x',
-    symbol: KnownTokens.BTC,
-    name: 'BTC',
-    decimals: 0,
-    priceFeed: '0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c', // BTC -> $
-    icon: 'token-wbtc',
-  },
-  {
-    address: '0x',
-    symbol: KnownTokens.ETH,
-    name: 'Ether',
-    decimals: 0,
-    priceFeed: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419', // ETH -> $
-    icon: 'token-eth',
-  },
-  {
-    address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-    symbol: KnownTokens.WETH,
-    name: 'Wrapped Ether',
-    decimals: 18,
-    pricePath: [KnownTokens.ETH],
-    icon: 'token-weth',
-  },
-  {
-    address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-    symbol: KnownTokens.WBTC,
-    name: 'Wrapped BTC',
-    decimals: 8,
-    pricePath: [KnownTokens.BTC],
-    icon: 'token-wbtc',
-  },
-  {
-    address: '0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D',
-    symbol: KnownTokens.REN_BTC,
-    name: 'renBTC',
-    decimals: 8,
-    pricePath: [KnownTokens.BTC],
-    icon: 'token-renbtc',
-  },
-  UsdcToken,
   XyzToken,
+  UsdcToken,
   BondToken,
   AaveToken,
   CompToken,
@@ -195,7 +142,7 @@ const KNOWN_TOKENS: TokenMeta[] = [
   SushiToken,
   LinkToken,
   IlvToken,
-  UsdcXYZSushiLPToken,
+  UsdcXyzSLPToken,
 ];
 
 (window as any).KNOWN_TOKENS = KNOWN_TOKENS;
@@ -206,6 +153,7 @@ export function getKnownTokens(): TokenMeta[] {
 
 type ContextType = {
   tokens: TokenMeta[];
+  version: number;
   getTokenBySymbol(symbol: string): TokenMeta | undefined;
   getTokenByAddress(address: string): TokenMeta | undefined;
   getTokenPriceIn(source: string, target: string): BigNumber | undefined;
@@ -215,6 +163,7 @@ type ContextType = {
 
 const Context = createContext<ContextType>({
   tokens: [...KNOWN_TOKENS],
+  version: 0,
   getTokenBySymbol: () => undefined,
   getTokenByAddress: () => undefined,
   getTokenPriceIn: () => undefined,
@@ -226,18 +175,6 @@ export function useKnownTokens(): ContextType {
   return useContext<ContextType>(Context);
 }
 
-const PRICE_FEED_ABI: AbiItem[] = [
-  createAbiItem('decimals', [], ['int8']),
-  createAbiItem('latestAnswer', [], ['int256']),
-];
-
-const BOND_PRICE_FEED_ABI: AbiItem[] = [
-  createAbiItem('decimals', [], ['int8']),
-  createAbiItem('totalSupply', [], ['uint256']),
-  createAbiItem('getReserves', [], ['uint112', 'uint112']),
-  createAbiItem('token0', [], ['address']),
-];
-
 export function getTokenBySymbol(symbol: string): TokenMeta | undefined {
   return KNOWN_TOKENS.find(token => token.symbol === symbol);
 }
@@ -246,79 +183,41 @@ export function getTokenByAddress(address: string): TokenMeta | undefined {
   return KNOWN_TOKENS.find(token => token.address.toLowerCase() === address.toLowerCase());
 }
 
-async function getFeedPrice(symbol: string): Promise<BigNumber> {
-  const token = getTokenBySymbol(symbol);
+const LP_PRICE_FEED_ABI: AbiItem[] = [
+  createAbiItem('decimals', [], ['int8']),
+  createAbiItem('totalSupply', [], ['uint256']),
+  createAbiItem('getReserves', [], ['uint112', 'uint112']),
+  createAbiItem('token0', [], ['address']),
+];
 
-  if (!token || !token.priceFeed) {
-    return Promise.reject();
-  }
+async function getXyzPrice(): Promise<BigNumber> {
+  const priceFeedContract = new Erc20Contract(LP_PRICE_FEED_ABI, UsdcXyzSLPToken.address);
 
-  const priceFeedContract = new Erc20Contract(PRICE_FEED_ABI, token.priceFeed);
-  priceFeedContract.setCallProvider(MainnetHttpsWeb3Provider);
+  const [{ 0: reserve0, 1: reserve1 }] = await priceFeedContract.batch([{ method: 'getReserves' }]);
+  const usdcReserve = new BigNumber(reserve0).unscaleBy(UsdcToken.decimals);
+  const xyzReserve = new BigNumber(reserve1).unscaleBy(XyzToken.decimals);
 
-  const [decimals, latestAnswer] = await priceFeedContract.batch([
-    { method: 'decimals', transform: Number },
-    { method: 'latestAnswer', transform: value => new BigNumber(value) },
-  ]);
-
-  return latestAnswer.unscaleBy(decimals)!;
-}
-
-async function getBondPrice(): Promise<BigNumber> {
-  const usdcToken = getTokenBySymbol(KnownTokens.USDC);
-  const bondToken = getTokenBySymbol(KnownTokens.BOND);
-
-  if (!usdcToken || !bondToken || !bondToken.priceFeed) {
-    return Promise.reject();
-  }
-
-  const priceFeedContract = new Erc20Contract(BOND_PRICE_FEED_ABI, bondToken.priceFeed);
-
-  const [decimals, [reserve0, reserve1], token0] = await priceFeedContract.batch([
-    { method: 'decimals', transform: Number },
-    {
-      method: 'getReserves',
-      transform: ({ 0: reserve0, 1: reserve1 }) => [new BigNumber(reserve0), new BigNumber(reserve1)],
-    },
-    { method: 'token0', transform: value => value.toLowerCase() },
-  ]);
-
-  const bond = token0 === bondToken.address.toLowerCase() ? reserve0 : reserve1;
-  const usdc = token0 === bondToken.address.toLowerCase() ? reserve1 : reserve0;
-
-  const bondReserve = bond.unscaleBy(decimals)!;
-  const usdcReserve = usdc.unscaleBy(usdcToken.decimals)!;
-
-  if (bondReserve?.eq(BigNumber.ZERO)) {
+  if (!usdcReserve || !xyzReserve || xyzReserve.eq(BigNumber.ZERO)) {
     return BigNumber.ZERO;
   }
 
-  return usdcReserve.dividedBy(bondReserve);
+  return usdcReserve.dividedBy(xyzReserve);
 }
 
-async function getUsdcXYZSushiLPPrice(): Promise<BigNumber> {
-  const usdcToken = getTokenBySymbol(KnownTokens.USDC);
-  const usdcXYZSushiLPToken = getTokenBySymbol(KnownTokens.USDC_XYZ_SUSHI_LP);
+async function getUsdcXyzSLPPrice(): Promise<BigNumber> {
+  const priceFeedContract = new Erc20Contract(LP_PRICE_FEED_ABI, UsdcXyzSLPToken.address);
 
-  if (!usdcToken || !usdcXYZSushiLPToken || !usdcXYZSushiLPToken.priceFeed) {
-    return Promise.reject();
-  }
-
-  const priceFeedContract = new Erc20Contract(BOND_PRICE_FEED_ABI, usdcXYZSushiLPToken.priceFeed);
-
-  const [decimals, totalSupply, [reserve0, reserve1], token0] = await priceFeedContract.batch([
+  const [decimals, totalSupply, reserves] = await priceFeedContract.batch([
     { method: 'decimals', transform: Number },
     { method: 'totalSupply', transform: value => new BigNumber(value) },
-    {
-      method: 'getReserves',
-      transform: ({ 0: reserve0, 1: reserve1 }) => [new BigNumber(reserve0), new BigNumber(reserve1)],
-    },
-    { method: 'token0', transform: value => value.toLowerCase() },
+    { method: 'getReserves' },
   ]);
+  const usdcReserve = new BigNumber(reserves[0]).unscaleBy(UsdcToken.decimals);
+  const supply = totalSupply.unscaleBy(decimals);
 
-  const usdcAmount = token0 === usdcToken.address.toLowerCase() ? reserve0 : reserve1;
-  const usdcReserve = usdcAmount.unscaleBy(usdcToken.decimals)!;
-  const supply = totalSupply.unscaleBy(decimals)!;
+  if (!usdcReserve || !supply || supply.eq(BigNumber.ZERO)) {
+    return BigNumber.ZERO;
+  }
 
   return usdcReserve.dividedBy(supply).multipliedBy(2);
 }
@@ -378,61 +277,48 @@ const KnownTokensProvider: FC = props => {
   const { children } = props;
 
   const wallet = useWallet();
-  const [reload] = useReload();
+  const [reload, version] = useReload();
 
-  React.useEffect(() => {
-    (BondToken.contract as Erc20Contract).loadCommon().catch(Error);
+  useEffect(() => {
+    (XyzToken.contract as Erc20Contract).loadCommon().catch(Error);
 
     (async () => {
-      await Promise.allSettled(
-        KNOWN_TOKENS.map(async token => {
-          switch (token.symbol) {
-            case KnownTokens.BOND:
-              token.price = await getBondPrice();
-              break;
-            case KnownTokens.USDC_XYZ_SUSHI_LP:
-              token.price = await getUsdcXYZSushiLPPrice();
-              break;
-            default:
-              token.price = await getFeedPrice(token.symbol);
-              break;
-          }
-        }),
-      );
+      XyzToken.price = await getXyzPrice().catch();
+      UsdcXyzSLPToken.price = await getUsdcXyzSLPPrice().catch();
 
-      KNOWN_TOKENS.forEach(token => {
-        if (token.priceFeed && token.price === undefined) {
-          token.price = BigNumber.ZERO;
-          return;
-        }
+      const ids = KNOWN_TOKENS.map(tk => tk.coinGeckoId)
+        .filter(Boolean)
+        .join(',');
 
-        if (token.pricePath) {
-          for (let path of token.pricePath) {
-            const tk = getTokenBySymbol(path);
+      try {
+        const prices = await fetch(
+          `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`,
+        ).then(res => res.json());
 
-            if (!tk || !tk.price) {
-              token.price = undefined;
-              break;
+        KNOWN_TOKENS.forEach(token => {
+          if (token.coinGeckoId) {
+            const price = prices[token.coinGeckoId]?.usd;
+
+            if (price) {
+              token.price = new BigNumber(price);
             }
-
-            token.price = token.price?.multipliedBy(tk.price) ?? tk.price;
           }
-        }
 
-        console.log(`[Token Price] ${token.symbol} = ${formatUSD(token.price)}`);
-      });
+          console.log(`[Token Price] ${token.symbol} = ${formatUSD(token.price)}`);
+        });
+      } catch {}
 
       reload();
     })();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     KNOWN_TOKENS.forEach(token => {
       token.contract?.setProvider(wallet.provider);
     });
   }, [wallet.provider]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     KNOWN_TOKENS.forEach(token => {
       token.contract?.setAccount(wallet.account);
     });
@@ -445,6 +331,7 @@ const KnownTokensProvider: FC = props => {
 
   const value = {
     tokens: [...KNOWN_TOKENS],
+    version,
     getTokenBySymbol,
     getTokenByAddress,
     getTokenPriceIn,

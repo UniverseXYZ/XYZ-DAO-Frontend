@@ -11,17 +11,12 @@ import ThemeSwitcher from './components/theme-switcher';
 
 import s from './s.module.scss';
 
-// import LayoutSideNav from 'layout/components/layout-side-nav';
-
 const YieldFarmingView = lazy(() => import('modules/yield-farming'));
 const GovernanceView = lazy(() => import('modules/governance'));
-// const SmartYieldView = lazy(() => import('modules/smart-yield'));
-// const SmartAlphaView = lazy(() => import('modules/smart-alpha'));
 
 const LayoutView: React.FC = () => {
   return (
     <div className={s.layout}>
-      {/*<LayoutSideNav />*/}
       <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
         <WarningProvider>
           <LayoutHeader />
@@ -32,9 +27,6 @@ const LayoutView: React.FC = () => {
                   <Route path="/yield-farming" component={YieldFarmingView} />
                   <Route path="/governance/:vt(\w+)" component={GovernanceView} />
                   <Route path="/governance" component={GovernanceView} />
-                  {/*<Route path="/smart-yield/:vt(\w+)" component={SmartYieldView} />*/}
-                  {/*<Route path="/smart-yield" component={SmartYieldView} />*/}
-                  {/*<Route path="/smart-alpha" component={SmartAlphaView} />*/}
                   <Redirect from="/" to="/yield-farming" />
                 </Switch>
               </Suspense>

@@ -12,9 +12,9 @@ import Grid from 'components/custom/grid';
 import Icon from 'components/custom/icon';
 import TokenAmount from 'components/custom/token-amount';
 import { Text } from 'components/custom/typography';
+import { XyzToken } from 'components/providers/known-tokens-provider';
 import useMergeState from 'hooks/useMergeState';
 
-import { XyzToken } from '../../../../components/providers/known-tokens-provider';
 import config from '../../../../config';
 import Erc20Contract from '../../../../web3/erc20Contract';
 import { useDAO } from '../../components/dao-provider';
@@ -127,7 +127,7 @@ const WalletDepositView: React.FC = () => {
 
         <Grid flow="row" gap={4}>
           <Text type="small" weight="semibold" color="secondary">
-            XYZ
+            {XyzToken.symbol}
           </Text>
           <Text type="p1" weight="semibold" color="primary">
             {formatBONDValue(xyzBalance)}

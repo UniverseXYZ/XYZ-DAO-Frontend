@@ -35,7 +35,7 @@ const PoolsView: React.FC = () => {
           <PoolCard poolId={YFPoolID.SUSHI} />
           <PoolCard poolId={YFPoolID.LINK} />
           <PoolCard poolId={YFPoolID.ILV} />
-          <PoolCard poolId={YFPoolID.USDC_XYZ_SUSHI_LP} />
+          <PoolCard poolId={YFPoolID.USDC_XYZ_SLP} />
         </div>
         <PoolChart className="mb-32" />
         <PoolTransactions />

@@ -7,6 +7,7 @@ import Progress from 'components/antd/progress';
 import Grid from 'components/custom/grid';
 import Icon from 'components/custom/icon';
 import { Hint, Text } from 'components/custom/typography';
+import { XyzToken } from 'components/providers/known-tokens-provider';
 
 import { useDAO } from '../../../../components/dao-provider';
 
@@ -34,8 +35,8 @@ const ActivationThreshold: React.FC<ActivationThresholdProps> = props => {
         <Hint
           text={
             <Text type="p2">
-              For the XYZ to be activated, a threshold of {formatBONDValue(dao.activationThreshold)} XYZ tokens staked
-              has to be met.
+              For the {XyzToken.symbol} to be activated, a threshold of {formatBONDValue(dao.activationThreshold)} XYZ
+              tokens staked has to be met.
             </Text>
           }>
           <Text type="p2" weight="bold" color="primary" font="secondary">
@@ -57,7 +58,7 @@ const ActivationThreshold: React.FC<ActivationThresholdProps> = props => {
         <Grid flow="col" gap={8} align="center">
           <Icon name="png/universe" width={32} height={32} />
           <Text type="p1" weight="bold" color="primary">
-            {formatBONDValue(dao.bondStaked)}
+            {formatBONDValue(dao.xyzStaked)}
           </Text>
           <Text type="p1" weight="semibold" color="secondary">
             / {formatBONDValue(dao.activationThreshold)} already staked.
