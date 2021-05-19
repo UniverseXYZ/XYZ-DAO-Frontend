@@ -61,7 +61,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
             {poolMeta?.label ?? '-'}
           </Text>
           <Text type="lb2" weight="semibold" color="primary" ellipsis>
-            WEEK {lastActiveEpoch ?? '-'} / {totalEpochs ?? '-'}
+            EPOCH {lastActiveEpoch ?? '-'} / {totalEpochs ?? '-'}
           </Text>
         </div>
         {walletCtx.isActive && (
