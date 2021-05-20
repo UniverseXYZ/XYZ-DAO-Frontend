@@ -160,7 +160,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
         <div className={s.box}>
           <Grid className="card-row" flow="row" align="start">
             <Text type="p2" weight="semibold" color="secondary" className="mb-4">
-              The ${poolMeta?.label} staking pool ended after {totalEpochs} weeks on {formattedEndDate}. Deposits are
+              The ${poolMeta?.label} staking pool ended after {totalEpochs} epochs on {formattedEndDate}. Deposits are
               now disabled, but you can still withdraw your tokens and collect any unclaimed rewards.
             </Text>
             {poolMeta?.tokens.some(tk => tk === XyzToken) && (

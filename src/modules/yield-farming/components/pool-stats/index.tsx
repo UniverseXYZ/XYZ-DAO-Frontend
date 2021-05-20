@@ -114,8 +114,8 @@ const PoolStats: React.FC<Props> = ({ className }) => {
               className="mb-48"
               text={
                 <Text type="p2">
-                  This counter shows the time left in the current week. The pool(s) below are synchronized and have
-                  epochs that last a week. You can deposit to the pool(s) during the duration of an epoch and receive
+                  This counter shows the time left in the current epoch. The pool(s) below are synchronized and have
+                  epochs that last a epoch. You can deposit to the pool(s) during the duration of an epoch and receive
                   rewards proportional to the time they are staked, but the funds must stay staked until the clock runs
                   out and the epoch ends in order to be able to harvest the rewards.
                 </Text>

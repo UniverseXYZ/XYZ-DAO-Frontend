@@ -13,6 +13,7 @@ import Grid from 'components/custom/grid';
 import Icon from 'components/custom/icon';
 import { Text } from 'components/custom/typography';
 import { useGeneral } from 'components/providers/general-provider';
+import { useWarning } from 'components/providers/warning-provider';
 import ConnectedWallet from 'wallets/components/connected-wallet';
 import { useWallet } from 'wallets/wallet';
 
@@ -23,6 +24,7 @@ const modalRoot = document.getElementById('modal-root') || document.body;
 const LayoutHeader: React.FC = () => {
   const { navOpen, setNavOpen, toggleDarkTheme, isDarkTheme } = useGeneral();
   const wallet = useWallet();
+  const { warns } = useWarning();
 
   const isGovernancePage = useRouteMatch('/governance');
 
@@ -131,7 +133,9 @@ const LayoutHeader: React.FC = () => {
       </Button>
       {navOpen &&
         ReactDOM.createPortal(
-          <div className={cn(s.mobileMenu, { [s.open]: navOpen })}>
+          <div
+            className={cn(s.mobileMenu, { [s.open]: navOpen })}
+            style={{ '--warns-count': warns.length } as React.CSSProperties}>
             <div className={s.mobileInner}>
               <div className={s.mobileMenuInner}>
                 <div>

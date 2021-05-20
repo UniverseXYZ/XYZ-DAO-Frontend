@@ -41,7 +41,7 @@ const PoolHeader: FC = () => {
             {poolMeta.label}
           </Text>
           <Text type="small" weight="semibold" color="primary">
-            Week {poolMeta.contract.lastActiveEpoch} / {poolMeta.contract.totalEpochs}
+            Epoch {poolMeta.contract.lastActiveEpoch} / {poolMeta.contract.totalEpochs}
           </Text>
         </div>
       </div>
@@ -64,7 +64,7 @@ const PoolHeader: FC = () => {
         </div>
         <div>
           <Text type="small" weight="semibold" color="secondary" className="mb-8">
-            Weekly rewards
+            Epoch rewards
           </Text>
           <div className="flex align-center">
             <Icon name="png/universe" width={24} height={24} className="mr-8" />

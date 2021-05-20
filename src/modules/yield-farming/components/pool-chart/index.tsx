@@ -55,20 +55,20 @@ const PoolChart: FC<Props> = props => {
 
   const epochFilters = useMemo(() => {
     if (!activeYfPool) {
-      return [{ value: 'all', label: 'All weeks' }];
+      return [{ value: 'all', label: 'All epochs' }];
     }
 
     const { lastActiveEpoch } = activeYfPool.contract;
 
     if (!lastActiveEpoch) {
-      return [{ value: 'all', label: 'All weeks' }];
+      return [{ value: 'all', label: 'All epochs' }];
     }
 
     return [
-      { value: 'all', label: 'All weeks' },
+      { value: 'all', label: 'All epochs' },
       ...Array.from({ length: lastActiveEpoch }).map((_, epoch) => ({
         value: String(epoch),
-        label: `Week ${epoch + 1}`,
+        label: `Epoch ${epoch + 1}`,
       })),
     ];
   }, [activeYfPool, version]);
@@ -161,7 +161,7 @@ const PoolChart: FC<Props> = props => {
           ?.multipliedBy(-1);
 
         historyMap.set(timestamp, {
-          label: isAll ? `Week ${epoch + 1}` : format(new Date(timestamp), 'dd-MM-yyyy'),
+          label: isAll ? `Epoch ${epoch + 1}` : format(new Date(timestamp), 'dd-MM-yyyy'),
           deposits: prevDeposits.plus(deposits ?? BigNumber.ZERO),
           withdrawals: prevWithdrawals.plus(withdrawals ?? BigNumber.ZERO),
         });

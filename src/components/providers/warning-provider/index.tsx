@@ -11,10 +11,12 @@ import s from './s.module.scss';
 
 export type WarningContextType = {
   addWarn: (opts: WarnType) => () => void;
+  warns: WarnType[];
 };
 
 const WarningContext = React.createContext<WarningContextType>({
   addWarn: () => () => undefined,
+  warns: [],
 });
 
 export function useWarning(): WarningContextType {
@@ -88,6 +90,7 @@ const WarningProvider: React.FC = props => {
     <WarningContext.Provider
       value={{
         addWarn,
+        warns,
       }}>
       <Grid flow="row">
         {warns.map((warn, idx) => (

@@ -1,3 +1,4 @@
+import React from 'react';
 import cn from 'classnames';
 
 import { DropdownList } from 'components/custom/dropdown';
@@ -34,6 +35,13 @@ export const TokenAmount: React.FC<TokenAmountType> = ({
   name,
   ...rest
 }) => {
+  const handlerKeyPress = (event: React.KeyboardEvent) => {
+    let validChars = '1234567890';
+    if (!rest.value.includes('.')) validChars += '.';
+
+    if (!validChars.includes(event.key)) event.preventDefault();
+  };
+
   return (
     <div className={className}>
       <div className={s.tokenAmount}>
@@ -48,11 +56,16 @@ export const TokenAmount: React.FC<TokenAmountType> = ({
             className={s.tokenAmountValue}
             type="text"
             pattern="[0-9]+([\.,][0-9]+)?"
+            inputMode="numeric"
             step={1 / 10 ** Math.min(decimals, 6)}
             lang="en"
-            onChange={e => {
-              onChange(e.target.value);
+            onChange={ev => {
+              onChange(ev.target.value);
             }}
+            onWheel={ev => {
+              ev.currentTarget.blur();
+            }}
+            onKeyPress={handlerKeyPress}
             {...rest}
           />
           <div className={s.tokenAmountHint}>{secondary}</div>
