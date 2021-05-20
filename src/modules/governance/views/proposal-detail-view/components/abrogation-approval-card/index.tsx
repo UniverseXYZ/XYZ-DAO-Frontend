@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Progress from 'components/antd/progress';
 import Grid from 'components/custom/grid';
+import ProgressNew from 'components/custom/progress';
 import { Hint, Text } from 'components/custom/typography';
 
 import { useAbrogation } from '../../providers/AbrogationProvider';
@@ -29,11 +29,14 @@ const AbrogationApprovalCard: React.FC = () => {
             (&gt; {abrogationCtx.acceptanceThreshold}% required)
           </Text>
         </Grid>
-        <Progress
+        <ProgressNew
           percent={abrogationCtx.approvalRate}
           acceptance={abrogationCtx.acceptanceThreshold}
-          strokeColor={passed ? 'var(--theme-green-color)' : 'var(--theme-red-color)'}
-          trailColor={passed ? 'rgba(var(--theme-green-color-rgb), .16)' : 'rgba(var(--theme-red-color-rgb), .16)'}
+          colors={{
+            bg: passed ? 'var(--gradient-green-opacity)' : 'var(--gradient-red-opacity)',
+            bar: passed ? 'var(--gradient-green)' : 'var(--gradient-red)',
+            acceptance: passed ? 'var(--gradient-green)' : 'var(--gradient-red-opacity)',
+          }}
         />
       </Grid>
     </div>

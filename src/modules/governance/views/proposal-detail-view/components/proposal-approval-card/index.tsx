@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Progress from 'components/antd/progress';
 import Grid from 'components/custom/grid';
+import ProgressNew from 'components/custom/progress';
 import { Hint, Text } from 'components/custom/typography';
 
 import { useProposal } from '../../providers/ProposalProvider';
@@ -29,11 +29,14 @@ const ProposalApprovalCard: React.FC = () => {
             (&gt; {proposalCtx.proposal?.acceptanceThreshold}% required)
           </Text>
         </Grid>
-        <Progress
+        <ProgressNew
           percent={proposalCtx.forRate}
           acceptance={proposalCtx.proposal?.acceptanceThreshold}
-          strokeColor={passed ? 'var(--gradient-green)' : 'var(--gradient-red)'}
-          trailColor={passed ? 'rgba(var(--theme-green-color-rgb), .16)' : 'rgba(var(--theme-red-color-rgb), .16)'}
+          colors={{
+            bg: passed ? 'var(--gradient-green-opacity)' : 'var(--gradient-red-opacity)',
+            bar: passed ? 'var(--gradient-green)' : 'var(--gradient-red)',
+            acceptance: passed ? 'var(--gradient-green)' : 'var(--gradient-red-opacity)',
+          }}
         />
       </Grid>
     </div>

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Button from 'components/antd/button';
-import Progress from 'components/antd/progress';
 import Grid from 'components/custom/grid';
+import ProgressNew from 'components/custom/progress';
 import { Hint, Text } from 'components/custom/typography';
 
 import { useAbrogation } from '../../providers/AbrogationProvider';
@@ -52,10 +52,10 @@ const AbrogationVoteResultsCard: React.FC = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Progress
+          <ProgressNew
             percent={abrogationCtx.forRate}
-            strokeColor="var(--theme-green-color)"
-            trailColor="var(--theme-red-color)"
+            colors={{ bg: 'var(--gradient-red)', bar: 'var(--gradient-green)' }}
+            style={{ margin: '8px 0' }}
           />
         </Grid>
         <Grid className="card-row p-24" flow="row">

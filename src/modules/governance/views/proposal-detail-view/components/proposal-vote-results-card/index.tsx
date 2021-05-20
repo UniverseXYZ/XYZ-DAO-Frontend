@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Button from 'components/antd/button';
-import Progress from 'components/antd/progress';
 import Grid from 'components/custom/grid';
+import ProgressNew from 'components/custom/progress';
 import { Hint, Text } from 'components/custom/typography';
 
 import { useProposal } from '../../providers/ProposalProvider';
@@ -52,10 +52,10 @@ const ProposalVoteResultsCard: React.FC = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Progress
+          <ProgressNew
             percent={proposalCtx.forRate}
-            strokeColor="var(--gradient-green)"
-            trailColor="var(--gradient-red-safe)"
+            colors={{ bg: 'var(--gradient-red)', bar: 'var(--gradient-green)' }}
+            style={{ margin: '8px 0' }}
           />
         </Grid>
         <Grid flow="row" className="card-row p-24">
