@@ -3,9 +3,9 @@ import cn from 'classnames';
 import { formatBONDValue } from 'web3/utils';
 
 import Button from 'components/antd/button';
-import Progress from 'components/antd/progress';
 import Grid from 'components/custom/grid';
 import Icon from 'components/custom/icon';
+import ProgressNew from 'components/custom/progress';
 import { Hint, Text } from 'components/custom/typography';
 import { XyzToken } from 'components/providers/known-tokens-provider';
 
@@ -44,15 +44,7 @@ const ActivationThreshold: React.FC<ActivationThresholdProps> = props => {
           </Text>
         </Hint>
         <Grid gap={12} colsTemplate="auto 24px" width="100%">
-          <Progress
-            percent={dao.activationRate}
-            trailColor="var(--theme-border-color)"
-            strokeWidth={24}
-            strokeColor={{
-              '0%': 'rgba(188, 235, 0, 1)',
-              '100%': 'rgba(0, 234, 234, 1)',
-            }}
-          />
+          <ProgressNew percent={dao.activationRate} colors={{ bg: 'var(--gradient-green)' }} height={24} />
           <Icon name="ribbon-outlined" />
         </Grid>
         <Grid flow="col" gap={8} align="center">

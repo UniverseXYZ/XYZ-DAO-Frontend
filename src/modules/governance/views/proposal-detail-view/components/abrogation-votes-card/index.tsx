@@ -3,8 +3,8 @@ import { formatBigValue } from 'web3/utils';
 
 import Alert from 'components/antd/alert';
 import Button from 'components/antd/button';
-import Progress from 'components/antd/progress';
 import Grid from 'components/custom/grid';
+import ProgressNew from 'components/custom/progress';
 import { Text } from 'components/custom/typography';
 import useMergeState from 'hooks/useMergeState';
 
@@ -98,10 +98,9 @@ const AbrogationVotesCard: React.FC = () => {
                 </Text>
               </Grid>
             </Grid>
-            <Progress
+            <ProgressNew
               percent={abrogationCtx.forRate}
-              strokeColor="var(--theme-green-color)"
-              trailColor="rgba(var(--theme-green-color-rgb), .16)"
+              colors={{ bg: 'var(--gradient-green-opacity)', bar: 'var(--gradient-green)' }}
             />
           </Grid>
           <Grid flow="row" gap={16}>
@@ -118,10 +117,9 @@ const AbrogationVotesCard: React.FC = () => {
                 </Text>
               </Grid>
             </Grid>
-            <Progress
+            <ProgressNew
               percent={abrogationCtx.againstRate}
-              strokeColor="var(--theme-red-color)"
-              trailColor="rgba(var(--theme-red-color-rgb), .16)"
+              colors={{ bg: 'var(--gradient-red-opacity)', bar: 'var(--gradient-red)' }}
             />
           </Grid>
         </Grid>

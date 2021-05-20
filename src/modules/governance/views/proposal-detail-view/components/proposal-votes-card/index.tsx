@@ -3,8 +3,8 @@ import { formatBigValue } from 'web3/utils';
 
 import Alert from 'components/antd/alert';
 import Button from 'components/antd/button';
-import Progress from 'components/antd/progress';
 import Grid from 'components/custom/grid';
+import ProgressNew from 'components/custom/progress';
 import { Text } from 'components/custom/typography';
 import { APIProposalState } from 'modules/governance/api';
 import { useWallet } from 'wallets/wallet';
@@ -126,10 +126,9 @@ const ProposalVotesCard: React.FC = () => {
                 </Text>
               </Grid>
             </Grid>
-            <Progress
+            <ProgressNew
               percent={proposalCtx.forRate}
-              strokeColor="var(--gradient-green)"
-              trailColor="rgba(var(--theme-green-color-rgb), .16)"
+              colors={{ bg: 'var(--gradient-green-opacity)', bar: 'var(--gradient-green)' }}
             />
           </Grid>
           <Grid flow="row" gap={16}>
@@ -146,10 +145,9 @@ const ProposalVotesCard: React.FC = () => {
                 </Text>
               </Grid>
             </Grid>
-            <Progress
+            <ProgressNew
               percent={proposalCtx.againstRate}
-              strokeColor="var(--gradient-red)"
-              trailColor="rgba(var(--theme-red-color-rgb), .16)"
+              colors={{ bg: 'var(--gradient-red-opacity)', bar: 'var(--gradient-red)' }}
             />
           </Grid>
         </Grid>
