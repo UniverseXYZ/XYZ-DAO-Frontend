@@ -59,7 +59,7 @@ function getData(n: NotificationType, reload: Function): [IconNames, [string, st
           <Text type="p2" weight="semibold" color="secondary" className="mb-16">
             Proposal {getProposalLink(n.metadata.proposalId)} has been created by{' '}
             {getStrongText(shortenAddr(n.metadata.proposer))} and entered the warm-up phase. You have{' '}
-            {getStrongText(getRelativeTime(n.metadata.displayDuration))} to stake your BOND
+            {getStrongText(getRelativeTime(n.metadata.displayDuration))} to stake your {XyzToken.symbol}
           </Text>
           <Link to="/governance/wallet/deposit" className="button-primary">
             Deposit now

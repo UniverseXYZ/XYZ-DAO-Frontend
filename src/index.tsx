@@ -22,19 +22,19 @@ const App: React.FC = () => {
     <ErrorBoundary>
       <StaticSprite />
       <WindowStateProvider>
-        <EthWeb3Provider>
-          <Web3WalletProvider>
-            <KnownTokensProvider>
-              <GeneralContextProvider>
+        <GeneralContextProvider>
+          <EthWeb3Provider>
+            <Web3WalletProvider>
+              <KnownTokensProvider>
                 <Router>
                   <NotificationsProvider>
                     <LayoutView />
                   </NotificationsProvider>
                 </Router>
-              </GeneralContextProvider>
-            </KnownTokensProvider>
-          </Web3WalletProvider>
-        </EthWeb3Provider>
+              </KnownTokensProvider>
+            </Web3WalletProvider>
+          </EthWeb3Provider>
+        </GeneralContextProvider>
       </WindowStateProvider>
     </ErrorBoundary>
   );

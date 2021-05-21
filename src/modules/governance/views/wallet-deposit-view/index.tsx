@@ -2,7 +2,7 @@ import React from 'react';
 import AntdForm from 'antd/lib/form';
 import AntdSwitch from 'antd/lib/switch';
 import BigNumber from 'bignumber.js';
-import { ZERO_BIG_NUMBER, formatBONDValue } from 'web3/utils';
+import { ZERO_BIG_NUMBER, formatXYZValue } from 'web3/utils';
 
 import Alert from 'components/antd/alert';
 import Button from 'components/antd/button';
@@ -118,10 +118,10 @@ const WalletDepositView: React.FC = () => {
 
         <Grid flow="row" gap={4}>
           <Text type="small" weight="semibold" color="secondary">
-            Voting vXYZ
+            Voting v{XyzToken.symbol}
           </Text>
           <Text type="p1" weight="semibold" color="primary">
-            {formatBONDValue(stakedBalance)}
+            {formatXYZValue(stakedBalance)}
           </Text>
         </Grid>
 
@@ -130,7 +130,7 @@ const WalletDepositView: React.FC = () => {
             {XyzToken.symbol}
           </Text>
           <Text type="p1" weight="semibold" color="primary">
-            {formatBONDValue(xyzBalance)}
+            {formatXYZValue(xyzBalance)}
           </Text>
         </Grid>
 

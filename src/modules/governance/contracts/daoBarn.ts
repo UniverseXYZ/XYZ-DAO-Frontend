@@ -138,7 +138,7 @@ export type DAOBarnContractData = {
 
 const InitialState: DAOBarnContractData = {
   contract: Contract,
-  activationThreshold: new BigNumber(400_000),
+  activationThreshold: new BigNumber(40_000),
   xyzStaked: undefined,
   balance: undefined,
   votingPower: undefined,

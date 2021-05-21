@@ -41,7 +41,7 @@ const PoolUnstake: FC = () => {
   const stakedBalance = selectedStakedToken?.nextEpochUserBalance?.unscaleBy(activeToken.decimals);
   const walletBalance = activeContract.balance?.unscaleBy(activeToken.decimals);
   const maxAmount = stakedBalance ?? BigNumber.ZERO;
-  const bnAmount = new BigNumber(amount);
+  const bnAmount = BigNumber.from(amount);
 
   function handleTokenSelect(tokenSymbol: string) {
     const tokenMeta = knownTokensCtx.getTokenBySymbol(tokenSymbol);
@@ -175,7 +175,7 @@ const PoolUnstake: FC = () => {
       <button
         type="button"
         className="button-primary"
-        disabled={!bnAmount.gt(BigNumber.ZERO) || bnAmount.gt(maxAmount) || unstaking}
+        disabled={!bnAmount || !bnAmount.gt(BigNumber.ZERO) || bnAmount.gt(maxAmount) || unstaking}
         onClick={handleUnstake}>
         {unstaking && <Spin spinning />}
         Unstake

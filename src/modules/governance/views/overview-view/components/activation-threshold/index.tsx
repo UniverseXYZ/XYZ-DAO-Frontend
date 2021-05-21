@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import { formatBONDValue } from 'web3/utils';
+import { formatXYZValue } from 'web3/utils';
 
 import Button from 'components/antd/button';
 import Grid from 'components/custom/grid';
@@ -35,7 +35,7 @@ const ActivationThreshold: React.FC<ActivationThresholdProps> = props => {
         <Hint
           text={
             <Text type="p2">
-              For the {XyzToken.symbol} to be activated, a threshold of {formatBONDValue(dao.activationThreshold)} XYZ
+              For the {XyzToken.symbol} to be activated, a threshold of {formatXYZValue(dao.activationThreshold)} XYZ
               tokens staked has to be met.
             </Text>
           }>
@@ -50,10 +50,10 @@ const ActivationThreshold: React.FC<ActivationThresholdProps> = props => {
         <Grid flow="col" gap={8} align="center">
           <Icon name="png/universe" width={32} height={32} />
           <Text type="p1" weight="bold" color="primary">
-            {formatBONDValue(dao.xyzStaked)}
+            {formatXYZValue(dao.xyzStaked)}
           </Text>
           <Text type="p1" weight="semibold" color="secondary">
-            / {formatBONDValue(dao.activationThreshold)} already staked.
+            / {formatXYZValue(dao.activationThreshold)} already staked.
           </Text>
         </Grid>
         {dao.activationRate === 100 && !dao.isActive && (
