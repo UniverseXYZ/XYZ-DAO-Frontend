@@ -118,7 +118,7 @@ const WalletDepositView: React.FC = () => {
 
         <Grid flow="row" gap={4}>
           <Text type="small" weight="semibold" color="secondary">
-            Voting v{XyzToken.symbol}
+            Staked Balance
           </Text>
           <Text type="p1" weight="semibold" color="primary">
             {formatXYZValue(stakedBalance)}
@@ -127,7 +127,7 @@ const WalletDepositView: React.FC = () => {
 
         <Grid flow="row" gap={4}>
           <Text type="small" weight="semibold" color="secondary">
-            {XyzToken.symbol}
+            Wallet Balance
           </Text>
           <Text type="p1" weight="semibold" color="primary">
             {formatXYZValue(xyzBalance)}

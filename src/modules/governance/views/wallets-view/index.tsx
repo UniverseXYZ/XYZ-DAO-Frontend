@@ -47,10 +47,10 @@ const WalletView: React.FC = () => {
         Wallet
       </Text>
       <Tabs activeKey={activeTab} simple onChange={handleTabChange}>
-        <Tabs.Tab key="deposit" tab="Deposit" />
+        <Tabs.Tab key="deposit" tab="Stack" />
         <Tabs.Tab key="lock" tab="Lock" />
         <Tabs.Tab key="delegate" tab="Delegate" />
-        <Tabs.Tab key="withdraw" tab="Withdraw" />
+        <Tabs.Tab key="withdraw" tab="Unstack" />
       </Tabs>
       <Switch>
         <Route path="/governance/wallet/deposit" exact component={WalletDepositView} />

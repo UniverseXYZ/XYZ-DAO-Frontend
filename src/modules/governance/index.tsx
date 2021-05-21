@@ -75,18 +75,10 @@ const GovernanceViewInternal: React.FC = () => {
             </>
           }
         />
-        {/*<Tabs.Tab*/}
-        {/*  key="treasury"*/}
-        {/*  tab={*/}
-        {/*    <>*/}
-        {/*      <Icon name="treasury-outlined" /> Treasury*/}
-        {/*    </>*/}
-        {/*  }*/}
-        {/*/>*/}
         <Tabs.Tab
-          key="signal"
+          key="forum"
           tab={
-            <ExternalLink href="https://signal.barnbridge.com/" style={{ color: 'inherit' }}>
+            <ExternalLink href="https://forum.universe.xyz/" style={{ color: 'inherit' }}>
               <Grid flow="col" gap={8} align="center">
                 <Icon name="chats-outlined" />
                 <Text type="p1" weight="semibold">
@@ -97,20 +89,6 @@ const GovernanceViewInternal: React.FC = () => {
             </ExternalLink>
           }
         />
-        {/*<Tabs.Tab*/}
-        {/*  key="forum"*/}
-        {/*  tab={*/}
-        {/*    <ExternalLink href="https://forum.barnbridge.com/" style={{ color: 'inherit' }}>*/}
-        {/*      <Grid flow="col" gap={8} align="center">*/}
-        {/*        <Icon name="forum-outlined" />*/}
-        {/*        <Text type="p1" weight="semibold">*/}
-        {/*          Forum*/}
-        {/*        </Text>*/}
-        {/*        <Icon name="arrow-top-right" width={8} height={8} style={{ alignSelf: 'start', color: 'inherit' }} />*/}
-        {/*      </Grid>*/}
-        {/*    </ExternalLink>*/}
-        {/*  }*/}
-        {/*/>*/}
       </Tabs>
       <div className="content-container-fix content-container">
         <Switch>
