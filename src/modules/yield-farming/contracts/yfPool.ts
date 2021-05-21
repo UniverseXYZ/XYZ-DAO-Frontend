@@ -2,6 +2,8 @@ import BigNumber from 'bignumber.js';
 import { AbiItem } from 'web3-utils';
 import Web3Contract, { createAbiItem } from 'web3/web3Contract';
 
+import { toNumber } from 'utils';
+
 const ABI: AbiItem[] = [
   createAbiItem('NR_OF_EPOCHS', [], ['uint256']),
   createAbiItem('TOTAL_DISTRIBUTED_AMOUNT', [], ['uint256']),
@@ -112,11 +114,11 @@ export class YfPoolContract extends Web3Contract {
       { method: 'getCurrentEpoch' },
     ]);
 
-    this.totalEpochs = Number(totalEpochs);
-    this.totalSupply = Number(totalForDistribution);
-    this.epochDuration = Number(epochDuration);
-    this.epoch1Start = Number(epochStart);
-    this.currentEpoch = Number(currentEpoch);
+    this.totalEpochs = toNumber(totalEpochs);
+    this.totalSupply = toNumber(totalForDistribution);
+    this.epochDuration = toNumber(epochDuration);
+    this.epoch1Start = toNumber(epochStart);
+    this.currentEpoch = toNumber(currentEpoch);
     this.emit(Web3Contract.UPDATE_DATA);
 
     const [currentPoolSize] = await this.batch([{ method: 'getPoolSize', methodArgs: [this.currentEpoch] }]);
@@ -129,8 +131,8 @@ export class YfPoolContract extends Web3Contract {
 
     this.assertAccount();
 
-    const currentEpoch = await this.batch([{ method: 'getCurrentEpoch' }]);
-    this.currentEpoch = Number(currentEpoch);
+    const currentEpoch = await this.call('getCurrentEpoch');
+    this.currentEpoch = toNumber(currentEpoch);
 
     const [currentEpochStake, toClaim] = await this.batch([
       { method: 'getEpochStake', methodArgs: [account, this.currentEpoch] },

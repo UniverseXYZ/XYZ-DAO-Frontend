@@ -120,11 +120,11 @@ const ProposalProvider: React.FC<ProposalProviderProps> = props => {
       againstRate,
     });
 
-    daoCtx.daoBarn.actions.xyzStakedAtTs(createTime + warmUpDuration).then(bondStakedAt => {
+    daoCtx.daoBarn.actions.xyzStakedAtTs(createTime + warmUpDuration).then(xyzStakedAt => {
       let quorum: number | undefined;
 
-      if (bondStakedAt?.gt(ZERO_BIG_NUMBER)) {
-        quorum = total.multipliedBy(100).div(bondStakedAt).toNumber();
+      if (xyzStakedAt?.gt(ZERO_BIG_NUMBER)) {
+        quorum = total.multipliedBy(100).div(xyzStakedAt).toNumber();
       }
 
       setState({ quorum });

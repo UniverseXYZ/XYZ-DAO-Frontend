@@ -44,7 +44,7 @@ const PoolStake: FC = () => {
   const stakedBalance = selectedStakedToken?.nextEpochUserBalance?.unscaleBy(activeToken.decimals);
   const walletBalance = activeContract.balance?.unscaleBy(activeToken.decimals);
   const maxAmount = BigNumber.min(walletBalance ?? BigNumber.ZERO, allowance ?? BigNumber.ZERO);
-  const bnAmount = new BigNumber(amount);
+  const bnAmount = BigNumber.from(amount);
 
   function handleTokenSelect(tokenSymbol: string) {
     const tokenMeta = knownTokensCtx.getTokenBySymbol(tokenSymbol);
@@ -165,7 +165,7 @@ const PoolStake: FC = () => {
               message={
                 <div className="flex flow-row row-gap-16 align-start">
                   <Text type="p2" weight="semibold" color="blue">
-                    You can still deposit BOND in the DAO governance to earn interest for your funds.
+                    You can still deposit {activeToken.symbol} in the DAO governance to earn interest for your funds.
                   </Text>
                   <Link to="/governance" className="link-blue">
                     <Text type="p2" weight="bold" style={{ textDecoration: 'underline' }}>
@@ -190,7 +190,13 @@ const PoolStake: FC = () => {
         <button
           type="button"
           className="button-primary"
-          disabled={!allowance?.gt(BigNumber.ZERO) || bnAmount.eq(BigNumber.ZERO) || bnAmount.gt(maxAmount) || staking}
+          disabled={
+            !allowance?.gt(BigNumber.ZERO) ||
+            !bnAmount ||
+            !bnAmount.gt(BigNumber.ZERO) ||
+            bnAmount.gt(maxAmount) ||
+            staking
+          }
           onClick={handleStake}>
           {staking && <Spin spinning />}
           Stake
