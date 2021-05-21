@@ -41,9 +41,11 @@ const LayoutHeader: React.FC = () => {
           noPadding
           content={
             <div className={cn('card', s.dropdown)}>
-              <ExternalLink href="#" className={s.dropdownLink}>
+              <ExternalLink href="#" className={s.dropdownLink} aria-disabled="true">
                 <Icon name="auction" width={20} height={20} className={s.dropdownIcon} />
-                <span>Auction house</span>
+                <Tooltip title="Coming soon" placement="top" hint>
+                  <span>Auction house</span>
+                </Tooltip>
               </ExternalLink>
               <ExternalLink className={s.dropdownLink} aria-disabled="true">
                 <Icon name="marketplace" width={20} height={20} className={s.dropdownIcon} />
@@ -74,15 +76,15 @@ const LayoutHeader: React.FC = () => {
           noPadding
           content={
             <div className={cn('card', s.dropdown)}>
-              <ExternalLink href="#" className={s.dropdownLink}>
+              <ExternalLink href="https://universe.xyz/about" className={s.dropdownLink}>
                 <Icon name="about" width={20} height={20} className={s.dropdownIcon} />
                 <span>About</span>
               </ExternalLink>
-              <ExternalLink href="#" className={s.dropdownLink}>
+              <ExternalLink href="https://github.com/UniverseXYZ/UniverseXYZ-Whitepaper" className={s.dropdownLink}>
                 <Icon name="whitepaper" width={20} height={20} className={s.dropdownIcon} />
                 <span>Whitepaper</span>
               </ExternalLink>
-              <ExternalLink href="#" className={s.dropdownLink}>
+              <ExternalLink href="https://universe.xyz/team" className={s.dropdownLink}>
                 <Icon name="team" width={20} height={20} className={s.dropdownIcon} />
                 <span>Team</span>
               </ExternalLink>
@@ -141,9 +143,11 @@ const LayoutHeader: React.FC = () => {
                 <div>
                   <div className={s.mobileMenuBlock}>
                     <h3>Products</h3>
-                    <ExternalLink href="#" className={s.dropdownLink}>
+                    <ExternalLink href="#" className={s.dropdownLink} aria-disabled="true">
                       <Icon name="auction" width={20} height={20} className={s.dropdownIcon} />
-                      <span>Auction house</span>
+                      <Tooltip title="Coming soon" placement="top" hint>
+                        <span>Auction house</span>
+                      </Tooltip>
                     </ExternalLink>
                     <ExternalLink className={s.dropdownLink} aria-disabled="true">
                       <Icon name="marketplace" width={20} height={20} className={s.dropdownIcon} />
@@ -160,15 +164,17 @@ const LayoutHeader: React.FC = () => {
                   </div>
                   <div className={s.mobileMenuBlock}>
                     <h3>Info</h3>
-                    <ExternalLink href="#" className={s.dropdownLink}>
+                    <ExternalLink href="https://universe.xyz/about" className={s.dropdownLink}>
                       <Icon name="about" width={20} height={20} className={s.dropdownIcon} />
                       <span>About</span>
                     </ExternalLink>
-                    <ExternalLink href="#" className={s.dropdownLink}>
+                    <ExternalLink
+                      href="https://github.com/UniverseXYZ/UniverseXYZ-Whitepaper"
+                      className={s.dropdownLink}>
                       <Icon name="whitepaper" width={20} height={20} className={s.dropdownIcon} />
                       <span>Whitepaper</span>
                     </ExternalLink>
-                    <ExternalLink href="#" className={s.dropdownLink}>
+                    <ExternalLink href="https://universe.xyz/team" className={s.dropdownLink}>
                       <Icon name="team" width={20} height={20} className={s.dropdownIcon} />
                       <span>Team</span>
                     </ExternalLink>
