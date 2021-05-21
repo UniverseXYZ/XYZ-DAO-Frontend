@@ -2,7 +2,7 @@ import React from 'react';
 import AntdForm from 'antd/lib/form';
 import AntdSwitch from 'antd/lib/switch';
 import BigNumber from 'bignumber.js';
-import { ZERO_BIG_NUMBER, formatBONDValue } from 'web3/utils';
+import { ZERO_BIG_NUMBER, formatXYZValue } from 'web3/utils';
 
 import Alert from 'components/antd/alert';
 import Button from 'components/antd/button';
@@ -121,7 +121,7 @@ const WalletDepositView: React.FC = () => {
             Staked Balance
           </Text>
           <Text type="p1" weight="semibold" color="primary">
-            {formatBONDValue(stakedBalance)}
+            {formatXYZValue(stakedBalance)}
           </Text>
         </Grid>
 
@@ -130,7 +130,7 @@ const WalletDepositView: React.FC = () => {
             Wallet Balance
           </Text>
           <Text type="p1" weight="semibold" color="primary">
-            {formatBONDValue(xyzBalance)}
+            {formatXYZValue(xyzBalance)}
           </Text>
         </Grid>
 

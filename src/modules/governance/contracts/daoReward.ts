@@ -80,7 +80,7 @@ export type DAORewardContract = DAORewardContractData & {
   reload(): void;
   actions: {
     claim(): Promise<any>;
-    getBondRewards(): BigNumber | undefined;
+    getXYZRewards(): BigNumber | undefined;
   };
 };
 
@@ -102,7 +102,7 @@ export function useDAORewardContract(): DAORewardContract {
     loadUserData(wallet.account).then(setState).catch(Error);
   }, [wallet.account, version, setState]);
 
-  function getBondRewards(): BigNumber | undefined {
+  function getXYZRewards(): BigNumber | undefined {
     if (!state.poolFeature) {
       return undefined;
     }
@@ -128,7 +128,7 @@ export function useDAORewardContract(): DAORewardContract {
       claim(): Promise<void> {
         return wallet.isActive ? claimSend(wallet.account!) : Promise.reject();
       },
-      getBondRewards,
+      getXYZRewards,
     },
   };
 }

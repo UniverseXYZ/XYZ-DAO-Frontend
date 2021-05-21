@@ -110,11 +110,11 @@ const AbrogationProvider: React.FC = props => {
       againstRate,
     });
 
-    daoCtx.daoBarn.actions.xyzStakedAtTs(createTime - 1).then(bondStakedAt => {
+    daoCtx.daoBarn.actions.xyzStakedAtTs(createTime - 1).then(xyzStakedAt => {
       let approvalRate: number | undefined;
 
-      if (bondStakedAt?.gt(ZERO_BIG_NUMBER)) {
-        approvalRate = forVotes.multipliedBy(100).div(bondStakedAt).toNumber();
+      if (xyzStakedAt?.gt(ZERO_BIG_NUMBER)) {
+        approvalRate = forVotes.multipliedBy(100).div(xyzStakedAt).toNumber();
         approvalRate = Math.min(approvalRate, 100);
       }
 

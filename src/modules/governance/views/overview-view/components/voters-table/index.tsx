@@ -30,7 +30,7 @@ const Columns: ColumnsType<APIVoterEntity> = [
   },
   {
     title: 'Staked Balance',
-    dataIndex: 'bondStaked',
+    dataIndex: 'kekStaked',
     width: 200,
     align: 'right',
     render: (value: BigNumber) => (

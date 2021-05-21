@@ -2,7 +2,7 @@ import React from 'react';
 import { Spin } from 'antd';
 import BigNumber from 'bignumber.js';
 import cn from 'classnames';
-import { formatBONDValue, formatBigValue, isSmallBONDValue } from 'web3/utils';
+import { formatBigValue, formatXYZValue, isSmallXYZValue } from 'web3/utils';
 
 import Button from 'components/antd/button';
 import Divider from 'components/antd/divider';
@@ -76,8 +76,8 @@ const VotingHeader: React.FC = () => {
             <Tooltip title={<Text type="p2">{formatBigValue(claimValue, XyzToken.decimals)}</Text>}>
               <Skeleton loading={claimValue === undefined}>
                 <Text type="h3" weight="bold" color="primary">
-                  {isSmallBONDValue(claimValue) && '> '}
-                  {formatBONDValue(claimValue)}
+                  {isSmallXYZValue(claimValue) && '> '}
+                  {formatXYZValue(claimValue)}
                 </Text>
               </Skeleton>
             </Tooltip>
@@ -100,7 +100,7 @@ const VotingHeader: React.FC = () => {
           <Grid flow="col" align="center">
             <Skeleton loading={xyzBalance === undefined}>
               <Text type="h3" weight="bold" color="primary">
-                {formatBONDValue(xyzBalance)}
+                {formatXYZValue(xyzBalance)}
               </Text>
             </Skeleton>
             <Icon name="png/universe" src={imgSrc} width={40} height={40} />
@@ -114,7 +114,7 @@ const VotingHeader: React.FC = () => {
           <Grid flow="col" gap={16} align="center">
             <Skeleton loading={votingPower === undefined}>
               <Text type="h3" weight="bold" color="primary">
-                {formatBONDValue(votingPower) || '-'}
+                {formatXYZValue(votingPower) || '-'}
               </Text>
             </Skeleton>
             <Button type="light" onClick={() => setState({ showDetailedView: true })}>
