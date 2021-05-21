@@ -60,7 +60,7 @@
         opacity: 0.8;
       }
 
-      .link[aria-disabled="true"] {
+      .link[aria-disabled='true'] {
         color: #717980;
       }
     }
@@ -120,6 +120,7 @@
         padding: 15px 16px;
       }
     }
+
     .subscribeButton {
       position: absolute;
       top: 50%;
