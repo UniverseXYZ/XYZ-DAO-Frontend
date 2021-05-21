@@ -229,3 +229,9 @@ button {
 .link-gradient:hover {
   opacity: 0.7;
 }
+
+ul {
+  ::marker {
+    color: var(--theme-primary-color);
+  }
+}

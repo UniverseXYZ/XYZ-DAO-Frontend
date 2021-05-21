@@ -3,11 +3,12 @@
   flex-direction: row-reverse;
   align-items: center;
 
-  & > span {
+  > span {
     display: inline-flex;
   }
-  & > span + span {
-    margin-left: 10px;
+
+  > span + span {
+    margin-right: 10px;
   }
 }
 
