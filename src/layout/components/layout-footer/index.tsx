@@ -66,8 +66,10 @@ const LayoutFooter: React.FC = () => {
         <div className={s.rightBlock}>
           <nav className={s.navBlock}>
             <h3>Products</h3>
-            <ExternalLink href="#" className={s.link}>
-              Auction house
+            <ExternalLink href="#" className={s.link} aria-disabled="true">
+              <Tooltip title="Coming soon" placement="top" hint>
+                Auction house
+              </Tooltip>
             </ExternalLink>
             <ExternalLink className={s.link} aria-disabled="true">
               <Tooltip title="Coming soon" placement="top" hint>
@@ -82,13 +84,13 @@ const LayoutFooter: React.FC = () => {
           </nav>
           <nav className={s.navBlock}>
             <h3>Info</h3>
-            <ExternalLink href="#" className={s.link}>
+            <ExternalLink href="https://universe.xyz/about" className={s.link}>
               About
             </ExternalLink>
-            <ExternalLink href="#" className={s.link}>
+            <ExternalLink href="https://github.com/UniverseXYZ/UniverseXYZ-Whitepaper" className={s.link}>
               Whitepaper
             </ExternalLink>
-            <ExternalLink href="#" className={s.link}>
+            <ExternalLink href="https://universe.xyz/team" className={s.link}>
               Team
             </ExternalLink>
           </nav>
@@ -114,10 +116,10 @@ const LayoutFooter: React.FC = () => {
           Powered by xyzDAO.
         </Text>
         <div>
-          <ExternalLink href="#" className={s.sLink}>
+          <ExternalLink href="https://twitter.com/universe_xyz" className={s.sLink}>
             <Icon name="twitter" width="20" height="20" />
           </ExternalLink>
-          <ExternalLink href="#" className={s.sLink}>
+          <ExternalLink href="https://discord.com/invite/vau77wXCD3" className={s.sLink}>
             <Icon name="discord" width="20" height="20" />
           </ExternalLink>
         </div>

@@ -22,7 +22,7 @@ const LayoutView: React.FC = () => {
           <LayoutHeader />
           <main className={s.main}>
             <ErrorBoundary>
-              <Suspense fallback={<AntdSpin className="pv-24 ph-64" />}>
+              <Suspense fallback={<AntdSpin className="pv-24 ph-64" style={{ width: '100%' }} />}>
                 <Switch>
                   <Route path="/yield-farming" component={YieldFarmingView} />
                   <Route path="/governance/:vt(\w+)" component={GovernanceView} />
