@@ -8,6 +8,7 @@ import { getGasValue } from 'web3/utils';
 import EventEmitter from 'wolfy87-eventemitter';
 
 import { DEFAULT_WEB3, DEFAULT_WEB3_PROVIDER, WEB3_ERROR_VALUE } from 'components/providers/eth-web3-provider';
+import * as Antd from 'antd';
 
 export type Web3ContractAbiItem = AbiItem;
 
@@ -217,6 +218,13 @@ class Web3Contract extends EventEmitter {
           state: 'fail',
           error,
         });
+
+        if ((error as any).code === -32000) {
+          Antd.notification.error({
+            message: 'Insufficient ETH to cover gas fees.',
+          });
+        }
+
         return Promise.reject(error);
       });
   }
