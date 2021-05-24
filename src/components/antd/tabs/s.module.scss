@@ -64,4 +64,9 @@
       border: 0;
     }
   }
+
+  :global(.ant-tabs-tab-disabled) {
+    opacity: 0.3;
+    pointer-events: none;
+  }
 }
