@@ -1,8 +1,8 @@
 .wrap {
   --percent: 0%;
   --height: 8px;
-  --bg-bar: var(--gradient-green);
-  --bg-component: var(--gradient-green-opacity);
+  --bg-bar: var(--theme-green-color);
+  --bg-component: rgba(var(--theme-green-color-rgb), 0.16);
 
   position: relative;
   border-radius: 100px;

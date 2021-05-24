@@ -33,9 +33,9 @@ const AbrogationApprovalCard: React.FC = () => {
           percent={abrogationCtx.approvalRate}
           acceptance={abrogationCtx.acceptanceThreshold}
           colors={{
-            bg: passed ? 'var(--gradient-green-opacity)' : 'var(--gradient-red-opacity)',
-            bar: passed ? 'var(--gradient-green)' : 'var(--gradient-red)',
-            acceptance: passed ? 'var(--gradient-green)' : 'var(--gradient-red-opacity)',
+            bg: passed ? 'rgba(var(--theme-green-color-rgb), 0.16)' : 'rgba(var(--theme-red-color-rgb), 0.16)',
+            bar: passed ? 'var(--theme-green-color)' : 'var(--theme-red-color)',
+            acceptance: passed ? 'var(--theme-green-color)' : 'rgba(var(--theme-red-color-rgb), 0.16)',
           }}
         />
       </Grid>

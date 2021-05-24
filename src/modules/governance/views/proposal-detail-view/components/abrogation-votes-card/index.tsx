@@ -100,7 +100,7 @@ const AbrogationVotesCard: React.FC = () => {
             </Grid>
             <ProgressNew
               percent={abrogationCtx.forRate}
-              colors={{ bg: 'var(--gradient-green-opacity)', bar: 'var(--gradient-green)' }}
+              colors={{ bg: 'rgba(var(--theme-green-color-rgb), 0.16)', bar: 'var(--theme-green-color)' }}
             />
           </Grid>
           <Grid flow="row" gap={16}>
@@ -119,7 +119,7 @@ const AbrogationVotesCard: React.FC = () => {
             </Grid>
             <ProgressNew
               percent={abrogationCtx.againstRate}
-              colors={{ bg: 'var(--gradient-red-opacity)', bar: 'var(--gradient-red)' }}
+              colors={{ bg: 'rgba(var(--theme-red-color-rgb), 0.16)', bar: 'var(--theme-red-color)' }}
             />
           </Grid>
         </Grid>

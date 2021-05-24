@@ -7,6 +7,7 @@ import Grid from 'components/custom/grid';
 import Icon from 'components/custom/icon';
 import ProgressNew from 'components/custom/progress';
 import { Hint, Text } from 'components/custom/typography';
+import { useGeneral } from 'components/providers/general-provider';
 import { XyzToken } from 'components/providers/known-tokens-provider';
 
 import { useDAO } from '../../../../components/dao-provider';
@@ -18,6 +19,7 @@ export type ActivationThresholdProps = {
 const ActivationThreshold: React.FC<ActivationThresholdProps> = props => {
   const dao = useDAO();
   const [activating, setActivating] = React.useState<boolean>(false);
+  const { isDarkTheme } = useGeneral();
 
   function handleActivate() {
     setActivating(true);
@@ -44,7 +46,14 @@ const ActivationThreshold: React.FC<ActivationThresholdProps> = props => {
           </Text>
         </Hint>
         <Grid gap={12} colsTemplate="auto 24px" width="100%">
-          <ProgressNew percent={dao.activationRate} colors={{ bg: 'var(--gradient-green)' }} height={24} />
+          <ProgressNew
+            percent={dao.activationRate}
+            colors={{
+              bg: isDarkTheme ? 'rgba(47, 47, 47, 1)' : 'rgba(248, 248, 249, 1)',
+              bar: 'var(--theme-green-color)',
+            }}
+            height={24}
+          />
           <Icon name="ribbon-outlined" />
         </Grid>
         <Grid flow="col" gap={8} align="center">
