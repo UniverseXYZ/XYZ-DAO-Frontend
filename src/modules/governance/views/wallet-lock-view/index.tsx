@@ -4,7 +4,6 @@ import cn from 'classnames';
 import addDays from 'date-fns/addDays';
 import addMonths from 'date-fns/addMonths';
 import addSeconds from 'date-fns/addSeconds';
-import differenceInDays from 'date-fns/differenceInDays';
 import getHours from 'date-fns/getHours';
 import getMinutes from 'date-fns/getMinutes';
 import getUnixTime from 'date-fns/getUnixTime';
@@ -235,7 +234,7 @@ const WalletLockView: React.FC = () => {
                   }
                   disabledTime={selectedDate => {
                     const currentDate = new Date();
-                    if (differenceInDays(selectedDate || new Date(), currentDate) > 1) {
+                    if (!isSameDay(selectedDate || new Date(), currentDate)) {
                       return {};
                     }
 
