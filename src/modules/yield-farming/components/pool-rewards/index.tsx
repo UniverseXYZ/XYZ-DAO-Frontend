@@ -25,12 +25,16 @@ const PoolRewards: React.FC = () => {
   const xyzContract = XyzToken.contract as Erc20Contract;
 
   const totalToClaim = yfPoolsCtx.yfPools.reduce((sum: BigNumber | undefined, { contract }) => {
+    if (!contract.address) {
+      return sum ?? BigNumber.ZERO;
+    }
+
     return (sum ?? BigNumber.ZERO).plus(contract.toClaim ?? BigNumber.ZERO);
   }, undefined);
 
   const totalPotentialReward = yfPoolsCtx.yfPools.reduce((sum: BigNumber | undefined, { contract }) => {
-    if (contract.isPoolEnded !== false) {
-      return sum;
+    if (contract.isPoolEnded !== false || !contract.address) {
+      return sum ?? BigNumber.ZERO;
     }
 
     return (sum ?? BigNumber.ZERO).plus(contract.potentialReward ?? BigNumber.ZERO);
