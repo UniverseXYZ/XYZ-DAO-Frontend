@@ -1,3 +1,4 @@
+import * as Antd from 'antd';
 import debounce from 'lodash/debounce';
 import Web3 from 'web3';
 import { Method } from 'web3-core-method';
@@ -217,6 +218,13 @@ class Web3Contract extends EventEmitter {
           state: 'fail',
           error,
         });
+
+        if ((error as any).code === -32000) {
+          Antd.notification.error({
+            message: 'Insufficient ETH to cover gas fees.',
+          });
+        }
+
         return Promise.reject(error);
       });
   }
