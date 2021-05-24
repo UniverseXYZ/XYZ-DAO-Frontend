@@ -66,6 +66,9 @@ const config = {
       },
     },
   },
+  dao: {
+    activationThreshold: Number(process.env.REACT_APP_DAO_ACTIVATION_THRESHOLD),
+  },
 };
 
 export const XYZ_MARKET_LINK = `https://app.sushi.com/add/${config.tokens.usdc}/${config.tokens.xyz}`;

@@ -283,8 +283,8 @@ const KnownTokensProvider: FC = props => {
     (XyzToken.contract as Erc20Contract).loadCommon().catch(Error);
 
     (async () => {
-      XyzToken.price = await getXyzPrice().catch();
-      UsdcXyzSLPToken.price = await getUsdcXyzSLPPrice().catch();
+      XyzToken.price = await getXyzPrice().catch(() => undefined);
+      UsdcXyzSLPToken.price = await getUsdcXyzSLPPrice().catch(() => undefined);
 
       const ids = KNOWN_TOKENS.map(tk => tk.coinGeckoId)
         .filter(Boolean)

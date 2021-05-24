@@ -43,6 +43,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
   const poolEffectiveBalanceInUSD = yfPoolsCtx.getPoolEffectiveBalanceInUSD(poolId);
   const myPoolBalanceInUSD = yfPoolsCtx.getMyPoolBalanceInUSD(poolId);
   const myPoolEffectiveBalanceInUSD = yfPoolsCtx.getMyPoolEffectiveBalanceInUSD(poolId);
+  const unavailable = !poolMeta?.contract.address && !poolMeta?.tokens[0]?.price;
 
   function handleStaking() {
     history.push(`/yield-farming/${poolId}`);
@@ -68,7 +69,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           </button>
         )}
       </div>
-      {!isEnded && (
+      {!isEnded && !unavailable && (
         <>
           <div className="card-row flex flow-row p-24">
             <Text type="lb2" weight="semibold" color="secondary" className="mb-4">
@@ -147,7 +148,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           <Text type="p1" weight="semibold" color="primary">
             {formatUSD(myPoolBalanceInUSD)}
           </Text>
-          {!isEnded && (
+          {!isEnded && !unavailable && (
             <>
               <Text type="p2" color="secondary">
                 {formatUSD(myPoolEffectiveBalanceInUSD)} effective balance
@@ -156,7 +157,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           )}
         </div>
       )}
-      {isEnded && (
+      {isEnded && !unavailable && (
         <div className={s.box}>
           <Grid className="card-row" flow="row" align="start">
             <Text type="p2" weight="semibold" color="secondary" className="mb-4">
@@ -174,6 +175,15 @@ const PoolCard: React.FC<PoolCardProps> = props => {
                 </Text>
               </Link>
             )}
+          </Grid>
+        </div>
+      )}
+      {poolId === YFPoolID.USDC_XYZ_SLP && unavailable && (
+        <div className={s.box}>
+          <Grid className="card-row" flow="row" align="start">
+            <Text type="p2" weight="semibold" color="secondary" className="mb-4">
+              The ${poolMeta?.label} is not available yet. The pool will start at the beginning of the 2nd epoch.
+            </Text>
           </Grid>
         </div>
       )}
