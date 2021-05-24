@@ -84,6 +84,8 @@ jobs:
         REACT_APP_CONTRACT_DAO_BARN_ADDR: ''
         REACT_APP_CONTRACT_DAO_REWARD_ADDR: ''
 
+        REACT_APP_DAO_ACTIVATION_THRESHOLD: 0
+
         REACT_APP_BASE_API_URL: ''
 
     - name: Save artifacts

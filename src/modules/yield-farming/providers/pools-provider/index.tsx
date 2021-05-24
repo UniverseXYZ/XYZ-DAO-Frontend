@@ -176,12 +176,16 @@ const YFPoolsProvider: FC = props => {
 
   useEffect(() => {
     KNOWN_POOLS.forEach(pool => {
-      pool.contract.on(Web3Contract.UPDATE_DATA, reload);
-      pool.contract.loadCommon().catch(Error);
+      if (pool.contract.address) {
+        pool.contract.on(Web3Contract.UPDATE_DATA, reload);
+        pool.contract.loadCommon().catch(Error);
 
-      pool.tokens.forEach(tokenMeta => {
-        stakingContract.loadCommonFor(tokenMeta.address).catch(Error);
-      });
+        pool.tokens.forEach(tokenMeta => {
+          if (tokenMeta.address) {
+            stakingContract.loadCommonFor(tokenMeta.address).catch(Error);
+          }
+        });
+      }
     });
   }, []);
 
@@ -200,11 +204,15 @@ const YFPoolsProvider: FC = props => {
       pool.contract.setAccount(walletCtx.account);
 
       if (walletCtx.isActive) {
-        pool.contract.loadUserData().catch(Error);
+        if (pool.contract.address) {
+          pool.contract.loadUserData().catch(Error);
 
-        pool.tokens.forEach(tokenMeta => {
-          stakingContract.loadUserDataFor(tokenMeta.address).catch(Error);
-        });
+          pool.tokens.forEach(tokenMeta => {
+            if (tokenMeta.address) {
+              stakingContract.loadUserDataFor(tokenMeta.address).catch(Error);
+            }
+          });
+        }
       }
     });
   }, [walletCtx.account]);
@@ -217,7 +225,15 @@ const YFPoolsProvider: FC = props => {
         return undefined;
       }
 
+      if (!pool.contract.address) {
+        return BigNumber.ZERO;
+      }
+
       return BigNumber.sumEach(pool.tokens, token => {
+        if (!token.address) {
+          return BigNumber.ZERO;
+        }
+
         const stakedToken = stakingContract.stakedTokens.get(token.address);
 
         if (!stakedToken || stakedToken.nextEpochPoolSize === undefined) {
@@ -238,7 +254,15 @@ const YFPoolsProvider: FC = props => {
         return undefined;
       }
 
+      if (!pool.contract.address) {
+        return BigNumber.ZERO;
+      }
+
       return BigNumber.sumEach(pool.tokens, token => {
+        if (!token.address) {
+          return BigNumber.ZERO;
+        }
+
         const stakedToken = stakingContract.stakedTokens.get(token.address);
 
         if (!stakedToken || stakedToken.currentEpochPoolSize === undefined) {
@@ -262,7 +286,15 @@ const YFPoolsProvider: FC = props => {
         return undefined;
       }
 
+      if (!pool.contract.address) {
+        return BigNumber.ZERO;
+      }
+
       return BigNumber.sumEach(pool.tokens, token => {
+        if (!token.address) {
+          return BigNumber.ZERO;
+        }
+
         const stakedToken = stakingContract.stakedTokens.get(token.address);
 
         if (!stakedToken || stakedToken.nextEpochUserBalance === undefined) {
@@ -286,7 +318,15 @@ const YFPoolsProvider: FC = props => {
         return undefined;
       }
 
+      if (!pool.contract.address) {
+        return BigNumber.ZERO;
+      }
+
       return BigNumber.sumEach(pool.tokens, token => {
+        if (!token.address) {
+          return BigNumber.ZERO;
+        }
+
         const stakedToken = stakingContract.stakedTokens.get(token.address);
 
         if (!stakedToken || stakedToken.currentEpochUserBalance === undefined) {
@@ -316,6 +356,10 @@ const YFPoolsProvider: FC = props => {
 
   const getYFDistributedRewards = useCallback(() => {
     return BigNumber.sumEach(KNOWN_POOLS, yfPool => {
+      if (!yfPool.contract.address) {
+        return BigNumber.ZERO;
+      }
+
       const { distributedReward } = yfPool.contract;
 
       if (distributedReward === undefined) {
@@ -328,6 +372,10 @@ const YFPoolsProvider: FC = props => {
 
   const getYFTotalSupply = useCallback(() => {
     return BigNumber.sumEach(KNOWN_POOLS, yfPool => {
+      if (!yfPool.contract.address) {
+        return BigNumber.ZERO;
+      }
+
       const { totalSupply } = yfPool.contract;
 
       if (totalSupply === undefined) {

@@ -61,8 +61,8 @@ function getColumns(isAll: boolean): ColumnsType<TableEntity> {
             <Icon name={knownToken.icon as IconNames} width={40} height={40} />
             <div>
               <Text type="p1" weight="semibold" wrap={false} color="primary" className="mb-4">
-                {entity.actionType === APIYFPoolActionType.DEPOSIT && 'Stack'}
-                {entity.actionType === APIYFPoolActionType.WITHDRAW && 'Unstack'}
+                {entity.actionType === APIYFPoolActionType.DEPOSIT && 'Deposit'}
+                {entity.actionType === APIYFPoolActionType.WITHDRAW && 'Withdraw'}
               </Text>
               <Text type="small" weight="semibold" wrap={false}>
                 {knownToken.name}
