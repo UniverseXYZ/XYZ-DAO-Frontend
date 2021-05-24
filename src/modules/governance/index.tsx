@@ -77,6 +77,7 @@ const GovernanceViewInternal: React.FC = () => {
         />
         <Tabs.Tab
           key="forum"
+          disabled
           tab={
             <ExternalLink href="https://forum.universe.xyz/" style={{ color: 'inherit' }}>
               <Grid flow="col" gap={8} align="center">
