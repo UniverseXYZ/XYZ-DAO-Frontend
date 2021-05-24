@@ -176,7 +176,7 @@ const PoolStatistics: FC = () => {
                 }>
                 <Text type="p1" weight="semibold" color="primary">
                   {formatToken(selectedStakedToken?.nextEpochUserBalance?.unscaleBy(activeToken?.decimals), {
-                    decimals: activeToken?.decimals,
+                    decimals: (activeToken?.decimals || 12) >= 6 ? 6 : activeToken?.decimals,
                   }) ?? '-'}
                 </Text>
               </Tooltip>
@@ -197,8 +197,7 @@ const PoolStatistics: FC = () => {
                 }>
                 <Text type="p1" weight="semibold" color="primary">
                   {formatToken(selectedStakedToken?.currentEpochUserBalance?.unscaleBy(activeToken?.decimals), {
-                    decimals: activeToken?.decimals,
-                    compact: true,
+                    decimals: (activeToken?.decimals || 12) >= 6 ? 6 : activeToken?.decimals,
                   }) ?? '-'}
                 </Text>
               </Tooltip>
@@ -216,7 +215,7 @@ const PoolStatistics: FC = () => {
                 }>
                 <Text type="p1" weight="semibold" color="primary">
                   {formatToken(activeContract.balance?.unscaleBy(activeToken?.decimals), {
-                    decimals: activeToken?.decimals,
+                    decimals: (activeToken?.decimals || 12) >= 6 ? 6 : activeToken?.decimals,
                   }) ?? '-'}
                 </Text>
               </Tooltip>
