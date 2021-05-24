@@ -1,3 +1,4 @@
+import * as Antd from 'antd';
 import debounce from 'lodash/debounce';
 import Web3 from 'web3';
 import { Method } from 'web3-core-method';
@@ -8,7 +9,6 @@ import { getGasValue } from 'web3/utils';
 import EventEmitter from 'wolfy87-eventemitter';
 
 import { DEFAULT_WEB3, DEFAULT_WEB3_PROVIDER, WEB3_ERROR_VALUE } from 'components/providers/eth-web3-provider';
-import * as Antd from 'antd';
 
 export type Web3ContractAbiItem = AbiItem;
 
