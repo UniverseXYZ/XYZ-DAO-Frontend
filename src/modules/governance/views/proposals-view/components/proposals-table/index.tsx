@@ -57,7 +57,7 @@ const Columns: ColumnsType<LiteProposalEntity> = [
           <Grid gap={24} colsTemplate="minmax(0, 196px) 65px">
             <ProgressNew
               percent={forRate.toNumber()}
-              colors={{ bg: 'var(--gradient-green-opacity)', bar: 'var(--gradient-green)' }}
+              colors={{ bg: 'rgba(var(--theme-green-color-rgb), 0.16)', bar: 'var(--theme-green-color)' }}
               style={{ alignSelf: 'center' }}
             />
             <Text type="p2" weight="semibold" color="secondary" align="right">
@@ -67,7 +67,7 @@ const Columns: ColumnsType<LiteProposalEntity> = [
           <Grid gap={24} colsTemplate="minmax(0, 196px) 65px">
             <ProgressNew
               percent={againstRate.toNumber()}
-              colors={{ bg: 'var(--gradient-red-opacity)', bar: 'var(--gradient-red)' }}
+              colors={{ bg: 'rgba(var(--theme-red-color-rgb), 0.16)', bar: 'var(--theme-red-color)' }}
               style={{ alignSelf: 'center' }}
             />
             <Text type="p2" weight="semibold" color="secondary" align="right">

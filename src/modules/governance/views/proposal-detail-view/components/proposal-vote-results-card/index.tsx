@@ -54,7 +54,7 @@ const ProposalVoteResultsCard: React.FC = () => {
           </Grid>
           <ProgressNew
             percent={proposalCtx.forRate}
-            colors={{ bg: 'var(--gradient-red)', bar: 'var(--gradient-green)' }}
+            colors={{ bg: 'var(--theme-red-color)', bar: 'var(--theme-green-color)' }}
             style={{ margin: '8px 0' }}
           />
         </Grid>
