@@ -176,7 +176,7 @@ const YFPoolsProvider: FC = props => {
 
   useEffect(() => {
     KNOWN_POOLS.forEach(pool => {
-      if (pool.contract.address) {
+      if (pool.contract.isPoolAvailable) {
         pool.contract.on(Web3Contract.UPDATE_DATA, reload);
         pool.contract.loadCommon().catch(Error);
 
@@ -204,7 +204,7 @@ const YFPoolsProvider: FC = props => {
       pool.contract.setAccount(walletCtx.account);
 
       if (walletCtx.isActive) {
-        if (pool.contract.address) {
+        if (pool.contract.isPoolAvailable) {
           pool.contract.loadUserData().catch(Error);
 
           pool.tokens.forEach(tokenMeta => {
@@ -225,7 +225,7 @@ const YFPoolsProvider: FC = props => {
         return undefined;
       }
 
-      if (!pool.contract.address) {
+      if (!pool.contract.isPoolAvailable) {
         return BigNumber.ZERO;
       }
 
@@ -254,7 +254,7 @@ const YFPoolsProvider: FC = props => {
         return undefined;
       }
 
-      if (!pool.contract.address) {
+      if (!pool.contract.isPoolAvailable) {
         return BigNumber.ZERO;
       }
 
@@ -286,7 +286,7 @@ const YFPoolsProvider: FC = props => {
         return undefined;
       }
 
-      if (!pool.contract.address) {
+      if (!pool.contract.isPoolAvailable) {
         return BigNumber.ZERO;
       }
 
@@ -318,7 +318,7 @@ const YFPoolsProvider: FC = props => {
         return undefined;
       }
 
-      if (!pool.contract.address) {
+      if (!pool.contract.isPoolAvailable) {
         return BigNumber.ZERO;
       }
 
@@ -356,7 +356,7 @@ const YFPoolsProvider: FC = props => {
 
   const getYFDistributedRewards = useCallback(() => {
     return BigNumber.sumEach(KNOWN_POOLS, yfPool => {
-      if (!yfPool.contract.address) {
+      if (!yfPool.contract.isPoolAvailable) {
         return BigNumber.ZERO;
       }
 
@@ -372,7 +372,7 @@ const YFPoolsProvider: FC = props => {
 
   const getYFTotalSupply = useCallback(() => {
     return BigNumber.sumEach(KNOWN_POOLS, yfPool => {
-      if (!yfPool.contract.address) {
+      if (!yfPool.contract.isPoolAvailable) {
         return BigNumber.ZERO;
       }
 

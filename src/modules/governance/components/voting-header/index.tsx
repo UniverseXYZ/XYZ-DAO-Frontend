@@ -111,7 +111,7 @@ const VotingHeader: React.FC = () => {
           <Text type="p2" color="secondary">
             Total voting power
           </Text>
-          <Grid flow="col" gap={16} align="center">
+          <div className="flex col-gap-16 align-center" style={{ height: `40px` }}>
             <Skeleton loading={votingPower === undefined}>
               <Text type="h3" weight="bold" color="primary">
                 {formatXYZValue(votingPower) || '-'}
@@ -124,7 +124,7 @@ const VotingHeader: React.FC = () => {
             </Button>
 
             {state.showDetailedView && <VotingDetailedModal onCancel={() => setState({ showDetailedView: false })} />}
-          </Grid>
+          </div>
         </Grid>
 
         <UseLeftTime end={userLockedUntil ?? 0} delay={1_000} onEnd={handleLeftTimeEnd}>

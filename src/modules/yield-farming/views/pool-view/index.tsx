@@ -32,7 +32,7 @@ const PoolViewInner: FC = () => {
     }
   }, [poolMeta?.contract.isPoolEnded]);
 
-  if (!poolMeta) {
+  if (!poolMeta || !poolMeta.contract.isPoolAvailable) {
     return <Redirect to="/yield-farming" />;
   }
 
@@ -42,21 +42,17 @@ const PoolViewInner: FC = () => {
     <div className="content-container-fix content-container">
       <div className="container-limit">
         <PoolHeader />
-
-        <div className="flexbox-grid mb-32">
-          <div className={cn('card', s.stakeCard)}>
-            <div className={cn('card-header pv-0', s.stakeCardHeader)}>
-              {isInitialized && (
+        <Spin spinning={!isInitialized} wrapperClassName="mb-32">
+          <div className="flexbox-grid">
+            <div className={cn('card', s.stakeCard)}>
+              <div className={cn('card-header pv-0', s.stakeCardHeader)}>
                 <Tabs
                   tabs={[
-                    ...(poolMeta.contract.isPoolEnded === false
-                      ? [
-                          {
-                            id: 'stake',
-                            children: 'Stake',
-                          },
-                        ]
-                      : []),
+                    {
+                      id: 'stake',
+                      children: 'Stake',
+                      disabled: poolMeta.contract.isPoolEnded !== false,
+                    },
                     {
                       id: 'unstake',
                       children: 'Unstake',
@@ -66,17 +62,15 @@ const PoolViewInner: FC = () => {
                   activeKey={activeTab}
                   onClick={setActiveTab}
                 />
-              )}
-            </div>
-            <Spin spinning={!isInitialized}>
+              </div>
               <div className="p-24">
                 {activeTab === 'stake' && <PoolStake />}
                 {activeTab === 'unstake' && <PoolUnstake />}
               </div>
-            </Spin>
+            </div>
+            <PoolStatistics />
           </div>
-          <PoolStatistics />
-        </div>
+        </Spin>
         <PoolTransactions />
       </div>
     </div>

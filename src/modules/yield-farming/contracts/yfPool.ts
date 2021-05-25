@@ -48,6 +48,10 @@ export class YfPoolContract extends Web3Contract {
     return Math.min(this.currentEpoch, this.totalEpochs);
   }
 
+  get isPoolAvailable(): boolean {
+    return Boolean(this.address);
+  }
+
   get isPoolEnded(): boolean | undefined {
     if (this.currentEpoch === undefined || this.totalEpochs === undefined) {
       return undefined;

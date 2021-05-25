@@ -65,8 +65,8 @@ const PoolStatistics: FC = () => {
   const isEnded = poolMeta?.contract.isPoolEnded === true;
 
   return (
-    <div className={s.component}>
-      <div className="card mb-32">
+    <div className={cn(s.component, 'flex flow-row')}>
+      <div className="card mb-24">
         <div className="card-header">
           <Text type="p1" weight="semibold" color="primary">
             My rewards
@@ -137,7 +137,7 @@ const PoolStatistics: FC = () => {
         </div>
       </div>
 
-      <div className="card">
+      <div className="card flex-grow">
         <div className="card-header">
           <Text type="p1" weight="semibold" color="primary">
             My stake
