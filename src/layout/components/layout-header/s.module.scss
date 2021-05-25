@@ -193,6 +193,7 @@
 
 .dropdownLink[aria-disabled='true'] {
   color: var(--theme-secondary-color) !important;
+  cursor: default;
 
   .dropdownIcon {
     color: var(--theme-secondary-color) !important;
