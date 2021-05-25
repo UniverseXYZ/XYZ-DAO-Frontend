@@ -66,21 +66,21 @@ const LayoutFooter: React.FC = () => {
         <div className={s.rightBlock}>
           <nav className={s.navBlock}>
             <h3>Products</h3>
-            <ExternalLink href="#" className={s.link} aria-disabled="true">
+            <span className={s.link} aria-disabled="true">
               <Tooltip title="Coming soon" placement="top" hint>
                 Auction house
               </Tooltip>
-            </ExternalLink>
-            <ExternalLink className={s.link} aria-disabled="true">
+            </span>
+            <span className={s.link} aria-disabled="true">
               <Tooltip title="Coming soon" placement="top" hint>
                 NFT marketplace
               </Tooltip>
-            </ExternalLink>
-            <ExternalLink className={s.link} aria-disabled="true">
+            </span>
+            <span className={s.link} aria-disabled="true">
               <Tooltip title="Coming soon" placement="top" hint>
                 Social media
               </Tooltip>
-            </ExternalLink>
+            </span>
           </nav>
           <nav className={s.navBlock}>
             <h3>Info</h3>

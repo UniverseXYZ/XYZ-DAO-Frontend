@@ -61,6 +61,7 @@
       }
 
       .link[aria-disabled='true'] {
+        cursor: default;
         color: #717980;
       }
     }
