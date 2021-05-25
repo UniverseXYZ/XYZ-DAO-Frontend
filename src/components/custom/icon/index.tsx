@@ -5,6 +5,7 @@ import aaveSrc from 'resources/png/token-aave.png';
 import ilvSrc from 'resources/png/token-ilv.png';
 import linkSrc from 'resources/png/token-link.png';
 import sushiSrc from 'resources/png/token-sushi.png';
+import uslpSrc from 'resources/png/token-uslp.png';
 import universeSrc from 'resources/png/universe.png';
 import Sprite from 'resources/svg/icons-sprite.svg';
 
@@ -35,6 +36,7 @@ export type TokenIconNames =
   | 'png/sushi'
   | 'png/link'
   | 'png/ilv'
+  | 'png/uslp'
   | 'cream_finance'
   | 'yearn_finance';
 
@@ -135,7 +137,9 @@ export type IconNames =
   | 'docs'
   | 'twitter'
   | 'discord'
-  | 'dropdown';
+  | 'dropdown'
+  | 'theme-switcher-sun'
+  | 'theme-switcher-moon';
 
 export type IconProps = {
   name: IconNames;
@@ -167,6 +171,8 @@ const Icon: React.FC<IconProps> = props => {
           return linkSrc;
         case 'png/sushi':
           return sushiSrc;
+        case 'png/uslp':
+          return uslpSrc;
         default:
           return '';
       }

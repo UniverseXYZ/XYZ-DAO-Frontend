@@ -5,6 +5,7 @@ import Button from 'components/antd/button';
 import Popover from 'components/antd/popover';
 import Grid from 'components/custom/grid';
 import { Text } from 'components/custom/typography';
+import { XyzToken } from 'components/providers/known-tokens-provider';
 import useMergeState from 'hooks/useMergeState';
 
 import { APIProposalState } from '../../../../api';
@@ -39,7 +40,7 @@ const ProposalAbrogationCard: React.FC = () => {
     <>
       <div className="card">
         <div className="card-header">
-          <Text type="p1" weight="semibold" color="primary">
+          <Text type="p1" weight="semibold" color="primary" font="secondary">
             Abrogation proposal
           </Text>
         </div>
@@ -57,7 +58,7 @@ const ProposalAbrogationCard: React.FC = () => {
               <ul>
                 <li>
                   <Text type="p1" color="primary">
-                    Acceptance criteria: 50% of staked BOND
+                    Acceptance criteria: 50% of staked {XyzToken.symbol}
                   </Text>
                 </li>
                 <li>
@@ -90,11 +91,11 @@ const ProposalAbrogationCard: React.FC = () => {
 
               <Grid flow="row" gap={8} align="center" justify="end">
                 <Button
-                  type="default"
+                  type="ghost"
                   loading={state.cancelling}
                   disabled={!hasThreshold}
                   onClick={() => setState({ abrogationVoteModal: true })}>
-                  Initiate abrogation proposal
+                  <span>Initiate abrogation proposal</span>
                 </Button>
 
                 {!hasThreshold && (
@@ -107,10 +108,10 @@ const ProposalAbrogationCard: React.FC = () => {
                       placement="bottomLeft"
                       overlayStyle={{ width: 520 }}
                       content={
-                        <Text type="p2" weight="semibold">
+                        <Text type="p2" weight="semibold" color="primary">
                           You don’t have enough voting power to create an abrogation proposal. The creator of an
                           abrogation proposal needs to have a voting power of at least {daoCtx.minThreshold}% of the
-                          amount of $BOND staked in the DAO.
+                          amount of $XYZ staked in the DAO.
                         </Text>
                       }
                       visible={state.showWhyReason}

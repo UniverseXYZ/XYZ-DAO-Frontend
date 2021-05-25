@@ -1,6 +1,6 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
-import { formatBONDValue } from 'web3/utils';
+import { formatXYZValue } from 'web3/utils';
 
 import Button from 'components/antd/button';
 import Modal, { ModalProps } from 'components/antd/modal';
@@ -30,7 +30,7 @@ const WalletDepositConfirmModal: React.FC<WalletDepositConfirmModalProps> = prop
             </Text>
 
             <Text type="p2" weight="semibold" color="secondary">
-              You are about to deposit {formatBONDValue(deposit)} ${XyzToken.symbol}.
+              You are about to deposit {formatXYZValue(deposit)} ${XyzToken.symbol}.
               <br />
               You have an active lock for {getFormattedDuration(0, lockDuration)}.
             </Text>
@@ -41,7 +41,7 @@ const WalletDepositConfirmModal: React.FC<WalletDepositConfirmModalProps> = prop
         </Grid>
         <Grid flow="col" justify="space-between">
           <Button type="default" onClick={modalProps.onCancel}>
-            Cancel
+            <span>Cancel</span>
           </Button>
           <Button type="primary" onClick={modalProps.onOk}>
             Deposit

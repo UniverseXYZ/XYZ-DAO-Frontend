@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import { formatBONDValue, formatToken, formatUSD } from 'web3/utils';
+import { formatToken, formatUSD, formatXYZValue } from 'web3/utils';
 
 import ExternalLink from 'components/custom/externalLink';
 import Grid from 'components/custom/grid';
@@ -47,14 +47,14 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
           <Grid flow="row" gap={4}>
             <Grid flow="col" gap={4} align="end">
               <Text type="h2" weight="bold" color="primary">
-                {formatToken(daoCtx.daoBarn.bondStaked)}
+                {formatToken(daoCtx.daoBarn.xyzStaked)}
               </Text>
               <Text type="p1" color="secondary">
                 {XyzToken.symbol}
               </Text>
             </Grid>
             <Text type="p1" color="secondary">
-              {formatUSD(convertTokenInUSD(daoCtx.daoBarn.bondStaked, XyzToken.symbol))}
+              {formatUSD(convertTokenInUSD(daoCtx.daoBarn.xyzStaked, XyzToken.symbol))}
             </Text>
           </Grid>
         </Grid>
@@ -66,24 +66,22 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
             text={
               <Grid flow="row" gap={8} align="start">
                 <Text type="p2">
-                  This number shows the amount of vXYZ currently minted. This number may differ from the amount of 4XYZ
+                  This number shows the amount of v{XyzToken.symbol} currently minted. This number may differ from the
+                  amount of ${XyzToken.symbol}
                   staked because of the multiplier mechanic
                 </Text>
-                <ExternalLink
-                  href="https://docs.barnbridge.com/governance/barnbridge-dao/multiplier-and-voting-power"
-                  className="link-blue"
-                  style={{ fontWeight: 600 }}>
+                <ExternalLink href="https://docs.universe.xyz/" className="link-blue" style={{ fontWeight: 600 }}>
                   Learn more
                 </ExternalLink>
               </Grid>
             }>
             <Text type="lb2" weight="semibold" color="secondary">
-              VXYZ
+              v{XyzToken.symbol}
             </Text>
           </Hint>
           <Grid flow="row" gap={4}>
             <Text type="h2" weight="bold" color="primary">
-              {formatBONDValue(overview?.totalVbond)}
+              {formatXYZValue(overview?.TotalVKek)}
             </Text>
           </Grid>
         </Grid>
@@ -98,10 +96,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
                   This counter shows the average amount of time ${XyzToken.symbol} stakers locked their deposits in
                   order to take advantage of the voting power bonus.
                 </Text>
-                <ExternalLink
-                  href="https://docs.barnbridge.com/governance/barnbridge-dao/multiplier-and-voting-power"
-                  className="link-blue"
-                  style={{ fontWeight: 600 }}>
+                <ExternalLink href="https://docs.universe.xyz/" className="link-blue" style={{ fontWeight: 600 }}>
                   Learn more
                 </ExternalLink>
               </Grid>
@@ -139,7 +134,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
             <UseLeftTime end={(daoCtx.daoReward.poolFeature?.endTs ?? 0) * 1000} delay={5_000}>
               {() => (
                 <Text type="h2" weight="bold" color="primary">
-                  {formatToken(daoCtx.daoReward.actions.getBondRewards())}
+                  {formatToken(daoCtx.daoReward.actions.getXYZRewards())}
                 </Text>
               )}
             </UseLeftTime>
@@ -155,11 +150,10 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
           <Hint
             text={
               <Grid flow="row" gap={8} align="start">
-                <Text type="p2">This number shows the amount of vXYZ that is delegated to other addresses.</Text>
-                <ExternalLink
-                  href="https://docs.barnbridge.com/governance/barnbridge-dao/multiplier-and-voting-power#3-you-can-delegate-vbonds-to-other-users"
-                  className="link-blue"
-                  style={{ fontWeight: 600 }}>
+                <Text type="p2">
+                  This number shows the amount of v{XyzToken.symbol} that is delegated to other addresses.
+                </Text>
+                <ExternalLink href="https://docs.universe.xyz/" className="link-blue" style={{ fontWeight: 600 }}>
                   Learn more
                 </ExternalLink>
               </Grid>
@@ -170,10 +164,10 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
           </Hint>
           <Grid flow="row" gap={4}>
             <Text type="h2" weight="bold" color="primary">
-              {formatBONDValue(overview?.totalDelegatedPower)}
+              {formatXYZValue(overview?.totalDelegatedPower)}
             </Text>
             <Text type="p1" color="secondary">
-              out of {formatBONDValue((XyzToken.contract as Erc20Contract).totalSupply?.unscaleBy(XyzToken.decimals))}
+              out of {formatXYZValue((XyzToken.contract as Erc20Contract).totalSupply?.unscaleBy(XyzToken.decimals))}
             </Text>
           </Grid>
         </Grid>
@@ -202,7 +196,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
               </Text>
             </Grid>
             <Text type="p1" color="secondary">
-              {overview?.barnUsers} stakers & {overview?.voters} voters
+              {overview?.supernovaUsers} stakers & {overview?.voters} voters
             </Text>
           </Grid>
         </Grid>

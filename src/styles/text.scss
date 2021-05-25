@@ -1,3 +1,21 @@
+@font-face {
+  font-family: "Sharp Grotesk";
+  font-style: normal;
+  font-weight: 500;
+  src: url('../resources/fonts/SharpGroteskMedium25.eot') format('eot');
+  src: url('../resources/fonts/SharpGroteskMedium25.woff2') format('woff2'),
+  url('../resources/fonts/SharpGroteskMedium25.woff') format('woff');
+}
+
+@font-face {
+  font-family: "Sharp Grotesk";
+  font-style: normal;
+  font-weight: 700;
+  src: url('../resources/fonts/SharpGroteskSmBold25.eot') format('eot');
+  src: url('../resources/fonts/SharpGroteskSmBold25.woff2') format('woff2'),
+  url('../resources/fonts/SharpGroteskSmBold25.woff') format('woff');
+}
+
 @mixin font($size, $height, $weight: normal, $style: normal, $family: var(--font-family)) {
   font-family: $family;
   font-weight: $weight;

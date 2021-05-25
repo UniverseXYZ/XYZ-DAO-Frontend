@@ -16,7 +16,7 @@ import { useKnownTokens } from 'components/providers/known-tokens-provider';
 import { useReload } from 'hooks/useReload';
 import { ReactComponent as EmptyChartSvg } from 'resources/svg/empty-chart.svg';
 
-import { fetchYFPoolChart } from '../../api';
+import { APIYFPoolChart, fetchYFPoolChart } from '../../api';
 import { useYFPools } from '../../providers/pools-provider';
 
 import s from './s.module.scss';
@@ -42,7 +42,7 @@ const PoolChart: FC<Props> = props => {
   const [selectedYfType, setSelectedYfType] = useState('all');
 
   const [loading, setLoading] = useState(false);
-  const [chartData, setChartData] = useState([]);
+  const [rawData, setRawData] = useState<APIYFPoolChart>({});
 
   const activeYfPool = yfPoolsCtx.getYFKnownPoolByName(selectedYfPool);
 
@@ -92,9 +92,9 @@ const PoolChart: FC<Props> = props => {
 
     const isAll = selectedYfEpoch === 'all';
     const scale = isAll ? 'week' : 'day';
-    const { epoch1Start, epochDuration, lastActiveEpoch } = activeYfPool.contract;
+    const { epoch1Start, epochDuration } = activeYfPool.contract;
 
-    if (epoch1Start === undefined || epochDuration === undefined || lastActiveEpoch === undefined) {
+    if (epoch1Start === undefined || epochDuration === undefined) {
       return;
     }
 
@@ -113,45 +113,63 @@ const PoolChart: FC<Props> = props => {
 
       try {
         const result = await fetchYFPoolChart(addresses, epochStart, epochEnd, scale);
-
-        const historyMap = new Map<string, HistoryChartItem>();
-
-        activeYfPool.tokens.forEach(token => {
-          const tokenHistory = result[token.address];
-
-          Object.entries(tokenHistory).forEach(([timestamp, item]) => {
-            const dt = getUnixTime(new Date(timestamp));
-            const epoch = Math.floor((dt - epoch1Start) / epochDuration);
-
-            if (epoch > lastActiveEpoch!) {
-              return;
-            }
-
-            const prevItem = historyMap.get(timestamp);
-            const prevDeposits = prevItem?.deposits ?? BigNumber.ZERO;
-            const deposits = knownTokensCtx.convertTokenInUSD(
-              new BigNumber(item.sumDeposits).unscaleBy(token.decimals),
-              token.symbol,
-            );
-            const prevWithdrawals = prevItem?.withdrawals ?? BigNumber.ZERO;
-            const withdrawals = knownTokensCtx
-              .convertTokenInUSD(new BigNumber(item.sumWithdrawals).unscaleBy(token.decimals), token.symbol)
-              ?.multipliedBy(-1);
-
-            historyMap.set(timestamp, {
-              label: isAll ? `Epoch ${epoch + 1}` : format(new Date(timestamp), 'dd-MM-yyyy'),
-              deposits: prevDeposits.plus(deposits ?? BigNumber.ZERO),
-              withdrawals: prevWithdrawals.plus(withdrawals ?? BigNumber.ZERO),
-            });
-          });
-        });
-
-        setChartData(Array.from(historyMap.values()) as any);
+        setRawData(result);
       } catch {}
 
       setLoading(false);
     })();
   }, [activeYfPool, selectedYfEpoch, selectedYfType, version]);
+
+  const chartData = useMemo(() => {
+    if (!activeYfPool) {
+      return [];
+    }
+
+    const { epoch1Start, epochDuration, lastActiveEpoch } = activeYfPool.contract;
+    const historyMap = new Map<string, HistoryChartItem>();
+
+    if (epoch1Start === undefined || epochDuration === undefined || lastActiveEpoch === undefined) {
+      return [];
+    }
+
+    const isAll = selectedYfEpoch === 'all';
+
+    activeYfPool.tokens.forEach(token => {
+      const tokenHistory = rawData[token.address];
+
+      if (!tokenHistory) {
+        return;
+      }
+
+      Object.entries(tokenHistory).forEach(([timestamp, item]) => {
+        const dt = getUnixTime(new Date(timestamp));
+        const epoch = Math.floor((dt - epoch1Start) / epochDuration);
+
+        if (epoch > lastActiveEpoch!) {
+          return;
+        }
+
+        const prevItem = historyMap.get(timestamp);
+        const prevDeposits = prevItem?.deposits ?? BigNumber.ZERO;
+        const deposits = knownTokensCtx.convertTokenInUSD(
+          new BigNumber(item.sumDeposits).unscaleBy(token.decimals),
+          token.symbol,
+        );
+        const prevWithdrawals = prevItem?.withdrawals ?? BigNumber.ZERO;
+        const withdrawals = knownTokensCtx
+          .convertTokenInUSD(new BigNumber(item.sumWithdrawals).unscaleBy(token.decimals), token.symbol)
+          ?.multipliedBy(-1);
+
+        historyMap.set(timestamp, {
+          label: isAll ? `Epoch ${epoch + 1}` : format(new Date(timestamp), 'dd-MM-yyyy'),
+          deposits: prevDeposits.plus(deposits ?? BigNumber.ZERO),
+          withdrawals: prevWithdrawals.plus(withdrawals ?? BigNumber.ZERO),
+        });
+      });
+    });
+
+    return Array.from(historyMap.values());
+  }, [rawData, activeYfPool, knownTokensCtx.version, version]);
 
   return (
     <div className={cn('card', props.className)} style={{ overflowX: 'auto' }}>
@@ -221,6 +239,16 @@ const PoolChart: FC<Props> = props => {
                     left: 0,
                     bottom: 12,
                   }}>
+                  <defs>
+                    <linearGradient id="gradient-red" gradient-transform="rotate(135deg)">
+                      <stop offset="0%" stopColor="#FF7439" />
+                      <stop offset="100%" stopColor="#FF39BC" />
+                    </linearGradient>
+                    <linearGradient id="gradient-blue" gradient-transform="rotate(135deg) matrix(1, 0, 0, -1, 0, 0)">
+                      <stop offset="0%" stopColor="#914FE6" />
+                      <stop offset="100%" stopColor="#316CDF" />
+                    </linearGradient>
+                  </defs>
                   <ReCharts.CartesianGrid vertical={false} stroke="var(--theme-border-color)" strokeDasharray="3 3" />
                   <ReCharts.XAxis dataKey="label" stroke="var(--theme-default-color)" />
                   <ReCharts.YAxis
@@ -250,11 +278,10 @@ const PoolChart: FC<Props> = props => {
                         <div className="flex flow-row row-gap-12 p-16">
                           <div className="flex align-center justify-space-between">
                             <div
-                              className="chart-label"
+                              className={s.chartLabel}
                               style={
                                 {
-                                  '--bg-color': 'transparent',
-                                  '--dot-color': 'var(--theme-red-color)',
+                                  '--dot-color': 'var(--gradient-red)',
                                 } as React.CSSProperties
                               }>
                               Deposits
@@ -265,11 +292,10 @@ const PoolChart: FC<Props> = props => {
                           </div>
                           <div className="flex align-center justify-space-between">
                             <div
-                              className="chart-label"
+                              className={s.chartLabel}
                               style={
                                 {
-                                  '--bg-color': 'transparent',
-                                  '--dot-color': 'var(--theme-blue-color)',
+                                  '--dot-color': 'var(--gradient-blue)',
                                 } as React.CSSProperties
                               }>
                               Withdrawals
@@ -288,7 +314,7 @@ const PoolChart: FC<Props> = props => {
                       dataKey="deposits"
                       name="Deposits"
                       stackId="stack"
-                      fill="var(--theme-red-color)"
+                      fill="url(#gradient-red)"
                       radius={[4, 4, 0, 0]}
                       maxBarSize={50}
                     />
@@ -298,7 +324,7 @@ const PoolChart: FC<Props> = props => {
                       dataKey="withdrawals"
                       name="Withdrawals"
                       stackId="stack"
-                      fill="var(--theme-blue-color)"
+                      fill="url(#gradient-blue)"
                       radius={[4, 4, 0, 0]}
                       maxBarSize={50}
                     />
@@ -306,12 +332,10 @@ const PoolChart: FC<Props> = props => {
                 </ReCharts.BarChart>
               </ReCharts.ResponsiveContainer>
               <footer className="flex flow-col justify-center col-gap-24 row-gap-16">
-                <div className="chart-label" style={{ '--dot-color': 'var(--theme-red-color)' } as React.CSSProperties}>
+                <div className={s.chartLabel} style={{ '--dot-color': 'var(--gradient-red)' } as React.CSSProperties}>
                   Deposits
                 </div>
-                <div
-                  className="chart-label"
-                  style={{ '--dot-color': 'var(--theme-blue-color)' } as React.CSSProperties}>
+                <div className={s.chartLabel} style={{ '--dot-color': 'var(--gradient-blue)' } as React.CSSProperties}>
                   Withdrawals
                 </div>
               </footer>

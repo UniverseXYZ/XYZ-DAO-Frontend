@@ -59,7 +59,7 @@ const ProposalsViewInner: React.FC = () => {
   return (
     <Grid flow="row" gap={32}>
       <Grid flow="col" align="center" justify="space-between">
-        <Text type="h1" weight="bold" color="primary">
+        <Text type="h2" weight="bold" color="primary" font="secondary">
           Proposals
         </Text>
         {wallet.isActive && (
@@ -79,27 +79,29 @@ const ProposalsViewInner: React.FC = () => {
                   overlayStyle={{ width: 520 }}
                   content={
                     <Grid flow="row" gap={8}>
-                      <Text type="p2" weight="semibold">
+                      <Text type="p2" weight="semibold" color="primary">
                         There are 2 possible reasons for why you can’t create a proposal:
                       </Text>
 
                       <ul>
                         <li>
-                          <Text type="p2" weight="semibold">
+                          <Text type="p2" weight="semibold" color="primary">
                             You already are the creator of an ongoing proposal
                           </Text>
                         </li>
                         <li>
-                          <Text type="p2" weight="semibold">
+                          <Text type="p2" weight="semibold" color="primary">
                             You don’t have enough voting power to create a proposal. The creator of a proposal needs to
-                            have a voting power of at least {daoCtx.minThreshold}% of the amount of $BOND staked in the
+                            have a voting power of at least {daoCtx.minThreshold}% of the amount of $XYZ staked in the
                             DAO.
                           </Text>
                         </li>
                       </ul>
 
-                      <ExternalLink href="https://docs.barnbridge.com/governance/barnbridge-dao/proposals-and-voting">
-                        Learn more
+                      <ExternalLink href="https://docs.universe.xyz/">
+                        <Text type="p2" weight="semibold" color="blue">
+                          Learn more
+                        </Text>
                       </ExternalLink>
                     </Grid>
                   }

@@ -4,7 +4,7 @@ import ContractListener from 'web3/components/contract-listener';
 import Erc20Contract from 'web3/erc20Contract';
 import { ZERO_BIG_NUMBER } from 'web3/utils';
 
-import { BondToken } from 'components/providers/known-tokens-provider';
+import { XyzToken } from 'components/providers/known-tokens-provider';
 import config from 'config';
 import useMergeState from 'hooks/useMergeState';
 import { DAOBarnContract, useDAOBarnContract } from 'modules/governance/contracts/daoBarn';
@@ -17,7 +17,7 @@ import { APIProposalStateId } from '../../api';
 export type DAOProviderState = {
   minThreshold: number;
   isActive?: boolean;
-  bondStaked?: BigNumber;
+  xyzStaked?: BigNumber;
   activationThreshold?: BigNumber;
   activationRate?: number;
   thresholdRate?: number;
@@ -26,7 +26,7 @@ export type DAOProviderState = {
 const InitialState: DAOProviderState = {
   minThreshold: 1,
   isActive: undefined,
-  bondStaked: undefined,
+  xyzStaked: undefined,
   activationThreshold: undefined,
   activationRate: undefined,
   thresholdRate: undefined,
@@ -77,42 +77,44 @@ const DAOProvider: React.FC = props => {
   }, [walletCtx.provider]);
 
   React.useEffect(() => {
-    const bondContract = BondToken.contract as Erc20Contract;
+    const xyzContract = XyzToken.contract as Erc20Contract;
 
-    (async () => {
-      if (walletCtx.isActive) {
-        bondContract.setAccount(walletCtx.account);
-        bondContract.loadAllowance(config.contracts.dao.barn).catch(Error);
-      }
-    })();
+    xyzContract.setAccount(walletCtx.account);
+    daoBarn.contract.setAccount(walletCtx.account);
+    daoReward.contract.setAccount(walletCtx.account);
+    daoGovernance.contract.setAccount(walletCtx.account);
+
+    if (walletCtx.isActive) {
+      xyzContract.loadAllowance(config.contracts.dao.barn).catch(Error);
+    }
   }, [walletCtx.account]);
 
   React.useEffect(() => {
     const { isActive } = daoGovernance;
-    const { bondStaked, activationThreshold, votingPower } = daoBarn;
+    const { xyzStaked, activationThreshold, votingPower } = daoBarn;
 
     let activationRate: number | undefined;
 
-    if (bondStaked && activationThreshold?.gt(ZERO_BIG_NUMBER)) {
-      activationRate = bondStaked.multipliedBy(100).div(activationThreshold).toNumber();
+    if (xyzStaked && activationThreshold?.gt(ZERO_BIG_NUMBER)) {
+      activationRate = xyzStaked.multipliedBy(100).div(activationThreshold).toNumber();
       activationRate = Math.min(activationRate, 100);
     }
 
     let thresholdRate: number | undefined;
 
-    if (votingPower && bondStaked?.gt(ZERO_BIG_NUMBER)) {
-      thresholdRate = votingPower.multipliedBy(100).div(bondStaked).toNumber();
+    if (votingPower && xyzStaked?.gt(ZERO_BIG_NUMBER)) {
+      thresholdRate = votingPower.multipliedBy(100).div(xyzStaked).toNumber();
       thresholdRate = Math.min(thresholdRate, 100);
     }
 
     setState({
       isActive,
-      bondStaked,
+      xyzStaked,
       activationThreshold,
       activationRate,
       thresholdRate,
     });
-  }, [daoGovernance.isActive, daoBarn.bondStaked, daoBarn.activationThreshold, daoBarn.votingPower]);
+  }, [daoGovernance.isActive, daoBarn.xyzStaked, daoBarn.activationThreshold, daoBarn.votingPower]);
 
   function activate() {
     return daoGovernance.actions.activate().then(() => {

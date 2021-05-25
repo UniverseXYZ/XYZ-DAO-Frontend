@@ -1,3 +1,4 @@
+import React from 'react';
 import cn from 'classnames';
 
 import { DropdownList } from 'components/custom/dropdown';
@@ -20,6 +21,7 @@ type TokenAmountType = {
   max?: number;
   slider?: boolean;
   decimals?: number;
+  name?: string;
 };
 
 export const TokenAmount: React.FC<TokenAmountType> = ({
@@ -30,19 +32,40 @@ export const TokenAmount: React.FC<TokenAmountType> = ({
   classNameBefore,
   slider,
   decimals = 6,
+  name,
   ...rest
 }) => {
+  const handlerKeyPress = (event: React.KeyboardEvent) => {
+    let validChars = '1234567890';
+    if (!rest.value.includes('.')) validChars += '.';
+
+    if (!validChars.includes(event.key)) event.preventDefault();
+  };
+
   return (
     <div className={className}>
       <div className={s.tokenAmount}>
-        {before && <div className={cn(s.tokenAmountBefore, classNameBefore)}>{before}</div>}
+        {before && (
+          <div className={cn(s.tokenAmountBefore, classNameBefore)}>
+            {before}
+            <span className={s.tokenName}>{name}</span>
+          </div>
+        )}
         <div className={s.tokenAmountValues}>
           <input
             className={s.tokenAmountValue}
-            type="number"
-            onChange={e => {
-              onChange(e.target.value);
+            type="text"
+            pattern="[0-9]+([\.,][0-9]+)?"
+            inputMode="numeric"
+            step={1 / 10 ** Math.min(decimals, 6)}
+            lang="en"
+            onChange={ev => {
+              onChange(ev.target.value);
             }}
+            onWheel={ev => {
+              ev.currentTarget.blur();
+            }}
+            onKeyPress={handlerKeyPress}
             {...rest}
           />
           <div className={s.tokenAmountHint}>{secondary}</div>
@@ -54,7 +77,7 @@ export const TokenAmount: React.FC<TokenAmountType> = ({
             style={{ alignSelf: 'center' }}
             disabled={rest.disabled || rest.max === 0}
             onClick={() => onChange(String(rest.max))}>
-            MAX
+            <span>MAX</span>
           </button>
         )}
       </div>

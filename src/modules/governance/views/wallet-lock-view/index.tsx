@@ -4,10 +4,15 @@ import cn from 'classnames';
 import addDays from 'date-fns/addDays';
 import addMonths from 'date-fns/addMonths';
 import addSeconds from 'date-fns/addSeconds';
+import getHours from 'date-fns/getHours';
+import getMinutes from 'date-fns/getMinutes';
 import getUnixTime from 'date-fns/getUnixTime';
 import isAfter from 'date-fns/isAfter';
 import isBefore from 'date-fns/isBefore';
-import { ZERO_BIG_NUMBER, formatBONDValue } from 'web3/utils';
+import isSameDay from 'date-fns/isSameDay';
+import isSameHour from 'date-fns/isSameHour';
+import setDate from 'date-fns/set';
+import { ZERO_BIG_NUMBER, formatXYZValue } from 'web3/utils';
 
 import Alert from 'components/antd/alert';
 import Button from 'components/antd/button';
@@ -153,7 +158,7 @@ const WalletLockView: React.FC = () => {
             Staked Balance
           </Text>
           <Text type="p1" weight="semibold" color="primary">
-            {formatBONDValue(stakedBalance)}
+            {formatXYZValue(stakedBalance)}
           </Text>
         </Grid>
 
@@ -224,7 +229,30 @@ const WalletLockView: React.FC = () => {
                 <DatePicker
                   showTime
                   showNow={false}
-                  disabledDate={(date: Date) => isBefore(date, minAllowedDate) || isAfter(date, maxAllowedDate)}
+                  defaultValue={addSeconds(new Date(), 1)}
+                  disabledDate={(date: Date) => {
+                    const formattedDate = setDate(date, { hours: 23, minutes: 59, seconds: 59, milliseconds: 999 });
+
+                    return isBefore(formattedDate, minAllowedDate) || isAfter(formattedDate, maxAllowedDate);
+                  }}
+                  disabledTime={selectedDate => {
+                    const currentDate = new Date();
+
+                    if (!selectedDate || !isSameDay(selectedDate, currentDate)) return {};
+
+                    const range = (start: number, end: number) => {
+                      const result = [];
+                      for (let i = start; i < end; i++) result.push(i);
+                      return result;
+                    };
+
+                    return {
+                      disabledHours: () =>
+                        isSameDay(selectedDate, currentDate) ? range(0, getHours(currentDate)) : ([] as number[]),
+                      disabledMinutes: () =>
+                        isSameHour(selectedDate, currentDate) ? range(0, getMinutes(currentDate)) : ([] as number[]),
+                    };
+                  }}
                   format="DD/MM/YYYY HH:mm"
                   size="large"
                   disabled={formDisabled || state.saving}

@@ -1,12 +1,14 @@
 import React from 'react';
 import cn from 'classnames';
-import { formatBONDValue } from 'web3/utils';
+import { formatXYZValue } from 'web3/utils';
 
 import Button from 'components/antd/button';
-import Progress from 'components/antd/progress';
 import Grid from 'components/custom/grid';
 import Icon from 'components/custom/icon';
+import ProgressNew from 'components/custom/progress';
 import { Hint, Text } from 'components/custom/typography';
+import { useGeneral } from 'components/providers/general-provider';
+import { XyzToken } from 'components/providers/known-tokens-provider';
 
 import { useDAO } from '../../../../components/dao-provider';
 
@@ -17,6 +19,7 @@ export type ActivationThresholdProps = {
 const ActivationThreshold: React.FC<ActivationThresholdProps> = props => {
   const dao = useDAO();
   const [activating, setActivating] = React.useState<boolean>(false);
+  const { isDarkTheme } = useGeneral();
 
   function handleActivate() {
     setActivating(true);
@@ -34,33 +37,32 @@ const ActivationThreshold: React.FC<ActivationThresholdProps> = props => {
         <Hint
           text={
             <Text type="p2">
-              For the KEK to be activated, a threshold of {formatBONDValue(dao.activationThreshold)} KEK tokens staked
-              has to be met.
+              For the {XyzToken.symbol} to be activated, a threshold of {formatXYZValue(dao.activationThreshold)} XYZ
+              tokens staked has to be met.
             </Text>
           }>
-          <Text type="p1" weight="bold" color="primary">
+          <Text type="p2" weight="bold" color="primary" font="secondary">
             Activation threshold
           </Text>
         </Hint>
         <Grid gap={12} colsTemplate="auto 24px" width="100%">
-          <Progress
+          <ProgressNew
             percent={dao.activationRate}
-            trailColor="var(--theme-border-color)"
-            strokeWidth={24}
-            strokeColor={{
-              '0%': 'rgba(188, 235, 0, 1)',
-              '100%': 'rgba(0, 234, 234, 1)',
+            colors={{
+              bg: isDarkTheme ? 'rgba(47, 47, 47, 1)' : 'rgba(248, 248, 249, 1)',
+              bar: 'var(--theme-green-color)',
             }}
+            height={24}
           />
           <Icon name="ribbon-outlined" />
         </Grid>
         <Grid flow="col" gap={8} align="center">
           <Icon name="png/universe" width={32} height={32} />
           <Text type="p1" weight="bold" color="primary">
-            {formatBONDValue(dao.bondStaked)}
+            {formatXYZValue(dao.xyzStaked)}
           </Text>
           <Text type="p1" weight="semibold" color="secondary">
-            / {formatBONDValue(dao.activationThreshold)} already staked.
+            / {formatXYZValue(dao.activationThreshold)} already staked.
           </Text>
         </Grid>
         {dao.activationRate === 100 && !dao.isActive && (

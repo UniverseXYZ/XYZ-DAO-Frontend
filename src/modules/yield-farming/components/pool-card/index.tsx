@@ -7,17 +7,14 @@ import fromUnixTime from 'date-fns/fromUnixTime';
 import { formatToken, formatUSD } from 'web3/utils';
 
 import Grid from 'components/custom/grid';
+import Icon, { IconNames } from 'components/custom/icon';
 import IconsSet from 'components/custom/icons-set';
 import { Hint, Text } from 'components/custom/typography';
+import { XyzToken } from 'components/providers/known-tokens-provider';
+import { YFPoolID, useYFPools } from 'modules/yield-farming/providers/pools-provider';
 import { useWallet } from 'wallets/wallet';
 
-import Icon, { IconNames } from '../../../../components/custom/icon';
-import { XyzToken } from '../../../../components/providers/known-tokens-provider';
-import { YFPoolID, useYFPools } from '../../providers/pools-provider';
-
 import s from './s.module.scss';
-
-// import PoolStakeShareBar from '../pool-stake-share-bar';
 
 export type PoolCardProps = {
   poolId: YFPoolID;
@@ -46,6 +43,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
   const poolEffectiveBalanceInUSD = yfPoolsCtx.getPoolEffectiveBalanceInUSD(poolId);
   const myPoolBalanceInUSD = yfPoolsCtx.getMyPoolBalanceInUSD(poolId);
   const myPoolEffectiveBalanceInUSD = yfPoolsCtx.getMyPoolEffectiveBalanceInUSD(poolId);
+  const isPoolAvailable = poolMeta?.contract.isPoolAvailable;
 
   function handleStaking() {
     history.push(`/yield-farming/${poolId}`);
@@ -56,23 +54,22 @@ const PoolCard: React.FC<PoolCardProps> = props => {
       <div className={cn('card-header', s.cardTitleContainer)}>
         <IconsSet
           icons={poolMeta?.icons.map(icon => <Icon key={icon} name={icon as IconNames} width={40} height={40} />) ?? []}
-          className="mr-16"
         />
         <div className={s.cardTitleTexts}>
           <Text type="p1" weight="semibold" color="primary" ellipsis>
             {poolMeta?.label ?? '-'}
           </Text>
           <Text type="lb2" weight="semibold" color="primary" ellipsis>
-            WEEK {lastActiveEpoch ?? '-'} / {totalEpochs ?? '-'}
+            EPOCH {lastActiveEpoch ?? '-'} / {totalEpochs ?? '-'}
           </Text>
         </div>
-        {walletCtx.isActive && (
+        {walletCtx.isActive && isPoolAvailable && (
           <button type="button" disabled={!enabled} onClick={handleStaking} className="button-primary">
             Staking
           </button>
         )}
       </div>
-      {!isEnded && (
+      {!isEnded && isPoolAvailable && (
         <>
           <div className="card-row flex flow-row p-24">
             <Text type="lb2" weight="semibold" color="secondary" className="mb-4">
@@ -127,7 +124,6 @@ const PoolCard: React.FC<PoolCardProps> = props => {
             <Text type="p2" color="secondary" className="mb-8">
               {formatUSD(poolEffectiveBalanceInUSD) ?? '-'} effective balance
             </Text>
-            {/*<PoolStakeShareBar shares={state.shares} />*/}
           </div>
         </>
       )}
@@ -152,32 +148,42 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           <Text type="p1" weight="semibold" color="primary">
             {formatUSD(myPoolBalanceInUSD)}
           </Text>
-          {!isEnded && (
+          {!isEnded && isPoolAvailable && (
             <>
               <Text type="p2" color="secondary">
                 {formatUSD(myPoolEffectiveBalanceInUSD)} effective balance
               </Text>
-              {/*<PoolStakeShareBar shares={state.myShares} />*/}
             </>
           )}
         </div>
       )}
-      {isEnded && (
+      {isEnded && isPoolAvailable && (
         <div className={s.box}>
           <Grid className="card-row" flow="row" align="start">
             <Text type="p2" weight="semibold" color="secondary" className="mb-4">
               The ${poolMeta?.label} staking pool ended after {totalEpochs} epochs on {formattedEndDate}. Deposits are
               now disabled, but you can still withdraw your tokens and collect any unclaimed rewards.
             </Text>
-            <Link to="/governance" className="link-gradient">
-              <Text
-                type="p2"
-                weight="bold"
-                color="var(--gradient-green-safe-color)"
-                textGradient="var(--gradient-green)">
-                Go to governance staking
-              </Text>
-            </Link>
+            {poolMeta?.tokens.some(tk => tk === XyzToken) && (
+              <Link to="/governance" className="link-gradient">
+                <Text
+                  type="p2"
+                  weight="bold"
+                  color="var(--gradient-green-safe-color)"
+                  textGradient="var(--gradient-green)">
+                  Go to governance staking
+                </Text>
+              </Link>
+            )}
+          </Grid>
+        </div>
+      )}
+      {poolId === YFPoolID.USDC_XYZ_SLP && !isPoolAvailable && (
+        <div className={s.box}>
+          <Grid className="card-row" flow="row" align="start">
+            <Text type="p2" weight="semibold" color="secondary" className="mb-4">
+              The ${poolMeta?.label} is not available yet. The pool will start at the beginning of the 2nd epoch.
+            </Text>
           </Grid>
         </div>
       )}

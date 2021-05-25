@@ -12,8 +12,8 @@ import {
   SnxToken,
   SushiToken,
   TokenMeta,
-  UsdcXYZSushiLPToken,
-  convertTokenInUSD,
+  UsdcXyzSLPToken,
+  useKnownTokens,
 } from 'components/providers/known-tokens-provider';
 import config from 'config';
 import { useReload } from 'hooks/useReload';
@@ -29,7 +29,7 @@ export enum YFPoolID {
   SUSHI = 'sushi',
   LINK = 'link',
   ILV = 'ilv',
-  USDC_XYZ_SUSHI_LP = 'usdcXYZSushiLP',
+  USDC_XYZ_SLP = 'usdc-xyz-slp',
 }
 
 export type YFPoolMeta = {
@@ -104,13 +104,13 @@ export const IlvYfPool: YFPoolMeta = {
   contract: new YfPoolContract(config.contracts.yf.ilv),
 };
 
-export const UsdcKekSushiLPYfPool: YFPoolMeta = {
-  name: YFPoolID.USDC_XYZ_SUSHI_LP,
+export const UsdcXyzSLPYfPool: YFPoolMeta = {
+  name: YFPoolID.USDC_XYZ_SLP,
   label: 'USDC_XYZ_SUSHI_LP',
-  icons: ['token-usdc'],
+  icons: ['png/uslp'],
   colors: ['var(--theme-red-color)'],
-  tokens: [UsdcXYZSushiLPToken],
-  contract: new YfPoolContract(config.contracts.yf.usdcXYZSushiLP),
+  tokens: [UsdcXyzSLPToken],
+  contract: new YfPoolContract(config.contracts.yf.usdcXyzSLP),
 };
 
 const KNOWN_POOLS: YFPoolMeta[] = [
@@ -121,7 +121,7 @@ const KNOWN_POOLS: YFPoolMeta[] = [
   SushiYfPool,
   LinkYfPool,
   IlvYfPool,
-  UsdcKekSushiLPYfPool,
+  UsdcXyzSLPYfPool,
 ];
 
 export function getYFKnownPoolByName(name: string): YFPoolMeta | undefined {
@@ -163,6 +163,7 @@ export function useYFPools(): YFPoolsType {
 const YFPoolsProvider: FC = props => {
   const { children } = props;
 
+  const knownTokensCtx = useKnownTokens();
   const walletCtx = useWallet();
   const [reload] = useReload();
 
@@ -175,12 +176,16 @@ const YFPoolsProvider: FC = props => {
 
   useEffect(() => {
     KNOWN_POOLS.forEach(pool => {
-      pool.contract.on(Web3Contract.UPDATE_DATA, reload);
-      pool.contract.loadCommon().catch(Error);
+      if (pool.contract.isPoolAvailable) {
+        pool.contract.on(Web3Contract.UPDATE_DATA, reload);
+        pool.contract.loadCommon().catch(Error);
 
-      pool.tokens.forEach(tokenMeta => {
-        stakingContract.loadCommonFor(tokenMeta.address).catch(Error);
-      });
+        pool.tokens.forEach(tokenMeta => {
+          if (tokenMeta.address) {
+            stakingContract.loadCommonFor(tokenMeta.address).catch(Error);
+          }
+        });
+      }
     });
   }, []);
 
@@ -199,11 +204,15 @@ const YFPoolsProvider: FC = props => {
       pool.contract.setAccount(walletCtx.account);
 
       if (walletCtx.isActive) {
-        pool.contract.loadUserData().catch(Error);
+        if (pool.contract.isPoolAvailable) {
+          pool.contract.loadUserData().catch(Error);
 
-        pool.tokens.forEach(tokenMeta => {
-          stakingContract.loadUserDataFor(tokenMeta.address).catch(Error);
-        });
+          pool.tokens.forEach(tokenMeta => {
+            if (tokenMeta.address) {
+              stakingContract.loadUserDataFor(tokenMeta.address).catch(Error);
+            }
+          });
+        }
       }
     });
   }, [walletCtx.account]);
@@ -216,17 +225,25 @@ const YFPoolsProvider: FC = props => {
         return undefined;
       }
 
+      if (!pool.contract.isPoolAvailable) {
+        return BigNumber.ZERO;
+      }
+
       return BigNumber.sumEach(pool.tokens, token => {
+        if (!token.address) {
+          return BigNumber.ZERO;
+        }
+
         const stakedToken = stakingContract.stakedTokens.get(token.address);
 
         if (!stakedToken || stakedToken.nextEpochPoolSize === undefined) {
           return undefined;
         }
 
-        return convertTokenInUSD(stakedToken.nextEpochPoolSize.unscaleBy(token.decimals), token.symbol);
+        return knownTokensCtx.convertTokenInUSD(stakedToken.nextEpochPoolSize.unscaleBy(token.decimals), token.symbol);
       });
     },
-    [stakingContract],
+    [stakingContract, knownTokensCtx.version],
   );
 
   const getPoolEffectiveBalanceInUSD = useCallback(
@@ -237,17 +254,28 @@ const YFPoolsProvider: FC = props => {
         return undefined;
       }
 
+      if (!pool.contract.isPoolAvailable) {
+        return BigNumber.ZERO;
+      }
+
       return BigNumber.sumEach(pool.tokens, token => {
+        if (!token.address) {
+          return BigNumber.ZERO;
+        }
+
         const stakedToken = stakingContract.stakedTokens.get(token.address);
 
         if (!stakedToken || stakedToken.currentEpochPoolSize === undefined) {
           return undefined;
         }
 
-        return convertTokenInUSD(stakedToken.currentEpochPoolSize.unscaleBy(token.decimals), token.symbol);
+        return knownTokensCtx.convertTokenInUSD(
+          stakedToken.currentEpochPoolSize.unscaleBy(token.decimals),
+          token.symbol,
+        );
       });
     },
-    [stakingContract],
+    [stakingContract, knownTokensCtx.version],
   );
 
   const getMyPoolBalanceInUSD = useCallback(
@@ -258,17 +286,28 @@ const YFPoolsProvider: FC = props => {
         return undefined;
       }
 
+      if (!pool.contract.isPoolAvailable) {
+        return BigNumber.ZERO;
+      }
+
       return BigNumber.sumEach(pool.tokens, token => {
+        if (!token.address) {
+          return BigNumber.ZERO;
+        }
+
         const stakedToken = stakingContract.stakedTokens.get(token.address);
 
         if (!stakedToken || stakedToken.nextEpochUserBalance === undefined) {
           return undefined;
         }
 
-        return convertTokenInUSD(stakedToken.nextEpochUserBalance.unscaleBy(token.decimals), token.symbol);
+        return knownTokensCtx.convertTokenInUSD(
+          stakedToken.nextEpochUserBalance.unscaleBy(token.decimals),
+          token.symbol,
+        );
       });
     },
-    [stakingContract],
+    [stakingContract, knownTokensCtx.version],
   );
 
   const getMyPoolEffectiveBalanceInUSD = useCallback(
@@ -279,17 +318,28 @@ const YFPoolsProvider: FC = props => {
         return undefined;
       }
 
+      if (!pool.contract.isPoolAvailable) {
+        return BigNumber.ZERO;
+      }
+
       return BigNumber.sumEach(pool.tokens, token => {
+        if (!token.address) {
+          return BigNumber.ZERO;
+        }
+
         const stakedToken = stakingContract.stakedTokens.get(token.address);
 
         if (!stakedToken || stakedToken.currentEpochUserBalance === undefined) {
           return undefined;
         }
 
-        return convertTokenInUSD(stakedToken.currentEpochUserBalance.unscaleBy(token.decimals), token.symbol);
+        return knownTokensCtx.convertTokenInUSD(
+          stakedToken.currentEpochUserBalance.unscaleBy(token.decimals),
+          token.symbol,
+        );
       });
     },
-    [stakingContract],
+    [stakingContract, knownTokensCtx.version],
   );
 
   const getYFTotalStakedInUSD = useCallback(() => {
@@ -306,6 +356,10 @@ const YFPoolsProvider: FC = props => {
 
   const getYFDistributedRewards = useCallback(() => {
     return BigNumber.sumEach(KNOWN_POOLS, yfPool => {
+      if (!yfPool.contract.isPoolAvailable) {
+        return BigNumber.ZERO;
+      }
+
       const { distributedReward } = yfPool.contract;
 
       if (distributedReward === undefined) {
@@ -318,6 +372,10 @@ const YFPoolsProvider: FC = props => {
 
   const getYFTotalSupply = useCallback(() => {
     return BigNumber.sumEach(KNOWN_POOLS, yfPool => {
+      if (!yfPool.contract.isPoolAvailable) {
+        return BigNumber.ZERO;
+      }
+
       const { totalSupply } = yfPool.contract;
 
       if (totalSupply === undefined) {
@@ -353,7 +411,7 @@ const YFPoolsProvider: FC = props => {
       <ContractListener contract={SushiYfPool.contract} />
       <ContractListener contract={LinkYfPool.contract} />
       <ContractListener contract={IlvYfPool.contract} />
-      <ContractListener contract={UsdcKekSushiLPYfPool.contract} />
+      <ContractListener contract={UsdcXyzSLPYfPool.contract} />
     </YFPoolsContext.Provider>
   );
 };

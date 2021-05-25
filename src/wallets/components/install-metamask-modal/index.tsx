@@ -33,7 +33,7 @@ const InstallMetaMaskModal: React.FC<ModalProps> = props => {
           </Button>
 
           <Button type="ghost" onClick={props.onCancel}>
-            Go Back
+            <span>Go Back</span>
           </Button>
         </Grid>
       </Grid>

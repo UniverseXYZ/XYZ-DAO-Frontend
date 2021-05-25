@@ -78,3 +78,17 @@ export function doSequential<T, K = any>(
     )
     .then(() => results);
 }
+
+export function toNumber(value: number | string | undefined): number | undefined {
+  if (value === undefined || value === null) {
+    return undefined;
+  }
+
+  const val = Number(value);
+
+  if (!Number.isFinite(val)) {
+    return undefined;
+  }
+
+  return val;
+}

@@ -1,0 +1,70 @@
+.wrap {
+  --percent: 0%;
+  --height: 8px;
+  --bg-bar: var(--theme-green-color);
+  --bg-component: rgba(var(--theme-green-color-rgb), 0.16);
+
+  position: relative;
+  border-radius: 100px;
+}
+
+.progress {
+  height: var(--height);
+  border-radius: 100px;
+  overflow: hidden;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: block;
+  }
+
+  &::before {
+    background: var(--bg-component);
+    right: 0;
+    width: calc(100% - var(--percent, 0%) + 8px);
+  }
+
+  &::after {
+    background: var(--bg-bar);
+    left: 0;
+    width: var(--percent, 0%);
+    border-radius: 100px;
+  }
+}
+
+.acceptance {
+  --acceptance: 50%;
+  --acceptance-bg: var(--bg-component);
+
+  position: absolute;
+  left: var(--acceptance, 50%);
+  top: 0;
+  height: 100%;
+  width: 4px;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    display: block;
+    left: 0;
+    background: var(--acceptance-bg);
+    width: 4px;
+    height: calc(var(--height, 8px) / 2);
+  }
+
+  &::before {
+    top: calc(var(--height, 8px) / -2);
+    border-radius: 100px 100px 0 0;
+  }
+
+  &::after {
+    bottom: calc(var(--height, 8px) / -2);
+    border-radius: 0 0 100px 100px;
+  }
+}

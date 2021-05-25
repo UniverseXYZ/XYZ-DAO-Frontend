@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { ZERO_BIG_NUMBER, getHumanValue } from 'web3/utils';
 import Web3Contract, { Web3ContractAbiItem } from 'web3/web3Contract';
 
-import { BondToken } from 'components/providers/known-tokens-provider';
+import { XyzToken } from 'components/providers/known-tokens-provider';
 import config from 'config';
 import useMergeState from 'hooks/useMergeState';
 import { useReload } from 'hooks/useReload';
@@ -27,7 +27,7 @@ function loadCommonData(): Promise<any> {
       method: 'pullFeature',
       transform: (value: DaoRewardPullFeature) => ({
         ...value,
-        totalAmount: getHumanValue(new BigNumber(value.totalAmount), BondToken.decimals),
+        totalAmount: getHumanValue(new BigNumber(value.totalAmount), XyzToken.decimals),
       }),
     },
   ]).then(([poolFeature]) => {
@@ -48,7 +48,7 @@ function loadUserData(userAddress?: string): Promise<any> {
       callArgs: {
         from: userAddress,
       },
-      transform: (value: string) => getHumanValue(new BigNumber(value), BondToken.decimals),
+      transform: (value: string) => getHumanValue(new BigNumber(value), XyzToken.decimals),
       onError: () => ZERO_BIG_NUMBER,
     },
   ]).then(([claimValue]) => {
@@ -80,7 +80,7 @@ export type DAORewardContract = DAORewardContractData & {
   reload(): void;
   actions: {
     claim(): Promise<any>;
-    getBondRewards(): BigNumber | undefined;
+    getXYZRewards(): BigNumber | undefined;
   };
 };
 
@@ -102,7 +102,7 @@ export function useDAORewardContract(): DAORewardContract {
     loadUserData(wallet.account).then(setState).catch(Error);
   }, [wallet.account, version, setState]);
 
-  function getBondRewards(): BigNumber | undefined {
+  function getXYZRewards(): BigNumber | undefined {
     if (!state.poolFeature) {
       return undefined;
     }
@@ -128,7 +128,7 @@ export function useDAORewardContract(): DAORewardContract {
       claim(): Promise<void> {
         return wallet.isActive ? claimSend(wallet.account!) : Promise.reject();
       },
-      getBondRewards,
+      getXYZRewards,
     },
   };
 }

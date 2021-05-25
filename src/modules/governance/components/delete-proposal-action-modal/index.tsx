@@ -21,7 +21,7 @@ const DeleteProposalActionModal: React.FC<DeleteProposalActionModalProps> = prop
         </div>
         <div className="flex justify-space-between">
           <Button type="default" onClick={modalProps.onCancel}>
-            Cancel
+            <span>Cancel</span>
           </Button>
           <Button type="primary" onClick={modalProps.onOk}>
             Delete Action

@@ -21,6 +21,20 @@ BigNumber.prototype.unscaleBy = function (decimals?: number): BigNumber | undefi
 BigNumber.ZERO = new BigNumber(0);
 BigNumber.MAX_UINT_256 = new BigNumber(2).pow(256).minus(1);
 
+BigNumber.from = (value?: BigNumber.Value): BigNumber | undefined => {
+  if (value === undefined || value === null) {
+    return undefined;
+  }
+
+  const bnValue = new BigNumber(value);
+
+  if (bnValue.isNaN()) {
+    return undefined;
+  }
+
+  return bnValue;
+};
+
 BigNumber.sumEach = <T = any>(items: T[], predicate: (item: T) => BigNumber | undefined): BigNumber | undefined => {
   let sum = BigNumber.ZERO;
 
@@ -267,11 +281,11 @@ export function formatUSDValue(value?: BigNumber | number, decimals = 2, minDeci
   return val.isPositive() ? `$${formattedValue}` : `-$${formattedValue}`;
 }
 
-export function formatBONDValue(value?: BigNumber): string {
+export function formatXYZValue(value?: BigNumber): string {
   return formatBigValue(value, 4);
 }
 
-export function isSmallBONDValue(value?: BigNumber): boolean {
+export function isSmallXYZValue(value?: BigNumber): boolean {
   return !!value && value.gt(ZERO_BIG_NUMBER) && value.lt(0.0001);
 }
 

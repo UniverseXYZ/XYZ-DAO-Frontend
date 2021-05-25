@@ -3,8 +3,8 @@ import { formatBigValue } from 'web3/utils';
 
 import Alert from 'components/antd/alert';
 import Button from 'components/antd/button';
-import Progress from 'components/antd/progress';
 import Grid from 'components/custom/grid';
+import ProgressNew from 'components/custom/progress';
 import { Text } from 'components/custom/typography';
 import { APIProposalState } from 'modules/governance/api';
 import { useWallet } from 'wallets/wallet';
@@ -104,7 +104,7 @@ const ProposalVotesCard: React.FC = () => {
     <>
       <div className="card">
         <div className="card-header flex justify-space-between">
-          <Text type="p1" weight="semibold" color="primary">
+          <Text type="p1" weight="semibold" color="primary" font="secondary">
             Votes
           </Text>
           <Button type="link" onClick={handleShowVotersModal}>
@@ -126,10 +126,9 @@ const ProposalVotesCard: React.FC = () => {
                 </Text>
               </Grid>
             </Grid>
-            <Progress
+            <ProgressNew
               percent={proposalCtx.forRate}
-              strokeColor="var(--theme-green-color)"
-              trailColor="rgba(var(--theme-green-color-rgb), .16)"
+              colors={{ bg: 'rgba(var(--theme-green-color-rgb), 0.16)', bar: 'var(--theme-green-color)' }}
             />
           </Grid>
           <Grid flow="row" gap={16}>
@@ -146,10 +145,9 @@ const ProposalVotesCard: React.FC = () => {
                 </Text>
               </Grid>
             </Grid>
-            <Progress
+            <ProgressNew
               percent={proposalCtx.againstRate}
-              strokeColor="var(--theme-red-color)"
-              trailColor="rgba(var(--theme-red-color-rgb), .16)"
+              colors={{ bg: 'rgba(var(--theme-red-color-rgb), 0.16)', bar: 'var(--theme-red-color)' }}
             />
           </Grid>
         </Grid>
@@ -170,7 +168,7 @@ const ProposalVotesCard: React.FC = () => {
                     Vote for
                   </Button>
                   <Button type="default" onClick={handleVoteAgainstModal}>
-                    Vote against
+                    <span>Vote against</span>
                   </Button>
                 </Grid>
               ) : (
@@ -183,7 +181,7 @@ const ProposalVotesCard: React.FC = () => {
                       Change vote
                     </Button>
                     <Button type="default" onClick={handleVoteCancelModal}>
-                      Cancel vote
+                      <span>Cancel vote</span>
                     </Button>
                   </Grid>
                 </>

@@ -6,7 +6,7 @@
   padding: 12px 16px;
   background: var(--theme-body-color);
   border: 1px solid var(--theme-border-color);
-  border-radius: 4px;
+  border-radius: 12px;
 
   &:hover {
     background: var(--theme-body-color) !important;
@@ -27,8 +27,8 @@
   }
 
   &:global(.ant-picker-focused) {
-    border: 1px solid var(--theme-red-color);
-    box-shadow: 0 0 0 3px rgba(255, 67, 57, 0.16);
+    border: 1px solid var(--theme-border-color);
+    box-shadow: var(--input-shadow);
   }
 
   :global(.ant-picker-input) {
@@ -50,13 +50,14 @@
 .dropdown:global(.ant-picker-dropdown) {
   :global(.ant-picker-panel-container) {
     background: var(--theme-overlay-color);
+    border-radius: 12px;
 
     :global(.ant-picker-panel) {
       border: 0;
     }
 
     :global(.ant-picker-cell-inner) {
-      color: var(--theme-secondary-color);
+      color: var(--theme-primary-color);
     }
 
     :global(.ant-picker-header),
@@ -85,18 +86,53 @@
 
     :global(.ant-picker-time-panel-cell-selected) {
       :global(.ant-picker-time-panel-cell-inner) {
-        background: var(--theme-red-color);
+        background: var(--gradient-green);
       }
     }
 
     :global(.ant-picker-time-panel-cell-inner):hover {
-      background: var(--theme-red-color);
+      background: var(--gradient-green);
     }
 
     :global(.ant-picker-cell.ant-picker-cell-today.ant-picker-cell-selected) {
       :global(.ant-picker-cell-inner) {
         color: var(--theme-primary-color);
       }
+    }
+  }
+
+  :global(.ant-picker-cell.ant-picker-cell-today) :global(.ant-picker-cell-inner)::before {
+    border: 1px solid var(--gradient-green-safe);
+  }
+
+  :global(.ant-picker-cell.ant-picker-cell-selected) :global(.ant-picker-cell-inner) {
+    color: var(--theme-primary-color);
+    background: var(--gradient-green);
+  }
+
+  :global(.ant-picker-cell.ant-picker-cell-selected) :global(.ant-picker-cell-inner)::before {
+    border: 1px solid var(--gradient-green-safe);
+  }
+
+  :global(.ant-btn.ant-btn-primary) {
+    background: var(--gradient-green);
+    border: 0;
+    color: var(--theme-primary-color);
+  }
+
+  :global(.ant-picker-cell-disabled) {
+    opacity: 0.3;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  :global(.ant-picker-time-panel-cell-disabled) {
+    opacity: 0.3;
+
+    :global(.ant-picker-time-panel-cell-inner):hover {
+      background: none;
     }
   }
 }

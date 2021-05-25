@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Progress from 'components/antd/progress';
 import Grid from 'components/custom/grid';
+import ProgressNew from 'components/custom/progress';
 import { Hint, Text } from 'components/custom/typography';
 
 import { useProposal } from '../../providers/ProposalProvider';
@@ -15,7 +15,7 @@ const ProposalApprovalCard: React.FC = () => {
     <div className="card">
       <div className="card-header">
         <Hint text="Approval is the percentage of votes on a proposal that the total support must be greater than for the proposal to be approved. For example, if “Approval” is set to 51%, then more than 51% of the votes on a proposal must vote “Yes” for the proposal to pass.">
-          <Text type="p1" weight="semibold" color="primary">
+          <Text type="p1" weight="semibold" color="primary" font="secondary">
             Approval
           </Text>
         </Hint>
@@ -29,11 +29,14 @@ const ProposalApprovalCard: React.FC = () => {
             (&gt; {proposalCtx.proposal?.acceptanceThreshold}% required)
           </Text>
         </Grid>
-        <Progress
+        <ProgressNew
           percent={proposalCtx.forRate}
           acceptance={proposalCtx.proposal?.acceptanceThreshold}
-          strokeColor={passed ? 'var(--theme-green-color)' : 'var(--theme-red-color)'}
-          trailColor={passed ? 'rgba(var(--theme-green-color-rgb), .16)' : 'rgba(var(--theme-red-color-rgb), .16)'}
+          colors={{
+            bg: passed ? 'rgba(var(--theme-green-color-rgb), 0.16)' : 'rgba(var(--theme-red-color-rgb), 0.16)',
+            bar: passed ? 'var(--theme-green-color)' : 'var(--theme-red-color)',
+            acceptance: passed ? 'var(--theme-green-color)' : 'rgba(var(--theme-red-color-rgb), 0.16)',
+          }}
         />
       </Grid>
     </div>

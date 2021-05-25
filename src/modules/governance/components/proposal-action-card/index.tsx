@@ -82,7 +82,7 @@ const ProposalActionCard: React.FC<ProposalActionCardProps> = props => {
       key: 'delete',
       icon: <Icon name="bin-outlined" color="red" />,
       title: (
-        <Text type="p1" weight="semibold" color="red">
+        <Text type="p1" weight="semibold" color="primary" font="secondary">
           Delete action
         </Text>
       ),

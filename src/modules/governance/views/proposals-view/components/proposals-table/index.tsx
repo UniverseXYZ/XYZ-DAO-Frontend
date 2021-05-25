@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { ColumnsType } from 'antd/lib/table/interface';
 import { ZERO_BIG_NUMBER } from 'web3/utils';
 
-import Progress from 'components/antd/progress';
 import Table from 'components/antd/table';
 import Grid from 'components/custom/grid';
+import ProgressNew from 'components/custom/progress';
 import { Text } from 'components/custom/typography';
 import { UseLeftTime } from 'hooks/useLeftTime';
 
@@ -55,20 +55,20 @@ const Columns: ColumnsType<LiteProposalEntity> = [
       return (
         <Grid flow="row" gap={8}>
           <Grid gap={24} colsTemplate="minmax(0, 196px) 65px">
-            <Progress
+            <ProgressNew
               percent={forRate.toNumber()}
-              strokeColor="var(--theme-green-color)"
-              trailColor="rgba(var(--theme-green-color-rgb), .16)"
+              colors={{ bg: 'rgba(var(--theme-green-color-rgb), 0.16)', bar: 'var(--theme-green-color)' }}
+              style={{ alignSelf: 'center' }}
             />
             <Text type="p2" weight="semibold" color="secondary" align="right">
               {forRate.toFormat(2)}%
             </Text>
           </Grid>
           <Grid gap={24} colsTemplate="minmax(0, 196px) 65px">
-            <Progress
+            <ProgressNew
               percent={againstRate.toNumber()}
-              strokeColor="var(--theme-red-color)"
-              trailColor="rgba(var(--theme-red-color-rgb), .16)"
+              colors={{ bg: 'rgba(var(--theme-red-color-rgb), 0.16)', bar: 'var(--theme-red-color)' }}
+              style={{ alignSelf: 'center' }}
             />
             <Text type="p2" weight="semibold" color="secondary" align="right">
               {againstRate.toFormat(2)}%

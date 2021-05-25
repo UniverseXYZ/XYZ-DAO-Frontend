@@ -17,11 +17,11 @@ type PaginatedResult<T extends Record<string, any>> = {
 export type APIOverviewData = {
   avgLockTimeSeconds: number;
   totalDelegatedPower: BigNumber;
-  totalVbond: BigNumber;
+  TotalVKek: BigNumber;
   holders: number;
   holdersStakingExcluded: number;
   voters: number;
-  barnUsers: number;
+  supernovaUsers: number;
 };
 
 export function fetchOverviewData(): Promise<APIOverviewData> {
@@ -32,13 +32,13 @@ export function fetchOverviewData(): Promise<APIOverviewData> {
     .then(result => ({
       ...result.data,
       totalDelegatedPower: getHumanValue(new BigNumber(result.data.totalDelegatedPower), 18),
-      totalVbond: getHumanValue(new BigNumber(result.data.totalVbond), 18),
+      TotalVKek: getHumanValue(new BigNumber(result.data.TotalVKek), 18),
     }));
 }
 
 export type APIVoterEntity = {
   address: string;
-  bondStaked: BigNumber;
+  kekStaked: BigNumber;
   lockedUntil: number;
   delegatedPower: BigNumber;
   votes: number;
@@ -56,7 +56,7 @@ export function fetchVoters(page = 1, limit = 10): Promise<PaginatedResult<APIVo
       ...result,
       data: (result.data ?? []).map((item: APIVoterEntity) => ({
         ...item,
-        bondStaked: getHumanValue(new BigNumber(item.bondStaked), XyzToken.decimals)!,
+        kekStaked: getHumanValue(new BigNumber(item.kekStaked), XyzToken.decimals)!,
         delegatedPower: getHumanValue(new BigNumber(item.delegatedPower), 18)!,
         votingPower: getHumanValue(new BigNumber(item.votingPower), 18)!,
       })),

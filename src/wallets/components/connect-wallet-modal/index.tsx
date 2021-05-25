@@ -5,8 +5,10 @@ import Modal, { ModalProps } from 'components/antd/modal';
 import Grid from 'components/custom/grid';
 import { IconWallet } from 'components/custom/icon-wallet';
 import { Text } from 'components/custom/typography';
+import { useGeneral } from 'components/providers/general-provider';
 import useMergeState from 'hooks/useMergeState';
 import LedgerDerivationPathModal from 'wallets/components/ledger-deriviation-path-modal';
+import { CoinbaseWalletArgs } from 'wallets/connectors/coinbase';
 import { WalletConnectors, useWallet } from 'wallets/wallet';
 
 import s from './s.module.scss';
@@ -26,6 +28,7 @@ const InitialState: ConnectWalletModalState = {
 const ConnectWalletModal: React.FC<ConnectWalletModalProps> = props => {
   const { ...modalProps } = props;
 
+  const { isDarkTheme } = useGeneral();
   const wallet = useWallet();
   const [state, setState] = useMergeState<ConnectWalletModalState>(InitialState);
 
@@ -41,7 +44,15 @@ const ConnectWalletModal: React.FC<ConnectWalletModalProps> = props => {
       return;
     }
 
-    wallet.connect(connector).catch(Error);
+    let args = {};
+
+    if (connector.id === 'coinbase') {
+      args = {
+        darkMode: isDarkTheme,
+      } as CoinbaseWalletArgs;
+    }
+
+    wallet.connect(connector, args).catch(Error);
   }
 
   return (
@@ -64,7 +75,7 @@ const ConnectWalletModal: React.FC<ConnectWalletModalProps> = props => {
               className={s.button}
               style={{ height: '96px' }}
               onClick={() => handleConnectorSelect(connector)}>
-              <IconWallet wallet={connector.id} style={{ maxHeight: 32 }} />
+              <IconWallet wallet={connector.id} style={{ maxHeight: 32 }} className={s.walletIcon} />
             </Button>
           ))}
         </Grid>

@@ -2,7 +2,7 @@ import React from 'react';
 import AntdForm from 'antd/lib/form';
 import AntdSwitch from 'antd/lib/switch';
 import BigNumber from 'bignumber.js';
-import { ZERO_BIG_NUMBER, formatBONDValue } from 'web3/utils';
+import { ZERO_BIG_NUMBER, formatXYZValue } from 'web3/utils';
 
 import Alert from 'components/antd/alert';
 import Button from 'components/antd/button';
@@ -12,9 +12,9 @@ import Grid from 'components/custom/grid';
 import Icon from 'components/custom/icon';
 import TokenAmount from 'components/custom/token-amount';
 import { Text } from 'components/custom/typography';
+import { XyzToken } from 'components/providers/known-tokens-provider';
 import useMergeState from 'hooks/useMergeState';
 
-import { XyzToken } from '../../../../components/providers/known-tokens-provider';
 import config from '../../../../config';
 import Erc20Contract from '../../../../web3/erc20Contract';
 import { useDAO } from '../../components/dao-provider';
@@ -64,7 +64,9 @@ const WalletDepositView: React.FC = () => {
 
     try {
       await (XyzToken.contract as Erc20Contract).approve(checked, config.contracts.dao.barn);
-    } catch {}
+    } catch (e) {
+      console.error(e);
+    }
 
     setState({ enabling: false });
   }
@@ -121,7 +123,7 @@ const WalletDepositView: React.FC = () => {
             Staked Balance
           </Text>
           <Text type="p1" weight="semibold" color="primary">
-            {formatBONDValue(stakedBalance)}
+            {formatXYZValue(stakedBalance)}
           </Text>
         </Grid>
 
@@ -130,7 +132,7 @@ const WalletDepositView: React.FC = () => {
             Wallet Balance
           </Text>
           <Text type="p1" weight="semibold" color="primary">
-            {formatBONDValue(xyzBalance)}
+            {formatXYZValue(xyzBalance)}
           </Text>
         </Grid>
 
@@ -156,7 +158,9 @@ const WalletDepositView: React.FC = () => {
                 expanded: !prevState.expanded,
               }))
             }>
-            <Icon name="chevron-right" rotate={state.expanded ? 270 : 0} />
+            <span>
+              <Icon name="chevron-right" rotate={state.expanded ? 270 : 0} />
+            </span>
           </button>
         )}
       </Grid>
@@ -173,9 +177,10 @@ const WalletDepositView: React.FC = () => {
               <Grid flow="row" gap={32}>
                 <Form.Item name="amount" label="Amount" rules={[{ required: true, message: 'Required' }]}>
                   <TokenAmount
-                    tokenIcon="token-bond"
+                    tokenIcon="png/universe"
                     max={xyzBalance}
                     maximumFractionDigits={XyzToken.decimals}
+                    name={XyzToken.symbol}
                     displayDecimals={4}
                     disabled={state.saving}
                     slider

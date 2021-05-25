@@ -44,7 +44,7 @@ const PoolStake: FC = () => {
   const stakedBalance = selectedStakedToken?.nextEpochUserBalance?.unscaleBy(activeToken.decimals);
   const walletBalance = activeContract.balance?.unscaleBy(activeToken.decimals);
   const maxAmount = BigNumber.min(walletBalance ?? BigNumber.ZERO, allowance ?? BigNumber.ZERO);
-  const bnAmount = new BigNumber(amount);
+  const bnAmount = BigNumber.from(amount);
 
   function handleTokenSelect(tokenSymbol: string) {
     const tokenMeta = knownTokensCtx.getTokenBySymbol(tokenSymbol);
@@ -137,6 +137,7 @@ const PoolStake: FC = () => {
           )
         }
         value={amount}
+        name={activeToken.symbol}
         onChange={setAmount}
         max={maxAmount.toNumber()}
         placeholder={`0 (Max ${formatNumber(maxAmount, { decimals: activeToken.decimals })})`}
@@ -151,14 +152,9 @@ const PoolStake: FC = () => {
             message={
               <div className="flex flow-row row-gap-16 align-start">
                 <Text type="p2" weight="semibold" color="blue">
-                  You can still deposit {activeToken.symbol} in SMART Yield’s Junior or Senior Tranches and earn
-                  interest for your funds.
+                  Deposits made after an epoch started will be considered as pro-rata figures in relation to the length
+                  of the epoch.
                 </Text>
-                <Link to="/smart-yield" className="link-blue">
-                  <Text type="p2" weight="bold" style={{ textDecoration: 'underline' }}>
-                    Go to SMART yield
-                  </Text>
-                </Link>
               </div>
             }
             className="mb-32"
@@ -169,7 +165,7 @@ const PoolStake: FC = () => {
               message={
                 <div className="flex flow-row row-gap-16 align-start">
                   <Text type="p2" weight="semibold" color="blue">
-                    You can still deposit BOND in the DAO governance to earn interest for your funds.
+                    You can still deposit {activeToken.symbol} in the DAO governance to earn interest for your funds.
                   </Text>
                   <Link to="/governance" className="link-blue">
                     <Text type="p2" weight="bold" style={{ textDecoration: 'underline' }}>
@@ -190,21 +186,34 @@ const PoolStake: FC = () => {
         />
       )}
 
-      {allowance?.eq(BigNumber.ZERO) && (
-        <button type="button" className="button-primary" disabled={enabling} onClick={handleEnable}>
-          {enabling && <Spin spinning />}
-          Enable {activeToken.symbol}
+      <div style={{ display: 'flex' }}>
+        <button
+          type="button"
+          className="button-primary"
+          disabled={
+            !allowance?.gt(BigNumber.ZERO) ||
+            !bnAmount ||
+            !bnAmount.gt(BigNumber.ZERO) ||
+            bnAmount.gt(maxAmount) ||
+            staking
+          }
+          onClick={handleStake}>
+          {staking && <Spin spinning />}
+          Stake
         </button>
-      )}
 
-      <button
-        type="button"
-        className="button-primary"
-        disabled={!allowance?.gt(BigNumber.ZERO) || bnAmount.eq(BigNumber.ZERO) || bnAmount.gt(maxAmount) || staking}
-        onClick={handleStake}>
-        {staking && <Spin spinning />}
-        Stake
-      </button>
+        {allowance?.eq(BigNumber.ZERO) && (
+          <button
+            type="button"
+            className="button-primary"
+            disabled={enabling}
+            onClick={handleEnable}
+            style={{ marginLeft: 10 }}>
+            {enabling && <Spin spinning />}
+            Enable {activeToken.symbol}
+          </button>
+        )}
+      </div>
 
       {confirmModalVisible && (
         <TxConfirmModal

@@ -1,21 +1,14 @@
 import React, { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { formatNumber, formatToken, formatUSD } from 'web3/utils';
+import { formatNumber, formatUSD } from 'web3/utils';
 
-import Tooltip from 'components/antd/tooltip';
 import Icon, { IconNames } from 'components/custom/icon';
 import IconsSet from 'components/custom/icons-set';
 import { Text } from 'components/custom/typography';
-import { useKnownTokens } from 'components/providers/known-tokens-provider';
 
 import { useYFPool } from '../../providers/pool-provider';
-import { useYFPools } from '../../providers/pools-provider';
-
-import s from './s.module.scss';
 
 const PoolHeader: FC = () => {
-  const knownTokensCtx = useKnownTokens();
-  const yfPoolsCtx = useYFPools();
   const yfPoolCtx = useYFPool();
 
   const { poolMeta, poolBalance, effectivePoolBalance } = yfPoolCtx;
@@ -47,8 +40,8 @@ const PoolHeader: FC = () => {
           <Text type="p1" weight="semibold" color="primary" className="mb-4">
             {poolMeta.label}
           </Text>
-          <Text type="small" weight="semibold" color="red">
-            Epoch {poolMeta.contract.lastActiveEpoch} / {poolMeta.contract.totalEpochs}
+          <Text type="small" weight="semibold" color="primary">
+            Epoch {poolMeta.contract.lastActiveEpoch ?? '-'} / {poolMeta.contract.totalEpochs ?? '-'}
           </Text>
         </div>
       </div>
@@ -71,40 +64,13 @@ const PoolHeader: FC = () => {
         </div>
         <div>
           <Text type="small" weight="semibold" color="secondary" className="mb-8">
-            Weekly rewards
+            Epoch rewards
           </Text>
           <div className="flex align-center">
-            <Icon name="static/token-bond" width={16} height={16} className="mr-8" />
+            <Icon name="png/universe" width={24} height={24} className="mr-8" />
             <Text type="p1" weight="semibold" color="primary">
               {formatNumber(poolMeta.contract.epochReward) ?? '-'}
             </Text>
-          </div>
-        </div>
-        <div>
-          <Text type="small" weight="semibold" color="secondary" className="mb-8">
-            Pool distribution
-          </Text>
-          <div className={s.stakedBar}>
-            {poolMeta.tokens.map((token, index) => {
-              const stakedToken = yfPoolsCtx.stakingContract?.stakedTokens.get(token.address);
-              const rate =
-                knownTokensCtx
-                  .convertTokenInUSD(stakedToken?.nextEpochPoolSize, token.symbol)
-                  ?.unscaleBy(token.decimals)
-                  ?.dividedBy(poolBalance ?? 0)
-                  .multipliedBy(100) ?? 0;
-
-              return (
-                <Tooltip
-                  key={token.symbol}
-                  title={formatToken(stakedToken?.nextEpochPoolSize?.unscaleBy(token.decimals), {
-                    tokenName: token.symbol,
-                    decimals: token.decimals,
-                  })}>
-                  <div style={{ background: poolMeta.colors[index], width: `${rate}%` }} />
-                </Tooltip>
-              );
-            })}
           </div>
         </div>
       </div>

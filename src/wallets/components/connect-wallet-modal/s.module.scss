@@ -1,18 +1,19 @@
 .button {
   min-height: 96px;
   max-height: 96px;
-}
 
-.button:hover {
-  background-color: #202529 !important;
-}
+  &:hover {
+    background-color: #202529 !important;
+  }
 
-.button > svg {
-  filter: grayscale(100%) opacity(60%);
-  transition: filter 0.2s ease-out !important;
-  color: var(--theme-primary-color);
-}
+  .walletIcon {
+    filter: grayscale(100%) opacity(60%);
+    transition: filter 0.2s ease-out !important;
+    color: var(--theme-primary-color);
+    width: 100%;
+  }
 
-.button:hover > svg {
-  filter: grayscale(0%) opacity(100%);
+  &:hover .walletIcon {
+    filter: grayscale(0%) opacity(100%);
+  }
 }
