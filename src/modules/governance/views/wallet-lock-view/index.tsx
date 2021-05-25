@@ -4,7 +4,6 @@ import cn from 'classnames';
 import addDays from 'date-fns/addDays';
 import addMonths from 'date-fns/addMonths';
 import addSeconds from 'date-fns/addSeconds';
-import differenceInDays from 'date-fns/differenceInDays';
 import getHours from 'date-fns/getHours';
 import getMinutes from 'date-fns/getMinutes';
 import getUnixTime from 'date-fns/getUnixTime';
@@ -12,6 +11,7 @@ import isAfter from 'date-fns/isAfter';
 import isBefore from 'date-fns/isBefore';
 import isSameDay from 'date-fns/isSameDay';
 import isSameHour from 'date-fns/isSameHour';
+import setDate from 'date-fns/set';
 import { ZERO_BIG_NUMBER, formatXYZValue } from 'web3/utils';
 
 import Alert from 'components/antd/alert';
@@ -230,14 +230,15 @@ const WalletLockView: React.FC = () => {
                   showTime
                   showNow={false}
                   defaultValue={addSeconds(new Date(), 1)}
-                  disabledDate={(selectedDate: Date) =>
-                    isBefore(selectedDate, minAllowedDate) || isAfter(selectedDate, maxAllowedDate)
-                  }
+                  disabledDate={(date: Date) => {
+                    const formattedDate = setDate(date, { hours: 23, minutes: 59, seconds: 59, milliseconds: 999 });
+
+                    return isBefore(formattedDate, minAllowedDate) || isAfter(formattedDate, maxAllowedDate);
+                  }}
                   disabledTime={selectedDate => {
                     const currentDate = new Date();
-                    if (differenceInDays(selectedDate || new Date(), currentDate) > 1) {
-                      return {};
-                    }
+
+                    if (!selectedDate || !isSameDay(selectedDate, currentDate)) return {};
 
                     const range = (start: number, end: number) => {
                       const result = [];
@@ -245,16 +246,11 @@ const WalletLockView: React.FC = () => {
                       return result;
                     };
 
-                    isSameHour(selectedDate || new Date(), currentDate);
                     return {
                       disabledHours: () =>
-                        isSameDay(selectedDate || new Date(), currentDate)
-                          ? range(0, getHours(currentDate))
-                          : ([] as number[]),
+                        isSameDay(selectedDate, currentDate) ? range(0, getHours(currentDate)) : ([] as number[]),
                       disabledMinutes: () =>
-                        isSameHour(selectedDate || new Date(), currentDate)
-                          ? range(0, getMinutes(currentDate))
-                          : ([] as number[]),
+                        isSameHour(selectedDate, currentDate) ? range(0, getMinutes(currentDate)) : ([] as number[]),
                     };
                   }}
                   format="DD/MM/YYYY HH:mm"
