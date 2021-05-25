@@ -41,7 +41,7 @@ const PoolHeader: FC = () => {
             {poolMeta.label}
           </Text>
           <Text type="small" weight="semibold" color="primary">
-            Epoch {poolMeta.contract.lastActiveEpoch} / {poolMeta.contract.totalEpochs}
+            Epoch {poolMeta.contract.lastActiveEpoch ?? '-'} / {poolMeta.contract.totalEpochs ?? '-'}
           </Text>
         </div>
       </div>

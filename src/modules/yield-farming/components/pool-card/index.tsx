@@ -43,7 +43,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
   const poolEffectiveBalanceInUSD = yfPoolsCtx.getPoolEffectiveBalanceInUSD(poolId);
   const myPoolBalanceInUSD = yfPoolsCtx.getMyPoolBalanceInUSD(poolId);
   const myPoolEffectiveBalanceInUSD = yfPoolsCtx.getMyPoolEffectiveBalanceInUSD(poolId);
-  const unavailable = !poolMeta?.contract.address && !poolMeta?.tokens[0]?.price;
+  const isPoolAvailable = poolMeta?.contract.isPoolAvailable;
 
   function handleStaking() {
     history.push(`/yield-farming/${poolId}`);
@@ -63,13 +63,13 @@ const PoolCard: React.FC<PoolCardProps> = props => {
             EPOCH {lastActiveEpoch ?? '-'} / {totalEpochs ?? '-'}
           </Text>
         </div>
-        {walletCtx.isActive && (
+        {walletCtx.isActive && isPoolAvailable && (
           <button type="button" disabled={!enabled} onClick={handleStaking} className="button-primary">
             Staking
           </button>
         )}
       </div>
-      {!isEnded && !unavailable && (
+      {!isEnded && isPoolAvailable && (
         <>
           <div className="card-row flex flow-row p-24">
             <Text type="lb2" weight="semibold" color="secondary" className="mb-4">
@@ -148,7 +148,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           <Text type="p1" weight="semibold" color="primary">
             {formatUSD(myPoolBalanceInUSD)}
           </Text>
-          {!isEnded && !unavailable && (
+          {!isEnded && isPoolAvailable && (
             <>
               <Text type="p2" color="secondary">
                 {formatUSD(myPoolEffectiveBalanceInUSD)} effective balance
@@ -157,7 +157,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           )}
         </div>
       )}
-      {isEnded && !unavailable && (
+      {isEnded && isPoolAvailable && (
         <div className={s.box}>
           <Grid className="card-row" flow="row" align="start">
             <Text type="p2" weight="semibold" color="secondary" className="mb-4">
@@ -178,7 +178,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           </Grid>
         </div>
       )}
-      {poolId === YFPoolID.USDC_XYZ_SLP && unavailable && (
+      {poolId === YFPoolID.USDC_XYZ_SLP && !isPoolAvailable && (
         <div className={s.box}>
           <Grid className="card-row" flow="row" align="start">
             <Text type="p2" weight="semibold" color="secondary" className="mb-4">
