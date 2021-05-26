@@ -1,4 +1,5 @@
 import React from 'react';
+import BigNumber from 'bignumber.js';
 import cn from 'classnames';
 
 import { DropdownList } from 'components/custom/dropdown';
@@ -18,7 +19,7 @@ type TokenAmountType = {
   classNameBefore?: string;
   placeholder?: string;
   disabled?: boolean;
-  max?: number;
+  max?: BigNumber;
   slider?: boolean;
   decimals?: number;
   name?: string;
@@ -33,6 +34,7 @@ export const TokenAmount: React.FC<TokenAmountType> = ({
   slider,
   decimals = 6,
   name,
+  max,
   ...rest
 }) => {
   const handlerKeyPress = (event: React.KeyboardEvent) => {
@@ -70,26 +72,26 @@ export const TokenAmount: React.FC<TokenAmountType> = ({
           />
           <div className={s.tokenAmountHint}>{secondary}</div>
         </div>
-        {Number.isFinite(rest.max) && (
+        {max?.isFinite() && (
           <button
             type="button"
             className="button-ghost"
             style={{ alignSelf: 'center' }}
-            disabled={rest.disabled || rest.max === 0}
-            onClick={() => onChange(String(rest.max))}>
+            disabled={rest.disabled || max?.isEqualTo(BigNumber.ZERO)}
+            onClick={() => onChange(max?.toFormat())}>
             <span>MAX</span>
           </button>
         )}
       </div>
-      {slider && Number.isFinite(rest.max) ? (
+      {slider && max?.isFinite() ? (
         <Slider
           type="range"
           className={s.tokenAmountSlider}
           min="0"
-          max={rest.max}
+          max={max?.toNumber()}
           step={1 / 10 ** Math.min(decimals, 6)}
           value={rest.value ?? 0}
-          disabled={rest.disabled || rest.max === 0}
+          disabled={rest.disabled || max?.isEqualTo(BigNumber.ZERO)}
           onChange={e => {
             onChange(e.target.value);
           }}

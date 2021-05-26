@@ -28,6 +28,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
   const yfTotalEffectiveStakedInUSD = yfPoolsCtx.getYFTotalEffectiveStakedInUSD();
   const yfTotalSupply = yfPoolsCtx.getYFTotalSupply();
   const yfDistributedRewards = yfPoolsCtx.getYFDistributedRewards();
+  const { epochStart, currentEpoch } = yfPoolsCtx.stakingContract ?? {};
   const [, epochEndDate] = yfPoolsCtx.stakingContract?.epochDates ?? [];
 
   const isEnded = poolMeta?.contract.isPoolEnded === true;
@@ -109,38 +110,72 @@ const PoolStats: React.FC<Props> = ({ className }) => {
 
       {!isEnded && (
         <div className="card p-24">
-          <div className="flex flow-row justify-space-between full-height">
-            <Hint
-              className="mb-48"
-              text={
-                <Text type="p2">
-                  This counter shows the time left in the current epoch. The pool(s) below are synchronized and have
-                  epochs that last a epoch. You can deposit to the pool(s) during the duration of an epoch and receive
-                  rewards proportional to the time they are staked, but the funds must stay staked until the clock runs
-                  out and the epoch ends in order to be able to harvest the rewards.
+          {currentEpoch === 0 && (
+            <div className="flex flow-row justify-space-between full-height">
+              <Hint
+                className="mb-48"
+                text={
+                  <Text type="p2">
+                    This counter shows the time left until the first epoch starts. The pool(s) below are synchronized
+                    and have epochs that last a epoch. You can deposit to the pool(s) during the warm-up duration.
+                  </Text>
+                }>
+                <Text type="lb2" weight="semibold" color="primary" className={s.label}>
+                  Time Left
                 </Text>
-              }>
-              <Text type="lb2" weight="semibold" color="primary" className={s.label}>
-                Time Left
-              </Text>
-            </Hint>
-            <div className="flex flow-row">
-              {epochEndDate ? (
-                <UseLeftTime end={epochEndDate} delay={1_000}>
-                  {leftTime => (
-                    <Text type="h2" weight="bold" color="primary" className="mb-4">
-                      {leftTime > 0 ? getFormattedDuration(0, epochEndDate) : '0s'}
-                    </Text>
-                  )}
-                </UseLeftTime>
-              ) : (
-                '-'
-              )}
-              <Text type="p1" color="secondary">
-                until next epoch
-              </Text>
+              </Hint>
+              <div className="flex flow-row">
+                {epochStart ? (
+                  <UseLeftTime end={epochStart * 1_000} delay={1_000}>
+                    {leftTime => (
+                      <Text type="h2" weight="bold" color="primary" className="mb-4">
+                        {leftTime > 0 ? getFormattedDuration(0, epochStart * 1_000) : '0s'}
+                      </Text>
+                    )}
+                  </UseLeftTime>
+                ) : (
+                  '-'
+                )}
+                <Text type="p1" color="secondary">
+                  until the first epoch starts
+                </Text>
+              </div>
             </div>
-          </div>
+          )}
+          {currentEpoch !== 0 && (
+            <div className="flex flow-row justify-space-between full-height">
+              <Hint
+                className="mb-48"
+                text={
+                  <Text type="p2">
+                    This counter shows the time left in the current epoch. The pool(s) below are synchronized and have
+                    epochs that last a epoch. You can deposit to the pool(s) during the duration of an epoch and receive
+                    rewards proportional to the time they are staked, but the funds must stay staked until the clock
+                    runs out and the epoch ends in order to be able to harvest the rewards.
+                  </Text>
+                }>
+                <Text type="lb2" weight="semibold" color="primary" className={s.label}>
+                  Time Left
+                </Text>
+              </Hint>
+              <div className="flex flow-row">
+                {epochEndDate ? (
+                  <UseLeftTime end={epochEndDate} delay={1_000}>
+                    {leftTime => (
+                      <Text type="h2" weight="bold" color="primary" className="mb-4">
+                        {leftTime > 0 ? getFormattedDuration(0, epochEndDate) : '0s'}
+                      </Text>
+                    )}
+                  </UseLeftTime>
+                ) : (
+                  '-'
+                )}
+                <Text type="p1" color="secondary">
+                  until next epoch
+                </Text>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

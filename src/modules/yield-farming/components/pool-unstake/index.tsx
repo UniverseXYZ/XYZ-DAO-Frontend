@@ -126,7 +126,7 @@ const PoolUnstake: FC = () => {
         value={amount}
         name={activeToken.symbol}
         onChange={setAmount}
-        max={maxAmount.toNumber()}
+        max={maxAmount}
         placeholder={`0 (Max ${formatNumber(maxAmount, { decimals: activeToken.decimals })})`}
         slider
         className="mb-40"

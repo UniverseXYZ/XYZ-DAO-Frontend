@@ -80,7 +80,7 @@ const ProposalDetailsCard: React.FC = () => {
         </div>
         <div>
           <Hint
-            text={`If the creator’s v${XyzToken.symbol} balance falls below ${minThreshold}% of the total amount of $XYZ staked in the DAO the proposal can be cancelled by anyone.`}>
+            text={`If the creator’s v${XyzToken.symbol} balance falls below ${minThreshold}% of the total amount of $${XyzToken.symbol} staked in the DAO the proposal can be cancelled by anyone.`}>
             <Text type="small" weight="semibold" color="secondary" className="mb-4">
               Creator threshold
             </Text>

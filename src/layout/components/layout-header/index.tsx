@@ -53,24 +53,24 @@ const LayoutHeader: React.FC = () => {
           noPadding
           content={
             <div className={cn('card', s.dropdown)}>
-              <ExternalLink href="#" className={s.dropdownLink} aria-disabled="true">
+              <span className={s.dropdownLink} aria-disabled="true">
                 <Icon name="auction" width={20} height={20} className={s.dropdownIcon} />
                 <Tooltip title="Coming soon" placement="top" hint>
                   <span>Auction house</span>
                 </Tooltip>
-              </ExternalLink>
-              <ExternalLink className={s.dropdownLink} aria-disabled="true">
+              </span>
+              <span className={s.dropdownLink} aria-disabled="true">
                 <Icon name="marketplace" width={20} height={20} className={s.dropdownIcon} />
                 <Tooltip title="Coming soon" placement="top" hint>
                   <span>NFT marketplace</span>
                 </Tooltip>
-              </ExternalLink>
-              <ExternalLink className={s.dropdownLink} aria-disabled="true">
+              </span>
+              <span className={s.dropdownLink} aria-disabled="true">
                 <Icon name="social-media" width={20} height={20} className={s.dropdownIcon} />
                 <Tooltip title="Coming soon" placement="top" hint>
                   <span>Social media</span>
                 </Tooltip>
-              </ExternalLink>
+              </span>
             </div>
           }>
           <Button type="link" className={s.navLink}>
@@ -163,24 +163,24 @@ const LayoutHeader: React.FC = () => {
               <div className={s.mobileMenuInner}>
                 <div className={s.mobileMenuBlock}>
                   <h3>Products</h3>
-                  <ExternalLink href="#" className={s.dropdownLink} aria-disabled="true">
+                  <span className={s.dropdownLink} aria-disabled="true">
                     <Icon name="auction" width={20} height={20} className={s.dropdownIcon} />
                     <Tooltip title="Coming soon" placement="top" hint>
                       <span>Auction house</span>
                     </Tooltip>
-                  </ExternalLink>
-                  <ExternalLink className={s.dropdownLink} aria-disabled="true">
+                  </span>
+                  <span className={s.dropdownLink} aria-disabled="true">
                     <Icon name="marketplace" width={20} height={20} className={s.dropdownIcon} />
                     <Tooltip title="Coming soon" placement="top" hint>
                       <span>NFT marketplace</span>
                     </Tooltip>
-                  </ExternalLink>
-                  <ExternalLink className={s.dropdownLink} aria-disabled="true">
+                  </span>
+                  <span className={s.dropdownLink} aria-disabled="true">
                     <Icon name="social-media" width={20} height={20} className={s.dropdownIcon} />
                     <Tooltip title="Coming soon" placement="top" hint>
                       <span>Social media</span>
                     </Tooltip>
-                  </ExternalLink>
+                  </span>
                 </div>
                 <div className={s.mobileMenuBlock}>
                   <h3>Info</h3>
