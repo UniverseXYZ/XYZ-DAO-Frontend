@@ -1,0 +1,57 @@
+[
+	{
+		"address": "0x2D5AB5A00b78093f1ce41B9355043aB670A9A92A",
+		"earnings": "0x2086ac351052600000",
+		"reasons": "discord"
+	},
+	{
+		"address": "0x3EBa63fa61D78bC6028db7695fFB1fb474d775aE",
+		"earnings": "0x30ca024f987b900000",
+		"reasons": "discord,user"
+	},
+	{
+		"address": "0x88b503C81A4Fb9C9c5464dd3C6835fC34B2cc85d",
+		"earnings": "0x30ca024f987b900000",
+		"reasons": "discord,user"
+	},
+	{
+		"address": "0xDff71A881a17737b6942FE1542F4b88128eA57D8",
+		"earnings": "0x30ca024f987b900000",
+		"reasons": "discord,user"
+	},
+	{
+		"address": "0xCafe32E515f8c6B29Fc0B817d443bDF0bb2A5aD7",
+		"earnings": "0x30ca024f987b900000",
+		"reasons": "discord,user"
+	},
+	{
+		"address": "0x283D319dF3193BAa404a6BDf1f06ACf6a32E6b0D",
+		"earnings": "0x30ca024f987b900000",
+		"reasons": "discord,user"
+	},
+	{
+		"address": "0xa550215d922aF5af685461887190cBe1CB7c8071",
+		"earnings": "0x30ca024f987b900000",
+		"reasons": "discord,user"
+	},
+	{
+		"address": "0x6c041b57e92282568e9dB96eb188E811f5fC2D50",
+		"earnings": "0x30ca024f987b900000",
+		"reasons": "discord,user"
+	},
+	{
+		"address": "0xfAfff3270e7F72f7718D44eE0839870d44d3e2C0",
+		"earnings": "0x30ca024f987b900000",
+		"reasons": "discord,user"
+	},
+	{
+		"address": "0x1b773F51235E69B0a84bB488F623681Dd0315F67",
+		"earnings": "0x30ca024f987b900000",
+		"reasons": "discord,user"
+	},
+	{
+		"address": "0xb179AFa753D80CeA7308C05D96aFe7bb15b06a8f",
+		"earnings": "0x30ca024f987b900000",
+		"reasons": "discord,user"
+	}
+]
