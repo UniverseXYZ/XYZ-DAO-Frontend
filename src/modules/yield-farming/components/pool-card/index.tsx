@@ -84,7 +84,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
               </Text>
             </div>
           </div>
-          {walletCtx.isActive && (
+          {walletCtx.isActive && !!lastActiveEpoch && (
             <div className="card-row flex flow-row p-24">
               <Text type="lb2" weight="semibold" color="secondary">
                 My Potential Reward

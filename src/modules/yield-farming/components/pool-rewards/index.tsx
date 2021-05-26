@@ -23,6 +23,7 @@ const PoolRewards: React.FC = () => {
   const [harvestModalVisible, showHarvestModal] = useState(false);
 
   const xyzContract = XyzToken.contract as Erc20Contract;
+  const { currentEpoch } = yfPoolsCtx.stakingContract ?? {};
 
   const totalToClaim = yfPoolsCtx.yfPools.reduce((sum: BigNumber | undefined, { contract }) => {
     if (!contract.address) {
@@ -80,22 +81,27 @@ const PoolRewards: React.FC = () => {
             <Icon name={XyzToken.icon!} width={40} height={40} />
           </Grid>
         </Grid>
-        <Divider type="vertical" />
-        <Grid flow="row" gap={4} className={s.item3}>
-          <Grid flow="col" gap={8} align="center">
-            <Hint text="This number shows the $XYZ rewards you would potentially be able to harvest this epoch, but is subject to change - in case more users deposit, or you withdraw some of your stake.">
-              <Text type="p2" color="secondary">
-                Potential reward this epoch
-              </Text>
-            </Hint>
-          </Grid>
-          <Grid flow="col" gap={2} align="center">
-            <Text type="h3" weight="bold" color="primary">
-              {formatToken(totalPotentialReward) ?? '-'}
-            </Text>
-            <Icon name={XyzToken.icon!} width={40} height={40} />
-          </Grid>
-        </Grid>
+        {!!currentEpoch && (
+          <>
+            <Divider type="vertical" />
+            <Grid flow="row" gap={4} className={s.item3}>
+              <Grid flow="col" gap={8} align="center">
+                <Hint
+                  text={`This number shows the $${XyzToken.symbol} rewards you would potentially be able to harvest this epoch, but is subject to change - in case more users deposit, or you withdraw some of your stake.`}>
+                  <Text type="p2" color="secondary">
+                    Potential reward this epoch
+                  </Text>
+                </Hint>
+              </Grid>
+              <Grid flow="col" gap={2} align="center">
+                <Text type="h3" weight="bold" color="primary">
+                  {formatToken(totalPotentialReward) ?? '-'}
+                </Text>
+                <Icon name={XyzToken.icon!} width={40} height={40} />
+              </Grid>
+            </Grid>
+          </>
+        )}
       </Grid>
 
       {harvestModalVisible && <PoolHarvestModal onCancel={() => showHarvestModal(false)} />}

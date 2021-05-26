@@ -38,6 +38,8 @@ const PoolStatistics: FC = () => {
     return null;
   }
 
+  const { lastActiveEpoch } = poolMeta.contract;
+
   const selectedStakedToken = yfPoolsCtx.stakingContract?.stakedTokens.get(activeToken?.address!);
 
   function handleTabSelect(tokenSymbol: string) {
@@ -84,7 +86,7 @@ const PoolStatistics: FC = () => {
               </Text>
             </div>
           </div>
-          {!isEnded && (
+          {!isEnded && !!lastActiveEpoch && (
             <div className="flex align-center justify-space-between">
               <Text type="small" weight="semibold" color="secondary">
                 Potential reward this epoch
