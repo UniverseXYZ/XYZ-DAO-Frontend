@@ -184,26 +184,28 @@ const PoolStatistics: FC = () => {
               </Tooltip>
             </div>
 
-            <div className="flex align-center justify-space-between mb-24">
-              <Text type="small" weight="semibold" color="secondary">
-                Effective Staked balance
-              </Text>
-              <Tooltip
-                title={
-                  formatUSD(
-                    convertTokenInUSD(
-                      selectedStakedToken?.currentEpochUserBalance?.unscaleBy(activeToken?.decimals),
-                      activeToken?.symbol!,
-                    ),
-                  ) ?? '-'
-                }>
-                <Text type="p1" weight="semibold" color="primary">
-                  {formatToken(selectedStakedToken?.currentEpochUserBalance?.unscaleBy(activeToken?.decimals), {
-                    decimals: (activeToken?.decimals || 12) >= 6 ? 6 : activeToken?.decimals,
-                  }) ?? '-'}
+            {!!lastActiveEpoch && (
+              <div className="flex align-center justify-space-between mb-24">
+                <Text type="small" weight="semibold" color="secondary">
+                  Effective Staked balance
                 </Text>
-              </Tooltip>
-            </div>
+                <Tooltip
+                  title={
+                    formatUSD(
+                      convertTokenInUSD(
+                        selectedStakedToken?.currentEpochUserBalance?.unscaleBy(activeToken?.decimals),
+                        activeToken?.symbol!,
+                      ),
+                    ) ?? '-'
+                  }>
+                  <Text type="p1" weight="semibold" color="primary">
+                    {formatToken(selectedStakedToken?.currentEpochUserBalance?.unscaleBy(activeToken?.decimals), {
+                      decimals: (activeToken?.decimals || 12) >= 6 ? 6 : activeToken?.decimals,
+                    }) ?? '-'}
+                  </Text>
+                </Tooltip>
+              </div>
+            )}
 
             <div className="flex align-center justify-space-between">
               <Text type="small" weight="semibold" color="secondary">
