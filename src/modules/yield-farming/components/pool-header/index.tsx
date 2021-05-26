@@ -45,7 +45,7 @@ const PoolHeader: FC = () => {
           </Text>
         </div>
       </div>
-      <div className="card p-24 flexbox-grid mb-24">
+      <div className="card p-24 flex col-gap-48 mb-24">
         <div>
           <Text type="small" weight="semibold" color="secondary" className="mb-8">
             Pool balance
@@ -54,14 +54,16 @@ const PoolHeader: FC = () => {
             {formatUSD(poolBalance) ?? '-'}
           </Text>
         </div>
-        <div>
-          <Text type="small" weight="semibold" color="secondary" className="mb-8">
-            Effective pool balance
-          </Text>
-          <Text type="p1" weight="semibold" color="primary">
-            {formatUSD(effectivePoolBalance) ?? '-'}
-          </Text>
-        </div>
+        {!!poolMeta.contract.lastActiveEpoch && (
+          <div>
+            <Text type="small" weight="semibold" color="secondary" className="mb-8">
+              Effective pool balance
+            </Text>
+            <Text type="p1" weight="semibold" color="primary">
+              {formatUSD(effectivePoolBalance) ?? '-'}
+            </Text>
+          </div>
+        )}
         <div>
           <Text type="small" weight="semibold" color="secondary" className="mb-8">
             Epoch rewards

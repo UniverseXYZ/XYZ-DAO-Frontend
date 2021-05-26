@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import cn from 'classnames';
 import TxConfirmModal from 'web3/components/tx-confirm-modal';
 import Erc20Contract from 'web3/erc20Contract';
-import { formatNumber, formatToken, formatUSD } from 'web3/utils';
+import { formatToken, formatUSD } from 'web3/utils';
 
 import Alert from 'components/antd/alert';
 import Spin from 'components/antd/spin';
@@ -139,8 +139,8 @@ const PoolStake: FC = () => {
         value={amount}
         name={activeToken.symbol}
         onChange={setAmount}
-        max={maxAmount.toNumber()}
-        placeholder={`0 (Max ${formatNumber(maxAmount, { decimals: activeToken.decimals })})`}
+        max={maxAmount}
+        placeholder={`0 (Max ${formatToken(maxAmount, { decimals: activeToken.decimals })})`}
         slider
         className="mb-40"
         classNameBefore={poolMeta.tokens.length > 1 ? 'ph-0' : ''}

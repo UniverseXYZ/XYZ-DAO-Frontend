@@ -121,9 +121,11 @@ const PoolCard: React.FC<PoolCardProps> = props => {
             <Text type="p1" weight="semibold" color="primary" className="mb-4">
               {formatUSD(poolBalanceInUSD) ?? '-'}
             </Text>
-            <Text type="p2" color="secondary" className="mb-8">
-              {formatUSD(poolEffectiveBalanceInUSD) ?? '-'} effective balance
-            </Text>
+            {!!lastActiveEpoch && (
+              <Text type="p2" color="secondary" className="mb-8">
+                {formatUSD(poolEffectiveBalanceInUSD) ?? '-'} effective balance
+              </Text>
+            )}
           </div>
         </>
       )}
@@ -148,7 +150,7 @@ const PoolCard: React.FC<PoolCardProps> = props => {
           <Text type="p1" weight="semibold" color="primary">
             {formatUSD(myPoolBalanceInUSD)}
           </Text>
-          {!isEnded && isPoolAvailable && (
+          {!isEnded && isPoolAvailable && !!lastActiveEpoch && (
             <>
               <Text type="p2" color="secondary">
                 {formatUSD(myPoolEffectiveBalanceInUSD)} effective balance
