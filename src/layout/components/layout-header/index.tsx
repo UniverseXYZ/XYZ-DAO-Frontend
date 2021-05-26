@@ -42,10 +42,12 @@ const LayoutHeader: React.FC = () => {
 
   return (
     <div className={s.component} ref={setReferenceElement}>
-      <Link to="/" className={s.logoLink}>
+      <ExternalLink href="https://universe.xyz/" target="_self">
         <Icon name="png/universe" width="auto" height="auto" className={s.logo} />
-        <h1 className={s.title}>{isGovernancePage ? 'Governance' : 'Yield Farming'}</h1>
-      </Link>
+      </ExternalLink>
+      <div className={s.titleDelimiter} />
+      <h1 className={s.title}>{isGovernancePage ? 'Governance' : 'Yield Farming'}</h1>
+
       <nav className={s.nav}>
         <Popover
           placement="bottom"

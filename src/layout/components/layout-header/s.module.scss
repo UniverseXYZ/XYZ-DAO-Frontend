@@ -91,10 +91,17 @@
   }
 }
 
-.logoLink {
-  display: inline-flex;
-  align-items: center;
-  margin-right: auto;
+.titleDelimiter {
+  background: var(--theme-border-color);
+  width: 1px;
+  height: 34px;
+  margin-left: 14px;
+  margin-right: 20px;
+
+  @media (max-width: 768px) {
+    margin-left: 6px;
+    margin-right: 14px;
+  }
 }
 
 .logo {
@@ -117,11 +124,10 @@
   line-height: 24px;
   letter-spacing: 0;
   text-align: left;
-  margin: 0 0 0 14px;
-  border-left: 1px solid var(--theme-border-color);
-  padding: 5px 0 5px 20px;
+  margin-right: auto;
+  padding: 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     font-size: 13px;
     line-height: 13px;
   }
