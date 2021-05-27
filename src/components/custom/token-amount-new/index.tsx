@@ -82,6 +82,7 @@ export const TokenAmount: React.FC<TokenAmountType> = ({
               onChange(
                 (max?.toFormat as any)({
                   groupSeparator: '',
+                  decimalSeparator: '.',
                 }),
               )
             }>
