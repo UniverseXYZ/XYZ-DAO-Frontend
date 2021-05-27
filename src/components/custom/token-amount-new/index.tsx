@@ -78,7 +78,13 @@ export const TokenAmount: React.FC<TokenAmountType> = ({
             className="button-ghost"
             style={{ alignSelf: 'center' }}
             disabled={rest.disabled || max?.isEqualTo(BigNumber.ZERO)}
-            onClick={() => onChange(max?.toFormat())}>
+            onClick={() =>
+              onChange(
+                (max?.toFormat as any)({
+                  groupSeparator: '',
+                }),
+              )
+            }>
             <span>MAX</span>
           </button>
         )}
@@ -89,8 +95,8 @@ export const TokenAmount: React.FC<TokenAmountType> = ({
           className={s.tokenAmountSlider}
           min="0"
           max={max?.toNumber()}
-          step={1 / 10 ** Math.min(decimals, 6)}
-          value={rest.value ?? 0}
+          step={1 / 10 ** Math.min(decimals ?? 6, 6)}
+          value={Number(rest.value) || 0}
           disabled={rest.disabled || max?.isEqualTo(BigNumber.ZERO)}
           onChange={e => {
             onChange(e.target.value);
