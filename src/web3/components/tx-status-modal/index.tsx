@@ -23,7 +23,7 @@ const TxStatusModal: React.FC<Props> = props => {
       <div className="grid flow-row pv-8 ph-8">
         {state === 'progress' && (
           <>
-            <Icon name="tx-progress" width={180} height={160} className="mb-32 mh-auto" />
+            <Icon name="static/tx-progress" width={180} height={160} className="mb-32 mh-auto" />
             <Text type="h3" weight="semibold" color="primary" className="mb-16 text-center">
               Your transaction is being processed ...
             </Text>
