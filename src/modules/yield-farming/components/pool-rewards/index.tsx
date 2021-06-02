@@ -47,8 +47,7 @@ const PoolRewards: React.FC = () => {
   const isAirdropClaimed = merkleDistributorData?.isAirdropClaimed;
   const adjustedAmount = merkleDistributorData?.adjustedAmount;
 
-  let airdropAmount;
-  !isAirdropClaimed ? (airdropAmount = BigNumber.from(adjustedAmount)) : BigNumber.from(0);
+  const airdropAmount = !isAirdropClaimed ? BigNumber.from(adjustedAmount) : BigNumber.from(0);
 
   return (
     <div className={cn(s.component, 'pv-24')}>

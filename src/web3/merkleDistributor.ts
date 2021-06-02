@@ -30,18 +30,16 @@ export default class MerkleDistributor extends Web3Contract {
 
       const airdropAccounts = airdropData.map(drop => ({
         account: drop.address,
-        amount: BigNumber.from(BigNumber.from(drop.earnings.toString())),
+        amount: BigNumber.from(drop.earnings.toString()),
       }));
       this.claimIndex = airdropAccounts.findIndex(o => o.account === this.account);
-      this.claimIndex !== -1
-        ? (this.claimAmount = this.getClaimAmount(this.account || '', airdropData))
-        : (this.claimAmount = undefined);
+      this.claimAmount = this.claimIndex !== -1 ? this.getClaimAmount(this.account || '', airdropData) : undefined;
       this.adjustedAmount = undefined;
     });
   }
 
-  getClaimAmount(address: string, airdropData: any[]): string {
-    return airdropData.find(e => e.address === address).earnings;
+  getClaimAmount(address: string, airdropData: any[]): string | undefined {
+    return airdropData.find(e => e.address === address)?.earnings;
   }
 
   async loadUserData(): Promise<void> {

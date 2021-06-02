@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import { BigNumber as _BigNumber } from 'bignumber.js';
 import { BigNumber } from 'ethers';
 import MerkleDistributor from 'web3/merkleDistributor';
@@ -28,12 +28,15 @@ const AirdropModal: FC<AirdropModalProps> = props => {
 
   const merkleDistributorContract = merkleDistributor;
 
-  const airdropAccounts = airdropData.map(drop => ({
-    account: drop.address,
-    amount: BigNumber.from(BigNumber.from(drop.earnings.toString())),
-  }));
+  const tree = useMemo(() => {
+    const airdropAccounts = airdropData.map(drop => ({
+      account: drop.address,
+      amount: BigNumber.from(drop.earnings.toString()),
+    }));
 
-  const tree = new BalanceTree(airdropAccounts);
+    return new BalanceTree(airdropAccounts);
+  }, []);
+
   const hexClaimAmount = merkleDistributorContract?.claimAmount;
   const claimAmountFromJSON = BigNumber.from(hexClaimAmount);
 
