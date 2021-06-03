@@ -28,10 +28,12 @@
       background: var(--theme-primary-color);
       color: var(--theme-card-color);
       border-radius: 100px;
+      box-shadow: 0 0 2px 0 rgba(255, 255, 255, 0.6);
     }
 
     :global(.ant-tooltip-arrow-content) {
       background: var(--theme-primary-color);
+      box-shadow: 0 0 2px 0 rgba(255, 255, 255, 0.6);
     }
   }
 }
