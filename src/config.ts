@@ -71,6 +71,8 @@ const config = {
   },
 };
 
-export const XYZ_MARKET_LINK = `https://app.sushi.com/add/${config.tokens.usdc}/${config.tokens.xyz}`;
+export const XYZ_MARKET_LINK = `https://app.sushi.com/swap?inputCurrency=${config.tokens.usdc}&outputCurrency=${config.tokens.xyz}`;
+
+export const XYZ_MARKET_LIQUIDITY_LINK = `https://app.sushi.com/add/${config.tokens.usdc}/${config.tokens.xyz}`;
 
 export default config;

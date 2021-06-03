@@ -222,7 +222,7 @@ const LayoutHeader: React.FC = () => {
                       className="button-ghost"
                       onClick={() => wallet.showWalletsModal()}
                       style={{ margin: '20px auto 0' }}>
-                      <span>Sign in</span>
+                      <span>Connect Wallet</span>
                     </button>
                   </div>
                 ) : null}

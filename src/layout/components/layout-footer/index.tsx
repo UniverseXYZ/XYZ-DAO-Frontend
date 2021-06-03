@@ -8,6 +8,7 @@ import Tooltip from 'components/antd/tooltip';
 import ExternalLink from 'components/custom/externalLink';
 import Icon from 'components/custom/icon';
 import { Text } from 'components/custom/typography';
+import { XYZ_MARKET_LINK, XYZ_MARKET_LIQUIDITY_LINK } from 'config';
 
 import s from './s.module.scss';
 
@@ -37,13 +38,9 @@ const LayoutFooter: React.FC = () => {
 
   return (
     <footer className={s.footer}>
-      <div className={s.footerTop}>
-        <div className={s.leftBlock}>
-          <Link to="/" className={s.logoLink}>
-            <Icon name="png/universe" width="auto" height="auto" className={s.logo} />
-            <Icon name="universe-text" width="94" height="15" className={s.logoText} />
-          </Link>
-          <Text type="p2" weight="bold" color="white">
+      <div className={s.row}>
+        <div className={s.subscribeBlock}>
+          <Text type="p1" weight="bold" color="white" font="secondary">
             Stay up to date with our newsletter
           </Text>
           <form className={s.subscribeWrap} onSubmit={handlerSubscribe}>
@@ -63,9 +60,47 @@ const LayoutFooter: React.FC = () => {
             </button>
           </form>
         </div>
-        <div className={s.rightBlock}>
+        <div className={s.sBlock}>
+          <Text type="p1" weight="bold" color="white" font="secondary">
+            Join the community
+          </Text>
+          <div className={s.sLinksWrap}>
+            <ExternalLink href="https://twitter.com/universe_xyz" className={s.sLink}>
+              <Icon name="twitter" width="20" height="20" />
+            </ExternalLink>
+            <ExternalLink href="https://discord.com/invite/vau77wXCD3" className={s.sLink}>
+              <Icon name="discord" width="20" height="20" />
+            </ExternalLink>
+            <ExternalLink href="https://www.coingecko.com/en/coins/universe-xyz" className={s.sLink}>
+              <Icon name="coingecko" width="20" height="20" />
+            </ExternalLink>
+            <ExternalLink
+              href="https://www.youtube.com/channel/UCWt00md9T2b4iTsHWp_Fapw?sub_confirmation=1"
+              className={s.sLink}>
+              <Icon name="youtube" width="20" height="20" />
+            </ExternalLink>
+            <ExternalLink href="https://medium.com/universe-xyz" className={s.sLink}>
+              <Icon name="medium" width="20" height="20" />
+            </ExternalLink>
+          </div>
+        </div>
+      </div>
+      <div className={cn(s.row, s.navWrap)}>
+        <div className={s.logoWrap}>
+          <Link to="/" className={s.logoLink}>
+            <Icon name="png/universe" width="auto" height="auto" className={s.logo} />
+            <Icon name="universe-text" width="94" height="15" className={s.logoText} />
+          </Link>
+          <Text type="p1" color="white">
+            Launch your own community-driven NFT universe baked with social tools, media services, and distribution -
+            underpinned by the native $XYZ token.
+          </Text>
+        </div>
+        <div className={s.navBlocksWrap}>
           <nav className={s.navBlock}>
-            <h3>Products</h3>
+            <Text type="p1" color="white" font="secondary" className={s.navTitle}>
+              Products
+            </Text>
             <span className={s.link} aria-disabled="true">
               <Tooltip title="Coming soon" placement="top" hint>
                 Auction house
@@ -83,7 +118,24 @@ const LayoutFooter: React.FC = () => {
             </span>
           </nav>
           <nav className={s.navBlock}>
-            <h3>Info</h3>
+            <Text type="p1" color="white" font="secondary" className={s.navTitle}>
+              NFT Drops
+            </Text>
+            <span className={s.link} aria-disabled="true">
+              <Tooltip title="Coming soon" placement="top" hint>
+                Polymorphs
+              </Tooltip>
+            </span>
+            <span className={s.link} aria-disabled="true">
+              <Tooltip title="Coming soon" placement="top" hint>
+                Core Drops
+              </Tooltip>
+            </span>
+          </nav>
+          <nav className={s.navBlock}>
+            <Text type="p1" color="white" font="secondary" className={s.navTitle}>
+              Info
+            </Text>
             <ExternalLink href="https://universe.xyz/about" className={s.link}>
               About
             </ExternalLink>
@@ -95,7 +147,9 @@ const LayoutFooter: React.FC = () => {
             </ExternalLink>
           </nav>
           <nav className={s.navBlock}>
-            <h3>DAO</h3>
+            <Text type="p1" color="white" font="secondary" className={s.navTitle}>
+              DAO
+            </Text>
             <Link to="/governance" className={s.link}>
               Governance
             </Link>
@@ -108,19 +162,14 @@ const LayoutFooter: React.FC = () => {
           </nav>
         </div>
       </div>
-      <div className={s.copyrightsBlock}>
-        <Text type="p2" color="secondary">
-          Universe.xyz © 2021. Open-sourced.
-        </Text>
-        <Text type="p2" color="secondary">
-          Powered by xyzDAO.
-        </Text>
-        <div>
-          <ExternalLink href="https://twitter.com/universe_xyz" className={s.sLink}>
-            <Icon name="twitter" width="20" height="20" />
+      <div className={cn(s.row, s.copyrightsBlock)}>
+        <div className={s.copyrightLink}>Universe.xyz © 2021. Open-sourced.</div>
+        <div className={s.copyrightLinks}>
+          <ExternalLink href={XYZ_MARKET_LINK} className={s.copyrightLink}>
+            SushiSwap USDC/XYZ market
           </ExternalLink>
-          <ExternalLink href="https://discord.com/invite/vau77wXCD3" className={s.sLink}>
-            <Icon name="discord" width="20" height="20" />
+          <ExternalLink href={XYZ_MARKET_LIQUIDITY_LINK} className={s.copyrightLink}>
+            Add liquidity to SushiSwap USDC/XYZ pool
           </ExternalLink>
         </div>
       </div>

@@ -19,6 +19,7 @@ export type TokenIconNames =
   | 'token-unknown'
   | 'static/token-bond'
   | 'static/token-uniswap'
+  | 'static/tx-progress'
   | 'token-eth'
   | 'token-btc'
   | 'token-weth'
@@ -139,7 +140,10 @@ export type IconNames =
   | 'discord'
   | 'dropdown'
   | 'theme-switcher-sun'
-  | 'theme-switcher-moon';
+  | 'theme-switcher-moon'
+  | 'coingecko'
+  | 'youtube'
+  | 'medium';
 
 export type IconProps = {
   name: IconNames;
