@@ -162,5 +162,13 @@
         opacity: 1;
       }
     }
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+
+      > div + div {
+        margin-top: 16px;
+      }
+    }
   }
 }
