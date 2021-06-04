@@ -20,19 +20,32 @@
   }
 
   .subscribeBlock {
-    display: block;
+    display: flex;
     width: 50%;
+    flex-direction: column;
 
-    @media (max-width: 767px) {
+    .subscribeWrap {
+      max-width: 380px;
+      width: 100%;
+    }
+
+    @media (max-width: 1024px) {
       width: 100%;
       text-align: center;
+      align-items: center;
+    }
+
+    @media (max-width: 480px) {
+      .subscribeWrap {
+        max-width: 100%;
+      }
     }
   }
 
   .sBlock {
     margin: 0 auto;
 
-    @media (max-width: 767px) {
+    @media (max-width: 1024px) {
       text-align: center;
       margin: 44px auto 0;
     }
