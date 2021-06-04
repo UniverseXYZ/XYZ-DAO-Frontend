@@ -38,6 +38,12 @@ const LayoutHeader: React.FC = () => {
     forceUpdate?.();
   }, [warns.length]);
 
+  useEffect(() => {
+    if (navOpen && window.innerWidth > 768) {
+      setNavOpen(false);
+    }
+  }, [window.innerWidth]);
+
   const isGovernancePage = useRouteMatch('/governance');
 
   return (

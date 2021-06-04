@@ -61,7 +61,7 @@ const ProposalDetailViewInner: React.FC = () => {
   }
 
   return (
-    <div className="container-limit">
+    <div>
       <div className="mb-32">
         <button type="button" onClick={handleBackClick} className="button-text">
           <Icon name="arrow-back" width={16} height={16} className="mr-8" color="inherit" />

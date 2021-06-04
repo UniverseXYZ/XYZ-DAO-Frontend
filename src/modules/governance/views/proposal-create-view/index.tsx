@@ -169,7 +169,7 @@ const ProposalCreateView: React.FC = () => {
   }
 
   return (
-    <div className="container-limit">
+    <div>
       <div className="mb-16">
         <button type="button" onClick={handleBackClick} className="button-text">
           <Icon name="arrow-back" width={16} height={16} className="mr-8" color="inherit" />
