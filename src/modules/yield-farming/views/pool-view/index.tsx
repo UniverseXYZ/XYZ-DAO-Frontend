@@ -40,39 +40,37 @@ const PoolViewInner: FC = () => {
 
   return (
     <div className="content-container-fix content-container">
-      <div className="container-limit">
-        <PoolHeader />
-        <Spin spinning={!isInitialized} wrapperClassName="mb-32">
-          <div className="flexbox-grid">
-            <div className={cn('card', s.stakeCard)}>
-              <div className={cn('card-header pv-0', s.stakeCardHeader)}>
-                <Tabs
-                  tabs={[
-                    {
-                      id: 'stake',
-                      children: 'Stake',
-                      disabled: poolMeta.contract.isPoolEnded !== false,
-                    },
-                    {
-                      id: 'unstake',
-                      children: 'Unstake',
-                    },
-                  ]}
-                  size="small"
-                  activeKey={activeTab}
-                  onClick={setActiveTab}
-                />
-              </div>
-              <div className="p-24">
-                {activeTab === 'stake' && <PoolStake />}
-                {activeTab === 'unstake' && <PoolUnstake />}
-              </div>
+      <PoolHeader />
+      <Spin spinning={!isInitialized} wrapperClassName="mb-32">
+        <div className="flexbox-grid">
+          <div className={cn('card', s.stakeCard)}>
+            <div className={cn('card-header pv-0', s.stakeCardHeader)}>
+              <Tabs
+                tabs={[
+                  {
+                    id: 'stake',
+                    children: 'Stake',
+                    disabled: poolMeta.contract.isPoolEnded !== false,
+                  },
+                  {
+                    id: 'unstake',
+                    children: 'Unstake',
+                  },
+                ]}
+                size="small"
+                activeKey={activeTab}
+                onClick={setActiveTab}
+              />
             </div>
-            <PoolStatistics />
+            <div className="p-24">
+              {activeTab === 'stake' && <PoolStake />}
+              {activeTab === 'unstake' && <PoolUnstake />}
+            </div>
           </div>
-        </Spin>
-        <PoolTransactions />
-      </div>
+          <PoolStatistics />
+        </div>
+      </Spin>
+      <PoolTransactions />
     </div>
   );
 };

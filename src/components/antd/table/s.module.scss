@@ -119,5 +119,18 @@
         }
       }
     }
+
+    @media (max-width: 768px) {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+
+      :global(.ant-pagination-total-text) {
+        flex: 1 1 100%;
+        display: flex;
+        justify-content: flex-end;
+        margin: 0 0 8px;
+      }
+    }
   }
 }

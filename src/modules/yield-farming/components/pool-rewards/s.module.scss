@@ -2,27 +2,29 @@
   background: var(--theme-card-color);
   border-bottom: 1px solid var(--theme-border-color);
   gap: 16px;
-  padding: 24px 64px;
 }
 
 .items.items {
   @media (max-width: 767px) {
     grid-template-columns: none;
     grid-template-rows: none;
-    grid-template-areas: "item1 item2" "item3 item3";
+    grid-template-areas: 'item1 item2' 'item3 item3';
 
-    & > [role="separator"] {
+    [role='separator'] {
       display: none;
     }
-    & .item1 {
+
+    .item1 {
       grid-area: item1;
     }
-    & .item2 {
+
+    .item2 {
       grid-area: item2;
       border-left: 1px solid var(--theme-border-color);
       padding-left: 26px;
     }
-    & .item3 {
+
+    .item3 {
       text-align: center;
       justify-content: center;
       grid-area: item3;
