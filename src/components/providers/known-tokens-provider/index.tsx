@@ -216,7 +216,7 @@ async function getXyzPrice(): Promise<BigNumber> {
 async function getUsdcXyzSLPPrice(): Promise<BigNumber> {
   const priceFeedContract = new Erc20Contract(LP_PRICE_FEED_ABI, UsdcXyzSLPToken.address);
 
-  const [decimals, totalSupply, token0, reserves] = await priceFeedContract.batch([
+  const [decimals, totalSupply, token0, { 0: reserve0, 1: reserve1 }] = await priceFeedContract.batch([
     { method: 'decimals', transform: Number },
     { method: 'totalSupply', transform: value => new BigNumber(value) },
     { method: 'token0' },
