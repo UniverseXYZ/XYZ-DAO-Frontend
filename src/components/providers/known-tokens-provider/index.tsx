@@ -198,7 +198,7 @@ async function getXyzPrice(): Promise<BigNumber> {
   let xyzReserve;
   let usdcReserve;
 
-  if (token0 === XyzToken.address) {
+  if (String(token0).toLowerCase() === XyzToken.address) {
     xyzReserve = new BigNumber(reserve0).unscaleBy(XyzToken.decimals);
     usdcReserve = new BigNumber(reserve1).unscaleBy(UsdcToken.decimals);
   } else {
@@ -225,7 +225,7 @@ async function getUsdcXyzSLPPrice(): Promise<BigNumber> {
 
   let usdcReserve;
 
-  if (token0 === XyzToken.address) {
+  if (String(token0).toLowerCase() === XyzToken.address) {
     usdcReserve = new BigNumber(reserve1).unscaleBy(UsdcToken.decimals);
   } else {
     usdcReserve = new BigNumber(reserve0).unscaleBy(UsdcToken.decimals);
