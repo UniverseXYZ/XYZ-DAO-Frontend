@@ -193,9 +193,18 @@ const LP_PRICE_FEED_ABI: AbiItem[] = [
 async function getXyzPrice(): Promise<BigNumber> {
   const priceFeedContract = new Erc20Contract(LP_PRICE_FEED_ABI, UsdcXyzSLPToken.address);
 
-  const [{ 0: reserve0, 1: reserve1 }] = await priceFeedContract.batch([{ method: 'getReserves' }]);
-  const usdcReserve = new BigNumber(reserve0).unscaleBy(UsdcToken.decimals);
-  const xyzReserve = new BigNumber(reserve1).unscaleBy(XyzToken.decimals);
+  const [token0, { 0: reserve0, 1: reserve1 }] = await priceFeedContract.batch([{ method: 'token0' }, { method: 'getReserves' }]);
+
+  let xyzReserve;
+  let usdcReserve;
+
+  if (token0 === XyzToken.address) {
+    xyzReserve = new BigNumber(reserve0).unscaleBy(XyzToken.decimals);
+    usdcReserve = new BigNumber(reserve1).unscaleBy(UsdcToken.decimals);
+  } else {
+    xyzReserve = new BigNumber(reserve1).unscaleBy(XyzToken.decimals);
+    usdcReserve = new BigNumber(reserve0).unscaleBy(UsdcToken.decimals);
+  }
 
   if (!usdcReserve || !xyzReserve || xyzReserve.eq(BigNumber.ZERO)) {
     return BigNumber.ZERO;
@@ -207,12 +216,21 @@ async function getXyzPrice(): Promise<BigNumber> {
 async function getUsdcXyzSLPPrice(): Promise<BigNumber> {
   const priceFeedContract = new Erc20Contract(LP_PRICE_FEED_ABI, UsdcXyzSLPToken.address);
 
-  const [decimals, totalSupply, reserves] = await priceFeedContract.batch([
+  const [decimals, totalSupply, token0, reserves] = await priceFeedContract.batch([
     { method: 'decimals', transform: Number },
     { method: 'totalSupply', transform: value => new BigNumber(value) },
+    { method: 'token0' },
     { method: 'getReserves' },
   ]);
-  const usdcReserve = new BigNumber(reserves[0]).unscaleBy(UsdcToken.decimals);
+
+  let usdcReserve;
+
+  if (token0 === XyzToken.address) {
+    usdcReserve = new BigNumber(reserve1).unscaleBy(UsdcToken.decimals);
+  } else {
+    usdcReserve = new BigNumber(reserve0).unscaleBy(UsdcToken.decimals);
+  }
+
   const supply = totalSupply.unscaleBy(decimals);
 
   if (!usdcReserve || !supply || supply.eq(BigNumber.ZERO)) {
