@@ -193,7 +193,10 @@ const LP_PRICE_FEED_ABI: AbiItem[] = [
 async function getXyzPrice(): Promise<BigNumber> {
   const priceFeedContract = new Erc20Contract(LP_PRICE_FEED_ABI, UsdcXyzSLPToken.address);
 
-  const [token0, { 0: reserve0, 1: reserve1 }] = await priceFeedContract.batch([{ method: 'token0' }, { method: 'getReserves' }]);
+  const [token0, { 0: reserve0, 1: reserve1 }] = await priceFeedContract.batch([
+    { method: 'token0' },
+    { method: 'getReserves' },
+  ]);
 
   let xyzReserve;
   let usdcReserve;
