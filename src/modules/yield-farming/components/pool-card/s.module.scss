@@ -30,8 +30,13 @@
   border: 1px solid rgba(0, 0, 0, 0.16);
   border-radius: 8px;
 
-  [data-theme="dark"] & {
+  [data-theme='dark'] & {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.16);
   }
 }
+
+.xyzReward {
+  margin-right: 2px;
+}
+

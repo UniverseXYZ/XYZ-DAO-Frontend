@@ -64,8 +64,19 @@
   border-radius: 12px;
   box-shadow: var(--theme-card-shadow);
 
-  .card-row:not(:last-of-type) {
+  .card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .card-row-border {
     border-bottom: 1px solid var(--theme-border-color);
+
+    :last-of-type {
+      border-bottom: 0;
+    }
   }
 }
 
