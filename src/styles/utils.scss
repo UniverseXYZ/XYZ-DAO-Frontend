@@ -74,7 +74,7 @@
   .card-row-border {
     border-bottom: 1px solid var(--theme-border-color);
 
-    :last-of-type {
+    &:last-of-type {
       border-bottom: 0;
     }
   }
