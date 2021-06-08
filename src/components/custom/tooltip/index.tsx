@@ -49,6 +49,7 @@ export const Tooltip: FC<TooltipProps> = props => {
       onMouseLeave={handlerHide}
       onFocus={handlerShow}
       onBlur={handlerHide}
+      style={{ display: 'inline-flex' }}
       tabIndex={0}>
       {target}
       <div

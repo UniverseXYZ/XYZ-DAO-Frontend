@@ -42,68 +42,69 @@ const PoolRewards: React.FC = () => {
   }, undefined);
 
   return (
-    <div className={cn(s.component, 'pv-24 ph-64 sm-ph-16')}>
-      <Text type="lb2" weight="semibold" color="primary">
-        My Rewards
-      </Text>
+    <div className={cn(s.component, 'pv-24')}>
+      <div className="container-limit">
+        <Text type="lb2" weight="semibold" color="primary">
+          My Rewards
+        </Text>
 
-      <Grid flow="col" gap={24} className={s.items}>
-        <Grid flow="row" gap={4} className={s.item1}>
-          <Text type="p2" color="secondary">
-            Current reward
-          </Text>
-          <Grid flow="col" align="center">
-            <Text type="h3" weight="bold" color="primary">
-              {formatToken(totalToClaim?.unscaleBy(XyzToken.decimals)) ?? '-'}
+        <Grid flow="col" gap={24} className={s.items}>
+          <Grid flow="row" gap={4} className={s.item1}>
+            <Text type="p2" color="secondary">
+              Current reward
             </Text>
-            <Icon name={XyzToken.icon!} width={40} height={40} />
-            {walletCtx.isActive && (
-              <button
-                type="button"
-                className="button-text"
-                style={{ color: totalToClaim?.gt(BigNumber.ZERO) ? 'red' : 'var(--theme-default-color)' }}
-                // disabled={!totalToClaim?.gt(BigNumber.ZERO)}
-                onClick={() => showHarvestModal(true)}>
-                Claim
-              </button>
-            )}
-          </Grid>
-        </Grid>
-        <Divider type="vertical" />
-        <Grid flow="row" gap={4} className={s.item2}>
-          <Text type="p2" color="secondary">
-            {XyzToken.symbol} Balance
-          </Text>
-          <Grid flow="col" gap={2} align="center">
-            <Text type="h3" weight="bold" color="primary">
-              {formatToken(xyzContract.balance?.unscaleBy(XyzToken.decimals)) ?? '-'}
-            </Text>
-            <Icon name={XyzToken.icon!} width={40} height={40} />
-          </Grid>
-        </Grid>
-        {!!currentEpoch && (
-          <>
-            <Divider type="vertical" />
-            <Grid flow="row" gap={4} className={s.item3}>
-              <Grid flow="col" gap={8} align="center">
-                <Hint
-                  text={`This number shows the $${XyzToken.symbol} rewards you would potentially be able to harvest this epoch, but is subject to change - in case more users deposit, or you withdraw some of your stake.`}>
-                  <Text type="p2" color="secondary">
-                    Potential reward this epoch
-                  </Text>
-                </Hint>
-              </Grid>
-              <Grid flow="col" gap={2} align="center">
-                <Text type="h3" weight="bold" color="primary">
-                  {formatToken(totalPotentialReward) ?? '-'}
-                </Text>
-                <Icon name={XyzToken.icon!} width={40} height={40} />
-              </Grid>
+            <Grid flow="col" align="center">
+              <Text type="h3" weight="bold" color="primary">
+                {formatToken(totalToClaim?.unscaleBy(XyzToken.decimals)) ?? '-'}
+              </Text>
+              <Icon name={XyzToken.icon!} width={40} height={40} />
+              {walletCtx.isActive && (
+                <button
+                  type="button"
+                  className="button-text"
+                  style={{ color: totalToClaim?.gt(BigNumber.ZERO) ? 'red' : 'var(--theme-default-color)' }}
+                  // disabled={!totalToClaim?.gt(BigNumber.ZERO)}
+                  onClick={() => showHarvestModal(true)}>
+                  Claim
+                </button>
+              )}
             </Grid>
-          </>
-        )}
-      </Grid>
-
+          </Grid>
+          <Divider type="vertical" />
+          <Grid flow="row" gap={4} className={s.item2}>
+            <Text type="p2" color="secondary">
+              {XyzToken.symbol} Balance
+            </Text>
+            <Grid flow="col" gap={2} align="center">
+              <Text type="h3" weight="bold" color="primary">
+                {formatToken(xyzContract.balance?.unscaleBy(XyzToken.decimals)) ?? '-'}
+              </Text>
+              <Icon name={XyzToken.icon!} width={40} height={40} />
+            </Grid>
+          </Grid>
+          {!!currentEpoch && (
+            <>
+              <Divider type="vertical" />
+              <Grid flow="row" gap={4} className={s.item3}>
+                <Grid flow="col" gap={8} align="center">
+                  <Hint
+                    text={`This number shows the $${XyzToken.symbol} rewards you would potentially be able to harvest this epoch, but is subject to change - in case more users deposit, or you withdraw some of your stake.`}>
+                    <Text type="p2" color="secondary">
+                      Potential reward this epoch
+                    </Text>
+                  </Hint>
+                </Grid>
+                <Grid flow="col" gap={2} align="center">
+                  <Text type="h3" weight="bold" color="primary">
+                    {formatToken(totalPotentialReward) ?? '-'}
+                  </Text>
+                  <Icon name={XyzToken.icon!} width={40} height={40} />
+                </Grid>
+              </Grid>
+            </>
+          )}
+        </Grid>
+      </div>
       {harvestModalVisible && <PoolHarvestModal onCancel={() => showHarvestModal(false)} />}
     </div>
   );
