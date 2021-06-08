@@ -26,6 +26,9 @@ const LayoutHeader: React.FC = () => {
   const { navOpen, setNavOpen, toggleDarkTheme, isDarkTheme } = useGeneral();
   const [referenceElement, setReferenceElement] = useState<any>();
   const [popperElement, setPopperElement] = useState<any>();
+  const [popper1visible, setPopper1visible] = useState<boolean>(false);
+  const [popper2visible, setPopper2visible] = useState<boolean>(false);
+  const [popper3visible, setPopper3visible] = useState<boolean>(false);
   const wallet = useWallet();
   const { warns } = useWarning();
 
@@ -37,6 +40,12 @@ const LayoutHeader: React.FC = () => {
   useEffect(() => {
     forceUpdate?.();
   }, [warns.length]);
+
+  useEffect(() => {
+    if (navOpen && window.innerWidth > 768) {
+      setNavOpen(false);
+    }
+  }, [window.innerWidth]);
 
   const isGovernancePage = useRouteMatch('/governance');
 
@@ -50,8 +59,8 @@ const LayoutHeader: React.FC = () => {
 
       <nav className={s.nav}>
         <Popover
-          placement="bottom"
-          trigger="click"
+          visible={popper1visible}
+          onVisibleChange={setPopper1visible}
           noPadding
           content={
             <div className={cn('card', s.dropdown)}>
@@ -85,20 +94,29 @@ const LayoutHeader: React.FC = () => {
           </Button>
         </Popover>
         <Popover
-          placement="bottom"
-          trigger="click"
+          visible={popper2visible}
+          onVisibleChange={setPopper2visible}
           noPadding
           content={
             <div className={cn('card', s.dropdown)}>
-              <ExternalLink href="https://universe.xyz/about" className={s.dropdownLink}>
+              <ExternalLink
+                href="https://universe.xyz/about"
+                className={s.dropdownLink}
+                onClick={() => setPopper2visible(false)}>
                 <Icon name="about" width={20} height={20} className={s.dropdownIcon} />
                 <span>About</span>
               </ExternalLink>
-              <ExternalLink href="https://github.com/UniverseXYZ/UniverseXYZ-Whitepaper" className={s.dropdownLink}>
+              <ExternalLink
+                href="https://github.com/UniverseXYZ/UniverseXYZ-Whitepaper"
+                className={s.dropdownLink}
+                onClick={() => setPopper2visible(false)}>
                 <Icon name="whitepaper" width={20} height={20} className={s.dropdownIcon} />
                 <span>Whitepaper</span>
               </ExternalLink>
-              <ExternalLink href="https://universe.xyz/team" className={s.dropdownLink}>
+              <ExternalLink
+                href="https://universe.xyz/team"
+                className={s.dropdownLink}
+                onClick={() => setPopper2visible(false)}>
                 <Icon name="team" width={20} height={20} className={s.dropdownIcon} />
                 <span>Team</span>
               </ExternalLink>
@@ -114,20 +132,23 @@ const LayoutHeader: React.FC = () => {
           </Button>
         </Popover>
         <Popover
-          placement="bottom"
-          trigger="click"
           noPadding
+          visible={popper3visible}
+          onVisibleChange={setPopper3visible}
           content={
             <div className={cn('card', s.dropdown)}>
-              <Link to="/governance" className={s.dropdownLink}>
+              <Link to="/governance" className={s.dropdownLink} onClick={() => setPopper3visible(false)}>
                 <Icon name="governance" width={20} height={20} className={s.dropdownIcon} />
                 <span>Governance</span>
               </Link>
-              <Link to="/yield-farming" className={s.dropdownLink}>
+              <Link to="/yield-farming" className={s.dropdownLink} onClick={() => setPopper3visible(false)}>
                 <Icon name="yield-farming" width={20} height={20} className={s.dropdownIcon} />
                 <span>Yield farming</span>
               </Link>
-              <ExternalLink href="https://docs.universe.xyz/" className={s.dropdownLink}>
+              <ExternalLink
+                href="https://docs.universe.xyz/"
+                className={s.dropdownLink}
+                onClick={() => setPopper3visible(false)}>
                 <Icon name="docs" width={20} height={20} className={s.dropdownIcon} />
                 <span>Docs</span>
               </ExternalLink>
@@ -186,30 +207,42 @@ const LayoutHeader: React.FC = () => {
                 </div>
                 <div className={s.mobileMenuBlock}>
                   <h3>Info</h3>
-                  <ExternalLink href="https://universe.xyz/about" className={s.dropdownLink}>
+                  <ExternalLink
+                    href="https://universe.xyz/about"
+                    className={s.dropdownLink}
+                    onClick={() => setNavOpen(false)}>
                     <Icon name="about" width={20} height={20} className={s.dropdownIcon} />
                     <span>About</span>
                   </ExternalLink>
-                  <ExternalLink href="https://github.com/UniverseXYZ/UniverseXYZ-Whitepaper" className={s.dropdownLink}>
+                  <ExternalLink
+                    href="https://github.com/UniverseXYZ/UniverseXYZ-Whitepaper"
+                    className={s.dropdownLink}
+                    onClick={() => setNavOpen(false)}>
                     <Icon name="whitepaper" width={20} height={20} className={s.dropdownIcon} />
                     <span>Whitepaper</span>
                   </ExternalLink>
-                  <ExternalLink href="https://universe.xyz/team" className={s.dropdownLink}>
+                  <ExternalLink
+                    href="https://universe.xyz/team"
+                    className={s.dropdownLink}
+                    onClick={() => setNavOpen(false)}>
                     <Icon name="team" width={20} height={20} className={s.dropdownIcon} />
                     <span>Team</span>
                   </ExternalLink>
                 </div>
                 <div className={s.mobileMenuBlock}>
                   <h3>DAO</h3>
-                  <Link to="/governance" className={s.dropdownLink}>
+                  <Link to="/governance" className={s.dropdownLink} onClick={() => setNavOpen(false)}>
                     <Icon name="governance" width={20} height={20} className={s.dropdownIcon} />
                     <span>Governance</span>
                   </Link>
-                  <Link to="/yield-farming" className={s.dropdownLink}>
+                  <Link to="/yield-farming" className={s.dropdownLink} onClick={() => setNavOpen(false)}>
                     <Icon name="yield-farming" width={20} height={20} className={s.dropdownIcon} />
                     <span>Yield farming</span>
                   </Link>
-                  <ExternalLink href="https://docs.universe.xyz/" className={s.dropdownLink}>
+                  <ExternalLink
+                    href="https://docs.universe.xyz/"
+                    className={s.dropdownLink}
+                    onClick={() => setNavOpen(false)}>
                     <Icon name="docs" width={20} height={20} className={s.dropdownIcon} />
                     <span>Docs</span>
                   </ExternalLink>
@@ -220,7 +253,10 @@ const LayoutHeader: React.FC = () => {
                     <button
                       type="button"
                       className="button-ghost"
-                      onClick={() => wallet.showWalletsModal()}
+                      onClick={() => {
+                        setNavOpen(false);
+                        wallet.showWalletsModal();
+                      }}
                       style={{ margin: '20px auto 0' }}>
                       <span>Sign in</span>
                     </button>

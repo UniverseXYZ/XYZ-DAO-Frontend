@@ -1,10 +1,13 @@
 import React, { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { formatNumber, formatUSD } from 'web3/utils';
+import BigNumber from 'bignumber.js';
+import { formatNumber, formatPercent, formatUSD } from 'web3/utils';
 
 import Icon, { IconNames } from 'components/custom/icon';
 import IconsSet from 'components/custom/icons-set';
 import { Text } from 'components/custom/typography';
+import { KnownTokens } from 'components/providers/known-tokens-provider';
+import { convertTokenInUSD } from 'components/providers/known-tokens-provider';
 
 import { useYFPool } from '../../providers/pool-provider';
 
@@ -20,6 +23,11 @@ const PoolHeader: FC = () => {
   if (!poolMeta) {
     return null;
   }
+
+  const apr =
+    poolBalance?.isGreaterThan(BigNumber.ZERO) && poolMeta?.contract.epochReward
+      ? convertTokenInUSD(poolMeta?.contract.epochReward * 52, KnownTokens.XYZ)?.dividedBy(poolBalance)
+      : undefined;
 
   return (
     <>
@@ -46,6 +54,16 @@ const PoolHeader: FC = () => {
         </div>
       </div>
       <div className="card p-24 flex col-gap-48 mb-24">
+        <div>
+          <Text type="small" weight="semibold" color="secondary" className="mb-8">
+            APR
+          </Text>
+          <div className="flex align-center">
+            <Text type="p1" weight="semibold" color="primary">
+              {formatPercent(apr) ?? '-'}
+            </Text>
+          </div>
+        </div>
         <div>
           <Text type="small" weight="semibold" color="secondary" className="mb-8">
             Pool balance

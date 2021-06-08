@@ -63,103 +63,105 @@ const VotingHeader: React.FC = () => {
   }
 
   return (
-    <div className={cn(s.component, 'pv-24 ph-64 sm-ph-16')}>
-      <Text type="lb2" weight="semibold" color="primary" className="mb-16">
-        My Voting Power
-      </Text>
-      <Grid flow="col" gap={24} className={s.items}>
-        <Grid flow="row" gap={4} className={s.item1}>
-          <Text type="p2" color="secondary">
-            Current reward
-          </Text>
-          <Grid flow="col" align="center">
-            <Tooltip title={<Text type="p2">{formatBigValue(claimValue, XyzToken.decimals)}</Text>}>
-              <Skeleton loading={claimValue === undefined}>
+    <div className={cn(s.component, 'pv-24')}>
+      <div className="container-limit">
+        <Text type="lb2" weight="semibold" color="primary" className="mb-16">
+          My Voting Power
+        </Text>
+        <Grid flow="col" gap={24} className={s.items}>
+          <Grid flow="row" gap={4} className={s.item1}>
+            <Text type="p2" color="secondary">
+              Current reward
+            </Text>
+            <Grid flow="col" align="center">
+              <Tooltip title={<Text type="p2">{formatBigValue(claimValue, XyzToken.decimals)}</Text>}>
+                <Skeleton loading={claimValue === undefined}>
+                  <Text type="h3" weight="bold" color="primary">
+                    {isSmallXYZValue(claimValue) && '> '}
+                    {formatXYZValue(claimValue)}
+                  </Text>
+                </Skeleton>
+              </Tooltip>
+              <Icon name="png/universe" width={40} height={40} />
+              <Button
+                type="primary"
+                size="small"
+                disabled={claimValue?.isZero()}
+                onClick={handleClaim}
+                style={{ marginLeft: 4 }}>
+                {!state.claiming ? 'Claim' : <Spin spinning />}
+              </Button>
+            </Grid>
+          </Grid>
+          <Divider type="vertical" />
+          <Grid flow="row" gap={4} className={s.item2}>
+            <Text type="p2" color="secondary">
+              {XyzToken.symbol} Balance
+            </Text>
+            <Grid flow="col" align="center">
+              <Skeleton loading={xyzBalance === undefined}>
                 <Text type="h3" weight="bold" color="primary">
-                  {isSmallXYZValue(claimValue) && '> '}
-                  {formatXYZValue(claimValue)}
+                  {formatXYZValue(xyzBalance)}
                 </Text>
               </Skeleton>
-            </Tooltip>
-            <Icon name="png/universe" width={40} height={40} />
-            <Button
-              type="primary"
-              size="small"
-              disabled={claimValue?.isZero()}
-              onClick={handleClaim}
-              style={{ marginLeft: 4 }}>
-              {!state.claiming ? 'Claim' : <Spin spinning />}
-            </Button>
+              <Icon name="png/universe" src={imgSrc} width={40} height={40} />
+            </Grid>
           </Grid>
-        </Grid>
-        <Divider type="vertical" />
-        <Grid flow="row" gap={4} className={s.item2}>
-          <Text type="p2" color="secondary">
-            {XyzToken.symbol} Balance
-          </Text>
-          <Grid flow="col" align="center">
-            <Skeleton loading={xyzBalance === undefined}>
-              <Text type="h3" weight="bold" color="primary">
-                {formatXYZValue(xyzBalance)}
-              </Text>
-            </Skeleton>
-            <Icon name="png/universe" src={imgSrc} width={40} height={40} />
+          <Divider type="vertical" />
+          <Grid flow="row" gap={4} className={s.item3}>
+            <Text type="p2" color="secondary">
+              Total voting power
+            </Text>
+            <div className="flex col-gap-16 align-center" style={{ height: `40px` }}>
+              <Skeleton loading={votingPower === undefined}>
+                <Text type="h3" weight="bold" color="primary">
+                  {formatXYZValue(votingPower) || '-'}
+                </Text>
+              </Skeleton>
+              <Button type="light" onClick={() => setState({ showDetailedView: true })}>
+                <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">
+                  Detailed view
+                </Text>
+              </Button>
+
+              {state.showDetailedView && <VotingDetailedModal onCancel={() => setState({ showDetailedView: false })} />}
+            </div>
           </Grid>
-        </Grid>
-        <Divider type="vertical" />
-        <Grid flow="row" gap={4} className={s.item3}>
-          <Text type="p2" color="secondary">
-            Total voting power
-          </Text>
-          <div className="flex col-gap-16 align-center" style={{ height: `40px` }}>
-            <Skeleton loading={votingPower === undefined}>
-              <Text type="h3" weight="bold" color="primary">
-                {formatXYZValue(votingPower) || '-'}
-              </Text>
-            </Skeleton>
-            <Button type="light" onClick={() => setState({ showDetailedView: true })}>
-              <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">
-                Detailed view
-              </Text>
-            </Button>
 
-            {state.showDetailedView && <VotingDetailedModal onCancel={() => setState({ showDetailedView: false })} />}
-          </div>
-        </Grid>
+          <UseLeftTime end={userLockedUntil ?? 0} delay={1_000} onEnd={handleLeftTimeEnd}>
+            {leftTime => {
+              const leftMultiplier = new BigNumber(multiplier - 1)
+                .multipliedBy(leftTime)
+                .div(loadedUserLockedUntil)
+                .plus(1);
 
-        <UseLeftTime end={userLockedUntil ?? 0} delay={1_000} onEnd={handleLeftTimeEnd}>
-          {leftTime => {
-            const leftMultiplier = new BigNumber(multiplier - 1)
-              .multipliedBy(leftTime)
-              .div(loadedUserLockedUntil)
-              .plus(1);
-
-            return leftMultiplier.gt(1) ? (
-              <>
-                <Divider type="vertical" />
-                <Grid flow="row" gap={4} className={s.item4}>
-                  <Text type="p2" color="secondary">
-                    Multiplier & Lock timer
-                  </Text>
-                  <Grid flow="col" gap={8} align="center">
-                    <Tooltip title={`x${leftMultiplier}`}>
-                      <Text type="lb1" weight="bold" color="red" className={s.ratio}>
-                        {inRange(multiplier, 1, 1.01) ? '>' : ''} {formatBigValue(leftMultiplier, 2, '-', 2)}x
-                      </Text>
-                    </Tooltip>
+              return leftMultiplier.gt(1) ? (
+                <>
+                  <Divider type="vertical" />
+                  <Grid flow="row" gap={4} className={s.item4}>
                     <Text type="p2" color="secondary">
-                      for
+                      Multiplier & Lock timer
                     </Text>
-                    <Text type="h3" weight="bold" color="primary">
-                      {getFormattedDuration(0, userLockedUntil)}
-                    </Text>
+                    <Grid flow="col" gap={8} align="center">
+                      <Tooltip title={`x${leftMultiplier}`}>
+                        <Text type="lb1" weight="bold" color="red" className={s.ratio}>
+                          {inRange(multiplier, 1, 1.01) ? '>' : ''} {formatBigValue(leftMultiplier, 2, '-', 2)}x
+                        </Text>
+                      </Tooltip>
+                      <Text type="p2" color="secondary">
+                        for
+                      </Text>
+                      <Text type="h3" weight="bold" color="primary">
+                        {getFormattedDuration(0, userLockedUntil)}
+                      </Text>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </>
-            ) : undefined;
-          }}
-        </UseLeftTime>
-      </Grid>
+                </>
+              ) : undefined;
+            }}
+          </UseLeftTime>
+        </Grid>
+      </div>
     </div>
   );
 };

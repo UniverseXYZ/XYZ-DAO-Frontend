@@ -1,16 +1,20 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import BigNumber from 'bignumber.js';
 import cn from 'classnames';
 import addMinutes from 'date-fns/addMinutes';
 import format from 'date-fns/format';
 import fromUnixTime from 'date-fns/fromUnixTime';
 import { formatToken, formatUSD } from 'web3/utils';
+import { formatPercent } from 'web3/utils';
 
 import Grid from 'components/custom/grid';
 import Icon, { IconNames } from 'components/custom/icon';
 import IconsSet from 'components/custom/icons-set';
 import { Hint, Text } from 'components/custom/typography';
 import { XyzToken } from 'components/providers/known-tokens-provider';
+import { KnownTokens } from 'components/providers/known-tokens-provider';
+import { convertTokenInUSD } from 'components/providers/known-tokens-provider';
 import { YFPoolID, useYFPools } from 'modules/yield-farming/providers/pools-provider';
 import { useWallet } from 'wallets/wallet';
 
@@ -44,6 +48,10 @@ const PoolCard: React.FC<PoolCardProps> = props => {
   const myPoolBalanceInUSD = yfPoolsCtx.getMyPoolBalanceInUSD(poolId);
   const myPoolEffectiveBalanceInUSD = yfPoolsCtx.getMyPoolEffectiveBalanceInUSD(poolId);
   const isPoolAvailable = poolMeta?.contract.isPoolAvailable;
+  const apr =
+    poolBalanceInUSD?.isGreaterThan(BigNumber.ZERO) && epochReward
+      ? convertTokenInUSD(epochReward * 52, KnownTokens.XYZ)?.dividedBy(poolBalanceInUSD)
+      : undefined;
 
   function handleStaking() {
     history.push(`/yield-farming/${poolId}`);
@@ -71,66 +79,79 @@ const PoolCard: React.FC<PoolCardProps> = props => {
       </div>
       {!isEnded && isPoolAvailable && (
         <>
-          <div className="card-row flex flow-row p-24">
-            <Text type="lb2" weight="semibold" color="secondary" className="mb-4">
+          <div className="card-row card-row-border p-24">
+            <Text type="lb2" weight="semibold" color="secondary">
+              APR
+            </Text>
+            <div className="flex flow-col">
+              <Text type="p1" weight="semibold" color="primary">
+                {formatPercent(apr) ?? '-'}
+              </Text>
+            </div>
+          </div>
+          <div className="card-row card-row-border p-24">
+            <Text type="lb2" weight="semibold" color="secondary">
               Reward
             </Text>
             <div className="flex flow-col">
-              <Text type="p1" weight="semibold" color="primary" className="mr-4">
+              <Icon name="png/universe" className={s.xyzReward} />
+              <Text type="p1" weight="semibold" color="primary">
                 {formatToken(epochReward) ?? '-'}
-              </Text>
-              <Text type="p2" color="secondary">
-                {XyzToken.symbol}
               </Text>
             </div>
           </div>
           {walletCtx.isActive && !!lastActiveEpoch && (
-            <div className="card-row flex flow-row p-24">
+            <div className="card-row card-row-border p-24">
               <Text type="lb2" weight="semibold" color="secondary">
                 My Potential Reward
               </Text>
               <div className="flex flow-col">
-                <Text type="p1" weight="semibold" color="primary" className="mr-4">
+                <Icon name="png/universe" className={s.xyzReward} />
+                <Text type="p1" weight="semibold" color="primary">
                   {formatToken(potentialReward) ?? '-'}
-                </Text>
-                <Text type="p2" color="secondary">
-                  {XyzToken.symbol}
                 </Text>
               </div>
             </div>
           )}
-          <div className="card-row flex flow-row p-24">
-            <Hint
-              className="mb-4"
-              text={
-                <span>
-                  This number shows the total staked balance of the pool, and the effective balance of the pool.
-                  <br />
-                  <br />
-                  When staking tokens during an epoch that is currently running, your effective deposit amount will be
-                  proportionally reduced by the time that has passed from that epoch. Once an epoch ends, your staked
-                  balance and effective staked balance will be the equal, therefore pool balance and effective pool
-                  balance will differ in most cases.
-                </span>
-              }>
-              <Text type="lb2" weight="semibold" color="secondary">
-                Pool Balance
-              </Text>
-            </Hint>
+          <div className="flex flow-row p-24 card-row-border">
+            <div className="card-row">
+              <Hint
+                className="mb-4"
+                text={
+                  <span>
+                    This number shows the total staked balance of the pool, and the effective balance of the pool.
+                    <br />
+                    <br />
+                    When staking tokens during an epoch that is currently running, your effective deposit amount will be
+                    proportionally reduced by the time that has passed from that epoch. Once an epoch ends, your staked
+                    balance and effective staked balance will be the equal, therefore pool balance and effective pool
+                    balance will differ in most cases.
+                  </span>
+                }>
+                <Text type="lb2" weight="semibold" color="secondary">
+                  Pool Balance
+                </Text>
+              </Hint>
 
-            <Text type="p1" weight="semibold" color="primary" className="mb-4">
-              {formatUSD(poolBalanceInUSD) ?? '-'}
-            </Text>
-            {!!lastActiveEpoch && (
-              <Text type="p2" color="secondary" className="mb-8">
-                {formatUSD(poolEffectiveBalanceInUSD) ?? '-'} effective balance
+              <Text type="p1" weight="semibold" color="primary" className="mb-4">
+                {formatUSD(poolBalanceInUSD) ?? '-'}
               </Text>
-            )}
+            </div>
+            <div className="card-row">
+              <Text type="p2" color="secondary">
+                Effective balance
+              </Text>
+              {!!lastActiveEpoch && (
+                <Text type="p2" color="secondary">
+                  {formatUSD(poolEffectiveBalanceInUSD) ?? '-'}
+                </Text>
+              )}
+            </div>
           </div>
         </>
       )}
       {walletCtx.isActive && (
-        <div className="card-row flex flow-row p-24">
+        <div className="card-row p-24 card-row-border">
           <Hint
             text={
               <span>

@@ -41,7 +41,7 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
               </Text>
             }>
             <Text type="lb2" weight="semibold" color="secondary">
-              {XyzToken.symbol} Locked
+              {XyzToken.symbol} staked
             </Text>
           </Hint>
           <Grid flow="row" gap={4}>
