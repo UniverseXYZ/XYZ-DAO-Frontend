@@ -61,6 +61,7 @@ const LayoutHeader: React.FC = () => {
         <Popover
           visible={popper1visible}
           onVisibleChange={setPopper1visible}
+          trigger={['click', 'hover']}
           noPadding
           content={
             <div className={cn('card', s.dropdown)}>
@@ -96,6 +97,7 @@ const LayoutHeader: React.FC = () => {
         <Popover
           visible={popper2visible}
           onVisibleChange={setPopper2visible}
+          trigger={['click', 'hover']}
           noPadding
           content={
             <div className={cn('card', s.dropdown)}>
@@ -134,6 +136,7 @@ const LayoutHeader: React.FC = () => {
         <Popover
           noPadding
           visible={popper3visible}
+          trigger={['click', 'hover']}
           onVisibleChange={setPopper3visible}
           content={
             <div className={cn('card', s.dropdown)}>

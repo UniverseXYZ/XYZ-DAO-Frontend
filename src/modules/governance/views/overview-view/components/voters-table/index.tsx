@@ -31,7 +31,6 @@ const Columns: ColumnsType<APIVoterEntity> = [
   {
     title: 'Staked Balance',
     dataIndex: 'kekStaked',
-    width: 200,
     align: 'right',
     render: (value: BigNumber) => (
       <Text type="p1" weight="semibold" className="ml-auto">
@@ -42,7 +41,6 @@ const Columns: ColumnsType<APIVoterEntity> = [
   {
     title: 'Voting Power',
     dataIndex: 'votingPower',
-    width: 200,
     align: 'right',
     render: (value: BigNumber) => (
       <Text type="p1" weight="semibold" className="ml-auto">
@@ -53,7 +51,6 @@ const Columns: ColumnsType<APIVoterEntity> = [
   {
     title: 'Votes',
     dataIndex: 'votes',
-    width: 150,
     align: 'right',
     render: (value: number) => (
       <Text type="p1" weight="semibold" className="ml-auto">
