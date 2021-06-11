@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
 import ContractListener from 'web3/components/contract-listener';
 import Erc20Contract from 'web3/erc20Contract';
@@ -33,6 +33,7 @@ const InitialState: DAOProviderState = {
 };
 
 type DAOContextType = DAOProviderState & {
+  apr?: BigNumber;
   daoBarn: DAOBarnContract;
   daoReward: DAORewardContract;
   daoGovernance: DAOGovernanceContract;
@@ -45,6 +46,7 @@ type DAOContextType = DAOProviderState & {
 
 const DAOContext = React.createContext<DAOContextType>({
   ...InitialState,
+  apr: undefined,
   daoBarn: undefined as any,
   daoReward: undefined as any,
   daoGovernance: undefined as any,
@@ -116,6 +118,20 @@ const DAOProvider: React.FC = props => {
     });
   }, [daoGovernance.isActive, daoBarn.xyzStaked, daoBarn.activationThreshold, daoBarn.votingPower]);
 
+  const apr = useMemo(() => {
+    const { poolFeature } = daoReward;
+    const { xyzStaked } = daoBarn;
+
+    if (!poolFeature || !xyzStaked || poolFeature.endTs < Date.now() / 1_000) {
+      return undefined;
+    }
+
+    const duration = Number(poolFeature.totalDuration);
+    const yearInSeconds = 365 * 24 * 60 * 60;
+
+    return poolFeature.totalAmount.div(xyzStaked).div(duration).multipliedBy(yearInSeconds);
+  }, [daoReward.poolFeature, daoBarn.xyzStaked]);
+
   function activate() {
     return daoGovernance.actions.activate().then(() => {
       daoGovernance.reload();
@@ -153,6 +169,7 @@ const DAOProvider: React.FC = props => {
     <DAOContext.Provider
       value={{
         ...state,
+        apr,
         daoBarn,
         daoReward,
         daoGovernance,

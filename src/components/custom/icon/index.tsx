@@ -62,6 +62,7 @@ export type IconNames =
   | TokenIconNames
   | NavIconNames
   | ThemeIconNames
+  | 'static/uStar'
   | 'right-arrow-circle-outlined'
   | 'arrow-back'
   | 'down-arrow-circle'
