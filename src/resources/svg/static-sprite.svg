@@ -217,4 +217,35 @@
       </linearGradient>
     </defs>
   </symbol>
+  <symbol id="icon__static/uStar" viewBox="0 0 40 40" fill="none">
+    <defs>
+      <filter id="icon__static/uStar_filter1" x="-1.48602" y="-1.26044" width="42.7637" height="42.7637" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+        <feGaussianBlur stdDeviation="2.46127" result="effect1_foregroundBlur"/>
+      </filter>
+      <linearGradient id="icon__static/uStar_linear1" x1="7.81555" y1="9.53434" x2="30.6296" y2="32.3484" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#BFEF00"/>
+        <stop offset="1" stop-color="#00EAEA"/>
+      </linearGradient>
+      <linearGradient id="icon__static/uStar_linear2" x1="14.8953" y1="15.0474" x2="24.0521" y2="24.6755" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#BCEB00"/>
+        <stop offset="1" stop-color="#00EAEA"/>
+      </linearGradient>
+    </defs>
+    <mask id="icon__static/uStar_mask1" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="40">
+      <circle cx="20" cy="20" r="20" fill="#C4C4C4"/>
+    </mask>
+    <g mask="url(#icon__static/uStar_mask1)">
+      <mask id="icon__static/uStar_mask2" mask-type="alpha" maskUnits="userSpaceOnUse" x="-3" y="-3" width="46" height="46">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M43 20C43 32.7025 32.7025 43 20 43C7.29745 43 -3 32.7025 -3 20C-3 7.29745 7.29745 -3 20 -3C32.7025 -3 43 7.29745 43 20ZM19.9631 33.3998C27.3578 33.3998 33.3525 27.4052 33.3525 20.0105C33.3525 12.6157 27.3578 6.62108 19.9631 6.62108C12.5684 6.62108 6.57372 12.6157 6.57372 20.0105C6.57372 27.4052 12.5684 33.3998 19.9631 33.3998Z" fill="#C4C4C4"/>
+      </mask>
+      <g mask="url(#icon__static/uStar_mask2)">
+        <g filter="url(#icon__static/uStar_filter1)">
+          <path d="M36.3551 20.1214C36.3551 29.2116 28.986 36.5807 19.8958 36.5807C10.8056 36.5807 3.43652 29.2116 3.43652 20.1214C3.43652 11.0312 10.8056 3.66211 19.8958 3.66211C28.986 3.66211 36.3551 11.0312 36.3551 20.1214Z" fill="url(#icon__static/uStar_linear1)"/>
+        </g>
+      </g>
+    </g>
+    <path d="M19.9999 12.6875L22.1498 17.0425L26.9549 17.7412L23.4774 21.1294L24.298 25.9166L19.9999 23.6562L15.7018 25.915L16.5224 21.1294L13.0449 17.7396L17.85 17.0409L19.9999 12.6875Z" fill="url(#icon__static/uStar_linear2)"/>
+  </symbol>
 </svg>

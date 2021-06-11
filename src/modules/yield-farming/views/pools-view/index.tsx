@@ -2,9 +2,11 @@ import React from 'react';
 import { isMobile } from 'react-device-detect';
 
 import { Text } from 'components/custom/typography';
+import DaoCard from 'modules/governance/components/dao-card';
+import DAOProvider from 'modules/governance/components/dao-provider';
 import PoolCard from 'modules/yield-farming/components/pool-card';
+import { useWallet } from 'wallets/wallet';
 
-import { useWallet } from '../../../../wallets/wallet';
 import PoolChart from '../../components/pool-chart';
 import PoolRewards from '../../components/pool-rewards';
 import PoolStats from '../../components/pool-stats';
@@ -36,6 +38,9 @@ const PoolsView: React.FC = () => {
           <PoolCard poolId={YFPoolID.SUSHI} />
           <PoolCard poolId={YFPoolID.LINK} />
           <PoolCard poolId={YFPoolID.ILV} />
+          <DAOProvider>
+            <DaoCard />
+          </DAOProvider>
         </div>
         <PoolChart className="mb-32" />
         <PoolTransactions />

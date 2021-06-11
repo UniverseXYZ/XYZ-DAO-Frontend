@@ -1,0 +1,25 @@
+.cardTitleContainer {
+  display: grid;
+  grid-template-columns: min-content min-content;
+  gap: 16px;
+  min-height: 88px;
+  justify-content: space-between;
+
+  @media (max-width: 480px) {
+    gap: 24px 8px;
+    display: flex;
+    flex-wrap: wrap;
+    min-height: inherit;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+.cardTitleTexts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
