@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers';
+import { BigNumber, FixedNumber } from 'ethers';
 import { AbiItem } from 'web3-utils';
 import Web3Contract, { createAbiItem } from 'web3/web3Contract';
 
@@ -30,7 +30,7 @@ export default class MerkleDistributor extends Web3Contract {
 
       const airdropAccounts = airdropData.map(drop => ({
         account: drop.address,
-        amount: BigNumber.from(drop.earnings.toString()),
+        amount: BigNumber.from(FixedNumber.from(drop.earnings)),
       }));
       this.claimIndex = airdropAccounts.findIndex(o => o.account === this.account);
       this.claimAmount = this.claimIndex !== -1 ? this.getClaimAmount(this.account || '', airdropData) : undefined;

@@ -1,6 +1,6 @@
 import React, { FC, useMemo, useState } from 'react';
 import { BigNumber as _BigNumber } from 'bignumber.js';
-import { BigNumber } from 'ethers';
+import { BigNumber, FixedNumber } from 'ethers';
 import MerkleDistributor from 'web3/merkleDistributor';
 import { formatToken } from 'web3/utils';
 
@@ -31,7 +31,7 @@ const AirdropModal: FC<AirdropModalProps> = props => {
   const tree = useMemo(() => {
     const airdropAccounts = airdropData.map(drop => ({
       account: drop.address,
-      amount: BigNumber.from(drop.earnings.toString()),
+      amount: BigNumber.from(FixedNumber.from(drop.earnings)),
     }));
 
     return new BalanceTree(airdropAccounts);
