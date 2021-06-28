@@ -2,7 +2,7 @@ import { BigNumber, FixedNumber } from 'ethers';
 import { AbiItem } from 'web3-utils';
 import Web3Contract, { createAbiItem } from 'web3/web3Contract';
 
-import airdropData from '../merkle-distributor/airdrop.json';
+import airdropData from '../merkle-distributor/airdrop-test.json';
 
 const ABI: AbiItem[] = [
   createAbiItem('isClaimed', ['uint256'], ['bool']),
@@ -49,7 +49,7 @@ export default class MerkleDistributor extends Web3Contract {
       return;
     }
 
-    const amount = BigNumber.from(this.claimAmount).toString();
+    const amount = BigNumber.from(FixedNumber.from(this.claimAmount));
 
     if (this.claimAmount !== null && this.claimIndex !== -1) {
       const [isClaimed, adjustedAmount] = await this.batch([

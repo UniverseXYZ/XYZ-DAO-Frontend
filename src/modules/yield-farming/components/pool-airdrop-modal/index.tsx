@@ -13,7 +13,7 @@ import { XyzToken } from 'components/providers/known-tokens-provider';
 import BalanceTree from 'merkle-distributor/balance-tree';
 import { useWallet } from 'wallets/wallet';
 
-import airdropData from '../../../../merkle-distributor/airdrop.json';
+import airdropData from '../../../../merkle-distributor/airdrop-test.json';
 
 export type AirdropModalProps = ModalProps & {
   merkleDistributor?: MerkleDistributor;
@@ -37,8 +37,8 @@ const AirdropModal: FC<AirdropModalProps> = props => {
     return new BalanceTree(airdropAccounts);
   }, []);
 
-  const hexClaimAmount = merkleDistributorContract?.claimAmount;
-  const claimAmountFromJSON = BigNumber.from(hexClaimAmount);
+  const claimAmount = merkleDistributorContract?.claimAmount;
+  const claimAmountFromJSON = BigNumber.from(FixedNumber.from(claimAmount));
 
   const claimIndex = merkleDistributorContract?.claimIndex;
   const merkleProof = tree.getProof(claimIndex || BigNumber.from(0), walletCtx.account || '', claimAmountFromJSON);
