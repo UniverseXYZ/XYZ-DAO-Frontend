@@ -122,11 +122,9 @@ const LayoutFooter: React.FC = () => {
               <Text type="p1" color="white" font="secondary" className={s.navTitle}>
                 NFT Drops
               </Text>
-              <span className={s.link} aria-disabled="true">
-                <Tooltip title="Coming soon" placement="top" hint>
-                  Polymorphs
-                </Tooltip>
-              </span>
+              <ExternalLink href="https://universe.xyz/polymorphs" className={s.link}>
+                Polymorphs
+              </ExternalLink>
               <span className={s.link} aria-disabled="true">
                 <Tooltip title="Coming soon" placement="top" hint>
                   Core Drops

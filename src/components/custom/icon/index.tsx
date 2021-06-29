@@ -144,7 +144,9 @@ export type IconNames =
   | 'theme-switcher-moon'
   | 'coingecko'
   | 'youtube'
-  | 'medium';
+  | 'medium'
+  | 'polymorphs'
+  | 'core-drops';
 
 export type IconProps = {
   name: IconNames;

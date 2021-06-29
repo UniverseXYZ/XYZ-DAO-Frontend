@@ -8,6 +8,7 @@
 
   :global(.ant-popover-arrow) {
     border-color: var(--theme-card-color);
+    display: none;
   }
 
   :global(.ant-popover-title) {
