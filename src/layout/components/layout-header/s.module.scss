@@ -6,6 +6,11 @@
   padding: 12px var(--horizontal-padding);
   position: relative;
 
+
+  @media (max-width: 1024px) {
+    padding: 24px 12px;
+  }
+
   @media (max-width: 768px) {
     padding: 24px;
   }
@@ -63,6 +68,8 @@
   background: var(--theme-card-color);
   padding: 20px 0;
   border-radius: 0 0 12px 12px;
+  display: flex;
+  flex-wrap: wrap;
 
   .mobileMenuBlock {
     display: inline-block;

@@ -29,6 +29,7 @@ const LayoutHeader: React.FC = () => {
   const [popper1visible, setPopper1visible] = useState<boolean>(false);
   const [popper2visible, setPopper2visible] = useState<boolean>(false);
   const [popper3visible, setPopper3visible] = useState<boolean>(false);
+  const [popper4visible, setPopper4visible] = useState<boolean>(false);
   const wallet = useWallet();
   const { warns } = useWarning();
 
@@ -61,6 +62,7 @@ const LayoutHeader: React.FC = () => {
         <Popover
           visible={popper1visible}
           onVisibleChange={setPopper1visible}
+          trigger={['click', 'hover']}
           noPadding
           content={
             <div className={cn('card', s.dropdown)}>
@@ -94,8 +96,40 @@ const LayoutHeader: React.FC = () => {
           </Button>
         </Popover>
         <Popover
+          visible={popper4visible}
+          onVisibleChange={setPopper4visible}
+          trigger={['click', 'hover']}
+          noPadding
+          content={
+            <div className={cn('card', s.dropdown)}>
+              <ExternalLink
+                href="https://universe.xyz/polymorphs"
+                className={s.dropdownLink}
+                onClick={() => setPopper4visible(false)}>
+                <Icon name="polymorphs" width={20} height={20} className={s.dropdownIcon} />
+                <span>Polymorphs</span>
+              </ExternalLink>
+              <span className={s.dropdownLink} aria-disabled="true">
+                <Icon name="core-drops" width={20} height={20} className={s.dropdownIcon} />
+                <Tooltip title="Coming soon" placement="top" hint>
+                  <span>Core drops</span>
+                </Tooltip>
+              </span>
+            </div>
+          }>
+          <Button type="link" className={s.navLink}>
+            <Grid flow="col" align="center">
+              <Text type="p1" weight="500" color="primary" className="mr-4">
+                🔥 NFT drops
+              </Text>
+              <Icon name="dropdown-arrow" width={12} height={12} className={s.dropdownArrow} />
+            </Grid>
+          </Button>
+        </Popover>
+        <Popover
           visible={popper2visible}
           onVisibleChange={setPopper2visible}
+          trigger={['click', 'hover']}
           noPadding
           content={
             <div className={cn('card', s.dropdown)}>
@@ -134,6 +168,7 @@ const LayoutHeader: React.FC = () => {
         <Popover
           noPadding
           visible={popper3visible}
+          trigger={['click', 'hover']}
           onVisibleChange={setPopper3visible}
           content={
             <div className={cn('card', s.dropdown)}>
@@ -206,6 +241,22 @@ const LayoutHeader: React.FC = () => {
                   </span>
                 </div>
                 <div className={s.mobileMenuBlock}>
+                  <h3>NFT drops</h3>
+                  <ExternalLink
+                    href="https://universe.xyz/polymorphs"
+                    className={s.dropdownLink}
+                    onClick={() => setNavOpen(false)}>
+                    <Icon name="polymorphs" width={20} height={20} className={s.dropdownIcon} />
+                    <span>Polymorphs</span>
+                  </ExternalLink>
+                  <span className={s.dropdownLink} aria-disabled="true">
+                    <Icon name="core-drops" width={20} height={20} className={s.dropdownIcon} />
+                    <Tooltip title="Coming soon" placement="top" hint>
+                      <span>Core drops</span>
+                    </Tooltip>
+                  </span>
+                </div>
+                <div className={s.mobileMenuBlock}>
                   <h3>Info</h3>
                   <ExternalLink
                     href="https://universe.xyz/about"
@@ -248,7 +299,7 @@ const LayoutHeader: React.FC = () => {
                   </ExternalLink>
                 </div>
                 {!wallet.isActive && !isMobile ? (
-                  <div style={{ textAlign: 'center', padding: '0 20px' }}>
+                  <div style={{ textAlign: 'center', padding: '0 20px', width: '100%' }}>
                     <Divider />
                     <button
                       type="button"

@@ -62,6 +62,7 @@ export type IconNames =
   | TokenIconNames
   | NavIconNames
   | ThemeIconNames
+  | 'static/uStar'
   | 'right-arrow-circle-outlined'
   | 'arrow-back'
   | 'down-arrow-circle'
@@ -143,7 +144,9 @@ export type IconNames =
   | 'theme-switcher-moon'
   | 'coingecko'
   | 'youtube'
-  | 'medium';
+  | 'medium'
+  | 'polymorphs'
+  | 'core-drops';
 
 export type IconProps = {
   name: IconNames;

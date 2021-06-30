@@ -19,7 +19,7 @@ jobs:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
-        channel_id: C01D16VJ84C
+        channel: infra-ci-kekdao
         status: BUILD STARTED
         color: warning
 
@@ -100,7 +100,7 @@ jobs:
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
         message_id: ${{ steps.slack.outputs.message_id }}
-        channel_id: C01D16VJ84C
+        channel: infra-ci-kekdao
         status: BUILD SUCCESSFUL
         color: good
 
@@ -111,7 +111,7 @@ jobs:
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
         message_id: ${{ steps.slack.outputs.message_id }}
-        channel_id: C01D16VJ84C
+        channel: infra-ci-kekdao
         status: BUILD FAILED
         color: danger
 
@@ -126,7 +126,7 @@ jobs:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
-        channel_id: C01D16VJ84C
+        channel: infra-ci-kekdao
         status: DEPLOYMENT STARTED
         color: warning
 
@@ -165,7 +165,7 @@ jobs:
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
         message_id: ${{ steps.slack.outputs.message_id }}
-        channel_id: C01D16VJ84C
+        channel: infra-ci-kekdao
         status: DEPLOYMENT SUCCESSFUL
         color: good
 
@@ -176,6 +176,6 @@ jobs:
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
         message_id: ${{ steps.slack.outputs.message_id }}
-        channel_id: C01D16VJ84C
+        channel: infra-ci-kekdao
         status: DEPLOYMENT FAILED
         color: danger
