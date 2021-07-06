@@ -96,6 +96,8 @@
   "dependencies": {
     "@ethersproject/abi": "5.0.13",
     "@ethersproject/providers": "5.0.24",
+    "@ethersproject/bignumber": "^5.0.12",
+    "ethers": "^5.1.4",
     "@popperjs/core": "^2.9.2",
     "@rooks/use-debounce": "4.10.0",
     "@rooks/use-interval": "4.10.0",
