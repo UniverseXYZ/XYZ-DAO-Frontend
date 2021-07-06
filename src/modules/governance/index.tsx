@@ -14,6 +14,7 @@ import OverviewView from './views/overview-view';
 import ProposalCreateView from './views/proposal-create-view';
 import ProposalDetailView from './views/proposal-detail-view';
 import ProposalsView from './views/proposals-view';
+import TreasuryView from './views/treasury-view';
 import WalletView from './views/wallets-view';
 
 import s from './s.module.scss';
@@ -76,6 +77,14 @@ const GovernanceViewInternal: React.FC = () => {
           }
         />
         <Tabs.Tab
+          key="treasury"
+          tab={
+            <>
+              <Icon name="treasury-outlined" /> Treasury
+            </>
+          }
+        />
+        <Tabs.Tab
           key="forum"
           disabled
           tab={
@@ -96,6 +105,8 @@ const GovernanceViewInternal: React.FC = () => {
           <Route path="/governance/overview" exact component={OverviewView} />
           <Route path="/governance/wallet/:action(\w+)" component={WalletView} />
           <Redirect from="/governance/wallet" to="/governance/wallet/deposit" />
+          <Route path="/governance/treasury/:tab(\w+)" exact component={TreasuryView} />
+          <Redirect from="/governance/treasury" to="/governance/treasury/holdings" />
           <Route path="/governance/proposals/create" exact component={ProposalCreateView} />
           <Route path="/governance/proposals/:id(\d+)" exact component={ProposalDetailView} />
           <Route path="/governance/proposals" exact component={ProposalsView} />
