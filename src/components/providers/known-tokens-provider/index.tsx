@@ -11,6 +11,7 @@ import { useReload } from 'hooks/useReload';
 import { useWallet } from 'wallets/wallet';
 
 export enum KnownTokens {
+  ETH = 'ETH',
   XYZ = 'XYZ',
   USDC = 'USDC',
   BOND = 'BOND',
@@ -32,6 +33,15 @@ export type TokenMeta = {
   coinGeckoId?: string;
   contract?: Web3Contract;
   price?: BigNumber;
+};
+
+export const EthToken: TokenMeta = {
+  symbol: KnownTokens.ETH,
+  name: 'Ether',
+  address: '0x',
+  decimals: 18,
+  icon: 'token-eth',
+  coinGeckoId: 'ethereum',
 };
 
 export const XyzToken: TokenMeta = {
@@ -133,6 +143,7 @@ export const UsdcXyzSLPToken: TokenMeta = {
 };
 
 const KNOWN_TOKENS: TokenMeta[] = [
+  EthToken,
   XyzToken,
   UsdcToken,
   BondToken,
