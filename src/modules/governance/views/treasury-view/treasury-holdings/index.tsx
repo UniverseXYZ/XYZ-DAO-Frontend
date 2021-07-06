@@ -13,7 +13,9 @@ import ExternalLink from 'components/custom/externalLink';
 import Icon, { IconNames, TokenIconNames } from 'components/custom/icon';
 import TableFilter, { TableFilterType } from 'components/custom/table-filter';
 import { Text } from 'components/custom/typography';
+import { DEFAULT_WEB3 } from 'components/providers/eth-web3-provider';
 import {
+  EthToken,
   KnownTokens,
   convertTokenInUSD,
   getTokenBySymbol,
@@ -34,8 +36,9 @@ type APITreasuryTokenEntity = APITreasuryToken & {
 
 type State = {
   tokens: {
-    items: APITreasuryTokenEntity[];
     loading: boolean;
+    items: APITreasuryTokenEntity[];
+    ethBalance: BigNumber;
   };
   history: {
     items: APITreasuryHistory[];
@@ -52,8 +55,9 @@ type State = {
 
 const InitialState: State = {
   tokens: {
-    items: [],
     loading: false,
+    items: [],
+    ethBalance: BigNumber.ZERO,
   },
   history: {
     items: [],
@@ -258,6 +262,22 @@ const TreasuryHoldings: React.FC = () => {
       },
     }));
 
+    DEFAULT_WEB3.eth
+      .getBalance(config.contracts.dao.governance)
+      .then(value => {
+        // eth value
+        const amount = BigNumber.from(value)?.unscaleBy(18);
+
+        setState(prevState => ({
+          ...prevState,
+          tokens: {
+            ...prevState.tokens,
+            ethBalance: amount ?? BigNumber.ZERO,
+          },
+        }));
+      })
+      .catch(Error);
+
     fetchTreasuryTokens()
       .then(data => {
         const items = data.filter(item => Boolean(getTokenBySymbol(item.tokenSymbol as KnownTokens)));
@@ -355,6 +375,29 @@ const TreasuryHoldings: React.FC = () => {
         {formatUSD(totalHoldings) ?? '-'}
       </Text>
       <div className="flexbox-list mb-32" style={{ '--gap': '32px' } as React.CSSProperties}>
+        {state.tokens.ethBalance.gt(0) && (
+          <div className="card p-24" style={{ minWidth: 195 }}>
+            <div className="flex mb-16">
+              <Icon name={(EthToken.icon as IconNames) ?? 'token-unknown'} className="mr-8" />
+              <Text type="p1" weight="semibold" color="primary">
+                {EthToken.symbol}
+              </Text>
+            </div>
+            <Tooltip
+              overlayStyle={{ maxWidth: 'inherit' }}
+              title={formatToken(state.tokens.ethBalance, {
+                decimals: EthToken.decimals,
+                tokenName: EthToken.symbol,
+              })}>
+              <Text type="h3" weight="bold" color="primary" className="mb-4">
+                {formatToken(state.tokens.ethBalance) ?? '-'}
+              </Text>
+            </Tooltip>
+            <Text type="small" weight="semibold" color="secondary">
+              {formatUSD(convertTokenInUSD(state.tokens.ethBalance, EthToken.symbol))}
+            </Text>
+          </div>
+        )}
         {state.tokens.items.map(item => {
           const tokenMeta = getTokenBySymbol(item.tokenSymbol);
           const amount = item.token.getBalanceOf(config.contracts.dao.governance)?.unscaleBy(item.tokenDecimals);
