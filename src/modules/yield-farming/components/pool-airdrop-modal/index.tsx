@@ -37,11 +37,14 @@ const AirdropModal: FC<AirdropModalProps> = props => {
     return new BalanceTree(airdropAccounts);
   }, []);
 
-  const claimAmount = merkleDistributorContract?.claimAmount;
+  const claimAmount = merkleDistributorContract?.claimAmount || 0;
   const claimAmountFromJSON = BigNumber.from(FixedNumber.from(claimAmount));
 
-  const claimIndex = merkleDistributorContract?.claimIndex;
-  const merkleProof = tree.getProof(claimIndex || BigNumber.from(0), walletCtx.account || '', claimAmountFromJSON);
+  const claimIndex = merkleDistributorContract?.claimIndex || -1;
+  const merkleProof =
+    claimIndex !== -1
+      ? tree.getProof(claimIndex || BigNumber.from(0), walletCtx.account || '', claimAmountFromJSON)
+      : [];
   const adjustedAmount = _BigNumber.from(merkleDistributorContract?.adjustedAmount);
 
   async function claimAirdrop() {
@@ -71,8 +74,11 @@ const AirdropModal: FC<AirdropModalProps> = props => {
             Airdrop reward
           </Text>
           <Text type="p1" weight="500" color="secondary">
-            You have claimable tokens from an $XYZ Airdrop. This balance will rise as time passes and as more people
-            exit the pool and forfeit some rewards. Claim now or claim later for potentially higher rewards.
+            You have claimable tokens from the $XYZ Airdrop. This balance will rise over time and as more people exit
+            the pool and forfeit their additional rewards.{' '}
+            <Text type="p1" tag="span" weight="bold">
+              Warning: You can only claim once!
+            </Text>
           </Text>
           <br></br>
           <Text type="p1" weight="bold" color="primary" className="mb-8">
