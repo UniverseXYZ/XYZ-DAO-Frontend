@@ -114,7 +114,7 @@ const PoolRewards: React.FC = () => {
           <Divider type="vertical" />
           <Grid flow="row" gap={4} className={s.item3}>
             <Grid flow="col" gap={8} align="center">
-              <Hint text="You have claimable tokens from an $XYZ Airdrop. This balance will rise as time passes and as more people exit the pool and forfeit some rewards. Claim now or claim later for potentially higher rewards.">
+              <Hint text="You have claimable tokens from the $XYZ Airdrop. This balance will rise over time and as more people exit the pool and forfeit their additional rewards. Warning: You can only claim once.">
                 <Text type="p2" color="secondary">
                   Airdrop reward
                 </Text>
