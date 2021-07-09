@@ -75,7 +75,7 @@ const AirdropModal: FC<AirdropModalProps> = props => {
           </Text>
           <Text type="p1" weight="500" color="secondary">
             You have claimable tokens from the $XYZ Airdrop. This balance will rise over time and as more people exit
-            the pool and forfeit their additional rewards.{' '}
+            the pool and forfeit their additional rewards. <br></br>
             <Text type="p1" tag="span" weight="bold">
               Warning: You can only claim once!
             </Text>
