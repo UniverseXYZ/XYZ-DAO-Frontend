@@ -11,6 +11,7 @@ import { Hint, Text } from 'components/custom/typography';
 import { XyzToken } from 'components/providers/known-tokens-provider';
 import { useWallet } from 'wallets/wallet';
 
+import AirdropModal from '../../components/pool-airdrop-modal';
 import PoolHarvestModal from '../../components/pool-harvest-modal';
 import { useYFPools } from '../../providers/pools-provider';
 
@@ -21,6 +22,7 @@ const PoolRewards: React.FC = () => {
   const yfPoolsCtx = useYFPools();
 
   const [harvestModalVisible, showHarvestModal] = useState(false);
+  const [airdropModalVisible, showAirdropModal] = useState(false);
 
   const xyzContract = XyzToken.contract as Erc20Contract;
   const { currentEpoch } = yfPoolsCtx.stakingContract ?? {};
@@ -40,6 +42,12 @@ const PoolRewards: React.FC = () => {
 
     return (sum ?? BigNumber.ZERO).plus(contract.potentialReward ?? BigNumber.ZERO);
   }, undefined);
+
+  const merkleDistributorData = yfPoolsCtx.merkleDistributor;
+  const isAirdropClaimed = merkleDistributorData?.isAirdropClaimed;
+  const adjustedAmount = merkleDistributorData?.adjustedAmount;
+
+  const airdropAmount = !isAirdropClaimed ? BigNumber.from(adjustedAmount) : BigNumber.from(0);
 
   return (
     <div className={cn(s.component, 'pv-24')}>
@@ -103,9 +111,37 @@ const PoolRewards: React.FC = () => {
               </Grid>
             </>
           )}
+          <Divider type="vertical" />
+          <Grid flow="row" gap={4} className={s.item3}>
+            <Grid flow="col" gap={8} align="center">
+              <Hint text="You have claimable tokens from the $XYZ Airdrop. This balance will rise over time and as more people exit the pool and forfeit their additional rewards. Warning: You can only claim once.">
+                <Text type="p2" color="secondary">
+                  Airdrop reward
+                </Text>
+              </Hint>
+            </Grid>
+            <Grid flow="col" gap={2} align="center">
+              <Text type="h3" weight="bold" color="primary">
+                {formatToken(airdropAmount?.unscaleBy(XyzToken.decimals)) ?? 0}
+              </Text>
+              <Icon name={XyzToken.icon!} width={40} height={40} />
+              {walletCtx.isActive && (
+                <button
+                  type="button"
+                  className="button-primary"
+                  disabled={!airdropAmount?.gt(BigNumber.ZERO)}
+                  onClick={() => showAirdropModal(true)}>
+                  Claim
+                </button>
+              )}
+            </Grid>
+          </Grid>
         </Grid>
       </div>
       {harvestModalVisible && <PoolHarvestModal onCancel={() => showHarvestModal(false)} />}
+      {airdropModalVisible && (
+        <AirdropModal merkleDistributor={merkleDistributorData} onCancel={() => showAirdropModal(false)} />
+      )}
     </div>
   );
 };

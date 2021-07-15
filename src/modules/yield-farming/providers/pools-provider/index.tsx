@@ -1,6 +1,7 @@
 import React, { FC, createContext, useCallback, useContext, useEffect, useMemo } from 'react';
 import BigNumber from 'bignumber.js';
 import ContractListener from 'web3/components/contract-listener';
+import MerkleDistributor from 'web3/merkleDistributor';
 import Web3Contract from 'web3/web3Contract';
 
 import {
@@ -132,6 +133,7 @@ export type YFPoolsType = {
   yfPools: YFPoolMeta[];
   getYFKnownPoolByName: (name: string) => YFPoolMeta | undefined;
   stakingContract?: YfStakingContract;
+  merkleDistributor?: MerkleDistributor;
   getPoolBalanceInUSD: (name: string) => BigNumber | undefined;
   getPoolEffectiveBalanceInUSD: (name: string) => BigNumber | undefined;
   getMyPoolBalanceInUSD: (name: string) => BigNumber | undefined;
@@ -146,6 +148,7 @@ const YFPoolsContext = createContext<YFPoolsType>({
   yfPools: KNOWN_POOLS,
   getYFKnownPoolByName: getYFKnownPoolByName,
   stakingContract: undefined,
+  merkleDistributor: undefined,
   getPoolBalanceInUSD: () => undefined,
   getPoolEffectiveBalanceInUSD: () => undefined,
   getMyPoolBalanceInUSD: () => undefined,
@@ -174,6 +177,13 @@ const YFPoolsProvider: FC = props => {
     return staking;
   }, []);
 
+  const merkleDistributor = useMemo(() => {
+    const merkleDistributor = new MerkleDistributor([], config.contracts.merkleDistributor);
+    merkleDistributor.on(Web3Contract.UPDATE_DATA, reload);
+
+    return merkleDistributor;
+  }, []);
+
   useEffect(() => {
     KNOWN_POOLS.forEach(pool => {
       if (pool.contract.isPoolAvailable) {
@@ -195,10 +205,13 @@ const YFPoolsProvider: FC = props => {
     });
 
     stakingContract.setProvider(walletCtx.provider);
+    merkleDistributor.setProvider(walletCtx.provider);
   }, [walletCtx.provider]);
 
   useEffect(() => {
     stakingContract.setAccount(walletCtx.account);
+    merkleDistributor.setAccount(walletCtx.account);
+    merkleDistributor.loadUserData().catch(Error);
 
     KNOWN_POOLS.forEach(pool => {
       pool.contract.setAccount(walletCtx.account);
@@ -390,6 +403,7 @@ const YFPoolsProvider: FC = props => {
     yfPools: KNOWN_POOLS,
     getYFKnownPoolByName,
     stakingContract,
+    merkleDistributor,
     getYFTotalStakedInUSD,
     getYFTotalEffectiveStakedInUSD,
     getPoolBalanceInUSD,
@@ -404,6 +418,7 @@ const YFPoolsProvider: FC = props => {
     <YFPoolsContext.Provider value={value}>
       {children}
       <ContractListener contract={stakingContract} />
+      <ContractListener contract={merkleDistributor} />
       <ContractListener contract={BondYfPool.contract} />
       <ContractListener contract={AaveYfPool.contract} />
       <ContractListener contract={CompYfPool.contract} />

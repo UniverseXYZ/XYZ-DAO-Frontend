@@ -100,8 +100,8 @@ class Web3Contract extends EventEmitter {
     this.address = address;
     this.name = name;
 
-    this._callContract = new DEFAULT_WEB3.eth.Contract(abi, address) as EthContract;
-    this._sendContract = new DEFAULT_WEB3.eth.Contract(abi, address) as EthContract;
+    this._callContract = (new DEFAULT_WEB3.eth.Contract(abi, address) as any) as EthContract;
+    this._sendContract = (new DEFAULT_WEB3.eth.Contract(abi, address) as any) as EthContract;
   }
 
   get writeFunctions(): AbiItem[] {
