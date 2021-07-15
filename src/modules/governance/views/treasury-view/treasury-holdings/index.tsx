@@ -358,12 +358,19 @@ const TreasuryHoldings: React.FC = () => {
       return undefined;
     }
 
+    let sum = BigNumber.ZERO;
+
+    if (state.tokens.ethBalance) {
+      const amountUSD = convertTokenInUSD(state.tokens.ethBalance, EthToken.symbol);
+      sum.plus(amountUSD ?? 0);
+    }
+
     return state.tokens.items.reduce((a, item) => {
       const amount = item.token.getBalanceOf(config.contracts.dao.governance)?.unscaleBy(item.tokenDecimals);
       const amountUSD = convertTokenInUSD(amount, item.tokenSymbol);
 
       return a.plus(amountUSD ?? 0);
-    }, BigNumber.ZERO);
+    }, sum);
   }, [state.tokens, version, knownTokens.version]);
 
   return (
