@@ -10,10 +10,9 @@ import Spin from 'components/antd/spin';
 import Grid from 'components/custom/grid';
 import { Text } from 'components/custom/typography';
 import { XyzToken } from 'components/providers/known-tokens-provider';
+import config from 'config';
 import BalanceTree from 'merkle-distributor/balance-tree';
 import { useWallet } from 'wallets/wallet';
-
-import airdropData from '../../../../merkle-distributor/airdrop-test.json';
 
 export type AirdropModalProps = ModalProps & {
   merkleDistributor?: MerkleDistributor;
@@ -29,7 +28,11 @@ const AirdropModal: FC<AirdropModalProps> = props => {
   const merkleDistributorContract = merkleDistributor;
 
   const tree = useMemo(() => {
-    const airdropAccounts = airdropData.map(drop => ({
+    let airdropData;
+    config.isDev
+      ? (airdropData = require(`../../../../merkle-distributor/airdrop-test.json`))
+      : (airdropData = require(`../../../../merkle-distributor/airdrop.json`));
+    const airdropAccounts = airdropData.map((drop: { address: any; earnings: any }) => ({
       account: drop.address,
       amount: BigNumber.from(FixedNumber.from(drop.earnings)),
     }));
