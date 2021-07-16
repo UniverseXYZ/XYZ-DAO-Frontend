@@ -362,7 +362,7 @@ const TreasuryHoldings: React.FC = () => {
 
     if (state.tokens.ethBalance) {
       const amountUSD = convertTokenInUSD(state.tokens.ethBalance, EthToken.symbol);
-      sum.plus(amountUSD ?? 0);
+      sum = sum.plus(amountUSD ?? 0);
     }
 
     return state.tokens.items.reduce((a, item) => {
