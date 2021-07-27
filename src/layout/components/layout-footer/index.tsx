@@ -144,6 +144,9 @@ const LayoutFooter: React.FC = () => {
               <ExternalLink href="https://universe.xyz/team" className={s.link}>
                 Team
               </ExternalLink>
+              <ExternalLink href="https://docs.universe.xyz/" className={s.link}>
+                Docs
+              </ExternalLink>
             </nav>
             <nav className={s.navBlock}>
               <Text type="p1" color="white" font="secondary" className={s.navTitle}>
@@ -155,9 +158,6 @@ const LayoutFooter: React.FC = () => {
               <Link to="/yield-farming" className={s.link}>
                 Yield farming
               </Link>
-              <ExternalLink href="https://docs.universe.xyz/" className={s.link}>
-                Docs
-              </ExternalLink>
             </nav>
           </div>
         </div>
