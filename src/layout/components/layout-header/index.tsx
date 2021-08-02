@@ -14,8 +14,10 @@ import Grid from 'components/custom/grid';
 import Icon from 'components/custom/icon';
 import { Text } from 'components/custom/typography';
 import { useGeneral } from 'components/providers/general-provider';
+import { XyzToken } from 'components/providers/known-tokens-provider';
 import { useWarning } from 'components/providers/warning-provider';
 import ConnectedWallet from 'wallets/components/connected-wallet';
+import { MetamaskConnector } from 'wallets/connectors/metamask';
 import { useWallet } from 'wallets/wallet';
 
 import s from './s.module.scss';
@@ -49,6 +51,25 @@ const LayoutHeader: React.FC = () => {
   }, [window.innerWidth]);
 
   const isGovernancePage = useRouteMatch('/governance');
+
+  async function handleAddProjectToken() {
+    if (wallet.connector?.id === 'metamask') {
+      try {
+        const connector = new MetamaskConnector({ supportedChainIds: [] });
+        await connector.addToken({
+          type: 'ERC20',
+          options: {
+            address: XyzToken.address,
+            symbol: XyzToken.symbol,
+            decimals: XyzToken.decimals,
+            image: `${window.location.origin}/android-chrome-192x192.png`,
+          },
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }
 
   return (
     <div className={s.component} ref={setReferenceElement}>
@@ -199,6 +220,13 @@ const LayoutHeader: React.FC = () => {
           </Button>
         </Popover>
       </nav>
+      {!isMobile && wallet.isActive && wallet.connector?.id === 'metamask' && (
+        <div className={s.addTokenWrapper}>
+          <button type="button" onClick={handleAddProjectToken} className={s.addTokenButton}>
+            <Icon name="static/add-token" width={28} height={28} />
+          </button>
+        </div>
+      )}
       <ConnectedWallet />
       <Button type="link" className={s.burger} onClick={() => setNavOpen(prevState => !prevState)}>
         <Icon name={navOpen ? 'burger-close' : 'burger'} style={{ color: 'var(--theme-primary-color)' }} />

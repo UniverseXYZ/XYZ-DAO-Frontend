@@ -85,16 +85,39 @@ const GovernanceViewInternal: React.FC = () => {
           }
         />
         <Tabs.Tab
-          key="forum"
-          disabled
+          key="signal"
           tab={
-            <ExternalLink href="https://forum.universe.xyz/" style={{ color: 'inherit' }}>
+            <ExternalLink href="https://signal.universe.xyz/" style={{ color: 'inherit', position: 'relative' }}>
               <Grid flow="col" gap={8} align="center">
                 <Icon name="chats-outlined" />
                 <Text type="p1" weight="semibold">
-                  Discussions
+                  Signal
                 </Text>
-                <Icon name="arrow-top-right" width={8} height={8} style={{ alignSelf: 'start', color: 'inherit' }} />
+                <Icon
+                  name="arrow-top-right"
+                  width={8}
+                  height={8}
+                  style={{ position: 'absolute', top: 0, right: -12 }}
+                />
+              </Grid>
+            </ExternalLink>
+          }
+        />
+        <Tabs.Tab
+          key="forum"
+          tab={
+            <ExternalLink href="https://forum.universe.xyz/" style={{ color: 'inherit', position: 'relative' }}>
+              <Grid flow="col" gap={8} align="center">
+                <Icon name="chats-outlined" />
+                <Text type="p1" weight="semibold">
+                  Forum
+                </Text>
+                <Icon
+                  name="arrow-top-right"
+                  width={8}
+                  height={8}
+                  style={{ position: 'absolute', top: 0, right: -12 }}
+                />
               </Grid>
             </ExternalLink>
           }

@@ -85,7 +85,7 @@ const ConnectedWallet: React.FC = () => {
                 </Text>
               </Grid>
             </Grid>
-            <Divider />
+            <Divider style={{ minHeight: 28 }} />
             <Grid padding={24}>
               <button type="button" className="button button-ghost" onClick={() => wallet.disconnect()}>
                 <span>Disconnect</span>
@@ -173,9 +173,9 @@ const ConnectedWallet: React.FC = () => {
   );
 
   return (
-    <Grid flow="col" gap={24} justify="center">
+    <Grid flow="col" gap={20} justify="center" align="center">
       <NotificationSection />
-      <Divider type="vertical" />
+      <Divider type="vertical" style={{ minHeight: 28 }} />
       {AccountSection}
     </Grid>
   );
