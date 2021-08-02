@@ -146,7 +146,8 @@ export type IconNames =
   | 'youtube'
   | 'medium'
   | 'polymorphs'
-  | 'core-drops';
+  | 'core-drops'
+  | 'static/add-token';
 
 export type IconProps = {
   name: IconNames;

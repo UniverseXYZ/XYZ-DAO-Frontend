@@ -102,7 +102,7 @@
   margin-left: 14px;
   margin-right: 20px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1023px) {
     margin-left: 6px;
     margin-right: 14px;
   }
@@ -113,7 +113,7 @@
   width: 56px;
   height: 56px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1023px) {
     width: 44px;
     height: 44px;
   }
@@ -129,7 +129,7 @@
   letter-spacing: 0;
   text-align: left;
   margin-right: auto;
-  padding: 0;
+  padding: 0 16px 0 0;
 
   @media (max-width: 1024px) {
     font-size: 13px;
@@ -140,7 +140,8 @@
 .nav {
   display: flex;
   border-right: 1px solid var(--theme-border-color);
-  margin-right: 24px;
+  margin-right: 20px;
+  min-height: 28px;
 
   @media (max-width: 768px) {
     display: none;
@@ -158,6 +159,14 @@
     .dropdownArrow {
       transform: rotate(-180deg);
     }
+  }
+
+  &:last-child {
+    margin-right: 20px;
+  }
+
+  @media (max-width: 1023px) {
+    margin-right: 20px;
   }
 }
 
@@ -231,4 +240,21 @@
     color: #fff;
     margin-right: 10px;
   }
+}
+
+.addTokenWrapper {
+  padding-right: 20px;
+  margin-right: 20px;
+  border-right: 1px solid var(--theme-border-color);
+}
+
+.addTokenButton {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  padding: 0;
 }
