@@ -108,7 +108,7 @@ const GovernanceViewInternal: React.FC = () => {
           tab={
             <ExternalLink href="https://forum.universe.xyz/" style={{ color: 'inherit', position: 'relative' }}>
               <Grid flow="col" gap={8} align="center">
-                <Icon name="chats-outlined" />
+                <Icon name="forum-outlined" />
                 <Text type="p1" weight="semibold">
                   Forum
                 </Text>
