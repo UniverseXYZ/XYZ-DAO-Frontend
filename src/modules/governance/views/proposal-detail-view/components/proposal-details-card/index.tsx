@@ -64,7 +64,7 @@ const ProposalDetailsCard: React.FC = () => {
           Details
         </Text>
       </div>
-      <div className="card-row flexbox-list p-24" style={{ '--gap': '32px' } as React.CSSProperties}>
+      <div className="flexbox-list p-24" style={{ '--gap': '32px' } as React.CSSProperties}>
         <div>
           <Text type="small" weight="semibold" color="secondary" className="mb-4">
             Created by
@@ -86,7 +86,7 @@ const ProposalDetailsCard: React.FC = () => {
             </Text>
           </Hint>
           <Grid flow="col" gap={8}>
-            {thresholdRate !== undefined && (
+            {thresholdRate !== undefined ? (
               <>
                 <Icon name={isThresholdBelow ? 'close-circle-outlined' : 'check-circle-outlined'} />
                 <Skeleton loading={proposal === undefined}>
@@ -95,6 +95,8 @@ const ProposalDetailsCard: React.FC = () => {
                   </Text>
                 </Skeleton>
               </>
+            ) : (
+              '-'
             )}
           </Grid>
         </div>
@@ -106,7 +108,7 @@ const ProposalDetailsCard: React.FC = () => {
           )}
         </div>
       </div>
-      <Grid className="card-row p-24" flow="row" gap={16}>
+      <Grid className="p-24" flow="row" gap={16}>
         <Text type="small" weight="semibold" color="secondary">
           Description
         </Text>
@@ -114,10 +116,12 @@ const ProposalDetailsCard: React.FC = () => {
           {proposal?.description}
         </Text>
       </Grid>
-      <Grid className="card-row p-24" flow="row" gap={16}>
-        <Text type="small" weight="semibold" color="secondary">
-          Actions
-        </Text>
+      <Grid className="p-24" flow="row" gap={16}>
+        <div>
+          <Text type="small" weight="semibold" color="secondary">
+            Actions
+          </Text>
+        </div>
         {proposal?.targets.map((target: string, index: number) => (
           <ProposalActionCard
             key={index}
