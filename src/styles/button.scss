@@ -35,7 +35,6 @@
   &[disabled] {
     background: rgba(0, 0, 0, 0.1);
     color: rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
     box-shadow: none;
     cursor: not-allowed;
 
@@ -172,6 +171,7 @@
   font-size: 12px;
   line-height: 16px;
   padding: 9px 24px;
+  border-radius: 8px;
 }
 
 .button-big {
