@@ -24,7 +24,7 @@ const ProposalVoteResultsCard: React.FC = () => {
           </Button>
         </div>
         <Grid flow="row" className="card-row p-24">
-          <Grid flow="col" justify="space-between">
+          <Grid flow="col" justify="space-between" width="100%">
             <Grid flow="row" gap={4}>
               <Text type="small" weight="semibold" color="secondary">
                 For
@@ -59,7 +59,7 @@ const ProposalVoteResultsCard: React.FC = () => {
           />
         </Grid>
         <Grid flow="row" className="card-row p-24">
-          <Grid flow="col" justify="space-between">
+          <Grid flow="col" justify="space-between" width="100%">
             <Grid flow="row" gap={4}>
               <Hint text="Quorum is the percentage of the amount of tokens staked in the DAO that support for a proposal must be greater than for the proposal to be considered valid. For example, if the Quorum % is set to 20%, then more than 20% of the amount of tokens staked in the DAO must vote to approve a proposal for the vote to be considered valid.">
                 <Text type="small" weight="semibold" color="secondary">
@@ -68,7 +68,7 @@ const ProposalVoteResultsCard: React.FC = () => {
               </Hint>
               <Grid flow="col" gap={8}>
                 <Text type="p1" weight="semibold" color="primary">
-                  {proposalCtx.quorum?.toFixed(2)}%
+                  {proposalCtx.quorum ? proposalCtx.quorum.toFixed(2) + '%' : '-'}
                 </Text>
                 <Text type="p1" color="secondary">
                   (&gt; {proposalCtx.proposal?.minQuorum}% required)
@@ -83,7 +83,7 @@ const ProposalVoteResultsCard: React.FC = () => {
               </Hint>
               <Grid flow="col" gap={8}>
                 <Text type="p1" weight="semibold" color="primary">
-                  {proposalCtx.forRate?.toFixed(2)}%
+                  {proposalCtx.forRate ? proposalCtx.forRate?.toFixed(2) + '%' : '-'}
                 </Text>
                 <Text type="p1" color="secondary">
                   (&gt; {proposalCtx.proposal?.acceptanceThreshold}% required)

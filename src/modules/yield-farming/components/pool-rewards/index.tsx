@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import BigNumber from 'bignumber.js';
 import cn from 'classnames';
+import add from 'date-fns/add';
+import differenceInCalendarWeeks from 'date-fns/differenceInCalendarWeeks';
 import Erc20Contract from 'web3/erc20Contract';
 import { formatToken } from 'web3/utils';
 
@@ -48,6 +50,12 @@ const PoolRewards: React.FC = () => {
   const adjustedAmount = merkleDistributorData?.adjustedAmount;
 
   const airdropAmount = !isAirdropClaimed ? BigNumber.from(adjustedAmount) : BigNumber.from(0);
+  const airdropDurationInWeeks = 100;
+  const airdropStartDate = new Date(1626674400000); // 2021-07-19 00:00:00
+  const airdropEndDate = add(airdropStartDate, { weeks: airdropDurationInWeeks });
+  const airdropCurrentWeek =
+    airdropDurationInWeeks -
+    differenceInCalendarWeeks(new Date(airdropEndDate), new Date() > airdropEndDate ? airdropEndDate : new Date());
 
   return (
     <div className={cn(s.component, 'pv-24')}>
@@ -57,11 +65,11 @@ const PoolRewards: React.FC = () => {
         </Text>
 
         <Grid flow="col" gap={24} className={s.items}>
-          <Grid flow="row" gap={4} className={s.item1}>
+          <Grid flow="row" gap={2} className={s.item1}>
             <Text type="p2" color="secondary">
               Current reward
             </Text>
-            <Grid flow="col" align="center">
+            <Grid flow="col" align="center" gap={4}>
               <Text type="h3" weight="bold" color="primary">
                 {formatToken(totalToClaim?.unscaleBy(XyzToken.decimals)) ?? '-'}
               </Text>
@@ -69,8 +77,7 @@ const PoolRewards: React.FC = () => {
               {walletCtx.isActive && (
                 <button
                   type="button"
-                  className="button-text"
-                  style={{ color: totalToClaim?.gt(BigNumber.ZERO) ? 'red' : 'var(--theme-default-color)' }}
+                  className="button-primary button-small"
                   // disabled={!totalToClaim?.gt(BigNumber.ZERO)}
                   onClick={() => showHarvestModal(true)}>
                   Claim
@@ -79,11 +86,11 @@ const PoolRewards: React.FC = () => {
             </Grid>
           </Grid>
           <Divider type="vertical" />
-          <Grid flow="row" gap={4} className={s.item2}>
+          <Grid flow="row" gap={2} className={s.item2}>
             <Text type="p2" color="secondary">
               {XyzToken.symbol} Balance
             </Text>
-            <Grid flow="col" gap={2} align="center">
+            <Grid flow="col" gap={4} align="center">
               <Text type="h3" weight="bold" color="primary">
                 {formatToken(xyzContract.balance?.unscaleBy(XyzToken.decimals)) ?? '-'}
               </Text>
@@ -93,7 +100,7 @@ const PoolRewards: React.FC = () => {
           {!!currentEpoch && (
             <>
               <Divider type="vertical" />
-              <Grid flow="row" gap={4} className={s.item3}>
+              <Grid flow="row" gap={2} className={s.item4}>
                 <Grid flow="col" gap={8} align="center">
                   <Hint
                     text={`This number shows the $${XyzToken.symbol} rewards you would potentially be able to harvest this epoch, but is subject to change - in case more users deposit, or you withdraw some of your stake.`}>
@@ -102,7 +109,7 @@ const PoolRewards: React.FC = () => {
                     </Text>
                   </Hint>
                 </Grid>
-                <Grid flow="col" gap={2} align="center">
+                <Grid flow="col" gap={4} align="center">
                   <Text type="h3" weight="bold" color="primary">
                     {formatToken(totalPotentialReward) ?? '-'}
                   </Text>
@@ -112,15 +119,18 @@ const PoolRewards: React.FC = () => {
             </>
           )}
           <Divider type="vertical" />
-          <Grid flow="row" gap={4} className={s.item3}>
+          <Grid flow="row" gap={2} className={s.item3}>
             <Grid flow="col" gap={8} align="center">
               <Hint text="You have claimable tokens from the $XYZ Airdrop. This balance will rise over time and as more people exit the pool and forfeit their additional rewards. Warning: You can only claim once.">
                 <Text type="p2" color="secondary">
-                  Airdrop reward
+                  <span style={{ marginRight: 5 }}>Airdrop reward</span>
+                  <span className={s.week}>
+                    WEEK {airdropCurrentWeek}/{airdropDurationInWeeks}
+                  </span>
                 </Text>
               </Hint>
             </Grid>
-            <Grid flow="col" gap={2} align="center">
+            <Grid flow="col" gap={4} align="center">
               <Text type="h3" weight="bold" color="primary">
                 {formatToken(airdropAmount?.unscaleBy(XyzToken.decimals)) ?? 0}
               </Text>
@@ -128,8 +138,8 @@ const PoolRewards: React.FC = () => {
               {walletCtx.isActive && (
                 <button
                   type="button"
-                  className="button-primary"
-                  disabled={!airdropAmount?.gt(BigNumber.ZERO)}
+                  className="button-primary button-small"
+                  // disabled={!airdropAmount?.gt(BigNumber.ZERO)}
                   onClick={() => showAirdropModal(true)}>
                   Claim
                 </button>
