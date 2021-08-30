@@ -7,7 +7,6 @@ import DAOProvider from 'modules/governance/components/dao-provider';
 import PoolCard from 'modules/yield-farming/components/pool-card';
 import { useWallet } from 'wallets/wallet';
 
-import PoolChart from '../../components/pool-chart';
 import PoolRewards from '../../components/pool-rewards';
 import PoolStats from '../../components/pool-stats';
 import PoolTransactions from '../../components/pool-transactions';
@@ -42,7 +41,6 @@ const PoolsView: React.FC = () => {
           <PoolCard poolId={YFPoolID.LINK} />
           <PoolCard poolId={YFPoolID.ILV} />
         </div>
-        <PoolChart className="mb-32" />
         <PoolTransactions />
       </div>
     </>

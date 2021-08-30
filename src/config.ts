@@ -7,6 +7,9 @@ const config = {
   isDev: String(process.env.REACT_APP_ENV) === 'development',
   isProd: String(process.env.REACT_APP_ENV) === 'production',
   isTestnet: String(process.env.REACT_APP_ENV) === 'testnet',
+  graph: {
+    yfGraphUrl: `${String(process.env.REACT_APP_BASE_GRAPH_URL)}/subgraphs/name/enterdao/YieldFarmingGraph`,
+  },
   api: {
     baseUrl: String(process.env.REACT_APP_BASE_API_URL),
   },
