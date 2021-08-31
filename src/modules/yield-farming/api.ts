@@ -2,6 +2,7 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import BigNumber from 'bignumber.js';
 
 import config from 'config';
+import { result } from 'lodash';
 
 import { PaginatedResult } from 'utils/fetch';
 
@@ -31,10 +32,24 @@ export function fetchYFPoolTransactions(
     cache: new InMemoryCache(),
   });
 
+  console.log(limit * (page - 1), limit)
+  console.log(actionType)
+
+  // client.query({
+  //   query: gql`
+  //     qu
+  //   `
+  // })
+
   return client
     .query({
+
       query: gql`
       query($actionType: String, $tokenAddress: String, $userAddress: String, $first: Int, $skip: Int){
+        transactionCounts(where: {id: $actionType}){
+          id,
+          count
+        },
         transactions(first: $first, skip: $skip, where: {${(actionType != "all") ? "actionType: $actionType," : ""}${(tokenAddress != "all") ? "tokenAddress: $tokenAddress," : ""}${(userAddress != "all") ? "userAddress: $userAddress," : ""}}){
           actionType,
           tokenAddress,
@@ -46,15 +61,20 @@ export function fetchYFPoolTransactions(
       }
     `,
       variables: {
-        actionType: (actionType != "all") ? actionType : undefined,
+        actionType: actionType,
         tokenAddress: (tokenAddress != "all") ? tokenAddress : undefined,
         userAddress: (userAddress != "all") ? userAddress : undefined,
         first: limit,
-        skip: limit * (page - 1),
+        skip: (limit * (page - 1)),
       },
     })
+    .catch(e => {
+      console.log(e)
+      return { data: [], meta: { count: 0, block: 0 } }
+    })
     .then(result => {
-      return { data: result.data.transactions, meta: { count: (result.data.transactions.length < limit) ? (limit * (page - 1)) + (result.data.transactions.length) : limit * page + 1, block: page } }
+      console.log(result)
+      return { data: result.data.transactions, meta: { count: result.data.transactionCounts[0].count, block: page } }
     })
     .then((result: PaginatedResult<APIYFPoolTransaction>) => {
       return {
