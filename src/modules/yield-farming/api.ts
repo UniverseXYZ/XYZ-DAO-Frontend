@@ -37,7 +37,7 @@ export function fetchYFPoolTransactions(
 
       query: gql`
       query($actionType: String, $tokenAddress: String, $userAddress: String){
-        transactions(first: 1000, where: {${(actionType != "all") ? "actionType: $actionType," : ""}${(tokenAddress != "all") ? "tokenAddress: $tokenAddress," : ""}${(userAddress != "all") ? "userAddress: $userAddress," : ""}}){
+        transactions(first: 1000, orderBy: blockTimestamp, orderDirection: desc, where: {${(actionType != "all") ? "actionType: $actionType," : ""}${(tokenAddress != "all") ? "tokenAddress: $tokenAddress," : ""}${(userAddress != "all") ? "userAddress: $userAddress," : ""}}){
           actionType,
           tokenAddress,
           userAddress,
