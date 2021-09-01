@@ -32,25 +32,12 @@ export function fetchYFPoolTransactions(
     cache: new InMemoryCache(),
   });
 
-  console.log(limit * (page - 1), limit)
-  console.log(actionType)
-
-  // client.query({
-  //   query: gql`
-  //     qu
-  //   `
-  // })
-
   return client
     .query({
 
       query: gql`
-      query($actionType: String, $tokenAddress: String, $userAddress: String, $first: Int, $skip: Int){
-        transactionCounts(where: {id: $actionType}){
-          id,
-          count
-        },
-        transactions(first: $first, skip: $skip, where: {${(actionType != "all") ? "actionType: $actionType," : ""}${(tokenAddress != "all") ? "tokenAddress: $tokenAddress," : ""}${(userAddress != "all") ? "userAddress: $userAddress," : ""}}){
+      query($actionType: String, $tokenAddress: String, $userAddress: String){
+        transactions(first: 1000, where: {${(actionType != "all") ? "actionType: $actionType," : ""}${(tokenAddress != "all") ? "tokenAddress: $tokenAddress," : ""}${(userAddress != "all") ? "userAddress: $userAddress," : ""}}){
           actionType,
           tokenAddress,
           userAddress,
@@ -64,8 +51,6 @@ export function fetchYFPoolTransactions(
         actionType: actionType,
         tokenAddress: (tokenAddress != "all") ? tokenAddress : undefined,
         userAddress: (userAddress != "all") ? userAddress : undefined,
-        first: limit,
-        skip: (limit * (page - 1)),
       },
     })
     .catch(e => {
@@ -74,7 +59,8 @@ export function fetchYFPoolTransactions(
     })
     .then(result => {
       console.log(result)
-      return { data: result.data.transactions, meta: { count: result.data.transactionCounts[0].count, block: page } }
+
+      return { data: result.data.transactions.slice(limit * (page - 1), limit * page), meta: { count: result.data.transactions.length, block: page } }
     })
     .then((result: PaginatedResult<APIYFPoolTransaction>) => {
       return {

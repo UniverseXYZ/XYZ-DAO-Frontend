@@ -346,7 +346,7 @@ const PoolTransactions: FC = () => {
           position: ['bottomRight'],
           showTotal: (total: number, [from, to]: [number, number]) => (
             <Text type="p2" weight="semibold" color="secondary">
-              Showing {from} to {to} from {total}
+              Showing {from} to {to} the most recent {total}
             </Text>
           ),
           onChange: handlePageChange,
