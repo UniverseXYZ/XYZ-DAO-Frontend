@@ -94,6 +94,7 @@
     ]
   },
   "dependencies": {
+    "@apollo/client": "^3.4.10",
     "@ethersproject/abi": "5.0.13",
     "@ethersproject/bignumber": "5.0.12",
     "@ethersproject/providers": "5.4.1",
@@ -117,6 +118,7 @@
     "classnames": "2.2.6",
     "date-fns": "2.19.0",
     "ethers": "^5.4.1",
+    "graphql": "^15.5.1",
     "identicon.js": "2.3.3",
     "lodash": "4.17.21",
     "nanoid": "3.1.22",

@@ -7,8 +7,15 @@ const config = {
   isDev: String(process.env.REACT_APP_ENV) === 'development',
   isProd: String(process.env.REACT_APP_ENV) === 'production',
   isTestnet: String(process.env.REACT_APP_ENV) === 'testnet',
+  graph: {
+    yfGraphUrl: `${String(process.env.REACT_APP_BASE_GRAPH_URL)}/subgraphs/name/enterdao/DAOGraph`,
+  },
   api: {
     baseUrl: String(process.env.REACT_APP_BASE_API_URL),
+  },
+  zapper: {
+    baseUrl: String(process.env.REACT_APP_ZAPPER_URL),
+    apiKey: String(process.env.REACT_APP_ZAPPER_API_KEY)
   },
   tokens: {
     usdc: toLowerCase(process.env.REACT_APP_TOKEN_USDC_ADDR),

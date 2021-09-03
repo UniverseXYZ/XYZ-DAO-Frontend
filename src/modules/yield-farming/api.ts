@@ -1,8 +1,10 @@
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import BigNumber from 'bignumber.js';
 
 import config from 'config';
+import { result } from 'lodash';
 
-import { PaginatedResult, queryfy } from 'utils/fetch';
+import { PaginatedResult } from 'utils/fetch';
 
 export enum APIYFPoolActionType {
   DEPOSIT = 'DEPOSIT',
@@ -25,24 +27,40 @@ export function fetchYFPoolTransactions(
   userAddress: string = 'all',
   actionType: string = 'all',
 ): Promise<PaginatedResult<APIYFPoolTransaction>> {
-  const query = queryfy({
-    page: String(page),
-    limit: String(limit),
-    userAddress,
-    actionType,
-    tokenAddress,
+  const client = new ApolloClient({
+    uri: config.graph.yfGraphUrl,
+    cache: new InMemoryCache(),
   });
 
-  const url = new URL(`/api/yieldfarming/staking-actions/list?${query}`, config.api.baseUrl);
+  return client
+    .query({
 
-  return fetch(url.toString())
-    .then(result => result.json())
-    .then(result => {
-      if (result.status !== 200) {
-        return Promise.reject(new Error(result.data));
+      query: gql`
+      query($actionType: String, $tokenAddress: String, $userAddress: String){
+        transactions(first: 1000, orderBy: blockTimestamp, orderDirection: desc, where: {${(actionType != "all") ? "actionType: $actionType," : ""}${(tokenAddress != "all") ? "tokenAddress: $tokenAddress," : ""}${(userAddress != "all") ? "userAddress: $userAddress," : ""}}){
+          actionType,
+          tokenAddress,
+          userAddress,
+          amount,
+          transactionHash,
+          blockTimestamp
+        }
       }
+    `,
+      variables: {
+        actionType: actionType,
+        tokenAddress: (tokenAddress != "all") ? tokenAddress : undefined,
+        userAddress: (userAddress != "all") ? userAddress : undefined,
+      },
+    })
+    .catch(e => {
+      console.log(e)
+      return { data: [], meta: { count: 0, block: 0 } }
+    })
+    .then(result => {
+      console.log(result)
 
-      return result;
+      return { data: result.data.transactions.slice(limit * (page - 1), limit * page), meta: { count: result.data.transactions.length, block: page } }
     })
     .then((result: PaginatedResult<APIYFPoolTransaction>) => {
       return {
@@ -52,40 +70,5 @@ export function fetchYFPoolTransactions(
           amount: new BigNumber(item.amount),
         })),
       };
-    });
-}
-
-export type APIYFPoolChart = {
-  [tokenAddress: string]: {
-    [point: number]: {
-      sumDeposits: string;
-      sumWithdrawals: string;
-    };
-  };
-};
-
-export function fetchYFPoolChart(
-  tokenAddress: string[],
-  start: number,
-  end: number,
-  scale?: string,
-): Promise<APIYFPoolChart> {
-  const query = queryfy({
-    tokenAddress,
-    start,
-    end,
-    scale,
-  });
-
-  const url = new URL(`/api/yieldfarming/staking-actions/chart?${query}`, config.api.baseUrl);
-
-  return fetch(url.toString())
-    .then(result => result.json())
-    .then(result => {
-      if (result.status !== 200) {
-        return Promise.reject(new Error(result.data));
-      }
-
-      return result.data;
     });
 }

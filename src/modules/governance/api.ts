@@ -325,14 +325,22 @@ export type APITreasuryToken = {
 };
 
 export function fetchTreasuryTokens(): Promise<APITreasuryToken[]> {
-  const url = new URL(`/api/governance/treasury/tokens?address=${config.contracts.dao.governance}`, API_URL);
+  const url = new URL(`/v1/protocols/tokens/balances?addresses%5B%5D=${config.contracts.dao.governance}&network=ethereum&api_key=${config.zapper.apiKey}`, config.zapper.baseUrl);
 
   return fetch(url.toString())
     .then(result => result.json())
-    .then(({ status, data }) => {
-      if (status !== 200) {
-        return Promise.reject(status);
-      }
+    .then((res) => {
+      const assets = res[`${config.contracts.dao.governance}`].products[0].assets
+
+
+      const data = assets.filter((t: { symbol: string; }) => t.symbol != 'ETH').map((m: { address: any; symbol: any; decimals: any; }) => {
+        return {
+          tokenAddress: m.address,
+          tokenSymbol: m.symbol,
+          tokenDecimals: m.decimals
+        }
+      })
+
 
       return data;
     });
@@ -343,53 +351,52 @@ export type APITreasuryHistory = {
   accountLabel: string;
   counterpartyAddress: string;
   counterpartyLabel: string;
-  amount: number;
+  amount: string;
   transactionDirection: string;
   tokenAddress: string;
   tokenSymbol: string;
-  tokenDecimals: number;
   transactionHash: string;
   blockTimestamp: number;
   blockNumber: number;
 };
 
-export function fetchTreasuryHistory(
-  page = 1,
-  limit = 10,
-  tokenFilter: string,
-  directionFilter: string,
-): Promise<PaginatedResult<APITreasuryHistory>> {
-  const query = QueryString.stringify(
-    {
-      address: config.contracts.dao.governance,
-      page: String(page),
-      limit: String(limit),
-      tokenAddress: tokenFilter,
-      transactionDirection: directionFilter,
-    },
-    {
-      skipNull: true,
-      skipEmptyString: true,
-      encode: true,
-    },
-  );
+type ZapperTransactionHistory = {
+  hash: string;
+  blockNumber: number;
+  timeStamp: string;
+  symbol: string;
+  address: string;
+  direction: string;
+  from: string;
+  amount: string;
+  destination: string;
+}
 
-  const url = new URL(`/api/governance/treasury/transactions?${query}`, API_URL);
+export function fetchTreasuryHistory(): Promise<PaginatedResult<APITreasuryHistory>> {
+
+  // const url = new URL(`/api/governance/treasury/transactions?${query}`, API_URL);
+  const url = new URL(`/v1/transactions?address=${config.contracts.dao.governance}&addresses%5B%5D=${config.contracts.dao.governance}&network=ethereum&api_key=${config.zapper.apiKey}`, config.zapper.baseUrl);
 
   return fetch(url.toString())
     .then(result => result.json())
-    .then(({ status, ...data }) => {
-      if (status !== 200) {
-        return Promise.reject(status);
-      }
+    .then((res) => {
 
-      return data;
-    })
-    .then((result: PaginatedResult<APITreasuryHistory>) => ({
-      ...result,
-      data: (result.data ?? []).map(item => ({
-        ...item,
-        amount: Number(item.amount),
-      })),
-    }));
+      const data = res.data.map((m: ZapperTransactionHistory) => {
+        return {
+          accountAddress: (m.direction == 'incoming') ? m.destination : m.from,
+          accountLabel: 'DAO',
+          counterpartyAddress: (m.direction == 'incoming') ? m.from : m.destination,
+          counterpartyLabel: "",
+          amount: m.amount,
+          transactionDirection: (m.direction == 'incoming') ? 'IN' : 'OUT',
+          tokenAddress: m.address,
+          tokenSymbol: m.symbol,
+          transactionHash: m.hash,
+          blockTimestamp: Number.parseInt(m.timeStamp),
+          blockNumber: m.blockNumber
+        }
+      })
+
+      return { data, meta: { count: data.length } };
+    });
 }
