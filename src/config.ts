@@ -13,6 +13,10 @@ const config = {
   api: {
     baseUrl: String(process.env.REACT_APP_BASE_API_URL),
   },
+  zapper: {
+    baseUrl: String(process.env.REACT_APP_ZAPPER_URL),
+    apiKey: String(process.env.REACT_APP_ZAPPER_API_KEY)
+  },
   tokens: {
     usdc: toLowerCase(process.env.REACT_APP_TOKEN_USDC_ADDR),
     xyz: toLowerCase(process.env.REACT_APP_TOKEN_XYZ_ADDR),
