@@ -125,6 +125,9 @@ const LayoutFooter: React.FC = () => {
               <ExternalLink href="https://universe.xyz/polymorphs" className={s.link}>
                 Polymorphs
               </ExternalLink>
+              <ExternalLink href="https://universe.xyz/lobby-lobsters" className={s.link}>
+                Lobby Lobsters
+              </ExternalLink>
               <span className={s.link} aria-disabled="true">
                 <Tooltip title="Coming soon" placement="top" hint>
                   Core Drops

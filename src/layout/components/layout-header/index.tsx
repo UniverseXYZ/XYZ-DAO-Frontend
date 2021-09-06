@@ -130,6 +130,13 @@ const LayoutHeader: React.FC = () => {
                 <Icon name="polymorphs" width={20} height={20} className={s.dropdownIcon} />
                 <span>Polymorphs</span>
               </ExternalLink>
+              <ExternalLink
+                href="https://universe.xyz/lobby-lobsters"
+                className={s.dropdownLink}
+                onClick={() => setPopper4visible(false)}>
+                <Icon name="lobby-lobsters" width={20} height={20} className={s.dropdownIcon} />
+                <span>Lobby Lobsters</span>
+              </ExternalLink>
               <span className={s.dropdownLink} aria-disabled="true">
                 <Icon name="core-drops" width={20} height={20} className={s.dropdownIcon} />
                 <Tooltip title="Coming soon" placement="top" hint>
@@ -178,7 +185,7 @@ const LayoutHeader: React.FC = () => {
               <ExternalLink
                 href="https://docs.universe.xyz/"
                 className={s.dropdownLink}
-                onClick={() => setPopper3visible(false)}>
+                onClick={() => setPopper2visible(false)}>
                 <Icon name="docs" width={20} height={20} className={s.dropdownIcon} />
                 <span>Docs</span>
               </ExternalLink>
@@ -276,6 +283,13 @@ const LayoutHeader: React.FC = () => {
                     onClick={() => setNavOpen(false)}>
                     <Icon name="polymorphs" width={20} height={20} className={s.dropdownIcon} />
                     <span>Polymorphs</span>
+                  </ExternalLink>
+                  <ExternalLink
+                    href="https://universe.xyz/lobby-lobsters"
+                    className={s.dropdownLink}
+                    onClick={() => setNavOpen(false)}>
+                    <Icon name="lobby-lobsters" width={20} height={20} className={s.dropdownIcon} />
+                    <span>Lobby Lobsters</span>
                   </ExternalLink>
                   <span className={s.dropdownLink} aria-disabled="true">
                     <Icon name="core-drops" width={20} height={20} className={s.dropdownIcon} />
