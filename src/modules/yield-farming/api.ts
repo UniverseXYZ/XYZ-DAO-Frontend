@@ -28,7 +28,7 @@ export function fetchYFPoolTransactions(
   actionType: string = 'all',
 ): Promise<PaginatedResult<APIYFPoolTransaction>> {
   const client = new ApolloClient({
-    uri: config.graph.yfGraphUrl,
+    uri: config.graph.graphUrl,
     cache: new InMemoryCache(),
   });
 

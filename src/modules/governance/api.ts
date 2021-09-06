@@ -2,8 +2,8 @@ import BigNumber from 'bignumber.js';
 import QueryString from 'query-string';
 import { getHumanValue } from 'web3/utils';
 
-import { XyzToken } from 'components/providers/known-tokens-provider';
 import config from 'config';
+import {ApolloClient, gql, InMemoryCache} from "@apollo/client";
 
 const API_URL = config.api.baseUrl;
 
@@ -21,24 +21,46 @@ export type APIOverviewData = {
   holders: number;
   holdersStakingExcluded: number;
   voters: number;
-  supernovaUsers: number;
+  kernelUsers: number;
 };
 
 export function fetchOverviewData(): Promise<APIOverviewData> {
-  const url = new URL(`/api/governance/overview`, API_URL);
+  const client = new ApolloClient({
+    uri: config.graph.graphUrl,
+    cache: new InMemoryCache(),
+  });
 
-  return fetch(url.toString())
-    .then(result => result.json())
-    .then(result => ({
-      ...result.data,
-      totalDelegatedPower: getHumanValue(new BigNumber(result.data.totalDelegatedPower), 18),
-      TotalVKek: getHumanValue(new BigNumber(result.data.TotalVKek), 18),
-    }));
+  // TODO holders are not returned yet
+  return client
+    .query({
+
+      query: gql`
+      query GetOverview {
+        overview(id: "OVERVIEW") {
+          avgLockTimeSeconds
+          totalDelegatedPower
+          voters
+          kernelUsers
+        }
+      }
+    `})
+    .catch(e => {
+      console.log(e)
+      return { data: {}};
+    })
+    .then(result => {
+      console.log(result);
+      return {
+        ...result.data.overview,
+        totalDelegatedPower: getHumanValue(new BigNumber(result.data.overview.totalDelegatedPower), 18),
+        TotalVKek: BigNumber.ZERO, //TODO not supported
+      }
+    });
 }
 
 export type APIVoterEntity = {
   address: string;
-  kekStaked: BigNumber;
+  tokensStaked: BigNumber;
   lockedUntil: number;
   delegatedPower: BigNumber;
   votes: number;
@@ -48,19 +70,60 @@ export type APIVoterEntity = {
 };
 
 export function fetchVoters(page = 1, limit = 10): Promise<PaginatedResult<APIVoterEntity>> {
-  const url = new URL(`/api/governance/voters?page=${page}&limit=${limit}`, API_URL);
+  const client = new ApolloClient({
+    uri: config.graph.graphUrl,
+    cache: new InMemoryCache(),
+  });
 
-  return fetch(url.toString())
-    .then(result => result.json())
-    .then((result: PaginatedResult<APIVoterEntity>) => ({
+  // TODO GraphQL sorting does not work since tokensStaked is String!
+  // TODO It seems that kernelUsers are < than Voters. Must be investigated
+  // TODO VotingPower is not accounted yet
+  return client
+    .query({
+
+      query: gql`
+      query GetVoters ($limit: Int, $offset: Int) {
+        voters (first: $limit, skip: $offset){
+          id
+          tokensStaked
+          lockedUntil
+          delegatedPower
+          votes
+          proposals
+          hasActiveDelegation
+        }
+        overview (id: "OVERVIEW") {
+          kernelUsers
+        }
+      }
+      `,
+      variables: {
+        offset: limit * (page - 1),
+        limit: limit
+      },
+    })
+    .catch(e => {
+      console.log(e)
+      return { data: [], meta: { count: 0, block: 0 } }
+  })
+  .then(result => {
+    console.log(result)
+    return { data: result.data.voters, meta: {count: result.data.overview.kernelUsers, block: 0}}
+  })
+  .then((result => {
+    return {
       ...result,
-      data: (result.data ?? []).map((item: APIVoterEntity) => ({
-        ...item,
-        kekStaked: getHumanValue(new BigNumber(item.kekStaked), XyzToken.decimals)!,
-        delegatedPower: getHumanValue(new BigNumber(item.delegatedPower), 18)!,
-        votingPower: getHumanValue(new BigNumber(item.votingPower), 18)!,
+      data: (result.data ?? []).map((item: any) => ({
+        address: item.id,
+        tokensStaked: getHumanValue(new BigNumber(item.tokensStaked), 18),
+        lockedUntil: item.lockedUntil,
+        delegatedPower: getHumanValue(new BigNumber(item.delegatedPower), 18),
+        votes: item.votes,
+        proposals: item.proposals,
+        votingPower: getHumanValue(new BigNumber(item.tokensStaked), 18) // TODO
       })),
-    }));
+    };
+  }));
 }
 
 export enum APIProposalState {
