@@ -189,14 +189,14 @@ const VotingStatList: React.FC<VotingStatListProps> = props => {
           <Grid flow="row" gap={4}>
             <Grid flow="col" gap={4} align="end">
               <Text type="h2" weight="bold" color="primary">
-                {overview?.holdersStakingExcluded}
+                {overview?.holders}
               </Text>
               <Text type="p1" color="secondary">
                 holders
               </Text>
             </Grid>
             <Text type="p1" color="secondary">
-              {overview?.supernovaUsers} stakers & {overview?.voters} voters
+              {overview?.kernelUsers} stakers & {overview?.voters} voters
             </Text>
           </Grid>
         </Grid>

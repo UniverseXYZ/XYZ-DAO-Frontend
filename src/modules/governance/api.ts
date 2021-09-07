@@ -2,8 +2,8 @@ import BigNumber from 'bignumber.js';
 import QueryString from 'query-string';
 import { getHumanValue } from 'web3/utils';
 
-import { XyzToken } from 'components/providers/known-tokens-provider';
 import config from 'config';
+import {ApolloClient, gql, InMemoryCache} from "@apollo/client";
 
 const API_URL = config.api.baseUrl;
 
@@ -21,24 +21,46 @@ export type APIOverviewData = {
   holders: number;
   holdersStakingExcluded: number;
   voters: number;
-  supernovaUsers: number;
+  kernelUsers: number;
 };
 
 export function fetchOverviewData(): Promise<APIOverviewData> {
-  const url = new URL(`/api/governance/overview`, API_URL);
+  const client = new ApolloClient({
+    uri: config.graph.graphUrl,
+    cache: new InMemoryCache(),
+  });
 
-  return fetch(url.toString())
-    .then(result => result.json())
-    .then(result => ({
-      ...result.data,
-      totalDelegatedPower: getHumanValue(new BigNumber(result.data.totalDelegatedPower), 18),
-      TotalVKek: getHumanValue(new BigNumber(result.data.TotalVKek), 18),
-    }));
+  // TODO holders are not returned yet
+  return client
+    .query({
+
+      query: gql`
+      query GetOverview {
+        overview(id: "OVERVIEW") {
+          avgLockTimeSeconds
+          totalDelegatedPower
+          voters
+          kernelUsers
+        }
+      }
+    `})
+    .catch(e => {
+      console.log(e)
+      return { data: {}};
+    })
+    .then(result => {
+      console.log(result);
+      return {
+        ...result.data.overview,
+        totalDelegatedPower: getHumanValue(new BigNumber(result.data.overview.totalDelegatedPower), 18),
+        TotalVKek: BigNumber.ZERO, //TODO not supported
+      }
+    });
 }
 
 export type APIVoterEntity = {
   address: string;
-  kekStaked: BigNumber;
+  tokensStaked: BigNumber;
   lockedUntil: number;
   delegatedPower: BigNumber;
   votes: number;
@@ -48,19 +70,60 @@ export type APIVoterEntity = {
 };
 
 export function fetchVoters(page = 1, limit = 10): Promise<PaginatedResult<APIVoterEntity>> {
-  const url = new URL(`/api/governance/voters?page=${page}&limit=${limit}`, API_URL);
+  const client = new ApolloClient({
+    uri: config.graph.graphUrl,
+    cache: new InMemoryCache(),
+  });
 
-  return fetch(url.toString())
-    .then(result => result.json())
-    .then((result: PaginatedResult<APIVoterEntity>) => ({
+  // TODO GraphQL sorting does not work since tokensStaked is String!
+  // TODO It seems that kernelUsers are < than Voters. Must be investigated
+  // TODO VotingPower is not accounted yet
+  return client
+    .query({
+
+      query: gql`
+      query GetVoters ($limit: Int, $offset: Int) {
+        voters (first: $limit, skip: $offset){
+          id
+          tokensStaked
+          lockedUntil
+          delegatedPower
+          votes
+          proposals
+          hasActiveDelegation
+        }
+        overview (id: "OVERVIEW") {
+          kernelUsers
+        }
+      }
+      `,
+      variables: {
+        offset: limit * (page - 1),
+        limit: limit
+      },
+    })
+    .catch(e => {
+      console.log(e)
+      return { data: [], meta: { count: 0, block: 0 } }
+  })
+  .then(result => {
+    console.log(result)
+    return { data: result.data.voters, meta: {count: result.data.overview.kernelUsers, block: 0}}
+  })
+  .then((result => {
+    return {
       ...result,
-      data: (result.data ?? []).map((item: APIVoterEntity) => ({
-        ...item,
-        kekStaked: getHumanValue(new BigNumber(item.kekStaked), XyzToken.decimals)!,
-        delegatedPower: getHumanValue(new BigNumber(item.delegatedPower), 18)!,
-        votingPower: getHumanValue(new BigNumber(item.votingPower), 18)!,
+      data: (result.data ?? []).map((item: any) => ({
+        address: item.id,
+        tokensStaked: getHumanValue(new BigNumber(item.tokensStaked), 18),
+        lockedUntil: item.lockedUntil,
+        delegatedPower: getHumanValue(new BigNumber(item.delegatedPower), 18),
+        votes: item.votes,
+        proposals: item.proposals,
+        votingPower: getHumanValue(new BigNumber(item.tokensStaked), 18) // TODO
       })),
-    }));
+    };
+  }));
 }
 
 export enum APIProposalState {
@@ -119,41 +182,60 @@ export type APILiteProposalEntity = {
 export function fetchProposals(
   page = 1,
   limit = 10,
-  state?: string,
-  search?: string,
+  state?: string
 ): Promise<PaginatedResult<APILiteProposalEntity>> {
-  const query = QueryString.stringify(
-    {
-      page: String(page),
-      limit: String(limit),
-      state,
-      title: search,
-    },
-    {
-      skipNull: true,
-      skipEmptyString: true,
-      encode: true,
-    },
-  );
+  const client = new ApolloClient({
+    uri: config.graph.graphUrl,
+    cache: new InMemoryCache(),
+  });
 
-  const url = new URL(`/api/governance/proposals?${query}`, API_URL);
+  console.log(state);
+  return client
+    .query({
 
-  return fetch(url.toString())
-    .then(result => result.json())
-    .then(({ status, ...data }) => {
-      if (status !== 200) {
-        return Promise.reject(status);
+    // TODO all proposals filter is not excluded for some reason...
+    // where: {${(state != "ALL") ? "state: $state" : ""}}
+    query: gql`
+      query GetProposals ($limit: Int, $offset: Int, $state: String) {
+        proposals (first: $limit, skip: $offset) {
+          id
+          proposer
+          title
+          description
+          createTime
+          state
+          forVotes
+          againstVotes
+        }
+        overview (id: "OVERVIEW") {
+          proposals
+        }
       }
-
-      return data;
+    `,
+      variables: {
+        offset: limit * (page - 1),
+        limit: limit,
+        state: state != undefined ? state.toUpperCase() : "ALL"
+      },
     })
-    .then((result: PaginatedResult<APILiteProposalEntity>) => ({
-      ...result,
-      data: (result.data ?? []).map(proposal => ({
-        ...proposal,
-        forVotes: getHumanValue(new BigNumber(proposal.forVotes), 18)!,
-        againstVotes: getHumanValue(new BigNumber(proposal.againstVotes), 18)!,
-      })),
+    .catch(e => {
+      console.log(e)
+      return { data: [], meta: {count: 0, block: 0}}
+    })
+    .then(result => {
+      console.log(result)
+      return { data: result.data.proposals, meta: {count: result.data.overview.proposals, block: 0}}
+    })
+    .then((result => {
+      return {
+        ...result,
+        data: (result.data ?? []).map((item: any) => ({
+          ...item,
+          proposalId: item.id,
+          forVotes: getHumanValue(new BigNumber(item.forVotes), 18)!,
+          againstVotes: getHumanValue(new BigNumber(item.againstVotes), 18)!
+        }))
+      };
     }));
 }
 
@@ -179,23 +261,200 @@ export type APIProposalEntity = APILiteProposalEntity & {
   history: APIProposalHistoryEntity[];
 };
 
-export function fetchProposal(proposalId: number): Promise<APIProposalEntity> {
-  const url = new URL(`/api/governance/proposals/${proposalId}`, API_URL);
-
-  return fetch(url.toString())
-    .then(result => result.json())
-    .then(({ data, status }) => {
-      if (status !== 200) {
-        return Promise.reject(status);
-      }
-
-      return data;
+function checkForCancelledEvent(eventsCopy: Array<any>, nextDeadline: number, history: APIProposalHistoryEntity[]) {
+  if (eventsCopy.length > 0 && eventsCopy[0].createTime < nextDeadline && eventsCopy[0].eventType == "CANCELED") {
+    history.push({
+      name: "CANCELED",
+      startTimestamp: eventsCopy[0].createTime,
+      endTimestamp: 0,
+      txHash: eventsCopy[0].txHash
     })
-    .then((data: APIProposalEntity) => ({
-      ...data,
-      forVotes: getHumanValue(new BigNumber(data.forVotes), 18)!,
-      againstVotes: getHumanValue(new BigNumber(data.againstVotes), 18)!,
-    }));
+  }
+}
+
+function shouldStopBuilding(nextDeadline: number) {
+  return nextDeadline >= Math.floor(Date.now() / 1000);
+}
+
+function isFailedProposal(proposal: any): boolean {
+  // TODO get the data from the contract
+  return false;
+}
+
+function buildProposalHistory(proposal: any): APIProposalHistoryEntity[] {
+  let history = new Array<APIProposalHistoryEntity>();
+  let eventsCopy = JSON.parse(JSON.stringify(proposal.events)) as Array<any>;
+  eventsCopy.sort((a: any, b: any) => {
+    return a.createTime - b.createTime;
+  });
+
+  history.push({
+    name: "CREATED",
+    startTimestamp: proposal.createTime,
+    endTimestamp: 0,
+    txHash: eventsCopy[0].txHash
+  });
+  // Remove Created event
+  eventsCopy = eventsCopy.slice(1);
+  let warmUpEvent = history.push({
+    name: "WARMUP",
+    startTimestamp: proposal.createTime,
+    endTimestamp: 0, //proposal.createTime+ proposal.warmUpDuration,
+    txHash: ""
+  });
+
+  let nextDeadline = proposal.createTime + proposal.warmUpDuration;
+  // at this point, only a CANCELED event can occur that would be final for this history
+  // so we check the list of events to see if there's any CANCELED event that occurred before the WARMUP period ended
+  checkForCancelledEvent(eventsCopy, nextDeadline, history);
+
+  if (shouldStopBuilding(nextDeadline)) {
+    return history;
+  }
+
+  // if the proposal was not canceled in the WARMUP period, then it means we reached ACTIVE state so we add that to
+  // the history
+  history.push({
+    name: "ACTIVE",
+    startTimestamp: nextDeadline + 1,
+    endTimestamp: 0,
+    txHash: ""
+  });
+
+  // just like in WARMUP period, the only final event that could occur in this case is CANCELED
+  nextDeadline = proposal.createTime + proposal.warmUpDuration + proposal.activeDuration;
+  checkForCancelledEvent(eventsCopy, nextDeadline, history);
+
+  if (shouldStopBuilding(nextDeadline)) {
+    return history;
+  }
+
+  history.push({
+    name: isFailedProposal(proposal) ? "FAILED" : "ACCEPTED",
+    startTimestamp: nextDeadline + 1,
+    endTimestamp: 0,
+    txHash: ""
+  });
+
+  // after the proposal reached accepted state, nothing else can happen unless somebody calls the queue function
+  // which emits a QUEUED event
+  if(eventsCopy.length == 0) {
+    return history;
+  }
+
+  if (eventsCopy[0].eventType == "QUEUED") {
+    history.push({
+      name: "QUEUED",
+      startTimestamp: proposal.createTime + proposal.warmUpDuration + proposal.activeDuration + 1,
+      endTimestamp: 0,
+      txHash: eventsCopy[0].txHash,
+    })
+  }
+  eventsCopy = eventsCopy.slice(1);
+
+  nextDeadline = proposal.createTime + proposal.warmUpDuration + proposal.activeDuration + proposal.queueDuration;
+  if (shouldStopBuilding(nextDeadline)) {
+    return history;
+  }
+
+  // TODO add logic for abrogation proposals
+
+  // No abrogation proposal or did not pass
+  history.push({
+    name: "GRACE",
+    startTimestamp: nextDeadline,
+    endTimestamp: 0,
+    txHash: ""
+  });
+
+  nextDeadline += proposal.gracePeriodDuration;
+  if (eventsCopy.length > 0 && eventsCopy[0].createTime <= nextDeadline
+    && eventsCopy[0].eventType == "EXECUTED") {
+    history.push({
+      name: "EXECUTED",
+      startTimestamp: eventsCopy[0].createTime,
+      endTimestamp: 0,
+      txHash: eventsCopy[0].txHash
+    })
+  }
+
+  if (shouldStopBuilding(nextDeadline)) {
+    return history;
+  }
+
+  history.push({
+    name: "EXPIRED",
+    startTimestamp: nextDeadline,
+    endTimestamp: 0,
+    txHash: ""
+  });
+
+  return history;
+}
+
+export function fetchProposal(proposalId: number): Promise<APIProposalEntity> {
+  const client = new ApolloClient({
+    uri: config.graph.graphUrl,
+    cache: new InMemoryCache(),
+  });
+
+  return client
+    .query({
+
+      query: gql`
+      query GetProposal($proposalId:String) {
+        proposal (id: $proposalId) {
+          id
+          proposer
+          description
+          title
+          createTime
+          targets
+          values
+          signatures
+          calldatas
+          blockTimestamp
+          warmUpDuration
+          activeDuration
+          queueDuration
+          gracePeriodDuration
+          acceptanceThreshold
+          minQuorum
+          state
+          forVotes
+          againstVotes
+          eta
+          forVotes
+          againstVotes
+          events(orderBy:createTime, orderDirection: desc) {
+            proposalId
+            caller
+            eventType
+            createTime
+            txHash
+            eta
+          }
+        }
+      }
+      `,
+      variables: {
+        proposalId: proposalId.toString()
+      }
+    })
+  .catch(e => {
+    console.log(e)
+    return { data: {}};
+  })
+  .then(result => {
+    console.log(result);
+
+    return {
+      ...result.data.proposal,
+      forVotes: getHumanValue(new BigNumber(result.data.proposal.forVotes), 18)!,
+      againstVotes: getHumanValue(new BigNumber(result.data.proposal.againstVotes), 18)!,
+      history: buildProposalHistory(result.data.proposal)
+    }
+  })
 }
 
 export type APIVoteEntity = {
