@@ -146,6 +146,7 @@ export type IconNames =
   | 'youtube'
   | 'medium'
   | 'polymorphs'
+  | 'lobby-lobsters'
   | 'core-drops'
   | 'static/add-token';
 
