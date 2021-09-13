@@ -13,6 +13,8 @@ import { useProposal } from '../../providers/ProposalProvider';
 import ProposalVoteModal, { VoteState } from '../proposal-vote-modal';
 import ProposalVotersModal from '../proposal-voters-modal';
 
+import s from './s.module.scss';
+
 type ProposalVotesCardState = {
   showVotersModal: boolean;
   showVoteModal: boolean;
@@ -112,7 +114,7 @@ const ProposalVotesCard: React.FC = () => {
           </Button>
         </div>
         <Grid className="card-row p-24" flow="row" gap={32}>
-          <Grid flow="row" gap={16}>
+          <Grid flow="row" gap={16} className={s.row}>
             <Grid flow="col" justify="space-between" gap={8}>
               <Text type="p1" weight="semibold" color="primary">
                 For
@@ -131,7 +133,7 @@ const ProposalVotesCard: React.FC = () => {
               colors={{ bg: 'rgba(var(--theme-green-color-rgb), 0.16)', bar: 'var(--theme-green-color)' }}
             />
           </Grid>
-          <Grid flow="row" gap={16}>
+          <Grid flow="row" gap={16} className={s.row}>
             <Grid flow="col" justify="space-between" gap={8}>
               <Text type="p1" weight="semibold" color="primary">
                 Against
