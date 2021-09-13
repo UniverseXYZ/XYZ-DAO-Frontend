@@ -113,7 +113,7 @@ const ProposalVotesCard: React.FC = () => {
         </div>
         <Grid className="card-row p-24" flow="row" gap={32}>
           <Grid flow="row" gap={16}>
-            <Grid flow="col" justify="space-between">
+            <Grid flow="col" justify="space-between" gap={8}>
               <Text type="p1" weight="semibold" color="primary">
                 For
               </Text>
@@ -132,7 +132,7 @@ const ProposalVotesCard: React.FC = () => {
             />
           </Grid>
           <Grid flow="row" gap={16}>
-            <Grid flow="col" justify="space-between">
+            <Grid flow="col" justify="space-between" gap={8}>
               <Text type="p1" weight="semibold" color="primary">
                 Against
               </Text>
