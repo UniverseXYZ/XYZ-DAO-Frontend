@@ -60,24 +60,24 @@ const PoolRewards: React.FC = () => {
   return (
     <div className={cn(s.component, 'pv-24')}>
       <div className="container-limit">
-        <Text type="lb2" weight="semibold" color="primary">
+        <Text className="mb-16" type="lb2" weight="semibold" color="primary">
           My Rewards
         </Text>
 
         <Grid flow="col" gap={24} className={s.items}>
           <Grid flow="row" gap={2} className={s.item1}>
-            <Text type="p2" color="secondary">
+            <Text className="mb-8" type="p2" color="secondary">
               Current reward
             </Text>
-            <Grid flow="col" align="center" gap={4}>
+            <Grid flow="col" align="center" gap={6}>
               <Text type="h3" weight="bold" color="primary">
                 {formatToken(totalToClaim?.unscaleBy(XyzToken.decimals)) ?? '-'}
               </Text>
-              <Icon name={XyzToken.icon!} width={40} height={40} />
+              <Icon name={XyzToken.icon!} width={33} height={33} />
               {walletCtx.isActive && (
                 <button
                   type="button"
-                  className="button-primary button-small"
+                  className="button-primary button-small ml-8"
                   // disabled={!totalToClaim?.gt(BigNumber.ZERO)}
                   onClick={() => showHarvestModal(true)}>
                   Claim
@@ -87,21 +87,21 @@ const PoolRewards: React.FC = () => {
           </Grid>
           <Divider type="vertical" />
           <Grid flow="row" gap={2} className={s.item2}>
-            <Text type="p2" color="secondary">
+            <Text className="mb-8" type="p2" color="secondary">
               {XyzToken.symbol} Balance
             </Text>
-            <Grid flow="col" gap={4} align="center">
+            <Grid flow="col" gap={6} align="center">
               <Text type="h3" weight="bold" color="primary">
                 {formatToken(xyzContract.balance?.unscaleBy(XyzToken.decimals)) ?? '-'}
               </Text>
-              <Icon name={XyzToken.icon!} width={40} height={40} />
+              <Icon name={XyzToken.icon!} width={33} height={33} />
             </Grid>
           </Grid>
           {!!currentEpoch && (
             <>
               <Divider type="vertical" />
               <Grid flow="row" gap={2} className={s.item4}>
-                <Grid flow="col" gap={8} align="center">
+                <Grid className="mb-8" flow="col" gap={8} align="center">
                   <Hint
                     text={`This number shows the $${XyzToken.symbol} rewards you would potentially be able to harvest this epoch, but is subject to change - in case more users deposit, or you withdraw some of your stake.`}>
                     <Text type="p2" color="secondary">
@@ -109,36 +109,36 @@ const PoolRewards: React.FC = () => {
                     </Text>
                   </Hint>
                 </Grid>
-                <Grid flow="col" gap={4} align="center">
+                <Grid flow="col" gap={6} align="center">
                   <Text type="h3" weight="bold" color="primary">
                     {formatToken(totalPotentialReward) ?? '-'}
                   </Text>
-                  <Icon name={XyzToken.icon!} width={40} height={40} />
+                  <Icon name={XyzToken.icon!} width={33} height={33} />
                 </Grid>
               </Grid>
             </>
           )}
           <Divider type="vertical" />
           <Grid flow="row" gap={2} className={s.item3}>
-            <Grid flow="col" gap={8} align="center">
-              <Hint text="You have claimable tokens from the $XYZ Airdrop. This balance will rise over time and as more people exit the pool and forfeit their additional rewards. Warning: You can only claim once.">
+            <Grid className="mb-8" flow="col" gap={8} align="center">
+              <Hint text="You have claimable tokens from the $LEAG Airdrop. This balance will rise over time and as more people exit the pool and forfeit their additional rewards. Warning: You can only claim once.">
                 <Text type="p2" color="secondary">
                   <span style={{ marginRight: 5 }}>Airdrop reward</span>
-                  <span className={s.week}>
+                  {/* <span className={s.week}>
                     WEEK {airdropCurrentWeek}/{airdropDurationInWeeks}
-                  </span>
+                  </span> */}
                 </Text>
               </Hint>
             </Grid>
-            <Grid flow="col" gap={4} align="center">
+            <Grid flow="col" gap={6} align="center">
               <Text type="h3" weight="bold" color="primary">
                 {formatToken(airdropAmount?.unscaleBy(XyzToken.decimals)) ?? 0}
               </Text>
-              <Icon name={XyzToken.icon!} width={40} height={40} />
+              <Icon name={XyzToken.icon!} width={33} height={33} />
               {walletCtx.isActive && (
                 <button
                   type="button"
-                  className="button-primary button-small"
+                  className="button-primary button-small ml-8"
                   // disabled={!airdropAmount?.gt(BigNumber.ZERO)}
                   onClick={() => showAirdropModal(true)}>
                   Claim

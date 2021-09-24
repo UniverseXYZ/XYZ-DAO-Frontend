@@ -121,7 +121,7 @@ const VotersTable: React.FC<VotersTableProps> = props => {
               <Text type="p2" weight="semibold" color="secondary" className="hidden-mobile">
                 Showing {from} to {to} out of {total} stakers
               </Text>
-              <Text type="p2" weight="semibold" color="secondary" className="hidden-tablet hidden-desktop">
+               <Text type="p2" weight="semibold" color="secondary" className="hidden-tablet hidden-desktop">
                 {from}..{to} of {total}
               </Text>
             </>

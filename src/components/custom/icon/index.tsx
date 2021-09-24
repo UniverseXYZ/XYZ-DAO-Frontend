@@ -8,6 +8,8 @@ import sushiSrc from 'resources/png/token-sushi.png';
 import uslpSrc from 'resources/png/token-uslp.png';
 import universeSrc from 'resources/png/universe.png';
 import Sprite from 'resources/svg/icons-sprite.svg';
+import LeagueDaoDark from 'resources/png/league-dao-dark.png';
+import LeagueDaoLight from 'resources/png/league-dao-light.png';
 
 import s from './s.module.scss';
 
@@ -38,6 +40,8 @@ export type TokenIconNames =
   | 'png/link'
   | 'png/ilv'
   | 'png/uslp'
+  | 'png/leaguedaodark'
+  | 'png/leaguedaolight'
   | 'cream_finance'
   | 'yearn_finance';
 
@@ -172,6 +176,10 @@ const Icon: React.FC<IconProps> = props => {
       switch (name) {
         case 'png/universe':
           return universeSrc;
+        case 'png/leaguedaodark':
+          return LeagueDaoDark;
+        case 'png/leaguedaolight':
+          return LeagueDaoLight;
         case 'png/aave':
           return aaveSrc;
         case 'png/ilv':

@@ -5,10 +5,10 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 12px 32px;
+  padding: 15px 25px;
 
   border: 0;
-  background: var(--gradient-green);
+  background: var(--theme-yellow-color); 
   box-shadow: 0 10px 20px rgba(136, 120, 172, 0.2);
 
   border-radius: 12px;
@@ -23,12 +23,12 @@
 
   &:hover {
     color: #000;
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), linear-gradient(135deg, #bceb00 15.57%, #00eaea 84.88%);
+    background: #FFD12C;
   }
 
   &:active {
     color: #000;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), linear-gradient(135deg, #bceb00 15.57%, #00eaea 84.88%);
+    background: linear-gradient(0deg );
   }
 
   &:disabled,
@@ -87,10 +87,10 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 11px 32px;
+  padding: 11px 24px;
   position: relative;
 
-  border: 0;
+  border: 2px solid #FEE554;
   background-color: transparent;
   box-sizing: border-box;
   border-radius: 12px;
@@ -103,31 +103,31 @@
 
   color: var(--theme-primary-color);
 
-  &::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    border-radius: 12px;
-    background: var(--gradient-green);
-    z-index: 0;
-  }
+  // &::before {
+  //   content: '';
+  //   display: block;
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   bottom: 0;
+  //   right: 0;
+  //   border-radius: 12px;
+  //   background: var(--gradient-green);
+  //   z-index: 0;
+  // }
 
-  &::after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    bottom: 1px;
-    right: 1px;
-    border-radius: 12px;
-    background-color: var(--theme-card-color);
-    z-index: 0;
-  }
+  // &::after {
+  //   content: '';
+  //   display: block;
+  //   position: absolute;
+  //   top: 1px;
+  //   left: 1px;
+  //   bottom: 1px;
+  //   right: 1px;
+  //   border-radius: 12px;
+  //   background-color: var(--theme-card-color);
+  //   z-index: 0;
+  // }
 
   span {
     z-index: 1;

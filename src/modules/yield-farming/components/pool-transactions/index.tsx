@@ -13,7 +13,7 @@ import { Text } from 'components/custom/typography';
 import { convertTokenInUSD, getTokenByAddress } from 'components/providers/known-tokens-provider';
 import { useReload } from 'hooks/useReload';
 import { useWallet } from 'wallets/wallet';
-
+import './index.scss'
 import { APIYFPoolActionType, APIYFPoolTransaction, fetchYFPoolTransactions } from '../../api';
 import { useYFPool } from '../../providers/pool-provider';
 import { useYFPools } from '../../providers/pools-provider';
@@ -47,7 +47,7 @@ const InitialState: State = {
 function getColumns(isAll: boolean): ColumnsType<TableEntity> {
   return [
     {
-      title: 'Transaction',
+      title: 'Transaction type',
       width: '25%',
       render: function TransactionColumn(_, entity) {
         const knownToken = getTokenByAddress(entity.tokenAddress);
@@ -114,7 +114,7 @@ function getColumns(isAll: boolean): ColumnsType<TableEntity> {
           width: '25%',
           render: (_, entity) => (
             <ExternalLink href={getEtherscanAddressUrl(entity.userAddress)} className="link-blue">
-              <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">
+              <Text type="p1" weight="semibold" color="#fff" textGradient="var(--gradient-blue)">
                 {shortenAddr(entity.userAddress)}
               </Text>
             </ExternalLink>
@@ -127,7 +127,7 @@ function getColumns(isAll: boolean): ColumnsType<TableEntity> {
       render: (_, entity) => (
         <>
           <ExternalLink href={getEtherscanTxUrl(entity.transactionHash)} className="link-blue mb-4">
-            <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">
+            <Text type="p1" weight="semibold" color="#fff" textGradient="var(--gradient-blue)">
               {shortenAddr(entity.transactionHash)}
             </Text>
           </ExternalLink>
@@ -285,8 +285,9 @@ const PoolTransactions: FC = () => {
 
   return (
     <div className="card mb-32">
-      <div className="card-header flex flow-col align-center justify-space-between pv-0" style={{ overflowX: 'auto' }}>
+      <div className="card-header flex flow-col align-center  pv-0 header-select-section" style={{ overflowX: 'auto' }}>
         <Tabs
+          className="tab-section"
           activeKey={activeTab}
           style={{ flexShrink: 0 }}
           tabs={[
@@ -305,10 +306,10 @@ const PoolTransactions: FC = () => {
           ]}
           onClick={setActiveTab}
         />
-        <div className="flex align-center">
+        <div className="flex align-center mobile-select">
           {tokens.length! > 1 && (
             <Select
-              className="mr-16"
+              className="mr-16 all-tokens"
               style={{ minWidth: 150 }}
               options={[
                 {
@@ -339,18 +340,18 @@ const PoolTransactions: FC = () => {
         dataSource={state.transactions}
         loading={state.loading}
         rowKey="transactionHash"
-        pagination={{
-          total: state.total,
-          current: state.page,
-          pageSize: state.pageSize,
-          position: ['bottomRight'],
-          showTotal: (total: number, [from, to]: [number, number]) => (
-            <Text type="p2" weight="semibold" color="secondary">
-              Showing {from} to {to} out of {total} transactions
-            </Text>
-          ),
-          onChange: handlePageChange,
-        }}
+        // pagination={{
+        //   total: state.total,
+        //   current: state.page,
+        //   pageSize: state.pageSize,
+        //   position: ['bottomRight'],
+        //   showTotal: (total: number, [from, to]: [number, number]) => (
+        //     <Text type="p2" weight="semibold" color="secondary">
+        //       Showing {from} to {to} out of {total} transactions
+        //     </Text>
+        //   ),
+        //   onChange: handlePageChange,
+        // }}
         scroll={{
           x: true,
         }}

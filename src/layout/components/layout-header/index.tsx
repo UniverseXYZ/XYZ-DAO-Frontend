@@ -74,7 +74,7 @@ const LayoutHeader: React.FC = () => {
   return (
     <div className={s.component} ref={setReferenceElement}>
       <ExternalLink href="https://universe.xyz/" target="_self">
-        <Icon name="png/universe" width="auto" height="auto" className={s.logo} />
+        <Icon name={isDarkTheme ? "png/leaguedaodark" : "png/leaguedaolight"} width="67" height="44" className={s.logo} />
       </ExternalLink>
       <div className={s.titleDelimiter} />
       <h1 className={s.title}>{isGovernancePage ? 'Governance' : 'Yield Farming'}</h1>
@@ -148,7 +148,7 @@ const LayoutHeader: React.FC = () => {
           <Button type="link" className={s.navLink}>
             <Grid flow="col" align="center">
               <Text type="p1" weight="500" color="primary" className="mr-4">
-                🔥 NFT drops
+                Player drops
               </Text>
               <Icon name="dropdown-arrow" width={12} height={12} className={s.dropdownArrow} />
             </Grid>
@@ -276,7 +276,7 @@ const LayoutHeader: React.FC = () => {
                   </span>
                 </div>
                 <div className={s.mobileMenuBlock}>
-                  <h3>NFT drops</h3>
+                  <h3>Player drops</h3>
                   <ExternalLink
                     href="https://universe.xyz/polymorphs"
                     className={s.dropdownLink}
@@ -351,7 +351,7 @@ const LayoutHeader: React.FC = () => {
                         wallet.showWalletsModal();
                       }}
                       style={{ margin: '20px auto 0' }}>
-                      <span>Sign in</span>
+                      <span>Connect wallet</span>
                     </button>
                   </div>
                 ) : null}

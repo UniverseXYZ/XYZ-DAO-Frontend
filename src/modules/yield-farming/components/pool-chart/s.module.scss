@@ -5,8 +5,16 @@
 }
 
 .chartTitleFilters {
+  flex-wrap: wrap;
   @media (max-width: 480px) {
-    margin-top: 8px;
+    margin-top: 16px;
+    > div {
+      width: 100%;
+      margin-right: 0!important;
+      &:first-child {
+        margin-bottom: 16px;
+      }
+    }
   }
 }
 

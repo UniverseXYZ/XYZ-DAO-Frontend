@@ -90,7 +90,7 @@ export const Tabs: FC<TabsProps> = props => {
         <button
           key={id}
           className={cn(s.tab, className, {
-            [s.active]: id === activeKey,
+            // [s.active]: id === activeKey,
             [s.small]: size === 'small',
           })}
           style={{ width: variation === 'elastic' ? `calc(100% / ${totalTabs})` : 'inherit' }}

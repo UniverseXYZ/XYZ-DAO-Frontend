@@ -24,8 +24,8 @@
 
   &:global(.ant-alert-info) {
     --alert-bg-color: linear-gradient(135deg, rgba(145, 79, 230, 0.04) 0%, rgba(49, 108, 223, 0.04) 100%);
-    --alert-text-color: var(--theme-blue-color);
-    --alert-border-color: rgba(49, 108, 223, 0.32);
+    --alert-text-color: red;
+    --alert-border-color: red;
   }
 
   &:global(.ant-alert-success) {

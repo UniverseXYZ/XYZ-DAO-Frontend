@@ -4,7 +4,7 @@
   font-weight: normal;
 
   &.font-secondary {
-    font-family: 'Sharp Grotesk', 'Space Grotesk', sans-serif;
+    font-family: 'Manrope', sans-serif;
   }
 
   &.weight-500 {
@@ -99,9 +99,11 @@
     &.textGradient {
       background: var(--text-gradient);
       background-size: cover;
+      // font-size: var(--font-size-p1);
+      // color: var(--theme-white-color);
       -webkit-background-clip: text;
       background-clip: text;
-      -webkit-text-fill-color: transparent;
+      // -webkit-text-fill-color: transparent;
       text-fill-color: transparent;
     }
 

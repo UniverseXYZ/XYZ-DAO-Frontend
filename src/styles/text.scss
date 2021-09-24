@@ -1,14 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+
 @font-face {
-  font-family: "Sharp Grotesk";
+  font-family: 'Manrope', sans-serif;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   src: url('../resources/fonts/SharpGroteskMedium25.eot') format('eot');
   src: url('../resources/fonts/SharpGroteskMedium25.woff2') format('woff2'),
   url('../resources/fonts/SharpGroteskMedium25.woff') format('woff');
 }
 
 @font-face {
-  font-family: "Sharp Grotesk";
+  font-family: 'Manrope', sans-serif;
   font-style: normal;
   font-weight: 700;
   src: url('../resources/fonts/SharpGroteskSmBold25.eot') format('eot');

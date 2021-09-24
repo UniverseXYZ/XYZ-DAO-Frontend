@@ -15,6 +15,7 @@ import { Text } from 'components/custom/typography';
 import { useNotifications } from 'components/providers/notifications-provider';
 import Notifications from 'wallets/components/notifications';
 import { useWallet } from 'wallets/wallet';
+import myAccountIcon from '../../../resources/svg/my-account.svg'; 
 
 import s from './s.module.scss';
 
@@ -102,7 +103,7 @@ const ConnectedWallet: React.FC = () => {
   if (!wallet.isActive) {
     return !isMobile ? (
       <button type="button" className="button-ghost" onClick={() => wallet.showWalletsModal()}>
-        <span>Sign in</span>
+        <span>Connect wallet</span>
       </button>
     ) : null;
   }
@@ -162,9 +163,13 @@ const ConnectedWallet: React.FC = () => {
       }>
       <Button type="link" className={s.accountLink}>
         <Grid flow="col" align="center">
-          <Identicon address={wallet.account} width={24} height={24} className="mr-8" />
+          <div className={s.myAccountIcon}>
+            <img src={myAccountIcon} alt="My account" />
+          </div>
+          {/* <Identicon address={wallet.account} width={24} height={24} className="mr-8" /> */}
           <Text type="p1" color="primary" className={cn(s.walletAddress, 'mr-4')}>
-            {shortenAddr(wallet.account, 4, 3)}
+            {/* {shortenAddr(wallet.account, 4, 3)} */}
+            My account
           </Text>
           <Icon name="dropdown-arrow" className={s.dropdownArrow} />
         </Grid>

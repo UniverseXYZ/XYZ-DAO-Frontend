@@ -1,7 +1,7 @@
 .content-container {
   --content-container-v-padding: 40px;
 
-  padding: var(--content-container-v-padding) var(--horizontal-padding);
+  padding: var(--horizontal-padding);
   width: 100%;
   max-width: calc(var(--horizontal-padding) * 2 + 1100px);
   margin-left: auto;
@@ -61,7 +61,7 @@
 
 .card {
   background-color: var(--theme-card-color);
-  border-radius: 12px;
+  border-radius: 6px;
   box-shadow: var(--theme-card-shadow);
 
   .card-row {
@@ -83,6 +83,13 @@
 .card-header {
   border-bottom: 1px solid var(--theme-border-color);
   padding: 24px;
+
+  @media (max-width: 768px) {
+    display: grid;
+    // > div{
+    //   margin: 16px 0;     display: grid;     grid-gap: 16px;      padding: 0 24px;;
+    // }
+  }
 }
 
 .css-grid {

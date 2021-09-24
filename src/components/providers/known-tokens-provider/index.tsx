@@ -12,7 +12,7 @@ import { useWallet } from 'wallets/wallet';
 
 export enum KnownTokens {
   ETH = 'ETH',
-  XYZ = 'XYZ',
+  XYZ = 'LEAG',
   USDC = 'USDC',
   BOND = 'BOND',
   AAVE = 'AAVE',
@@ -47,7 +47,7 @@ export const EthToken: TokenMeta = {
 export const XyzToken: TokenMeta = {
   address: config.tokens.xyz,
   symbol: KnownTokens.XYZ,
-  name: 'XYZ Governance Token',
+  name: 'LEAG Governance Token',
   decimals: 18,
   icon: 'png/universe' as any,
   contract: new Erc20Contract([], config.tokens.xyz),
@@ -136,7 +136,7 @@ export const IlvToken: TokenMeta = {
 export const UsdcXyzSLPToken: TokenMeta = {
   address: config.tokens.usdcXyzSLP,
   symbol: KnownTokens.USDC_XYZ_SLP,
-  name: 'USDC XYZ SUSHI LP',
+  name: 'USDC LEAG SUSHI LP',
   decimals: 18,
   icon: 'png/uslp',
   contract: new Erc20Contract([], config.tokens.usdcXyzSLP),

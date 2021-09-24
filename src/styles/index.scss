@@ -64,7 +64,7 @@ body.mobile-menu-open {
 }
 
 :root {
-  --font-family: 'Space Grotesk', sans-serif;
+  --font-family: 'Manrope', sans-serif;
   --font-size-h1: 32px;
   --font-size-h2: 24px;
   --font-size-h3: 18px;
@@ -108,8 +108,8 @@ body.mobile-menu-open {
   --theme-blue-color-rgb: 79, 106, 230; // blue500
   --theme-blue400-color: #7288ea;
 
-  --theme-yellow-color: #cca74d; // yellow600
-  --theme-yellow-color-rgb: 204, 167, 77; // yellow600
+  --theme-yellow-color: #ffe654; // yellow600
+  --theme-yellow-color-rgb: 255, 209, 44; // yellow600
 
   --theme-purple-color: #a26ee3; // purple500
   --theme-purple-color-rgb: 162, 110, 227; // purple500
@@ -156,13 +156,13 @@ body.mobile-menu-open {
 }
 
 [data-theme='dark'] {
-  --theme-body-color: #131313;
-  --theme-card-color: #1d1d1d;
+  --theme-body-color: #1B1C32;
+  --theme-card-color: #252641;
   --theme-overlay-color: #36393d;
   --theme-mask-color: rgba(32, 37, 41, 0.8);
   --theme-border-color: #43484d;
   --theme-icon-color: #606268;
-  --theme-icon-hover-color: #fff;
+  --theme-icon-hover-color: #FFE654;
   --theme-icon-hover-gradient: linear-gradient(135deg, #bceb00 15%, #00eaea 85%);
 
   --theme-primary-color: #fff;
@@ -176,8 +176,8 @@ body.mobile-menu-open {
   --theme-input-background: #1d1d1d;
   --theme-input-placeholder: #606268;
 
-  --theme-tooltip-bg: #2f2f2f;
-  --theme-tooltip-item-bg-active: #3f3f3f;
+  --theme-tooltip-bg: #36385B;
+  --theme-tooltip-item-bg-active: #252641;
 }
 
 :focus:not(:focus-visible) {

@@ -13,7 +13,22 @@
     border-radius: 12px;
   }
 }
-
+.myAccountIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  border: 1px solid var(--theme-border-color);
+  margin-right: 12px;
+  border-radius: 50%;
+  img {
+    height: 23px;
+    width: 23px;
+    margin-top: 4px;
+    margin-right: 3px;
+  }
+}
 .accountLink {
   &:global(.ant-popover-open) {
     .dropdownArrow {

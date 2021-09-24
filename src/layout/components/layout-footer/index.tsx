@@ -41,7 +41,7 @@ const LayoutFooter: React.FC = () => {
       <div className="container-limit">
         <div className={s.row}>
           <div className={s.subscribeBlock}>
-            <Text type="p1" weight="bold" color="white" font="secondary">
+            <Text type="p1" weight="bold" color="white" font="secondary" >
               Stay up to date with our newsletter
             </Text>
             <form className={s.subscribeWrap} onSubmit={handlerSubscribe}>
@@ -89,12 +89,11 @@ const LayoutFooter: React.FC = () => {
         <div className={cn(s.row, s.navWrap)}>
           <div className={s.logoWrap}>
             <Link to="/" className={s.logoLink}>
-              <Icon name="png/universe" width="auto" height="auto" className={s.logo} />
-              <Icon name="universe-text" width="94" height="15" className={s.logoText} />
+              <Icon name="png/leaguedaodark" width="auto" height="auto" className={s.logo} />
+              {/* <Icon name="universe-text" width="94" height="15" className={s.logoText} /> */}
             </Link>
-            <Text type="p1" color="white">
-              Launch your own community-driven NFT universe baked with social tools, media services, and distribution -
-              underpinned by the native $XYZ token.
+            <Text type="p2" color="white">
+              Join one of our Tokenized Fantasy Sports leagues and become a part of the LeagueDAO community. 
             </Text>
           </div>
           <div className={s.navBlocksWrap}>
@@ -120,7 +119,7 @@ const LayoutFooter: React.FC = () => {
             </nav>
             <nav className={s.navBlock}>
               <Text type="p1" color="white" font="secondary" className={s.navTitle}>
-                NFT Drops
+                Player Drops
               </Text>
               <ExternalLink href="https://universe.xyz/polymorphs" className={s.link}>
                 Polymorphs

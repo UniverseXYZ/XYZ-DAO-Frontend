@@ -110,19 +110,19 @@
 
 .logo {
   margin-right: 3px;
-  width: 56px;
-  height: 56px;
+  width: 67px;
+  height: 44px;
 
   @media (max-width: 1023px) {
-    width: 44px;
-    height: 44px;
+    width: 54px;
+    height: 36px;
   }
 }
 
 .title {
-  font-family: 'Sharp Grotesk', 'Space Grotesk', sans-serif;
+  font-family: 'Gilroy', sans-serif;
   color: var(--theme-primary-color);
-  font-size: 18px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 600;
   line-height: 24px;
@@ -222,7 +222,7 @@
 .themeSwitcher {
   margin: 20px auto;
   padding: 11px 24px;
-  font-family: inherit;
+  font-family: 'Manrope';
   font-size: 16px;
   font-weight: 500;
   line-height: 20px;
@@ -245,13 +245,14 @@
 .addTokenWrapper {
   padding-right: 20px;
   margin-right: 20px;
-  border-right: 1px solid var(--theme-border-color);
+  // border-right: 1px solid var(--theme-border-color);
+  display: none;
 }
 
 .addTokenButton {
   width: 28px;
   height: 28px;
-  display: flex;
+  // display: flex;
   align-items: center;
   justify-content: center;
   border: 0;

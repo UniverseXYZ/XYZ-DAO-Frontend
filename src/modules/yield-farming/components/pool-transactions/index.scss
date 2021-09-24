@@ -1,0 +1,27 @@
+.header-select-section{
+    justify-content: space-between;
+    @media only screen and (max-width: 768px) {
+        justify-content: unset;
+        padding: 0;
+    }
+    .tab-section{
+        @media only screen and (max-width: 768px){
+            padding: 0 24px;
+        }   
+    }
+}
+.mobile-select{
+    @media only screen and (max-width: 768px) {
+          display: grid;
+          grid-gap: 16px;
+          padding: 24px 24px;
+          border-top: 1px solid;
+          border-bottom: 1px solid;
+      }
+      .all-tokens{
+        @media only screen and (max-width: 768px) {
+            margin-right: 0;
+        }   
+      }
+      
+}
