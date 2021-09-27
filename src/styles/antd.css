@@ -1,7 +1,4 @@
-/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
-/* stylelint-disable no-duplicate-selectors */
-/* stylelint-disable */
-/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+
 [class^=ant-]::-ms-clear,
 [class*= ant-]::-ms-clear,
 [class^=ant-] input::-ms-clear,
@@ -21848,6 +21845,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   position: relative;
   display: flex;
   transition: transform 0.3s;
+  flex-wrap: wrap;
 }
 .ant-tabs > .ant-tabs-nav .ant-tabs-nav-operations,
 .ant-tabs > div > .ant-tabs-nav .ant-tabs-nav-operations {
@@ -23042,6 +23040,9 @@ span.ant-transfer-list-search-action {
   vertical-align: middle;
   outline: none;
   cursor: pointer;
+  
+  
+
 }
 .ant-tree-checkbox-wrapper:hover .ant-tree-checkbox-inner,
 .ant-tree-checkbox:hover .ant-tree-checkbox-inner,

@@ -117,7 +117,8 @@ const ConnectedWallet: React.FC = () => {
       content={
         <div className="card">
           <Grid className="card-header" flow="col" gap={16} align="center" justify="start">
-            <Identicon address={wallet.account} width={40} height={40} />
+                <img src={myAccountIcon} alt="My account" />
+            {/* <Identicon address={wallet.account} width={40} height={40} /> */}
             <ExternalLink href={getEtherscanAddressUrl(wallet.account!)}>
               <Text type="p1" weight="semibold" color="blue">
                 {shortenAddr(wallet.account, 8, 8)}

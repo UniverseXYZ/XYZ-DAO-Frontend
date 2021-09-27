@@ -7,7 +7,7 @@
   margin: 0;
   padding: 24px;
   background: var(--theme-border-color); // border
-  border: none;
+  border: 1px solid #4C4C62;
   border-radius: 12px;
   position: relative;
   color: var(--theme-primary-color);
@@ -25,7 +25,8 @@
     border-radius: 12px;
   }
   &::before {
-    background: var(--theme-card-color); //bg dark stable
+    background: var(--theme-card-color);
+    border: 1px solid #E4CE52; //bg dark stable
   }
   &::after {
     background: var(--theme-card-color); // bg gradient
@@ -54,13 +55,12 @@
   }
 
   &:global(.ant-radio-wrapper-checked) {
-    background: var(--gradient-green);
     &::after {
-      background: linear-gradient(135deg, rgba(188, 235, 0, 0.1) 15.57%, rgba(0, 234, 234, 0.1) 84.88%);
+      background: rgba(145, 248, 124, 0.1);
     }
     :global(.ant-radio-inner) {
       border: 0;
-      background: linear-gradient(135deg, #BCEB00 15.57%, #00EAEA 84.88%);
+      background: #E4CE52;
 
       &::before {
         content: '';

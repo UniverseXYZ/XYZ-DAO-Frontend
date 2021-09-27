@@ -92,7 +92,7 @@
   }
 
   &.textGradient {
-    color: var(--text-color);
+    color: #fff;
   }
   @supports ((background-clip: text) or (-webkit-background-clip: text)) and
     ((text-fill-color: transparent) or (-webkit-text-fill-color: transparent)) {

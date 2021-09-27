@@ -93,7 +93,7 @@
   border: 2px solid #FEE554;
   background-color: transparent;
   box-sizing: border-box;
-  border-radius: 12px;
+  border-radius: 3px;
 
   font-weight: bold;
   font-size: 14px;
@@ -102,6 +102,10 @@
   text-align: center;
 
   color: var(--theme-primary-color);
+
+  @media (max-width: 768px) {
+      padding: 5px 15px;
+  }
 
   // &::before {
   //   content: '';

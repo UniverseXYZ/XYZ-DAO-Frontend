@@ -2,8 +2,12 @@
   margin: 0;
   border-color: var(--theme-border-color);
 
+  @media (max-width: 768px) {
+    display: none;;
+}
+
   &:global(.ant-divider-vertical) {
     top: 0;
-    height: 100%;
+
   }
 }

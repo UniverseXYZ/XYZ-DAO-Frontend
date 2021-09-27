@@ -170,8 +170,8 @@
     &:disabled:hover {
       box-shadow: var(--btn-primary-shadow-disabled);
       border: var(--btn-primary-border-disabled);
-      background: var(--btn-primary-bg-disabled);
-      color: var(--btn-primary-text-disabled);
+      // background: var(--btn-primary-bg-disabled);
+      // color: var(--btn-primary-text-disabled);
     }
   }
 

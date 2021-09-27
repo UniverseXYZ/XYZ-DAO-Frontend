@@ -48,10 +48,10 @@
   ((text-fill-color: transparent) or (-webkit-text-fill-color: transparent)) {
     &:global(.ant-alert-info) :global(.ant-alert-message) {
       --alert-bg-color: linear-gradient(135deg, rgba(145, 79, 230, 0.04) 0%, rgba(49, 108, 223, 0.04) 100%);
-      --alert-text-color: var(--gradient-blue);
+      // --alert-text-color: var(--gradient-blue);
     }
     &:global(.ant-alert-info) :global(.ant-alert-icon) {
-      color: rgb(145, 79, 230);
+      // color: rgb(145, 79, 230);
     }
     &:global(.ant-alert-success) :global(.ant-alert-message) {
       --alert-bg-color: var(--theme-green-color-rgb);

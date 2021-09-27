@@ -82,7 +82,7 @@ const VotingHeader: React.FC = () => {
                   </Text>
                 </Skeleton>
               </Tooltip>
-              <Icon name="png/universe" width={40} height={40} />
+              <Icon name="png/universe" width={40} height={40} className='ml-8 , mr-16'/>
               <Button
                 type="primary"
                 size="small"
@@ -104,7 +104,7 @@ const VotingHeader: React.FC = () => {
                   {formatXYZValue(xyzBalance)}
                 </Text>
               </Skeleton>
-              <Icon name="png/universe" src={imgSrc} width={40} height={40} />
+              <Icon name="png/universe" src={imgSrc} width={40} height={40} className='ml-8 , mr-24'/>
             </Grid>
           </Grid>
           <Divider type="vertical" />
