@@ -102,14 +102,17 @@ const LayoutFooter: React.FC = () => {
               <Text type="p1" color="white" font="secondary" className={s.navTitle}>
                 Products
               </Text>
+              <ExternalLink href="https://universe.xyz/minting" className={s.link}>
+                Minting
+              </ExternalLink>
               <span className={s.link} aria-disabled="true">
                 <Tooltip title="Coming soon" placement="top" hint>
-                  Auction house
+                  NFT marketplace
                 </Tooltip>
               </span>
               <span className={s.link} aria-disabled="true">
                 <Tooltip title="Coming soon" placement="top" hint>
-                  NFT marketplace
+                  Auction house
                 </Tooltip>
               </span>
               <span className={s.link} aria-disabled="true">
