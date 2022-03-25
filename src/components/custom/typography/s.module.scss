@@ -44,6 +44,11 @@
     line-height: calc(var(--font-size-p2) + 10px);
   }
 
+  &.p3 {
+    font-size: var(--font-size-p3);
+    line-height: calc(var(--font-size-p3) + 10px);
+  }
+
   &.lb1 {
     font-size: var(--font-size-lb1);
     letter-spacing: 0.04em;

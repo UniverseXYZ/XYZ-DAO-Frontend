@@ -41,8 +41,18 @@ const LayoutFooter: React.FC = () => {
     <footer className={s.footer}>
       <div className="container-limit">
         <div className={s.row}>
+          <div className={s.logoWrap}>
+            <Link to="/" className={s.logoLink}>
+              <Icon name="png/universe" width="auto" height="auto" className={s.logo} />
+              <Icon name="universe-text" width="94" height="15" className={s.logoText} />
+            </Link>
+            <Text className={s.logoSubText} type="p3">
+              Launch your own community-driven NFT universe baked with social tools, media services, and distribution -
+              underpinned by the native $XYZ token.
+            </Text>
+          </div>
           <div className={s.subscribeBlock}>
-            <Text type="p1" weight="bold" color="white" font="secondary">
+            <Text type="p3" weight="bold" color="white" font="secondary">
               Stay up to date with our newsletter
             </Text>
             <form className={s.subscribeWrap} onSubmit={handlerSubscribe}>
@@ -62,45 +72,11 @@ const LayoutFooter: React.FC = () => {
               </button>
             </form>
           </div>
-          <div className={s.sBlock}>
-            <Text type="p1" weight="bold" color="white" font="secondary">
-              Join the community
-            </Text>
-            <div className={s.sLinksWrap}>
-              <ExternalLink href="https://twitter.com/universe_xyz" className={s.sLink}>
-                <Icon name="twitter" width="20" height="20" />
-              </ExternalLink>
-              <ExternalLink href="https://discord.com/invite/vau77wXCD3" className={s.sLink}>
-                <Icon name="discord" width="20" height="20" />
-              </ExternalLink>
-              <ExternalLink href="https://www.coingecko.com/en/coins/universe-xyz" className={s.sLink}>
-                <Icon name="coingecko" width="20" height="20" />
-              </ExternalLink>
-              <ExternalLink
-                href="https://www.youtube.com/channel/UCWt00md9T2b4iTsHWp_Fapw?sub_confirmation=1"
-                className={s.sLink}>
-                <Icon name="youtube" width="20" height="20" />
-              </ExternalLink>
-              <ExternalLink href="https://medium.com/universe-xyz" className={s.sLink}>
-                <Icon name="medium" width="20" height="20" />
-              </ExternalLink>
-            </div>
-          </div>
         </div>
         <div className={cn(s.row, s.navWrap)}>
-          <div className={s.logoWrap}>
-            <Link to="/" className={s.logoLink}>
-              <Icon name="png/universe" width="auto" height="auto" className={s.logo} />
-              <Icon name="universe-text" width="94" height="15" className={s.logoText} />
-            </Link>
-            <Text type="p1" color="white">
-              Launch your own community-driven NFT universe baked with social tools, media services, and distribution -
-              underpinned by the native $XYZ token.
-            </Text>
-          </div>
           <div className={s.navBlocksWrap}>
             <nav className={s.navBlock}>
-              <Text type="p1" color="white" font="secondary" className={s.navTitle}>
+              <Text type="p3" color="white" font="secondary" weight="bold" className={s.navTitle}>
                 Products
               </Text>
               <ExternalLink href="https://universe.xyz/marketplace" className={s.link}>
@@ -122,7 +98,7 @@ const LayoutFooter: React.FC = () => {
               </span>
             </nav>
             <nav className={s.navBlock}>
-              <Text type="p1" color="white" font="secondary" className={s.navTitle}>
+              <Text type="p3" color="white" font="secondary" weight="bold" className={s.navTitle}>
                 NFT Drops
               </Text>
               <ExternalLink href="https://universe.xyz/polymorphs" className={s.link}>
@@ -138,7 +114,18 @@ const LayoutFooter: React.FC = () => {
               </span>
             </nav>
             <nav className={s.navBlock}>
-              <Text type="p1" color="white" font="secondary" className={s.navTitle}>
+              <Text type="p3" color="white" font="secondary" weight="bold" className={s.navTitle}>
+                Rarity charts
+              </Text>
+              <ExternalLink href="https://universe.xyz/polymorph-rarity" className={s.link}>
+                Polymorphs
+              </ExternalLink>
+              <ExternalLink href="https://rarity.tools/lobby-lobsters" className={s.link}>
+                Lobby Lobsters
+              </ExternalLink>
+            </nav>
+            <nav className={s.navBlock}>
+              <Text type="p3" color="white" font="secondary" weight="bold" className={s.navTitle}>
                 Info
               </Text>
               <ExternalLink href="https://universe.xyz/about" className={s.link}>
@@ -153,9 +140,12 @@ const LayoutFooter: React.FC = () => {
               <ExternalLink href="https://docs.universe.xyz/" className={s.link}>
                 Docs
               </ExternalLink>
+              <ExternalLink href="https://universe.freshdesk.com/support/home" className={s.link}>
+                Support
+              </ExternalLink>
             </nav>
             <nav className={s.navBlock}>
-              <Text type="p1" color="white" font="secondary" className={s.navTitle}>
+              <Text type="p3" color="white" font="secondary" weight="bold" className={s.navTitle}>
                 DAO
               </Text>
               <Link to="/governance" className={s.link}>
@@ -164,18 +154,46 @@ const LayoutFooter: React.FC = () => {
               <Link to="/yield-farming" className={s.link}>
                 Yield farming
               </Link>
+              <ExternalLink href="https://forum.universe.xyz/" className={s.link}>
+                Forum
+              </ExternalLink>
+              <ExternalLink href="https://signal.universe.xyz/" className={s.link}>
+                Signal
+              </ExternalLink>
             </nav>
           </div>
         </div>
         <div className={cn(s.row, s.copyrightsBlock)}>
-          <div className={s.copyrightLink}>Universe.xyz © 2021. Open-sourced.</div>
-          <div className={s.copyrightLinks}>
-            <ExternalLink href={XYZ_MARKET_LINK} className={s.copyrightLink}>
-              SushiSwap USDC/XYZ market
-            </ExternalLink>
+          <div className={s.copyrightTexts}>
+            <div className={s.copyrightText}>Universe.xyz © 2021. Open-sourced.</div>
             <ExternalLink href={XYZ_MARKET_LIQUIDITY_LINK} className={s.copyrightLink}>
               Add liquidity to SushiSwap USDC/XYZ pool
             </ExternalLink>
+            <ExternalLink href={XYZ_MARKET_LINK} className={s.copyrightLink}>
+              SushiSwap USDC/XYZ market
+            </ExternalLink>
+          </div>
+
+          <div className={s.sBlock}>
+            <div className={s.sLinksWrap}>
+              <ExternalLink href="https://twitter.com/universe_xyz" className={s.sLink}>
+                <Icon name="twitter" width="20" height="20" />
+              </ExternalLink>
+              <ExternalLink href="https://discord.com/invite/vau77wXCD3" className={s.sLink}>
+                <Icon name="discord" width="20" height="20" />
+              </ExternalLink>
+              <ExternalLink href="https://www.coingecko.com/en/coins/universe-xyz" className={s.sLink}>
+                <Icon name="coingecko" width="20" height="20" />
+              </ExternalLink>
+              <ExternalLink
+                href="https://www.youtube.com/channel/UCWt00md9T2b4iTsHWp_Fapw?sub_confirmation=1"
+                className={s.sLink}>
+                <Icon name="youtube" width="20" height="20" />
+              </ExternalLink>
+              <ExternalLink href="https://medium.com/universe-xyz" className={s.sLink}>
+                <Icon name="medium" width="20" height="20" />
+              </ExternalLink>
+            </div>
           </div>
         </div>
       </div>
