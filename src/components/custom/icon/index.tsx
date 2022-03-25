@@ -148,6 +148,7 @@ export type IconNames =
   | 'polymorphs'
   | 'lobby-lobsters'
   | 'core-drops'
+  | 'minting'
   | 'static/add-token';
 
 export type IconProps = {

@@ -87,16 +87,23 @@ const LayoutHeader: React.FC = () => {
           noPadding
           content={
             <div className={cn('card', s.dropdown)}>
-              <span className={s.dropdownLink} aria-disabled="true">
-                <Icon name="auction" width={20} height={20} className={s.dropdownIcon} />
-                <Tooltip title="Coming soon" placement="top" hint>
-                  <span>Auction house</span>
-                </Tooltip>
-              </span>
+              <ExternalLink
+                href="https://universe.xyz/minting"
+                className={s.dropdownLink}
+                onClick={() => setPopper4visible(false)}>
+                <Icon name="minting" width={20} height={20} className={s.dropdownIcon} />
+                <span>Minting</span>
+              </ExternalLink>
               <span className={s.dropdownLink} aria-disabled="true">
                 <Icon name="marketplace" width={20} height={20} className={s.dropdownIcon} />
                 <Tooltip title="Coming soon" placement="top" hint>
                   <span>NFT marketplace</span>
+                </Tooltip>
+              </span>
+              <span className={s.dropdownLink} aria-disabled="true">
+                <Icon name="auction" width={20} height={20} className={s.dropdownIcon} />
+                <Tooltip title="Coming soon" placement="top" hint>
+                  <span>Auction house</span>
                 </Tooltip>
               </span>
               <span className={s.dropdownLink} aria-disabled="true">
@@ -256,16 +263,23 @@ const LayoutHeader: React.FC = () => {
               <div className={s.mobileMenuInner}>
                 <div className={s.mobileMenuBlock}>
                   <h3>Products</h3>
-                  <span className={s.dropdownLink} aria-disabled="true">
-                    <Icon name="auction" width={20} height={20} className={s.dropdownIcon} />
-                    <Tooltip title="Coming soon" placement="top" hint>
-                      <span>Auction house</span>
-                    </Tooltip>
-                  </span>
+                  <ExternalLink
+                    href="https://universe.xyz/minting"
+                    className={s.dropdownLink}
+                    onClick={() => setNavOpen(false)}>
+                    <Icon name="minting" width={20} height={20} className={s.dropdownIcon} />
+                    <span>Minting</span>
+                  </ExternalLink>
                   <span className={s.dropdownLink} aria-disabled="true">
                     <Icon name="marketplace" width={20} height={20} className={s.dropdownIcon} />
                     <Tooltip title="Coming soon" placement="top" hint>
                       <span>NFT marketplace</span>
+                    </Tooltip>
+                  </span>
+                  <span className={s.dropdownLink} aria-disabled="true">
+                    <Icon name="auction" width={20} height={20} className={s.dropdownIcon} />
+                    <Tooltip title="Coming soon" placement="top" hint>
+                      <span>Auction house</span>
                     </Tooltip>
                   </span>
                   <span className={s.dropdownLink} aria-disabled="true">
