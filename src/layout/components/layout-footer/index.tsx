@@ -5,13 +5,13 @@ import AntdSpin from 'antd/lib/spin';
 import cn from 'classnames';
 
 import Tooltip from 'components/antd/tooltip';
+import Badge from 'components/custom/badge';
 import ExternalLink from 'components/custom/externalLink';
 import Icon from 'components/custom/icon';
 import { Text } from 'components/custom/typography';
 import { XYZ_MARKET_LINK, XYZ_MARKET_LIQUIDITY_LINK } from 'config';
 
 import s from './s.module.scss';
-import Badge from '../../../components/custom/badge';
 
 const LayoutFooter: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -104,8 +104,8 @@ const LayoutFooter: React.FC = () => {
                 Products
               </Text>
               <ExternalLink href="https://universe.xyz/marketplace" className={s.link}>
-                NFT marketplace
-                <Badge variant="beta">BETA</Badge>
+                <span className="mr-4">NFT marketplace</span>
+                <Badge variant="primary">BETA</Badge>
               </ExternalLink>
               <ExternalLink href="https://universe.xyz/minting" className={s.link}>
                 Minting

@@ -6,7 +6,7 @@ import s from './s.module.scss';
 type Props = {
   children?: number | string;
   className?: string;
-  variant?: 'beta';
+  variant?: 'primary';
 };
 
 const Badge: React.FC<Props> = ({ children, className, variant, ...rest }) => {
