@@ -164,8 +164,8 @@ const LayoutFooter: React.FC = () => {
           </div>
         </div>
         <div className={cn(s.row, s.copyrightsBlock)}>
-          <div className={s.copyrightTexts}>
-            <div className={s.copyrightText}>Universe.xyz © 2021. Open-sourced.</div>
+          <div className={s.copyrightLink}>Universe.xyz © {new Date().getFullYear()}. Open-sourced.</div>
+          <div className={s.copyrightLinks}>
             <ExternalLink href={XYZ_MARKET_LIQUIDITY_LINK} className={s.copyrightLink}>
               Add liquidity to SushiSwap USDC/XYZ pool
             </ExternalLink>
