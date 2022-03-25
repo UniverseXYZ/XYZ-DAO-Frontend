@@ -11,6 +11,7 @@ import { Text } from 'components/custom/typography';
 import { XYZ_MARKET_LINK, XYZ_MARKET_LIQUIDITY_LINK } from 'config';
 
 import s from './s.module.scss';
+import Badge from '../../../components/custom/badge';
 
 const LayoutFooter: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -102,14 +103,13 @@ const LayoutFooter: React.FC = () => {
               <Text type="p1" color="white" font="secondary" className={s.navTitle}>
                 Products
               </Text>
+              <ExternalLink href="https://universe.xyz/marketplace" className={s.link}>
+                NFT marketplace
+                <Badge variant="beta">BETA</Badge>
+              </ExternalLink>
               <ExternalLink href="https://universe.xyz/minting" className={s.link}>
                 Minting
               </ExternalLink>
-              <span className={s.link} aria-disabled="true">
-                <Tooltip title="Coming soon" placement="top" hint>
-                  NFT marketplace
-                </Tooltip>
-              </span>
               <span className={s.link} aria-disabled="true">
                 <Tooltip title="Coming soon" placement="top" hint>
                   Auction house

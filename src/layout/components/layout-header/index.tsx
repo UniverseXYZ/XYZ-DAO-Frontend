@@ -21,6 +21,7 @@ import { MetamaskConnector } from 'wallets/connectors/metamask';
 import { useWallet } from 'wallets/wallet';
 
 import s from './s.module.scss';
+import Badge from '../../../components/custom/badge';
 
 const modalRoot = document.getElementById('modal-root') || document.body;
 
@@ -88,18 +89,20 @@ const LayoutHeader: React.FC = () => {
           content={
             <div className={cn('card', s.dropdown)}>
               <ExternalLink
+                href="https://universe.xyz/marketplace"
+                className={s.dropdownLink}
+                onClick={() => setPopper4visible(false)}>
+                <Icon name="marketplace" width={20} height={20} className={s.dropdownIcon} />
+                <span>NFT marketplace</span>
+                <Badge variant="beta">BETA</Badge>
+              </ExternalLink>
+              <ExternalLink
                 href="https://universe.xyz/minting"
                 className={s.dropdownLink}
                 onClick={() => setPopper4visible(false)}>
                 <Icon name="minting" width={20} height={20} className={s.dropdownIcon} />
                 <span>Minting</span>
               </ExternalLink>
-              <span className={s.dropdownLink} aria-disabled="true">
-                <Icon name="marketplace" width={20} height={20} className={s.dropdownIcon} />
-                <Tooltip title="Coming soon" placement="top" hint>
-                  <span>NFT marketplace</span>
-                </Tooltip>
-              </span>
               <span className={s.dropdownLink} aria-disabled="true">
                 <Icon name="auction" width={20} height={20} className={s.dropdownIcon} />
                 <Tooltip title="Coming soon" placement="top" hint>
@@ -264,18 +267,20 @@ const LayoutHeader: React.FC = () => {
                 <div className={s.mobileMenuBlock}>
                   <h3>Products</h3>
                   <ExternalLink
+                    href="https://universe.xyz/marketplace"
+                    className={s.dropdownLink}
+                    onClick={() => setNavOpen(false)}>
+                    <Icon name="marketplace" width={20} height={20} className={s.dropdownIcon} />
+                    <span>NFT marketplace</span>
+                    <Badge variant="beta">BETA</Badge>
+                  </ExternalLink>
+                  <ExternalLink
                     href="https://universe.xyz/minting"
                     className={s.dropdownLink}
                     onClick={() => setNavOpen(false)}>
                     <Icon name="minting" width={20} height={20} className={s.dropdownIcon} />
                     <span>Minting</span>
                   </ExternalLink>
-                  <span className={s.dropdownLink} aria-disabled="true">
-                    <Icon name="marketplace" width={20} height={20} className={s.dropdownIcon} />
-                    <Tooltip title="Coming soon" placement="top" hint>
-                      <span>NFT marketplace</span>
-                    </Tooltip>
-                  </span>
                   <span className={s.dropdownLink} aria-disabled="true">
                     <Icon name="auction" width={20} height={20} className={s.dropdownIcon} />
                     <Tooltip title="Coming soon" placement="top" hint>
