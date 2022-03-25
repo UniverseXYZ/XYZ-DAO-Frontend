@@ -187,7 +187,7 @@ function getFilters(tokens: APITreasuryTokenEntity[]): TableFilterType[] {
         const tokenOpts = [
           {
             value: 'all',
-            label: 'All tokens',
+            label: 'All Tokens',
           },
           ...tokens.map(token => ({
             value: token.tokenAddress,
@@ -206,7 +206,7 @@ function getFilters(tokens: APITreasuryTokenEntity[]): TableFilterType[] {
         const options = [
           {
             value: 'all',
-            label: 'All pool transactions',
+            label: 'All Pool Transactions',
           },
           {
             value: 'in',
@@ -376,7 +376,7 @@ const TreasuryHoldings: React.FC = () => {
   return (
     <>
       <Text type="p1" weight="semibold" color="secondary" className="mb-8">
-        Total holdings balance
+        Total Holdings Balance
       </Text>
       <Text type="h2" weight="bold" color="primary" className="mb-40">
         {formatUSD(totalHoldings) ?? '-'}
@@ -438,7 +438,7 @@ const TreasuryHoldings: React.FC = () => {
       <div className="card">
         <div className="card-header flex flow-col align-center justify-space-between pv-12">
           <Text type="p1" weight="semibold" color="primary">
-            Transaction history
+            Transaction History
           </Text>
           <TableFilter
             filters={getFilters(state.tokens.items)}
@@ -461,7 +461,7 @@ const TreasuryHoldings: React.FC = () => {
             position: ['bottomRight'],
             showTotal: (total: number, [from, to]: [number, number]) => (
               <Text type="p2" weight="semibold" color="secondary">
-                Showing {from} to {to} out of {total} entries
+                Showing {from} to {to} out of {total} entries.
               </Text>
             ),
             onChange: handlePaginationChange,

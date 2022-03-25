@@ -9,6 +9,7 @@ import Button from 'components/antd/button';
 import Divider from 'components/antd/divider';
 import Popover from 'components/antd/popover';
 import Tooltip from 'components/antd/tooltip';
+import Badge from 'components/custom/badge';
 import ExternalLink from 'components/custom/externalLink';
 import Grid from 'components/custom/grid';
 import Icon from 'components/custom/icon';
@@ -32,6 +33,7 @@ const LayoutHeader: React.FC = () => {
   const [popper2visible, setPopper2visible] = useState<boolean>(false);
   const [popper3visible, setPopper3visible] = useState<boolean>(false);
   const [popper4visible, setPopper4visible] = useState<boolean>(false);
+  const [popper5visible, setPopper5visible] = useState<boolean>(false);
   const wallet = useWallet();
   const { warns } = useWarning();
 
@@ -87,16 +89,25 @@ const LayoutHeader: React.FC = () => {
           noPadding
           content={
             <div className={cn('card', s.dropdown)}>
+              <ExternalLink
+                href="https://universe.xyz/marketplace"
+                className={s.dropdownLink}
+                onClick={() => setPopper4visible(false)}>
+                <Icon name="marketplace" width={20} height={20} className={s.dropdownIcon} />
+                <span className="mr-4">NFT marketplace</span>
+                <Badge variant="primary">BETA</Badge>
+              </ExternalLink>
+              <ExternalLink
+                href="https://universe.xyz/minting"
+                className={s.dropdownLink}
+                onClick={() => setPopper4visible(false)}>
+                <Icon name="minting" width={20} height={20} className={s.dropdownIcon} />
+                <span>Minting</span>
+              </ExternalLink>
               <span className={s.dropdownLink} aria-disabled="true">
                 <Icon name="auction" width={20} height={20} className={s.dropdownIcon} />
                 <Tooltip title="Coming soon" placement="top" hint>
-                  <span>Auction house</span>
-                </Tooltip>
-              </span>
-              <span className={s.dropdownLink} aria-disabled="true">
-                <Icon name="marketplace" width={20} height={20} className={s.dropdownIcon} />
-                <Tooltip title="Coming soon" placement="top" hint>
-                  <span>NFT marketplace</span>
+                  <span>Auction House</span>
                 </Tooltip>
               </span>
               <span className={s.dropdownLink} aria-disabled="true">
@@ -112,6 +123,9 @@ const LayoutHeader: React.FC = () => {
               <Text type="p1" weight="500" color="primary" className="mr-4">
                 Products
               </Text>
+              <Badge variant="primary" className="mr-4">
+                NEW
+              </Badge>
               <Icon name="dropdown-arrow" width={12} height={12} className={s.dropdownArrow} />
             </Grid>
           </Button>
@@ -148,7 +162,39 @@ const LayoutHeader: React.FC = () => {
           <Button type="link" className={s.navLink}>
             <Grid flow="col" align="center">
               <Text type="p1" weight="500" color="primary" className="mr-4">
-                🔥 NFT drops
+                NFT drops
+              </Text>
+              <Icon name="dropdown-arrow" width={12} height={12} className={s.dropdownArrow} />
+            </Grid>
+          </Button>
+        </Popover>
+        <Popover
+          visible={popper5visible}
+          onVisibleChange={setPopper5visible}
+          trigger={['click', 'hover']}
+          noPadding
+          content={
+            <div className={cn('card', s.dropdown)}>
+              <ExternalLink
+                href="https://universe.xyz/polymorph-rarity"
+                className={s.dropdownLink}
+                onClick={() => setPopper5visible(false)}>
+                <Icon name="rarity-chart" width={20} height={11} className={s.dropdownIcon} />
+                <span>Polymorphs</span>
+              </ExternalLink>
+              <ExternalLink
+                href="https://rarity.tools/lobby-lobsters"
+                className={s.dropdownLink}
+                onClick={() => setPopper5visible(false)}>
+                <Icon name="rarity-chart" width={20} height={11} className={s.dropdownIcon} />
+                <span>Lobby Lobsters</span>
+              </ExternalLink>
+            </div>
+          }>
+          <Button type="link" className={s.navLink}>
+            <Grid flow="col" align="center">
+              <Text type="p1" weight="500" color="primary" className="mr-4">
+                Rarity charts
               </Text>
               <Icon name="dropdown-arrow" width={12} height={12} className={s.dropdownArrow} />
             </Grid>
@@ -189,6 +235,13 @@ const LayoutHeader: React.FC = () => {
                 <Icon name="docs" width={20} height={20} className={s.dropdownIcon} />
                 <span>Docs</span>
               </ExternalLink>
+              <ExternalLink
+                href="https://universe.freshdesk.com/support/home"
+                className={s.dropdownLink}
+                onClick={() => setPopper2visible(false)}>
+                <Icon name="support" width={20} height={15} className={s.dropdownIcon} />
+                <span>Support</span>
+              </ExternalLink>
             </div>
           }>
           <Button type="link" className={s.navLink}>
@@ -213,8 +266,22 @@ const LayoutHeader: React.FC = () => {
               </Link>
               <Link to="/yield-farming" className={s.dropdownLink} onClick={() => setPopper3visible(false)}>
                 <Icon name="yield-farming" width={20} height={20} className={s.dropdownIcon} />
-                <span>Yield farming</span>
+                <span>Yield Farming</span>
               </Link>
+              <ExternalLink
+                href="https://forum.universe.xyz/"
+                className={s.dropdownLink}
+                onClick={() => setPopper3visible(false)}>
+                <Icon name="forum" width={20} height={15} className={s.dropdownIcon} />
+                <span>Forum</span>
+              </ExternalLink>
+              <ExternalLink
+                href="https://signal.universe.xyz/#/"
+                className={s.dropdownLink}
+                onClick={() => setPopper3visible(false)}>
+                <Icon name="signal" width={20} height={20} className={s.dropdownIcon} />
+                <span>Signal</span>
+              </ExternalLink>
             </div>
           }>
           <Button type="link" className={s.navLink}>
@@ -256,16 +323,25 @@ const LayoutHeader: React.FC = () => {
               <div className={s.mobileMenuInner}>
                 <div className={s.mobileMenuBlock}>
                   <h3>Products</h3>
+                  <ExternalLink
+                    href="https://universe.xyz/marketplace"
+                    className={s.dropdownLink}
+                    onClick={() => setNavOpen(false)}>
+                    <Icon name="marketplace" width={20} height={20} className={s.dropdownIcon} />
+                    <span className="mr-4">NFT marketplace</span>
+                    <Badge variant="primary">BETA</Badge>
+                  </ExternalLink>
+                  <ExternalLink
+                    href="https://universe.xyz/minting"
+                    className={s.dropdownLink}
+                    onClick={() => setNavOpen(false)}>
+                    <Icon name="minting" width={20} height={20} className={s.dropdownIcon} />
+                    <span>Minting</span>
+                  </ExternalLink>
                   <span className={s.dropdownLink} aria-disabled="true">
                     <Icon name="auction" width={20} height={20} className={s.dropdownIcon} />
                     <Tooltip title="Coming soon" placement="top" hint>
-                      <span>Auction house</span>
-                    </Tooltip>
-                  </span>
-                  <span className={s.dropdownLink} aria-disabled="true">
-                    <Icon name="marketplace" width={20} height={20} className={s.dropdownIcon} />
-                    <Tooltip title="Coming soon" placement="top" hint>
-                      <span>NFT marketplace</span>
+                      <span>Auction House</span>
                     </Tooltip>
                   </span>
                   <span className={s.dropdownLink} aria-disabled="true">
@@ -299,6 +375,23 @@ const LayoutHeader: React.FC = () => {
                   </span>
                 </div>
                 <div className={s.mobileMenuBlock}>
+                  <h3>Rarity charts</h3>
+                  <ExternalLink
+                    href="https://universe.xyz/polymorph-rarity"
+                    className={s.dropdownLink}
+                    onClick={() => setNavOpen(false)}>
+                    <Icon name="rarity-chart" width={20} height={11} className={s.dropdownIcon} />
+                    <span>Polymorphs</span>
+                  </ExternalLink>
+                  <ExternalLink
+                    href="https://rarity.tools/lobby-lobsters"
+                    className={s.dropdownLink}
+                    onClick={() => setNavOpen(false)}>
+                    <Icon name="rarity-chart" width={20} height={11} className={s.dropdownIcon} />
+                    <span>Lobby Lobsters</span>
+                  </ExternalLink>
+                </div>
+                <div className={s.mobileMenuBlock}>
                   <h3>Info</h3>
                   <ExternalLink
                     href="https://universe.xyz/about"
@@ -328,6 +421,13 @@ const LayoutHeader: React.FC = () => {
                     <Icon name="docs" width={20} height={20} className={s.dropdownIcon} />
                     <span>Docs</span>
                   </ExternalLink>
+                  <ExternalLink
+                    href="https://universe.freshdesk.com/support/home"
+                    className={s.dropdownLink}
+                    onClick={() => setNavOpen(false)}>
+                    <Icon name="support" width={20} height={15} className={s.dropdownIcon} />
+                    <span>Support</span>
+                  </ExternalLink>
                 </div>
                 <div className={s.mobileMenuBlock}>
                   <h3>DAO</h3>
@@ -337,8 +437,22 @@ const LayoutHeader: React.FC = () => {
                   </Link>
                   <Link to="/yield-farming" className={s.dropdownLink} onClick={() => setNavOpen(false)}>
                     <Icon name="yield-farming" width={20} height={20} className={s.dropdownIcon} />
-                    <span>Yield farming</span>
+                    <span>Yield Farming</span>
                   </Link>
+                  <ExternalLink
+                    href="https://forum.universe.xyz/"
+                    className={s.dropdownLink}
+                    onClick={() => setNavOpen(false)}>
+                    <Icon name="forum" width={20} height={15} className={s.dropdownIcon} />
+                    <span>Forum</span>
+                  </ExternalLink>
+                  <ExternalLink
+                    href="https://signal.universe.xyz/#/"
+                    className={s.dropdownLink}
+                    onClick={() => setNavOpen(false)}>
+                    <Icon name="signal" width={20} height={20} className={s.dropdownIcon} />
+                    <span>Signal</span>
+                  </ExternalLink>
                 </div>
                 {!wallet.isActive && !isMobile ? (
                   <div style={{ textAlign: 'center', padding: '0 20px', width: '100%' }}>

@@ -71,7 +71,7 @@ const VotingHeader: React.FC = () => {
         <Grid flow="col" gap={24} className={s.items}>
           <Grid flow="row" gap={4} className={s.item1}>
             <Text type="p2" color="secondary">
-              Current reward
+              Current Reward
             </Text>
             <Grid flow="col" align="center">
               <Tooltip title={<Text type="p2">{formatBigValue(claimValue, XyzToken.decimals)}</Text>}>
@@ -110,7 +110,7 @@ const VotingHeader: React.FC = () => {
           <Divider type="vertical" />
           <Grid flow="row" gap={4} className={s.item3}>
             <Text type="p2" color="secondary">
-              Total voting power
+              Total Voting Power
             </Text>
             <div className="flex col-gap-16 align-center" style={{ height: `40px` }}>
               <Skeleton loading={votingPower === undefined}>

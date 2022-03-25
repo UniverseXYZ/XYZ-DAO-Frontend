@@ -89,7 +89,7 @@ const PoolStatistics: FC = () => {
           {!isEnded && !!lastActiveEpoch && (
             <div className="flex align-center justify-space-between">
               <Text type="small" weight="semibold" color="secondary">
-                Potential reward this epoch
+                Potential Reward This Epoch
               </Text>
               <div className="flex align-center">
                 <Icon name={XyzToken.icon!} width={16} height={16} className="mr-8" />
@@ -124,7 +124,7 @@ const PoolStatistics: FC = () => {
                 <Icon name={XyzToken.icon!} width={24} height={24} />
               </div>
               <Text type="small" weight="semibold" color="secondary">
-                Current reward
+                Current Reward
               </Text>
             </div>
             <button
