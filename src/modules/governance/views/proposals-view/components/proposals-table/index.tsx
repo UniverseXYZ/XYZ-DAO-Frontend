@@ -96,7 +96,7 @@ const ProposalsTable: React.FC = () => {
       rowKey="proposalId"
       loading={proposalsCtx.loading}
       locale={{
-        emptyText: 'No proposals',
+        emptyText: 'No proposals.',
       }}
       pagination={{
         total: proposalsCtx.total,
@@ -105,7 +105,7 @@ const ProposalsTable: React.FC = () => {
         position: ['bottomRight'],
         showTotal: (total: number, [from, to]: [number, number]) => (
           <Text type="p2" weight="semibold" color="secondary">
-            Showing {from} to {to} out of {total} proposals
+            Showing {from} to {to} out of {total} proposals.
           </Text>
         ),
         onChange: handlePaginationChange,

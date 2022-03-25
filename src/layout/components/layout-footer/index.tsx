@@ -52,8 +52,8 @@ const LayoutFooter: React.FC = () => {
             </Text>
           </div>
           <div className={s.subscribeBlock}>
-            <Text type="p3" weight="bold" color="white" font="secondary">
-              Stay up to date with our newsletter
+            <Text type="p1" weight="bold" color="white" font="secondary">
+              Stay Up to Date With Our Newsletter
             </Text>
             <form className={s.subscribeWrap} onSubmit={handlerSubscribe}>
               <input
@@ -72,6 +72,30 @@ const LayoutFooter: React.FC = () => {
               </button>
             </form>
           </div>
+          <div className={s.sBlock}>
+            <Text type="p1" weight="bold" color="white" font="secondary">
+              Join the Community
+            </Text>
+            <div className={s.sLinksWrap}>
+              <ExternalLink href="https://twitter.com/universe_xyz" className={s.sLink}>
+                <Icon name="twitter" width="20" height="20" />
+              </ExternalLink>
+              <ExternalLink href="https://discord.com/invite/vau77wXCD3" className={s.sLink}>
+                <Icon name="discord" width="20" height="20" />
+              </ExternalLink>
+              <ExternalLink href="https://www.coingecko.com/en/coins/universe-xyz" className={s.sLink}>
+                <Icon name="coingecko" width="20" height="20" />
+              </ExternalLink>
+              <ExternalLink
+                href="https://www.youtube.com/channel/UCWt00md9T2b4iTsHWp_Fapw?sub_confirmation=1"
+                className={s.sLink}>
+                <Icon name="youtube" width="20" height="20" />
+              </ExternalLink>
+              <ExternalLink href="https://medium.com/universe-xyz" className={s.sLink}>
+                <Icon name="medium" width="20" height="20" />
+              </ExternalLink>
+            </div>
+          </div>
         </div>
         <div className={cn(s.row, s.navWrap)}>
           <div className={s.navBlocksWrap}>
@@ -88,7 +112,7 @@ const LayoutFooter: React.FC = () => {
               </ExternalLink>
               <span className={s.link} aria-disabled="true">
                 <Tooltip title="Coming soon" placement="top" hint>
-                  Auction house
+                  Auction House
                 </Tooltip>
               </span>
               <span className={s.link} aria-disabled="true">
@@ -152,7 +176,7 @@ const LayoutFooter: React.FC = () => {
                 Governance
               </Link>
               <Link to="/yield-farming" className={s.link}>
-                Yield farming
+                Yield Farming
               </Link>
               <ExternalLink href="https://forum.universe.xyz/" className={s.link}>
                 Forum
@@ -166,11 +190,11 @@ const LayoutFooter: React.FC = () => {
         <div className={cn(s.row, s.copyrightsBlock)}>
           <div className={s.copyrightLink}>Universe.xyz © {new Date().getFullYear()}. Open-sourced.</div>
           <div className={s.copyrightLinks}>
-            <ExternalLink href={XYZ_MARKET_LIQUIDITY_LINK} className={s.copyrightLink}>
-              Add liquidity to SushiSwap USDC/XYZ pool
-            </ExternalLink>
             <ExternalLink href={XYZ_MARKET_LINK} className={s.copyrightLink}>
-              SushiSwap USDC/XYZ market
+              SushiSwap USDC/XYZ Market
+            </ExternalLink>
+            <ExternalLink href={XYZ_MARKET_LIQUIDITY_LINK} className={s.copyrightLink}>
+              Add Liquidity to SushiSwap USDC/XYZ Pool
             </ExternalLink>
           </div>
 

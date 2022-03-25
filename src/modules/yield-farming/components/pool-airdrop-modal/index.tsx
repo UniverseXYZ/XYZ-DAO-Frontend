@@ -74,7 +74,7 @@ const AirdropModal: FC<AirdropModalProps> = props => {
       <div className="flex flow-row">
         <div className="flex flow-row mb-32">
           <Text type="h2" weight="semibold" color="primary" className="mb-8" font="secondary">
-            Airdrop reward
+            Airdrop Reward
           </Text>
           <Text type="p1" weight="500" color="secondary">
             You have claimable tokens from the $XYZ Airdrop. This balance will rise over time and as more people exit

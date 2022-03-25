@@ -93,7 +93,7 @@ const WalletDelegateView: React.FC = () => {
             Current Voting Type
           </Text>
           <Text type="p1" weight="semibold" color="primary">
-            {isDelegated ? 'Delegate voting' : 'Manual voting'}
+            {isDelegated ? 'Delegate Voting' : 'Manual Voting'}
           </Text>
         </Grid>
 
@@ -121,7 +121,7 @@ const WalletDelegateView: React.FC = () => {
             <Grid flow="row" gap={32}>
               <Form.Item
                 name="delegateAddress"
-                label="Delegate address"
+                label="Delegate Address"
                 rules={[{ required: true, message: 'Required' }]}>
                 <TokenInput disabled={formDisabled || state.saving} />
               </Form.Item>

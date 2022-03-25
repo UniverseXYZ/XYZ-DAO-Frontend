@@ -122,7 +122,7 @@ function getColumns(isAll: boolean): ColumnsType<TableEntity> {
         }
       : {},
     {
-      title: 'Transaction hash/timestamp',
+      title: 'Transaction Hash/Timestamp',
       width: '25%',
       render: (_, entity) => (
         <>
@@ -142,7 +142,7 @@ function getColumns(isAll: boolean): ColumnsType<TableEntity> {
 
 const TX_OPTS: SelectOption[] = [
   {
-    label: 'All transactions',
+    label: 'All Transactions',
     value: 'all',
   },
   {
@@ -300,7 +300,7 @@ const PoolTransactions: FC = () => {
               : []),
             {
               id: 'all',
-              children: poolCtx.poolMeta ? 'All transactions' : 'Transactions',
+              children: poolCtx.poolMeta ? 'All Transactions' : 'Transactions',
             },
           ]}
           onClick={setActiveTab}
@@ -313,7 +313,7 @@ const PoolTransactions: FC = () => {
               options={[
                 {
                   value: 'all',
-                  label: 'All tokens',
+                  label: 'All Tokens',
                 },
                 ...tokens.map(token => ({
                   value: token.address ?? 'all',
@@ -346,7 +346,7 @@ const PoolTransactions: FC = () => {
           position: ['bottomRight'],
           showTotal: (total: number, [from, to]: [number, number]) => (
             <Text type="p2" weight="semibold" color="secondary">
-              Showing {from} to {to} out of {total} transactions
+              Showing {from} to {to} out of {total} transactions.
             </Text>
           ),
           onChange: handlePageChange,

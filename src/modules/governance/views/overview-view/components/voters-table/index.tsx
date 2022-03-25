@@ -102,7 +102,7 @@ const VotersTable: React.FC<VotersTableProps> = props => {
     <div className={cn('card', className)}>
       <div className="card-header">
         <Text type="p1" weight="semibold" color="primary" font="secondary">
-          Voter weights
+          Voter Weights
         </Text>
       </div>
       <Table<APIVoterEntity>
@@ -119,7 +119,7 @@ const VotersTable: React.FC<VotersTableProps> = props => {
           showTotal: (total: number, [from, to]: [number, number]) => (
             <>
               <Text type="p2" weight="semibold" color="secondary" className="hidden-mobile">
-                Showing {from} to {to} out of {total} stakers
+                Showing {from} to {to} out of {total} wallets stakers
               </Text>
               <Text type="p2" weight="semibold" color="secondary" className="hidden-tablet hidden-desktop">
                 {from}..{to} of {total}

@@ -55,17 +55,17 @@ const PoolChart: FC<Props> = props => {
 
   const epochFilters = useMemo(() => {
     if (!activeYfPool) {
-      return [{ value: 'all', label: 'All epochs' }];
+      return [{ value: 'all', label: 'All Epochs' }];
     }
 
     const { lastActiveEpoch } = activeYfPool.contract;
 
     if (!lastActiveEpoch) {
-      return [{ value: 'all', label: 'All epochs' }];
+      return [{ value: 'all', label: 'All Epochs' }];
     }
 
     return [
-      { value: 'all', label: 'All epochs' },
+      { value: 'all', label: 'All Epochs' },
       ...Array.from({ length: lastActiveEpoch }).map((_, epoch) => ({
         value: String(epoch),
         label: `Epoch ${epoch + 1}`,
@@ -75,7 +75,7 @@ const PoolChart: FC<Props> = props => {
 
   const typeFilters = useMemo(() => {
     return [
-      { value: 'all', label: 'All pool transactions' },
+      { value: 'all', label: 'All Pool Transactions' },
       { value: 'deposits', label: 'Deposits' },
       { value: 'withdrawals', label: 'Withdrawals' },
     ];

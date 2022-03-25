@@ -67,7 +67,7 @@ const PoolRewards: React.FC = () => {
         <Grid flow="col" gap={24} className={s.items}>
           <Grid flow="row" gap={2} className={s.item1}>
             <Text type="p2" color="secondary">
-              Current reward
+              Current Reward
             </Text>
             <Grid flow="col" align="center" gap={4}>
               <Text type="h3" weight="bold" color="primary">
@@ -105,7 +105,7 @@ const PoolRewards: React.FC = () => {
                   <Hint
                     text={`This number shows the $${XyzToken.symbol} rewards you would potentially be able to harvest this epoch, but is subject to change - in case more users deposit, or you withdraw some of your stake.`}>
                     <Text type="p2" color="secondary">
-                      Potential reward this epoch
+                      Potential Reward This Epoch
                     </Text>
                   </Hint>
                 </Grid>
@@ -123,7 +123,7 @@ const PoolRewards: React.FC = () => {
             <Grid flow="col" gap={8} align="center">
               <Hint text="You have claimable tokens from the $XYZ Airdrop. This balance will rise over time and as more people exit the pool and forfeit their additional rewards. Warning: You can only claim once.">
                 <Text type="p2" color="secondary">
-                  <span style={{ marginRight: 5 }}>Airdrop reward</span>
+                  <span style={{ marginRight: 5 }}>Airdrop Reward</span>
                   <span className={s.week}>
                     WEEK {airdropCurrentWeek}/{airdropDurationInWeeks}
                   </span>

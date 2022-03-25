@@ -107,7 +107,7 @@ const LayoutHeader: React.FC = () => {
               <span className={s.dropdownLink} aria-disabled="true">
                 <Icon name="auction" width={20} height={20} className={s.dropdownIcon} />
                 <Tooltip title="Coming soon" placement="top" hint>
-                  <span>Auction house</span>
+                  <span>Auction House</span>
                 </Tooltip>
               </span>
               <span className={s.dropdownLink} aria-disabled="true">
@@ -266,7 +266,7 @@ const LayoutHeader: React.FC = () => {
               </Link>
               <Link to="/yield-farming" className={s.dropdownLink} onClick={() => setPopper3visible(false)}>
                 <Icon name="yield-farming" width={20} height={20} className={s.dropdownIcon} />
-                <span>Yield farming</span>
+                <span>Yield Farming</span>
               </Link>
               <ExternalLink
                 href="https://forum.universe.xyz/"
@@ -341,7 +341,7 @@ const LayoutHeader: React.FC = () => {
                   <span className={s.dropdownLink} aria-disabled="true">
                     <Icon name="auction" width={20} height={20} className={s.dropdownIcon} />
                     <Tooltip title="Coming soon" placement="top" hint>
-                      <span>Auction house</span>
+                      <span>Auction House</span>
                     </Tooltip>
                   </span>
                   <span className={s.dropdownLink} aria-disabled="true">
@@ -437,7 +437,7 @@ const LayoutHeader: React.FC = () => {
                   </Link>
                   <Link to="/yield-farming" className={s.dropdownLink} onClick={() => setNavOpen(false)}>
                     <Icon name="yield-farming" width={20} height={20} className={s.dropdownIcon} />
-                    <span>Yield farming</span>
+                    <span>Yield Farming</span>
                   </Link>
                   <ExternalLink
                     href="https://forum.universe.xyz/"

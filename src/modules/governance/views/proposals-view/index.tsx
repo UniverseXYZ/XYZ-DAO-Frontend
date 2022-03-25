@@ -119,7 +119,7 @@ const ProposalsViewInner: React.FC = () => {
       <div className="card">
         <div className="card-header flex justify-space-between" style={{ padding: 0 }}>
           <Tabs className={s.tabs} simple activeKey={proposalsCtx.stateFilter} onChange={handleStateChange}>
-            <Tabs.Tab key="all" tab="All proposals" />
+            <Tabs.Tab key="all" tab="All Proposals" />
             <Tabs.Tab key="active" tab="Active" />
             <Tabs.Tab key="executed" tab="Executed" />
             <Tabs.Tab key="failed" tab="Failed" />
@@ -127,7 +127,7 @@ const ProposalsViewInner: React.FC = () => {
           <Input
             className={s.search}
             prefix={<Icon name="search-outlined" width={16} height={16} />}
-            placeholder="Search proposal"
+            placeholder="Search Proposals"
             onChange={ev => handleSearchChange(ev)}
           />
         </div>

@@ -188,7 +188,7 @@ const WalletLockView: React.FC = () => {
         <Grid flow="row" gap={32}>
           <Grid flow="col" gap={64} colsTemplate="1fr 1fr">
             <Grid flow="row" gap={32}>
-              <Form.Item label="Add lock duration" dependencies={['lockEndDate']}>
+              <Form.Item label="Add Lock Duration" dependencies={['lockEndDate']}>
                 {() => (
                   <div className="flexbox-list" style={{ '--gap': '8px' } as React.CSSProperties}>
                     {DURATION_OPTIONS.map(opt => (
@@ -224,7 +224,7 @@ const WalletLockView: React.FC = () => {
               </Text>
               <Form.Item
                 name="lockEndDate"
-                label="Manual choose your lock end date"
+                label="Manual Choose Your Lock and End Date"
                 rules={[{ required: true, message: 'Required' }]}>
                 <DatePicker
                   showTime
