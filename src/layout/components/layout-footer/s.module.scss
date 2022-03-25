@@ -6,11 +6,22 @@
   .row {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding: 60px 0;
-    display: flex;
-    flex-wrap: wrap;
 
     &:last-of-type {
       border: 0;
+    }
+
+    &:first-of-type {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 120px;
+      max-width: 1110px;
+      margin: 0 auto;
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        grid-gap: 40px;
+      }
     }
 
     @media (max-width: 767px) {
@@ -20,18 +31,15 @@
 
   .subscribeBlock {
     display: flex;
-    width: 50%;
     flex-direction: column;
+    padding-top: 17px;
 
     .subscribeWrap {
-      max-width: 380px;
       width: 100%;
     }
 
     @media (max-width: 1024px) {
       width: 100%;
-      text-align: center;
-      align-items: center;
     }
 
     @media (max-width: 480px) {
@@ -41,17 +49,36 @@
     }
   }
 
-  .sBlock {
-    margin: 0 auto;
+  .copyrightTexts {
+    flex: 1;
+    display: inline-flex;
+    justify-content: space-between;
+    padding-right: 60px;
 
+    @media (max-width: 1024px) {
+      flex-direction: column;
+    }
+  }
+
+  .sBlock {
     @media (max-width: 1024px) {
       text-align: center;
       margin: 44px auto 0;
     }
+
+    @media (max-width: 767px) {
+      margin: 0 0 30px;
+      order: -1;
+      text-align: center;
+      width: 100%;
+    }
   }
 
   .sLinksWrap {
-    margin-top: 14px;
+    @media (max-width: 768px) {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 
   .sLink {
@@ -69,7 +96,6 @@
     @media (max-width: 768px) {
       width: 44px;
       height: 44px;
-      margin: 0 8px 16px;
     }
 
     &:last-of-type {
@@ -91,18 +117,18 @@
   }
 
   .navBlocksWrap {
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: 60px;
-    flex-grow: 1;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    grid-gap: 20px;
 
     @media (max-width: 1024px) {
       justify-content: flex-start;
     }
+    @media (max-width: 992px) {
+      grid-template-columns: repeat(3,1fr);
+    }
     @media (max-width: 768px) {
       padding-left: 0;
-      margin-top: 44px;
     }
   }
 
@@ -125,28 +151,26 @@
     .link {
       display: flex;
       align-items: center;
-      color: #fff;
+      color: hsla(0,0%,100%,.6);
       margin-bottom: 10px;
       font-size: 14px;
       font-style: normal;
-      font-weight: 500;
+      font-weight: bold;
       line-height: 20px;
     }
 
     .link:hover,
     .link:active {
-      opacity: 0.8;
+      color: white;
     }
 
     .link[aria-disabled='true'] {
       cursor: default;
-      color: #717980;
+      color: hsla(0,0%,100%,.2);
     }
   }
 
   .logoWrap {
-    max-width: 30%;
-
     @media (max-width: 768px) {
       max-width: 100%;
     }
@@ -172,6 +196,11 @@
 
   .logoText {
     color: #fff;
+  }
+
+  .logoSubText {
+    color: hsla(0,0%,100%,.6);
+    font-weight: 400;
   }
 
   .title {
@@ -228,16 +257,19 @@
     align-items: center;
     padding: 30px 0;
 
-    .copyrightLinks {
-      margin-left: auto;
-      display: flex;
-    }
-
+    .copyrightText,
     .copyrightLink {
       color: rgba(255, 255, 255, 0.4);
       font-size: 12px;
-      font-weight: 600;
       line-height: 17px;
+    }
+
+    .copyrightText {
+      font-weight: 400;
+    }
+
+    .copyrightLink {
+      font-weight: bold;
     }
 
     a.copyrightLink:hover {
@@ -248,19 +280,16 @@
       margin-left: 14px;
     }
 
+    @media (max-width: 1024px) {
+      .copyrightLink + .copyrightLink {
+        margin: 0 0;
+      }
+    }
+
     @media (max-width: 767px) {
       flex-direction: column;
       align-items: flex-start;
       padding: 30px 0;
-
-      .copyrightLinks {
-        margin: 20px 0 0;
-        flex-direction: column;
-      }
-
-      .copyrightLink + .copyrightLink {
-        margin: 20px 0 0;
-      }
     }
   }
 }

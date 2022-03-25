@@ -149,6 +149,10 @@ export type IconNames =
   | 'lobby-lobsters'
   | 'core-drops'
   | 'minting'
+  | 'forum'
+  | 'signal'
+  | 'support'
+  | 'rarity-chart'
   | 'static/add-token';
 
 export type IconProps = {
