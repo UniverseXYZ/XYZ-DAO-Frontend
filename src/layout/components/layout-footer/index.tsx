@@ -160,6 +160,9 @@ const LayoutFooter: React.FC = () => {
               <ExternalLink href="https://signal.universe.xyz/" className={s.link}>
                 Signal
               </ExternalLink>
+              <Link to="/airdrop" className={s.link}>
+                Airdrop
+              </Link>
             </nav>
           </div>
         </div>
