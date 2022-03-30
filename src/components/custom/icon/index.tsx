@@ -1,11 +1,15 @@
 import React, { CSSProperties } from 'react';
 import cn from 'classnames';
 
+import airdropClaimSrc from 'resources/png/airdrop-claim.png';
+import balloonCoinMobileSrc from 'resources/png/balloon-coin-mobile.png';
+import balloonCoinSrc from 'resources/png/balloon-coin.png';
 import aaveSrc from 'resources/png/token-aave.png';
 import ilvSrc from 'resources/png/token-ilv.png';
 import linkSrc from 'resources/png/token-link.png';
 import sushiSrc from 'resources/png/token-sushi.png';
 import uslpSrc from 'resources/png/token-uslp.png';
+import universeRedSrc from 'resources/png/universe-red.png';
 import universeSrc from 'resources/png/universe.png';
 import Sprite from 'resources/svg/icons-sprite.svg';
 
@@ -153,7 +157,11 @@ export type IconNames =
   | 'signal'
   | 'support'
   | 'rarity-chart'
-  | 'static/add-token';
+  | 'static/add-token'
+  | 'png/airdrop-claim'
+  | 'png/universe-red'
+  | 'png/balloon-coin'
+  | 'png/balloon-coin-mobile';
 
 export type IconProps = {
   name: IconNames;
@@ -177,6 +185,14 @@ const Icon: React.FC<IconProps> = props => {
       switch (name) {
         case 'png/universe':
           return universeSrc;
+        case 'png/universe-red':
+          return universeRedSrc;
+        case 'png/airdrop-claim':
+          return airdropClaimSrc;
+        case 'png/balloon-coin':
+          return balloonCoinSrc;
+        case 'png/balloon-coin-mobile':
+          return balloonCoinMobileSrc;
         case 'png/aave':
           return aaveSrc;
         case 'png/ilv':
