@@ -2,9 +2,17 @@ import React from 'react';
 
 import Icon from 'components/custom/icon';
 
+import { formatAirdropPageNumbers } from '../../../utils';
+
 import s from '../s.module.scss';
 
-const FirstSection = () => {
+interface IFirstSection {
+  totalAirdropped: number | undefined;
+  claimableTokens: number | undefined;
+  totalRedistributed: number | undefined;
+}
+
+const FirstSection = ({ totalAirdropped, claimableTokens, totalRedistributed }: IFirstSection) => {
   return (
     <div className={s.firstSection}>
       <div>
@@ -20,7 +28,7 @@ const FirstSection = () => {
         </div>
         <div className={s.value}>
           <Icon name="png/universe" width="auto" height="auto" />
-          <span>10,000,000</span>
+          <span>{formatAirdropPageNumbers(totalAirdropped)}</span>
         </div>
       </div>
       <div>
@@ -33,7 +41,12 @@ const FirstSection = () => {
         </div>
         <div className={s.value}>
           <Icon name="png/universe" width="auto" height="auto" />
-          <span>100,000</span>
+          <span>
+            {totalAirdropped !== undefined &&
+              claimableTokens !== undefined &&
+              totalRedistributed !== undefined &&
+              formatAirdropPageNumbers(totalAirdropped - claimableTokens - totalRedistributed)}
+          </span>
         </div>
       </div>
       <div>
@@ -46,7 +59,7 @@ const FirstSection = () => {
         </div>
         <div className={s.value}>
           <Icon name="png/universe" width="auto" height="auto" />
-          <span>135,000</span>
+          <span>{formatAirdropPageNumbers(totalRedistributed)}</span>
         </div>
       </div>
     </div>
