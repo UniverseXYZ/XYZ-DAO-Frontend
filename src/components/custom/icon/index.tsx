@@ -158,7 +158,7 @@ export type IconNames =
   | 'support'
   | 'rarity-chart'
   | 'static/add-token'
-  | 'airdrop';
+  | 'airdrop'
   | 'png/airdrop-claim'
   | 'png/universe-red'
   | 'png/balloon-coin'

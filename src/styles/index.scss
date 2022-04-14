@@ -134,6 +134,8 @@ body.mobile-menu-open {
 
   --theme-tooltip-bg: #fff;
   --theme-tooltip-item-bg-active: rgba(0, 0, 0, 0.04);
+
+  --airdrop-mask-bg: #f1f1f1;
 }
 
 @media (max-width: 1024px) {
@@ -179,6 +181,8 @@ body.mobile-menu-open {
 
   --theme-tooltip-bg: #2f2f2f;
   --theme-tooltip-item-bg-active: #3f3f3f;
+
+  --airdrop-mask-bg: #353535;
 }
 
 :focus:not(:focus-visible) {
