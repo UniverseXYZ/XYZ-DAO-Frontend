@@ -2,23 +2,31 @@ import React from 'react';
 
 import Icon from 'components/custom/icon';
 
+import { AirdropAnimation } from '../components/AirdropAnimation';
+
 import { formatAirdropPageNumbers } from '../../../utils';
 
 import s from '../s.module.scss';
-import { AirdropAnimation } from '../components/AirdropAnimation';
 
 interface IThirdSection {
   totalAidropAmount: number | undefined;
   adjustedAmount: number | undefined;
   bonusAmount: number | undefined;
+  airdropProgress: number;
   showAirdropModal: Function;
 }
 
-const ThirdSection = ({ totalAidropAmount, adjustedAmount, bonusAmount, showAirdropModal }: IThirdSection) => {
+const ThirdSection = ({
+  totalAidropAmount,
+  adjustedAmount,
+  bonusAmount,
+  airdropProgress,
+  showAirdropModal,
+}: IThirdSection) => {
   return (
     <div className={s.thirdSection}>
       <div>
-        <AirdropAnimation percent={30} />
+        <AirdropAnimation percent={airdropProgress} />
       </div>
       <div>
         <div className={s.availableToClaim}>

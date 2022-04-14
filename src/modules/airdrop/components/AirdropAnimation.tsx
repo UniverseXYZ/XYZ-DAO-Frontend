@@ -1,10 +1,11 @@
-import Lottie from 'react-lottie';
 import React from 'react';
+import Lottie from 'react-lottie';
 
 import { ReactComponent as AirdropMask } from 'resources/svg/airdrop.svg';
 
-import s from '../s.module.scss';
 import animationData from '../animations/AirdropWaves.json';
+
+import s from '../s.module.scss';
 
 interface IAirdropAnimationProps {
   percent: number;
@@ -28,4 +29,4 @@ export const AirdropAnimation = (props: IAirdropAnimationProps) => {
       <Lottie options={defaultOptions} style={{ bottom: `${percent}%` }} />
     </div>
   );
-}
+};

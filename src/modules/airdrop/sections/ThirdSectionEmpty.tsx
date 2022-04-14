@@ -1,12 +1,17 @@
 import React from 'react';
 
-import s from '../s.module.scss';
 import { AirdropAnimation } from '../components/AirdropAnimation';
 
-const ThirdSectionEmpty = () => {
+import s from '../s.module.scss';
+
+interface IThirdSectionEmpty {
+  airdropProgress: number;
+}
+
+const ThirdSectionEmpty = ({ airdropProgress }: IThirdSectionEmpty) => {
   return (
     <div className={s.thirdSection}>
-      <AirdropAnimation percent={30} />
+      <AirdropAnimation percent={airdropProgress} />
     </div>
   );
 };

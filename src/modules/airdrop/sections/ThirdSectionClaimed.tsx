@@ -1,15 +1,18 @@
 import React from 'react';
 
-import Icon from 'components/custom/icon';
-
-import s from '../s.module.scss';
 import { AirdropAnimation } from '../components/AirdropAnimation';
 
-const ThirdSectionClaimed = () => {
+import s from '../s.module.scss';
+
+interface IThirdSectionClaimed {
+  airdropProgress: number;
+}
+
+const ThirdSectionClaimed = ({ airdropProgress }: IThirdSectionClaimed) => {
   return (
     <div className={s.thirdSection}>
       <div>
-        <AirdropAnimation percent={30} />
+        <AirdropAnimation percent={airdropProgress} />
       </div>
       <div>
         {/* <div className={s.availableToClaim}>
