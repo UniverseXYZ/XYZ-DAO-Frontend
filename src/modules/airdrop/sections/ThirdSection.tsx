@@ -5,6 +5,7 @@ import Icon from 'components/custom/icon';
 import { formatAirdropPageNumbers } from '../../../utils';
 
 import s from '../s.module.scss';
+import { AirdropAnimation } from '../components/AirdropAnimation';
 
 interface IThirdSection {
   totalAidropAmount: number | undefined;
@@ -17,7 +18,7 @@ const ThirdSection = ({ totalAidropAmount, adjustedAmount, bonusAmount, showAird
   return (
     <div className={s.thirdSection}>
       <div>
-        <Icon name="png/airdrop-claim" width="auto" height="auto" className={s.airdropClaimIcon} />
+        <AirdropAnimation percent={30} />
       </div>
       <div>
         <div className={s.availableToClaim}>

@@ -1,13 +1,12 @@
 import React from 'react';
 
-import Icon from 'components/custom/icon';
-
 import s from '../s.module.scss';
+import { AirdropAnimation } from '../components/AirdropAnimation';
 
 const ThirdSectionEmpty = () => {
   return (
-    <div className={s.thirdSectionEmpty}>
-      <Icon name="png/airdrop-claim" width="auto" height="auto" />
+    <div className={s.thirdSection}>
+      <AirdropAnimation percent={30} />
     </div>
   );
 };
