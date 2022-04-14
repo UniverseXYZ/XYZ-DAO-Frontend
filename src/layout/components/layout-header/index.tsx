@@ -282,6 +282,10 @@ const LayoutHeader: React.FC = () => {
                 <Icon name="signal" width={20} height={20} className={s.dropdownIcon} />
                 <span>Signal</span>
               </ExternalLink>
+              <Link to="/airdrop" className={s.dropdownLink} onClick={() => setPopper3visible(false)}>
+                <Icon name="airdrop" width={20} height={20} className={s.dropdownIcon} />
+                <span>Airdrop</span>
+              </Link>
             </div>
           }>
           <Button type="link" className={s.navLink}>
@@ -453,6 +457,10 @@ const LayoutHeader: React.FC = () => {
                     <Icon name="signal" width={20} height={20} className={s.dropdownIcon} />
                     <span>Signal</span>
                   </ExternalLink>
+                  <Link to="/airdrop" className={s.dropdownLink} onClick={() => setNavOpen(false)}>
+                    <Icon name="airdrop" width={20} height={20} className={s.dropdownIcon} />
+                    <span>Airdrop</span>
+                  </Link>
                 </div>
                 {!wallet.isActive && !isMobile ? (
                   <div style={{ textAlign: 'center', padding: '0 20px', width: '100%' }}>
