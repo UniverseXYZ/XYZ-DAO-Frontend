@@ -92,3 +92,7 @@ export function toNumber(value: number | string | undefined): number | undefined
 
   return val;
 }
+
+export function formatAirdropPageNumbers(value: number | undefined): string | undefined {
+  return value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}

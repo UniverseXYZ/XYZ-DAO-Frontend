@@ -5,8 +5,6 @@ import AntdSpin from 'antd/lib/spin';
 
 import { useWarning } from 'components/providers/warning-provider';
 
-import YFPoolsProvider from './providers/pools-provider';
-
 const PoolsView = lazy(() => import('./views/pools-view'));
 const PoolView = lazy(() => import('./views/pool-view'));
 
@@ -36,15 +34,13 @@ const YieldFarmingView: React.FC = () => {
   }, [isMobile]);
 
   return (
-    <YFPoolsProvider>
-      <Suspense fallback={<AntdSpin />}>
-        <Switch>
-          <Route path="/yield-farming" exact component={PoolsView} />
-          <Route path="/yield-farming/:poolId" exact component={PoolView} />
-          <Redirect to="/yield-farming" />
-        </Switch>
-      </Suspense>
-    </YFPoolsProvider>
+    <Suspense fallback={<AntdSpin />}>
+      <Switch>
+        <Route path="/yield-farming" exact component={PoolsView} />
+        <Route path="/yield-farming/:poolId" exact component={PoolView} />
+        <Redirect to="/yield-farming" />
+      </Switch>
+    </Suspense>
   );
 };
 

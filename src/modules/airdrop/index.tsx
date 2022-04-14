@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { add, differenceInCalendarWeeks } from 'date-fns';
 
+import { useWallet } from '../../wallets/wallet';
+import AirdropModal from '../yield-farming/components/pool-airdrop-modal';
+import { useYFPools } from '../yield-farming/providers/pools-provider';
 import FirstSection from './sections/FirstSection';
 import SecondSection from './sections/SecondSection';
 import SecondSectionClaimed from './sections/SecondSectionClaimed';
@@ -12,9 +16,41 @@ import ThirdSectionEmpty from './sections/ThirdSectionEmpty';
 import s from './s.module.scss';
 
 const AirdropView: React.FC = () => {
-  const [state, setState] = useState('notEligible'); // initial, claimed, connectWallet, notEligible
+  const wallet = useWallet();
+  const yfPoolsCtx = useYFPools();
+  const [state, setState] = useState('initial'); // initial, claimed, connectWallet, notEligible
 
-  return (
+  const [airdropModalVisible, showAirdropModal] = useState(false);
+  const merkleDistributorData = yfPoolsCtx.merkleDistributor;
+  const adjustedAmount = merkleDistributorData?.adjustedAmount;
+  const claimAmount = merkleDistributorData?.claimAmount;
+  const isAirdropClaimed = merkleDistributorData?.isAirdropClaimed;
+  const bonusAmount = merkleDistributorData?.bonusPart;
+  const totalAirdropped = merkleDistributorData?.initialPoolSize;
+  const claimableTokens = merkleDistributorData?.currentPoolSize;
+  const claimIndex = merkleDistributorData?.claimIndex;
+  const totalRedistributed = merkleDistributorData?.totalBonus;
+
+  const airdropDurationInWeeks: number = 100;
+  const airdropStartDate = new Date(1626674400000); // 2021-07-19 00:00:00
+  const airdropEndDate = add(airdropStartDate, { weeks: airdropDurationInWeeks });
+  const airdropCurrentWeek =
+    airdropDurationInWeeks -
+    differenceInCalendarWeeks(new Date(airdropEndDate), new Date() > airdropEndDate ? airdropEndDate : new Date());
+
+  useEffect(() => {
+    if (!wallet.isActive) {
+      setState('connectWallet');
+    } else if (isAirdropClaimed) {
+      setState('claimed');
+    } else if (claimIndex === -1) {
+      setState('notEligible');
+    } else {
+      setState('initial');
+    }
+  }, [wallet, yfPoolsCtx]);
+
+  return yfPoolsCtx.merkleDistributor?.isFetched || state === 'connectWallet' ? (
     <div className={s.airdropRewardPage}>
       <div className={s.airdropRewardPageContainer}>
         <div className={s.titleDescription}>
@@ -26,7 +62,11 @@ const AirdropView: React.FC = () => {
           </p>
         </div>
         <div className={s.gridLayout}>
-          <FirstSection />
+          <FirstSection
+            totalAirdropped={totalAirdropped}
+            claimableTokens={claimableTokens}
+            totalRedistributed={totalRedistributed}
+          />
           {state === 'claimed' ? (
             <SecondSectionClaimed />
           ) : state === 'connectWallet' ? (
@@ -34,7 +74,12 @@ const AirdropView: React.FC = () => {
           ) : state === 'notEligible' ? (
             <SecondSectionNotEligible />
           ) : (
-            <SecondSection />
+            <SecondSection
+              airdropCurrentWeek={airdropCurrentWeek}
+              airdropDurationInWeeks={airdropDurationInWeeks}
+              totalAirdropAmount={claimAmount}
+              bonusAmount={bonusAmount}
+            />
           )}
           {state === 'claimed' ? (
             <ThirdSectionClaimed />
@@ -43,11 +88,21 @@ const AirdropView: React.FC = () => {
           ) : state === 'notEligible' ? (
             <ThirdSectionEmpty />
           ) : (
-            <ThirdSection />
+            <ThirdSection
+              totalAidropAmount={claimAmount}
+              adjustedAmount={adjustedAmount}
+              bonusAmount={bonusAmount}
+              showAirdropModal={showAirdropModal}
+            />
           )}
         </div>
+        {airdropModalVisible && (
+          <AirdropModal merkleDistributor={merkleDistributorData} onCancel={() => showAirdropModal(false)} />
+        )}
       </div>
     </div>
+  ) : (
+    <></>
   );
 };
 
