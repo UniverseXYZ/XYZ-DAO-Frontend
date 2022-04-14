@@ -153,7 +153,8 @@ export type IconNames =
   | 'signal'
   | 'support'
   | 'rarity-chart'
-  | 'static/add-token';
+  | 'static/add-token'
+  | 'airdrop';
 
 export type IconProps = {
   name: IconNames;
