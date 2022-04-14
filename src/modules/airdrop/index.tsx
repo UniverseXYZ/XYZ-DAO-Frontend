@@ -37,6 +37,7 @@ const AirdropView: React.FC = () => {
   const airdropCurrentWeek =
     airdropDurationInWeeks -
     differenceInCalendarWeeks(new Date(airdropEndDate), new Date() > airdropEndDate ? airdropEndDate : new Date());
+  const airdropProgress = (airdropCurrentWeek / airdropDurationInWeeks) * 100;
 
   useEffect(() => {
     if (!wallet.isActive) {
@@ -82,16 +83,17 @@ const AirdropView: React.FC = () => {
             />
           )}
           {state === 'claimed' ? (
-            <ThirdSectionClaimed />
+            <ThirdSectionClaimed airdropProgress={airdropProgress} />
           ) : state === 'connectWallet' ? (
-            <ThirdSectionEmpty />
+            <ThirdSectionEmpty airdropProgress={airdropProgress} />
           ) : state === 'notEligible' ? (
-            <ThirdSectionEmpty />
+            <ThirdSectionEmpty airdropProgress={airdropProgress} />
           ) : (
             <ThirdSection
               totalAidropAmount={claimAmount}
               adjustedAmount={adjustedAmount}
               bonusAmount={bonusAmount}
+              airdropProgress={airdropProgress}
               showAirdropModal={showAirdropModal}
             />
           )}
