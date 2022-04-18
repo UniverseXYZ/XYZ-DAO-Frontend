@@ -57,9 +57,9 @@ const AirdropView: React.FC = () => {
         <div className={s.titleDescription}>
           <h1 className={s.title}>Airdrop reward</h1>
           <p className={s.description}>
-            You may have received claimable token rewards from the LeagueDAO Airdrop. Claiming your airdrop will forfeit
-            a portion of your balance. Your total claimable amount will rise whenever someone forfeits a portion of
-            their reward.
+            You may have received claimable token rewards from the Universe.XYZ Airdrop. Claiming your airdrop will
+            forfeit a portion of your balance. Your total claimable amount will rise whenever someone forfeits a portion
+            of their reward.
           </p>
         </div>
         <div className={s.gridLayout}>
