@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import BigNumber from 'bignumber.js';
 import cn from 'classnames';
 import add from 'date-fns/add';
@@ -17,11 +18,14 @@ import AirdropModal from '../../components/pool-airdrop-modal';
 import PoolHarvestModal from '../../components/pool-harvest-modal';
 import { useYFPools } from '../../providers/pools-provider';
 
+import { formatAirdropPageNumbers } from '../../../../utils';
+
 import s from './s.module.scss';
 
 const PoolRewards: React.FC = () => {
   const walletCtx = useWallet();
   const yfPoolsCtx = useYFPools();
+  const history = useHistory();
 
   const [harvestModalVisible, showHarvestModal] = useState(false);
   const [airdropModalVisible, showAirdropModal] = useState(false);
@@ -46,10 +50,8 @@ const PoolRewards: React.FC = () => {
   }, undefined);
 
   const merkleDistributorData = yfPoolsCtx.merkleDistributor;
-  const isAirdropClaimed = merkleDistributorData?.isAirdropClaimed;
   const adjustedAmount = merkleDistributorData?.adjustedAmount;
 
-  const airdropAmount = !isAirdropClaimed ? BigNumber.from(adjustedAmount) : BigNumber.from(0);
   const airdropDurationInWeeks = 100;
   const airdropStartDate = new Date(1626674400000); // 2021-07-19 00:00:00
   const airdropEndDate = add(airdropStartDate, { weeks: airdropDurationInWeeks });
@@ -132,7 +134,7 @@ const PoolRewards: React.FC = () => {
             </Grid>
             <Grid flow="col" gap={4} align="center">
               <Text type="h3" weight="bold" color="primary">
-                {formatToken(airdropAmount?.unscaleBy(XyzToken.decimals)) ?? 0}
+                {formatAirdropPageNumbers(adjustedAmount) ?? 0}
               </Text>
               <Icon name={XyzToken.icon!} width={40} height={40} />
               {walletCtx.isActive && (
@@ -140,7 +142,7 @@ const PoolRewards: React.FC = () => {
                   type="button"
                   className="button-primary button-small"
                   // disabled={!airdropAmount?.gt(BigNumber.ZERO)}
-                  onClick={() => showAirdropModal(true)}>
+                  onClick={() => history.push(`/airdrop`)}>
                   Claim
                 </button>
               )}
