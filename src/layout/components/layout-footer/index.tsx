@@ -72,30 +72,6 @@ const LayoutFooter: React.FC = () => {
               </button>
             </form>
           </div>
-          <div className={s.sBlock}>
-            <Text type="p1" weight="bold" color="white" font="secondary">
-              Join the Community
-            </Text>
-            <div className={s.sLinksWrap}>
-              <ExternalLink href="https://twitter.com/universe_xyz" className={s.sLink}>
-                <Icon name="twitter" width="20" height="20" />
-              </ExternalLink>
-              <ExternalLink href="https://discord.com/invite/vau77wXCD3" className={s.sLink}>
-                <Icon name="discord" width="20" height="20" />
-              </ExternalLink>
-              <ExternalLink href="https://www.coingecko.com/en/coins/universe-xyz" className={s.sLink}>
-                <Icon name="coingecko" width="20" height="20" />
-              </ExternalLink>
-              <ExternalLink
-                href="https://www.youtube.com/channel/UCWt00md9T2b4iTsHWp_Fapw?sub_confirmation=1"
-                className={s.sLink}>
-                <Icon name="youtube" width="20" height="20" />
-              </ExternalLink>
-              <ExternalLink href="https://medium.com/universe-xyz" className={s.sLink}>
-                <Icon name="medium" width="20" height="20" />
-              </ExternalLink>
-            </div>
-          </div>
         </div>
         <div className={cn(s.row, s.navWrap)}>
           <div className={s.navBlocksWrap}>
