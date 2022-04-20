@@ -77,7 +77,7 @@
             svg {
               cursor: pointer;
               &:hover {
-                color: #131313;
+                color: var(--theme-icon-hover-color);
                 + .tooltip {
                   visibility: visible;
                 }

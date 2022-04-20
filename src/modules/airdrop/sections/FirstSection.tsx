@@ -21,8 +21,8 @@ const FirstSection = ({ totalAirdropped, claimableTokens, totalRedistributed }: 
           <div className={s.info}>
             <Icon name="info-outlined" width={16} height={16} />
             <div className={s.tooltip}>
-              This number shows the XYZ token rewards distributed so far out of the total of 2,800,000 that are going to
-              be available for Yield Farming.
+              This number shows the total amount of XYZ tokens distributed as a whole,
+              these tokens will all be available when the airdrop period is over.
             </div>
           </div>
         </div>
