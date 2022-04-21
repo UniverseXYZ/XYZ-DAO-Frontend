@@ -53,6 +53,8 @@ const LayoutHeader: React.FC = () => {
   }, [window.innerWidth]);
 
   const isGovernancePage = useRouteMatch('/governance');
+  const isYieldFarmingPage = useRouteMatch('/yield-farming');
+  const isAirdropPage = useRouteMatch('/airdrop');
 
   async function handleAddProjectToken() {
     if (wallet.connector?.id === 'metamask') {
@@ -79,7 +81,9 @@ const LayoutHeader: React.FC = () => {
         <Icon name="png/universe" width="auto" height="auto" className={s.logo} />
       </ExternalLink>
       <div className={s.titleDelimiter} />
-      <h1 className={s.title}>{isGovernancePage ? 'Governance' : 'Yield Farming'}</h1>
+      {isGovernancePage && (<h1 className={s.title}>Governance</h1>)}
+      {isYieldFarmingPage && (<h1 className={s.title}>Yield Farming</h1>)}
+      {isAirdropPage && (<h1 className={s.title}>Airdrop</h1>)}
 
       <nav className={s.nav}>
         <Popover
