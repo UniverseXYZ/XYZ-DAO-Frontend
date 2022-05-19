@@ -12,7 +12,6 @@
     "build:prod": "react-scripts build",
     "start": "react-scripts start",
     "start:prod": "node -r dotenv/config ./node_modules/.bin/react-scripts start dotenv_config_path=.env.production.local",
-    "web": "react-scripts start",
     "lessc": "lessc src/styles/antd.less src/styles/antd.css -js",
     "lint": "eslint src/**/*.ts{,x} && tsc --noEmit && stylelint --syntax scss 'src/**/*.scss'",
     "format": "prettier --write src/**/*.ts{,x}",
