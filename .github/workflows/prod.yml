@@ -2,8 +2,8 @@ name: Live Environment
 
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - rshtirmer/deploy
 
 jobs:
   build:
