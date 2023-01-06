@@ -85,9 +85,10 @@ export enum ProposalState {
   Grace,
   Expired,
   Executed,
+  Abrogated,
 }
 
-function getProposalStateCall(proposalId: number): Promise<ProposalState> {
+export function getProposalStateCall(proposalId: number): Promise<ProposalState> {
   return Contract.call('state', [proposalId]).then(Number);
 }
 

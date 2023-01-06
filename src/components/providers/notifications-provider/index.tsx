@@ -260,29 +260,6 @@ const NotificationsProvider: React.FC = ({ children }) => {
   const timestampRef = React.useRef(lastNotificationTimestamp);
   timestampRef.current = lastNotificationTimestamp;
 
-  React.useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-
-    if (wallet.initialized) {
-      fetchNotifications({ target: wallet.account }).then(setNotifications).catch(console.error);
-
-      intervalId = setInterval(() => {
-        fetchNotifications({ target: wallet.account, timestamp: timestampRef.current })
-          .then(ns => {
-            if (Array.isArray(ns)) {
-              setNotifications(prevNs => [...prevNs.filter(prevN => prevN.expiresOn * 1000 > Date.now()), ...ns]);
-              ns.forEach(n => addToast(n));
-            }
-          })
-          .catch(console.error);
-      }, 30_000);
-    }
-
-    return () => {
-      if (intervalId) clearInterval(intervalId);
-    };
-  }, [wallet.initialized, wallet.account]);
-
   return (
     <NotificationsContext.Provider
       value={{

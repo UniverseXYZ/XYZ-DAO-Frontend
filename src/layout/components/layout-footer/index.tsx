@@ -101,7 +101,7 @@ const LayoutFooter: React.FC = () => {
               <Text type="p3" color="white" font="secondary" weight="bold" className={s.navTitle}>
                 NFT Drops
               </Text>
-              <ExternalLink href="https://universe.xyz/polymorphs" className={s.link}>
+              <ExternalLink href="https://polymorphs.universe.xyz" className={s.link}>
                 Polymorphs
               </ExternalLink>
               <ExternalLink href="https://universe.xyz/lobby-lobsters" className={s.link}>
@@ -117,7 +117,7 @@ const LayoutFooter: React.FC = () => {
               <Text type="p3" color="white" font="secondary" weight="bold" className={s.navTitle}>
                 Rarity charts
               </Text>
-              <ExternalLink href="https://universe.xyz/polymorph-rarity" className={s.link}>
+              <ExternalLink href="https://polymorphs.universe.xyz/polymorph-rarity" className={s.link}>
                 Polymorphs
               </ExternalLink>
               <ExternalLink href="https://rarity.tools/lobby-lobsters" className={s.link}>

@@ -142,7 +142,7 @@ const LayoutHeader: React.FC = () => {
           content={
             <div className={cn('card', s.dropdown)}>
               <ExternalLink
-                href="https://universe.xyz/polymorphs"
+                href="https://polymorphs.universe.xyz"
                 className={s.dropdownLink}
                 onClick={() => setPopper4visible(false)}>
                 <Icon name="polymorphs" width={20} height={20} className={s.dropdownIcon} />
@@ -180,7 +180,7 @@ const LayoutHeader: React.FC = () => {
           content={
             <div className={cn('card', s.dropdown)}>
               <ExternalLink
-                href="https://universe.xyz/polymorph-rarity"
+                href="https://polymorphs.universe.xyz/polymorph-rarity"
                 className={s.dropdownLink}
                 onClick={() => setPopper5visible(false)}>
                 <Icon name="rarity-chart" width={20} height={11} className={s.dropdownIcon} />
@@ -362,7 +362,7 @@ const LayoutHeader: React.FC = () => {
                 <div className={s.mobileMenuBlock}>
                   <h3>NFT drops</h3>
                   <ExternalLink
-                    href="https://universe.xyz/polymorphs"
+                    href="https://polymorphs.universe.xyz"
                     className={s.dropdownLink}
                     onClick={() => setNavOpen(false)}>
                     <Icon name="polymorphs" width={20} height={20} className={s.dropdownIcon} />
@@ -385,7 +385,7 @@ const LayoutHeader: React.FC = () => {
                 <div className={s.mobileMenuBlock}>
                   <h3>Rarity charts</h3>
                   <ExternalLink
-                    href="https://universe.xyz/polymorph-rarity"
+                    href="https://polymorphs.universe.xyz/polymorph-rarity"
                     className={s.dropdownLink}
                     onClick={() => setNavOpen(false)}>
                     <Icon name="rarity-chart" width={20} height={11} className={s.dropdownIcon} />

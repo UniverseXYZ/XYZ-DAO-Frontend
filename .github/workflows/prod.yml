@@ -86,7 +86,13 @@ jobs:
 
         REACT_APP_DAO_ACTIVATION_THRESHOLD: '50000000'
 
-        REACT_APP_BASE_API_URL: 'https://api.dao.universe.xyz'
+        REACT_APP_BASE_API_URL: ''
+
+        REACT_APP_PRIMARY_GRAPH_URL: 'https://api.thegraph.com/subgraphs/name/universexyz/daosubgraph'
+        REACT_APP_FALLBACK_GRAPH_URL: 'https://api.thegraph.com/subgraphs/name/universexyz/daosubgraph'
+        
+        REACT_APP_ZAPPER_URL: 'https://api.zapper.fi/v1/'
+        REACT_APP_ZAPPER_API_KEY: ''
 
     - name: Save artifacts
       uses: actions/upload-artifact@v2

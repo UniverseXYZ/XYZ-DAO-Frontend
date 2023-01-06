@@ -7,6 +7,14 @@ const config = {
   isDev: String(process.env.REACT_APP_ENV) === 'development',
   isProd: String(process.env.REACT_APP_ENV) === 'production',
   isTestnet: String(process.env.REACT_APP_ENV) === 'testnet',
+  graph: {
+    primaryUrl: String(process.env.REACT_APP_PRIMARY_GRAPH_URL),
+    fallbackUrl: String(process.env.REACT_APP_FALLBACK_GRAPH_URL),
+  },
+  zapper: {
+    baseUrl: String(process.env.REACT_APP_ZAPPER_URL),
+    apiKey: String(process.env.REACT_APP_ZAPPER_API_KEY),
+  },
   api: {
     baseUrl: String(process.env.REACT_APP_BASE_API_URL),
   },
