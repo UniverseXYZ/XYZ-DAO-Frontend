@@ -1,11 +1,12 @@
+import { gql } from '@apollo/client';
 import BigNumber from 'bignumber.js';
-import QueryString from 'query-string';
 import { getHumanValue } from 'web3/utils';
 
-import { XyzToken } from 'components/providers/known-tokens-provider';
 import config from 'config';
 
-const API_URL = config.api.baseUrl;
+import { GraphClient } from '../../web3/graph/client';
+import { ProposalHistory } from './stateHistory';
+import { VotingPower } from './votingPower';
 
 type PaginatedResult<T extends Record<string, any>> = {
   data: T[];
@@ -17,28 +18,42 @@ type PaginatedResult<T extends Record<string, any>> = {
 export type APIOverviewData = {
   avgLockTimeSeconds: number;
   totalDelegatedPower: BigNumber;
-  TotalVKek: BigNumber;
   holders: number;
   holdersStakingExcluded: number;
   voters: number;
-  supernovaUsers: number;
+  kernelUsers: number;
 };
 
 export function fetchOverviewData(): Promise<APIOverviewData> {
-  const url = new URL(`/api/governance/overview`, API_URL);
-
-  return fetch(url.toString())
-    .then(result => result.json())
-    .then(result => ({
-      ...result.data,
-      totalDelegatedPower: getHumanValue(new BigNumber(result.data.totalDelegatedPower), 18),
-      TotalVKek: getHumanValue(new BigNumber(result.data.TotalVKek), 18),
-    }));
+  return GraphClient.get({
+    query: gql`
+      query GetOverview {
+        overview(id: "OVERVIEW") {
+          avgLockTimeSeconds
+          totalDelegatedPower
+          voters
+          kernelUsers
+          holders
+        }
+      }
+    `,
+  })
+    .then(result => {
+      console.log(result);
+      return {
+        ...result.data.overview,
+        totalDelegatedPower: getHumanValue(new BigNumber(result.data.overview.totalDelegatedPower), 18),
+      };
+    })
+    .catch(e => {
+      console.log(e);
+      return { data: {} };
+    });
 }
 
 export type APIVoterEntity = {
   address: string;
-  kekStaked: BigNumber;
+  tokensStaked: BigNumber;
   lockedUntil: number;
   delegatedPower: BigNumber;
   votes: number;
@@ -48,19 +63,55 @@ export type APIVoterEntity = {
 };
 
 export function fetchVoters(page = 1, limit = 10): Promise<PaginatedResult<APIVoterEntity>> {
-  const url = new URL(`/api/governance/voters?page=${page}&limit=${limit}`, API_URL);
+  return GraphClient.get({
+    query: gql`
+      query GetVoters($limit: Int, $offset: Int) {
+        voters(
+          first: $limit
+          skip: $offset
+          orderBy: _tokensStakedWithoutDecimals
+          orderDirection: desc
+          where: { isKernelUser: true }
+        ) {
+          id
+          tokensStaked
+          lockedUntil
+          delegatedPower
+          votes
+          proposals
+          hasActiveDelegation
+        }
+        overview(id: "OVERVIEW") {
+          kernelUsers
+        }
+      }
+    `,
+    variables: {
+      offset: limit * (page - 1),
+      limit: limit,
+    },
+  })
+    .then(result => {
+      console.log(result);
 
-  return fetch(url.toString())
-    .then(result => result.json())
-    .then((result: PaginatedResult<APIVoterEntity>) => ({
-      ...result,
-      data: (result.data ?? []).map((item: APIVoterEntity) => ({
-        ...item,
-        kekStaked: getHumanValue(new BigNumber(item.kekStaked), XyzToken.decimals)!,
-        delegatedPower: getHumanValue(new BigNumber(item.delegatedPower), 18)!,
-        votingPower: getHumanValue(new BigNumber(item.votingPower), 18)!,
-      })),
-    }));
+      return {
+        ...result,
+        data: (result.data.voters ?? []).map((voter: any) => ({
+          address: voter.id,
+          tokensStaked: getHumanValue(new BigNumber(voter.tokensStaked), 18),
+          lockedUntil: voter.lockedUntil,
+          delegatedPower: getHumanValue(new BigNumber(voter.delegatedPower), 18),
+          votes: voter.votes,
+          proposals: voter.proposals,
+          votingPower: getHumanValue(VotingPower.calculate(voter), 18),
+        })),
+        meta: { count: result.data.overview.kernelUsers, block: 0 },
+      };
+    })
+    .catch(e => {
+      console.log(e);
+      return { data: [], meta: { count: 0, block: 0 } };
+    });
 }
 
 export enum APIProposalState {
@@ -116,45 +167,109 @@ export type APILiteProposalEntity = {
   againstVotes: BigNumber;
 };
 
+function buildStateFilter(state: string) {
+  if (state === 'ALL') {
+    return [];
+  }
+
+  let filter = [];
+  switch (state) {
+    case APIProposalState.ACTIVE:
+      filter.push(
+        APIProposalState.WARMUP,
+        APIProposalState.ACTIVE,
+        APIProposalState.ACCEPTED,
+        APIProposalState.QUEUED,
+        APIProposalState.GRACE,
+      );
+      break;
+    case APIProposalState.FAILED:
+      filter.push(
+        APIProposalState.CANCELED,
+        APIProposalState.FAILED,
+        APIProposalState.ABROGATED,
+        APIProposalState.EXPIRED,
+      );
+      break;
+    default:
+      filter.push(state);
+      break;
+  }
+  return filter;
+}
+
 export function fetchProposals(
   page = 1,
   limit = 10,
-  state?: string,
-  search?: string,
+  state: string = 'ALL',
 ): Promise<PaginatedResult<APILiteProposalEntity>> {
-  const query = QueryString.stringify(
-    {
-      page: String(page),
-      limit: String(limit),
-      state,
-      title: search,
-    },
-    {
-      skipNull: true,
-      skipEmptyString: true,
-      encode: true,
-    },
-  );
+  let stateFilter = buildStateFilter(state.toUpperCase());
+  return GraphClient.get({
+    query: gql`
+      query GetProposals {
+        proposals(first: 1000) {
+          id
+          proposer
+          title
+          description
+          createTime
+          state
+          forVotes
+          againstVotes
+          warmUpDuration
+          activeDuration
+          queueDuration
+          gracePeriodDuration
+          events(orderBy: createTime, orderDirection: desc) {
+            proposalId
+            caller
+            eventType
+            createTime
+            txHash
+            eta
+          }
+        }
+        overview(id: "OVERVIEW") {
+          proposals
+        }
+      }
+    `,
+  })
+    .then(async response => {
+      console.log(response);
+      let result: PaginatedResult<APILiteProposalEntity> = {
+        data: [],
+        meta: { count: response.data.overview.proposals.length },
+      };
 
-  const url = new URL(`/api/governance/proposals?${query}`, API_URL);
-
-  return fetch(url.toString())
-    .then(result => result.json())
-    .then(({ status, ...data }) => {
-      if (status !== 200) {
-        return Promise.reject(status);
+      for (let i = 0; i < response.data.proposals.length; i++) {
+        const graphProposal = response.data.proposals[i];
+        const liteProposal: APILiteProposalEntity = { ...graphProposal };
+        const history = await ProposalHistory.build(graphProposal);
+        liteProposal.proposalId = Number.parseInt(graphProposal.id);
+        liteProposal.forVotes = getHumanValue(new BigNumber(graphProposal.forVotes), 18)!;
+        liteProposal.againstVotes = getHumanValue(new BigNumber(graphProposal.againstVotes), 18)!;
+        liteProposal.stateTimeLeft = ProposalHistory.computeTimeLeft(state, graphProposal);
+        liteProposal.state = history[0].name as APIProposalState;
+        result.data.push(liteProposal);
       }
 
-      return data;
+      // Apply filter based on the proposal state
+      result.data = result.data.filter((p: APILiteProposalEntity) => {
+        return stateFilter.length === 0 || stateFilter.indexOf(p.state) !== -1;
+      });
+      // Sort based on Proposal Id
+      result.data = result.data.sort(
+        (a: APILiteProposalEntity, b: APILiteProposalEntity) => b.proposalId - a.proposalId,
+      );
+      // Paginate the result
+      result.data = result.data.slice(limit * (page - 1), limit * page);
+      return result;
     })
-    .then((result: PaginatedResult<APILiteProposalEntity>) => ({
-      ...result,
-      data: (result.data ?? []).map(proposal => ({
-        ...proposal,
-        forVotes: getHumanValue(new BigNumber(proposal.forVotes), 18)!,
-        againstVotes: getHumanValue(new BigNumber(proposal.againstVotes), 18)!,
-      })),
-    }));
+    .catch(e => {
+      console.log(e);
+      return { data: [], meta: { count: 0, block: 0 } };
+    });
 }
 
 export type APIProposalHistoryEntity = {
@@ -180,22 +295,63 @@ export type APIProposalEntity = APILiteProposalEntity & {
 };
 
 export function fetchProposal(proposalId: number): Promise<APIProposalEntity> {
-  const url = new URL(`/api/governance/proposals/${proposalId}`, API_URL);
-
-  return fetch(url.toString())
-    .then(result => result.json())
-    .then(({ data, status }) => {
-      if (status !== 200) {
-        return Promise.reject(status);
+  return GraphClient.get({
+    query: gql`
+      query GetProposal($proposalId: String) {
+        proposal(id: $proposalId) {
+          id
+          proposer
+          description
+          title
+          createTime
+          targets
+          values
+          signatures
+          calldatas
+          blockTimestamp
+          warmUpDuration
+          activeDuration
+          queueDuration
+          gracePeriodDuration
+          acceptanceThreshold
+          minQuorum
+          state
+          forVotes
+          againstVotes
+          eta
+          forVotes
+          againstVotes
+          events(orderBy: createTime, orderDirection: desc) {
+            proposalId
+            caller
+            eventType
+            createTime
+            txHash
+            eta
+          }
+        }
       }
-
-      return data;
+    `,
+    variables: {
+      proposalId: proposalId.toString(),
+    },
+  })
+    .then(async result => {
+      console.log(result);
+      const history = await ProposalHistory.build(result.data.proposal);
+      return {
+        ...result.data.proposal,
+        proposalId: result.data.proposal.id,
+        forVotes: getHumanValue(new BigNumber(result.data.proposal.forVotes), 18)!,
+        againstVotes: getHumanValue(new BigNumber(result.data.proposal.againstVotes), 18)!,
+        history: history,
+        state: history[0].name,
+      };
     })
-    .then((data: APIProposalEntity) => ({
-      ...data,
-      forVotes: getHumanValue(new BigNumber(data.forVotes), 18)!,
-      againstVotes: getHumanValue(new BigNumber(data.againstVotes), 18)!,
-    }));
+    .catch(e => {
+      console.log(e);
+      return { data: {} };
+    });
 }
 
 export type APIVoteEntity = {
@@ -205,48 +361,69 @@ export type APIVoteEntity = {
   blockTimestamp: number;
 };
 
+function computeCountBasedOnFilter(support: boolean | undefined, proposal: any) {
+  if (support === undefined) {
+    // No Filter applied
+    return proposal.votesCount;
+  } else if (support) {
+    // Filter for "For Votes"
+    return proposal.forVotesCount;
+  } else {
+    // Filter for "Against Votes"
+    return proposal.againstVotesCount;
+  }
+}
+
 export function fetchProposalVoters(
   proposalId: number,
   page = 1,
   limit = 10,
   support?: boolean,
 ): Promise<PaginatedResult<APIVoteEntity>> {
-  const query = QueryString.stringify(
-    {
-      page: String(page),
-      limit: String(limit),
-      support,
+  return GraphClient.get({
+    query: gql`
+        query GetProposalVotes ($proposalId: String, $limit: Int, $offset: Int, $support: Boolean) {
+          proposal (id: $proposalId) {
+            votesCount
+            forVotesCount
+            againstVotesCount
+            votingHistory (first: $limit, skip: $offset, orderBy: _powerWithoutDecimals, orderDirection: desc where: {${
+              support !== undefined ? 'support: $support' : ''
+            }}) {
+              address
+              support
+              blockTimestamp
+              power
+            }
+          }
+        }
+      `,
+    variables: {
+      proposalId: proposalId.toString(),
+      offset: limit * (page - 1),
+      limit: limit,
+      support: support,
     },
-    {
-      skipNull: true,
-      skipEmptyString: true,
-      encode: true,
-    },
-  );
-
-  const url = new URL(`/api/governance/proposals/${proposalId}/votes?${query}`, API_URL);
-
-  return fetch(url.toString())
-    .then(result => result.json())
-    .then(({ status, ...data }) => {
-      if (status !== 200) {
-        return Promise.reject(status);
-      }
-
-      return data;
+  })
+    .then(result => {
+      console.log(result);
+      return {
+        data: (result.data.proposal.votingHistory ?? []).map((item: any) => ({
+          ...item,
+          power: getHumanValue(new BigNumber(item.power), 18)!,
+        })),
+        meta: { count: computeCountBasedOnFilter(support, result.data.proposal), block: 0 },
+      };
     })
-    .then((result: PaginatedResult<APIVoteEntity>) => ({
-      ...result,
-      data: (result.data ?? []).map(vote => ({
-        ...vote,
-        power: getHumanValue(new BigNumber(vote.power), 18)!,
-      })),
-    }));
+    .catch(e => {
+      console.log(e);
+      return { data: [], meta: { count: 0, block: 0 } };
+    });
 }
 
 export type APIAbrogationEntity = {
   proposalId: number;
-  caller: string;
+  creator: string;
   createTime: number;
   description: string;
   forVotes: BigNumber;
@@ -254,22 +431,38 @@ export type APIAbrogationEntity = {
 };
 
 export function fetchAbrogation(proposalId: number): Promise<APIAbrogationEntity> {
-  const url = new URL(`/api/governance/abrogation-proposals/${proposalId}`, API_URL);
-
-  return fetch(url.toString())
-    .then(result => result.json())
-    .then(({ data, status }) => {
-      if (status !== 200) {
-        return Promise.reject(status);
+  let apId = `${proposalId.toString()}-AP`;
+  return GraphClient.get({
+    query: gql`
+      query GetAbrogation($apId: String) {
+        abrogationProposal(id: $apId) {
+          id
+          creator
+          createTime
+          description
+          forVotes
+          againstVotes
+        }
       }
-
-      return data;
+    `,
+    variables: {
+      apId: apId,
+    },
+  })
+    .then(result => {
+      console.log(result);
+      let abrogationProposal = result.data.abrogationProposal;
+      return {
+        ...abrogationProposal,
+        proposalId: proposalId,
+        forVotes: getHumanValue(new BigNumber(abrogationProposal.forVotes), 18)!,
+        againstVotes: getHumanValue(new BigNumber(abrogationProposal.againstVotes), 18)!,
+      };
     })
-    .then((data: APIAbrogationEntity) => ({
-      ...data,
-      forVotes: getHumanValue(new BigNumber(data.forVotes), 18)!,
-      againstVotes: getHumanValue(new BigNumber(data.againstVotes), 18)!,
-    }));
+    .catch(res => {
+      console.log(res);
+      return { data: {} };
+    });
 }
 
 export type APIAbrogationVoteEntity = {
@@ -285,37 +478,46 @@ export function fetchAbrogationVoters(
   limit = 10,
   support?: boolean,
 ): Promise<PaginatedResult<APIAbrogationVoteEntity>> {
-  const query = QueryString.stringify(
-    {
-      page: String(page),
-      limit: String(limit),
-      support,
-    },
-    {
-      skipNull: true,
-      skipEmptyString: true,
-      encode: true,
-    },
-  );
-
-  const url = new URL(`/api/governance/abrogation-proposals/${proposalId}/votes?${query}`, API_URL);
-
-  return fetch(url.toString())
-    .then(result => result.json())
-    .then(({ status, ...data }) => {
-      if (status !== 200) {
-        return Promise.reject(status);
+  let apId = `${proposalId.toString()}-AP`;
+  return GraphClient.get({
+    query: gql`
+      query GetAbrogationVotes ($apId: String, $limit: Int, $offset: Int, $support: Boolean) {
+        abrogationProposal (id: $apId) {
+          votesCount
+          forVotesCount
+          againstVotesCount
+          votingHistory (first: $limit, skip: $offset, orderBy: _powerWithoutDecimals, orderDirection: desc where: {${
+            support !== undefined ? 'support: $support' : ''
+          }}) {
+            address
+            support
+            blockTimestamp
+            power
+          }
+        }
       }
-
-      return data;
+    `,
+    variables: {
+      apId: apId,
+      offset: limit * (page - 1),
+      limit: limit,
+      support: support,
+    },
+  })
+    .then(result => {
+      console.log(result);
+      return {
+        data: (result.data.abrogationProposal.votingHistory ?? []).map((item: any) => ({
+          ...item,
+          power: getHumanValue(new BigNumber(item.power), 18)!,
+        })),
+        meta: { count: computeCountBasedOnFilter(support, result.data.abrogationProposal), block: 0 },
+      };
     })
-    .then((result: PaginatedResult<APIVoteEntity>) => ({
-      ...result,
-      data: (result.data ?? []).map(vote => ({
-        ...vote,
-        power: getHumanValue(new BigNumber(vote.power), 18)!,
-      })),
-    }));
+    .catch(e => {
+      console.log(e);
+      return { data: [], meta: { count: 0, block: 0 } };
+    });
 }
 
 export type APITreasuryToken = {
@@ -325,16 +527,24 @@ export type APITreasuryToken = {
 };
 
 export function fetchTreasuryTokens(): Promise<APITreasuryToken[]> {
-  const url = new URL(`/api/governance/treasury/tokens?address=${config.contracts.dao.governance}`, API_URL);
+  const url = new URL(
+    `/v1/protocols/tokens/balances?addresses%5B%5D=${config.contracts.dao.governance}&network=ethereum&api_key=${config.zapper.apiKey}`,
+    config.zapper.baseUrl,
+  );
 
   return fetch(url.toString())
     .then(result => result.json())
-    .then(({ status, data }) => {
-      if (status !== 200) {
-        return Promise.reject(status);
-      }
-
-      return data;
+    .then(res => {
+      const assets = res[`${config.contracts.dao.governance}`].products[0].assets;
+      return assets
+        .filter((t: { symbol: string }) => t.symbol !== 'ETH')
+        .map((m: { address: any; symbol: any; decimals: any }) => {
+          return {
+            tokenAddress: m.address,
+            tokenSymbol: m.symbol,
+            tokenDecimals: m.decimals,
+          };
+        });
     });
 }
 
@@ -343,53 +553,52 @@ export type APITreasuryHistory = {
   accountLabel: string;
   counterpartyAddress: string;
   counterpartyLabel: string;
-  amount: number;
+  amount: string;
   transactionDirection: string;
   tokenAddress: string;
   tokenSymbol: string;
-  tokenDecimals: number;
   transactionHash: string;
   blockTimestamp: number;
   blockNumber: number;
 };
 
-export function fetchTreasuryHistory(
-  page = 1,
-  limit = 10,
-  tokenFilter: string,
-  directionFilter: string,
-): Promise<PaginatedResult<APITreasuryHistory>> {
-  const query = QueryString.stringify(
-    {
-      address: config.contracts.dao.governance,
-      page: String(page),
-      limit: String(limit),
-      tokenAddress: tokenFilter,
-      transactionDirection: directionFilter,
-    },
-    {
-      skipNull: true,
-      skipEmptyString: true,
-      encode: true,
-    },
-  );
+type ZapperTransactionHistory = {
+  hash: string;
+  blockNumber: number;
+  timeStamp: string;
+  symbol: string;
+  address: string;
+  direction: string;
+  from: string;
+  amount: string;
+  destination: string;
+};
 
-  const url = new URL(`/api/governance/treasury/transactions?${query}`, API_URL);
+export function fetchTreasuryHistory(): Promise<PaginatedResult<APITreasuryHistory>> {
+  const url = new URL(
+    `/v1/transactions?address=${config.contracts.dao.governance}&addresses%5B%5D=${config.contracts.dao.governance}&network=ethereum&api_key=${config.zapper.apiKey}`,
+    config.zapper.baseUrl,
+  );
 
   return fetch(url.toString())
     .then(result => result.json())
-    .then(({ status, ...data }) => {
-      if (status !== 200) {
-        return Promise.reject(status);
-      }
+    .then(res => {
+      const data = res.data.map((m: ZapperTransactionHistory) => {
+        return {
+          accountAddress: m.direction === 'incoming' ? m.destination : m.from,
+          accountLabel: 'DAO',
+          counterpartyAddress: m.direction === 'incoming' ? m.from : m.destination,
+          counterpartyLabel: '',
+          amount: m.amount,
+          transactionDirection: m.direction === 'incoming' ? 'IN' : 'OUT',
+          tokenAddress: m.address,
+          tokenSymbol: m.symbol,
+          transactionHash: m.hash,
+          blockTimestamp: Number.parseInt(m.timeStamp),
+          blockNumber: m.blockNumber,
+        };
+      });
 
-      return data;
-    })
-    .then((result: PaginatedResult<APITreasuryHistory>) => ({
-      ...result,
-      data: (result.data ?? []).map(item => ({
-        ...item,
-        amount: Number(item.amount),
-      })),
-    }));
+      return { data, meta: { count: data.length } };
+    });
 }

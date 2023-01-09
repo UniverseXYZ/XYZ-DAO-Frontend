@@ -20,6 +20,8 @@ import {
   convertTokenInUSD,
   getTokenBySymbol,
   useKnownTokens,
+  convertTokenIn,
+  getTokenPrice,
 } from 'components/providers/known-tokens-provider';
 import config from 'config';
 import { useReload } from 'hooks/useReload';
@@ -72,6 +74,18 @@ const InitialState: State = {
   },
 };
 
+const getPrice = (entity: APITreasuryHistory): string | undefined => {
+  const price = getTokenPrice(entity.tokenSymbol);
+  if (price == undefined) {
+    return undefined
+  }
+  return formatUSD(Number.parseFloat(entity.amount) * price.toNumber())
+}
+
+function handleFooter(currentPageData: any) {
+  return ""
+}
+
 const Columns: ColumnsType<APITreasuryHistory> = [
   {
     title: 'Token Name',
@@ -116,15 +130,14 @@ const Columns: ColumnsType<APITreasuryHistory> = [
     render: (_, entity) => (
       <Tooltip
         placement="bottomRight"
-        title={formatToken(entity.amount, {
-          decimals: entity.tokenDecimals,
-          tokenName: entity.tokenSymbol,
-        })}>
+        title={`${entity.amount} ${entity.tokenSymbol}`}>
         <Text type="p1" weight="semibold" color={entity.transactionDirection === 'IN' ? 'green' : 'red'}>
-          {entity.transactionDirection === 'IN' ? '+' : '-'} {formatToken(entity.amount)}
+          {entity.transactionDirection === 'IN' ? '+' : '-'} {Number.parseFloat(entity.amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </Text>
         <Text type="small" weight="semibold">
-          {formatUSD(convertTokenInUSD(entity.amount, entity.tokenSymbol))}
+          {
+            getPrice(entity)
+          }
         </Text>
       </Tooltip>
     ),
@@ -177,53 +190,6 @@ const Columns: ColumnsType<APITreasuryHistory> = [
   },
 ];
 
-function getFilters(tokens: APITreasuryTokenEntity[]): TableFilterType[] {
-  return [
-    {
-      name: 'token',
-      label: 'Token address',
-      defaultValue: 'all',
-      itemRender: () => {
-        const tokenOpts = [
-          {
-            value: 'all',
-            label: 'All Tokens',
-          },
-          ...tokens.map(token => ({
-            value: token.tokenAddress,
-            label: token.token.name ?? '-',
-          })),
-        ];
-
-        return <Select options={tokenOpts} className="full-width" />;
-      },
-    },
-    {
-      name: 'direction',
-      label: 'Transaction direction',
-      defaultValue: 'all',
-      itemRender: () => {
-        const options = [
-          {
-            value: 'all',
-            label: 'All Pool Transactions',
-          },
-          {
-            value: 'in',
-            label: 'In',
-          },
-          {
-            value: 'out',
-            label: 'Out',
-          },
-        ];
-
-        return <Select options={options} className="full-width" />;
-      },
-    },
-  ];
-}
-
 const TreasuryHoldings: React.FC = () => {
   const [reload, version] = useReload();
   const knownTokens = useKnownTokens();
@@ -235,20 +201,6 @@ const TreasuryHoldings: React.FC = () => {
       history: {
         ...prevState.history,
         page,
-      },
-    }));
-  }
-
-  function handleFilterChange(filters: Record<string, any>) {
-    setState(prevState => ({
-      ...prevState,
-      history: {
-        ...prevState.history,
-        filters: {
-          ...prevState.history.filters,
-          ...filters,
-        },
-        page: 1,
       },
     }));
   }
@@ -318,8 +270,6 @@ const TreasuryHoldings: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    const { page, pageSize, filters } = state.history;
-
     setState(prevState => ({
       ...prevState,
       history: {
@@ -328,7 +278,7 @@ const TreasuryHoldings: React.FC = () => {
       },
     }));
 
-    fetchTreasuryHistory(page, pageSize, filters.token, filters.direction)
+    fetchTreasuryHistory()
       .then(data => {
         setState(prevState => ({
           ...prevState,
@@ -376,7 +326,7 @@ const TreasuryHoldings: React.FC = () => {
   return (
     <>
       <Text type="p1" weight="semibold" color="secondary" className="mb-8">
-        Total Holdings Balance
+        Total holdings balance
       </Text>
       <Text type="h2" weight="bold" color="primary" className="mb-40">
         {formatUSD(totalHoldings) ?? '-'}
@@ -425,7 +375,7 @@ const TreasuryHoldings: React.FC = () => {
                   tokenName: item.tokenSymbol,
                 })}>
                 <Text type="h3" weight="bold" color="primary" className="mb-4">
-                  {formatToken(amount) ?? '-'}
+                  {formatToken(amount, { minDecimals: 2 }) ?? '-'}
                 </Text>
               </Tooltip>
               <Text type="small" weight="semibold" color="secondary">
@@ -438,13 +388,8 @@ const TreasuryHoldings: React.FC = () => {
       <div className="card">
         <div className="card-header flex flow-col align-center justify-space-between pv-12">
           <Text type="p1" weight="semibold" color="primary">
-            Transaction History
+            Transaction history
           </Text>
-          <TableFilter
-            filters={getFilters(state.tokens.items)}
-            value={state.history.filters}
-            onChange={handleFilterChange}
-          />
         </div>
         <Table<APITreasuryHistory>
           columns={Columns}
@@ -453,18 +398,6 @@ const TreasuryHoldings: React.FC = () => {
           loading={state.history.loading}
           locale={{
             emptyText: 'No entries',
-          }}
-          pagination={{
-            total: state.history.total,
-            current: state.history.page,
-            pageSize: state.history.pageSize,
-            position: ['bottomRight'],
-            showTotal: (total: number, [from, to]: [number, number]) => (
-              <Text type="p2" weight="semibold" color="secondary">
-                Showing {from} to {to} out of {total} entries.
-              </Text>
-            ),
-            onChange: handlePaginationChange,
           }}
           scroll={{
             x: true,

@@ -140,14 +140,14 @@ export default class Erc20Contract extends Web3Contract {
     });
   }
 
-  approve(enable: boolean, spenderAddress: string): Promise<void> {
+  async approve(enable: boolean, spenderAddress: string): Promise<void> {
     if (!this.account) {
       return Promise.reject();
     }
 
     const value = enable ? BigNumber.MAX_UINT_256 : BigNumber.ZERO;
 
-    return this.send('approve', [spenderAddress, value], {
+    return this.send('approve', [spenderAddress, value.toString(10)], {
       from: this.account,
     }).then(() => this.loadAllowance(spenderAddress));
   }

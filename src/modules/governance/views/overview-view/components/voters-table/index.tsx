@@ -30,7 +30,7 @@ const Columns: ColumnsType<APIVoterEntity> = [
   },
   {
     title: 'Staked Balance',
-    dataIndex: 'kekStaked',
+    dataIndex: 'tokensStaked',
     align: 'right',
     render: (value: BigNumber) => (
       <Text type="p1" weight="semibold" className="ml-auto">
@@ -83,7 +83,7 @@ const VotersTable: React.FC<VotersTableProps> = props => {
   const [totalVoters, setTotal] = React.useState<number>(0);
   const [page, setPage] = React.useState<number>(1);
   const pageSize = 10;
-
+  console.log(voters);
   React.useEffect(() => {
     setLoading(true);
 
@@ -102,7 +102,7 @@ const VotersTable: React.FC<VotersTableProps> = props => {
     <div className={cn('card', className)}>
       <div className="card-header">
         <Text type="p1" weight="semibold" color="primary" font="secondary">
-          Voter Weights
+          Voter weights
         </Text>
       </div>
       <Table<APIVoterEntity>
@@ -119,7 +119,7 @@ const VotersTable: React.FC<VotersTableProps> = props => {
           showTotal: (total: number, [from, to]: [number, number]) => (
             <>
               <Text type="p2" weight="semibold" color="secondary" className="hidden-mobile">
-                Showing {from} to {to} out of {total} wallets stakers
+                Showing {from} to {to} out of {total} stakers
               </Text>
               <Text type="p2" weight="semibold" color="secondary" className="hidden-tablet hidden-desktop">
                 {from}..{to} of {total}

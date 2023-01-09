@@ -124,12 +124,6 @@ const ProposalsViewInner: React.FC = () => {
             <Tabs.Tab key="executed" tab="Executed" />
             <Tabs.Tab key="failed" tab="Failed" />
           </Tabs>
-          <Input
-            className={s.search}
-            prefix={<Icon name="search-outlined" width={16} height={16} />}
-            placeholder="Search Proposals"
-            onChange={ev => handleSearchChange(ev)}
-          />
         </div>
         <ProposalsTable />
       </div>

@@ -82,7 +82,7 @@ const Columns: ColumnsType<LiteProposalEntity> = [
 
 const ProposalsTable: React.FC = () => {
   const proposalsCtx = useProposals();
-
+  console.log(proposalsCtx);
   function handlePaginationChange(page: number) {
     proposalsCtx.changePage(page);
   }

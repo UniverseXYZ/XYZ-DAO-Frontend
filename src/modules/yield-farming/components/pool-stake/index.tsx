@@ -56,7 +56,9 @@ const PoolStake: FC = () => {
 
     try {
       await activeContract.approve(true, yfPoolsCtx.stakingContract?.address!);
-    } catch {}
+    } catch (err) {
+      console.log(err);
+    }
 
     setEnabling(false);
   }

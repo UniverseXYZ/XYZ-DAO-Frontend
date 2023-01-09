@@ -97,7 +97,7 @@ const PoolStats: React.FC<Props> = ({ className }) => {
           </Text>
           <div className="flex flow-row">
             <Text type="h2" weight="bold" color="primary" className="mb-4">
-              {formatUSD(XyzToken.price) ?? '-'}
+              {formatUSD(XyzToken.price, { decimals: 3 }) ?? '-'}
             </Text>
             <ExternalLink href={XYZ_MARKET_LINK} className="link-gradient">
               <Text type="p1" weight="semibold" color="var(--gradient-blue-safe)" textGradient="var(--gradient-blue)">

@@ -85,7 +85,9 @@ const WalletDepositView: React.FC = () => {
       form.setFieldsValue(InitialFormValues);
       daoCtx.daoBarn.reload();
       (XyzToken.contract as Erc20Contract).loadBalance().catch(Error);
-    } catch {}
+    } catch (error) {
+      console.log(error);
+    }
 
     setState({ saving: false });
   }

@@ -195,6 +195,7 @@ class Web3Contract extends EventEmitter {
     return contractMethod(...methodArgs)
       .send(_sendArgs, async (err: Error, txHash: string) => {
         if (err) {
+          console.log(err);
           return;
         }
 

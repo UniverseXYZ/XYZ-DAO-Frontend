@@ -90,14 +90,14 @@ function votingPowerAtTsCall(address: string, timestamp: number): Promise<BigNum
 }
 
 function depositSend(amount: BigNumber, from: string, gasPrice: number): Promise<void> {
-  return Contract.send('deposit', [getNonHumanValue(amount, 18)], {
+  return Contract.send('deposit', [getNonHumanValue(amount, 18).toString(10)], {
     from,
     gasPrice: getGasValue(gasPrice),
   });
 }
 
 function withdrawSend(amount: BigNumber, from: string, gasPrice: number): Promise<void> {
-  return Contract.send('withdraw', [getNonHumanValue(amount, 18)], {
+  return Contract.send('withdraw', [getNonHumanValue(amount, 18).toString(10)], {
     from,
     gasPrice: getGasValue(gasPrice),
   });
